@@ -8,6 +8,9 @@
 #include "SDLRenderer.h"
 #include "InputHandler.h"
 
+#include "MenuState.h"
+#include "PlayState.h"
+
 Game* Game::s_pInstance = 0;
 
 const int FPS = 60;
@@ -39,7 +42,10 @@ bool Game::init()
 	if (!TheTextureManager::Instance()->load("res/sprites/animate-alpha.png", "animate", TheRenderer::Instance()->getRendererPtr()))
 		return false; // Texture failed to load
 
-	TheInputHandler::Instance()->initJoysticks();
+	TheInputHandler::Instance()->init();
+
+	m_pGameStateMachine = new GameStateMachine();
+	m_pGameStateMachine->changeState(new MenuState());
 
 	m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
 	m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
@@ -72,29 +78,30 @@ void Game::render()
 {
 	TheRenderer::Instance()->startOfFrame();
 
-	//m_pRenderer->draw();
-
-	// Loop through all objects and draw them
-	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->draw();
-	}
+	m_pGameStateMachine->render();
 
 	TheRenderer::Instance()->EndOfFrame();
 }
 
 void Game::update()
 {
-	// Loop through all objects and update them
-	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->update();
-	}
+	m_pGameStateMachine->update();
 }
 
 void Game::handleEvents()
 {
 	TheInputHandler::Instance()->update();
+
+	
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ENTER))
+	{
+		m_pGameStateMachine->changeState(new PlayState());
+	}
+
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::BACKSPACE))
+	{
+		m_pGameStateMachine->changeState(new MenuState());
+	}
 }
 
 void Game::clean()

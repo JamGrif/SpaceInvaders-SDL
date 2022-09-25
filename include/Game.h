@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <vector>
+#include "GameStateMachine.h"
 
 //#include "SDLRenderer.h"
 
@@ -23,6 +24,7 @@ public:
 	void quit();
 
 	bool getRunning();
+	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 
 	static Game* Instance(); // Singleton
 private:
@@ -30,6 +32,8 @@ private:
 	static Game* s_pInstance;
 
 	std::vector<GameObject*> m_gameObjects;
+
+	GameStateMachine* m_pGameStateMachine;
 
 	bool m_bRunning;
 };

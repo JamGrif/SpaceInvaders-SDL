@@ -24,6 +24,7 @@ void Player::draw()
 
 void Player::update()
 {
+
 	m_velocity.setX(0);
 	m_velocity.setY(0);
 
@@ -31,10 +32,7 @@ void Player::update()
 
 	SDLGameObject::update();
 	// Animation stuff
-	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
-
-	//std::cout << m_acceleration.getX() << std::endl;
-	//std::cout << m_velocity.getX() << std::endl;
+	m_currentFrame = int(((SDL_GetTicks() / 100) % 5));
 }
 
 void Player::clean()
@@ -45,9 +43,13 @@ void Player::handleInput()
 {
 	constexpr int MOVEMENT_SPEED = 3;
 
+	Vector2D mousePos = TheInputHandler::Instance()->getMousePosition();
+
+	m_velocity = mousePos - m_position;
+	//m_velocity /= 50;
 	
 
-	if (TheInputHandler::Instance()->getMouseButtonState(LEFT))
+	if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT))
 	{
 		m_velocity.setX(-1);
 	}
@@ -58,56 +60,27 @@ void Player::handleInput()
 	//Vector2D vec = TheInputHandler::Instance()->getMousePosition();
 	//m_velocity = (vec - m_position) / 100; 
 
-	if (TheInputHandler::Instance()->getMouseButtonState(RIGHT))
+	if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::RIGHT))
 	{
 		m_velocity.setX(1);
 	}
 
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT))
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::RIGHT_ARROW))
 	{
 		m_velocity.setX(2);
 	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT))
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::LEFT_ARROW))
 	{
 		m_velocity.setX(-2);
 	}
 
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP))
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::UP_ARROW))
 	{
 		m_velocity.setY(-2);
 	}
 
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN))
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::DOWN_ARROW))
 	{
 		m_velocity.setY(2);
-	}
-
-	if (TheInputHandler::Instance()->joysticksInitialized())
-	{
-		// Check if the xvalue of the left stick is more than 0 (that it has moved)
-		if (TheInputHandler::Instance()->xValue(0, 1) > 0 || TheInputHandler::Instance()->xValue(0, 1) < 0)
-		{
-			m_velocity.setX(MOVEMENT_SPEED * TheInputHandler::Instance()->xValue(0, 1));
-		}
-	
-		if (TheInputHandler::Instance()->yValue(0, 1) > 0 || TheInputHandler::Instance()->yValue(0, 1) < 0)
-		{
-			m_velocity.setY(MOVEMENT_SPEED * TheInputHandler::Instance()->yValue(0, 1));
-		}
-	
-		if (TheInputHandler::Instance()->xValue(0, 2) > 0 || TheInputHandler::Instance()->xValue(0, 2) < 0)
-		{
-			m_velocity.setX(MOVEMENT_SPEED * TheInputHandler::Instance()->xValue(0, 2));
-		}
-	
-		if (TheInputHandler::Instance()->yValue(0, 2) > 0 || TheInputHandler::Instance()->yValue(0, 2) < 0)
-		{
-			m_velocity.setY(MOVEMENT_SPEED * TheInputHandler::Instance()->yValue(0, 2));
-		}
-
-		if (TheInputHandler::Instance()->getButtonState(0, 3)) // Check if button 3 has been pressed ( Y on Xbox controller)
-		{
-			m_velocity.setX(1);
-		}
 	}
 }

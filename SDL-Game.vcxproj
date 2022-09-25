@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\MenuButton.cpp" />
+    <ClCompile Include="src\GameStateMachine.cpp" />
+    <ClCompile Include="src\PlayState.cpp" />
+    <ClCompile Include="src\MenuState.cpp" />
+    <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\SDLRenderer.cpp" />
     <ClCompile Include="src\SDLWindow.cpp" />
@@ -120,6 +125,8 @@
     <ClInclude Include="dependencies\SDL\include\SDL_version.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_video.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h" />
+    <ClInclude Include="include\GameStateMachine.h" />
+    <ClInclude Include="include\GameState.h" />
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Game.h" />
@@ -130,6 +137,9 @@
     <ClInclude Include="include\SDLRenderer.h" />
     <ClInclude Include="include\Vector2D.h" />
     <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\MenuState.h" />
+    <ClInclude Include="include\PlayState.h" />
+    <ClInclude Include="include\MenuButton.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
