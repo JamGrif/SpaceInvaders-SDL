@@ -1,15 +1,13 @@
+#include "pch.h"
 #include "Game.h"
-//#include "SDL.h"
-#include "SDL_image.h"
 
-#include <iostream>
+#include "GameStateMachine.h"
 
-#include "SDLWindow.h"
-#include "SDLRenderer.h"
+#include "Window.h"
+#include "Renderer.h"
 #include "InputHandler.h"
 
-#include "MenuState.h"
-#include "PlayState.h"
+#include "MenuState.h" // Default state on game load
 
 Game* Game::s_pInstance = 0;
 
@@ -31,24 +29,24 @@ bool Game::init()
 		return false;
 	}
 
-	SDLWindow::Instance()->init(640, 480);
-	if (!SDLWindow::Instance()->getStatus())
+	TheWindow::Instance()->init(640, 480);
+	if (!TheWindow::Instance()->getStatus())
 		return false; // Window creation failed
 
 	TheRenderer::Instance()->init();
 	if (!TheRenderer::Instance()->getStatus())
 		return false; // Renderer creation failed
 	
-	if (!TheTextureManager::Instance()->load("res/sprites/animate-alpha.png", "animate", TheRenderer::Instance()->getRendererPtr()))
-		return false; // Texture failed to load
+	//if (!TheTextureManager::Instance()->load("res/sprites/animate-alpha.png", "animate", TheRenderer::Instance()->getRendererPtr()))
+	//	return false; // Texture failed to load
 
 	TheInputHandler::Instance()->init();
 
 	m_pGameStateMachine = new GameStateMachine();
 	m_pGameStateMachine->changeState(new MenuState());
 
-	m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-	m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
+	//m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
+	//m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
 	m_bRunning = true;
 	return true;
@@ -91,24 +89,13 @@ void Game::update()
 void Game::handleEvents()
 {
 	TheInputHandler::Instance()->update();
-
-	
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ENTER))
-	{
-		m_pGameStateMachine->changeState(new PlayState());
-	}
-
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::BACKSPACE))
-	{
-		m_pGameStateMachine->changeState(new MenuState());
-	}
 }
 
 void Game::clean()
 {
 	TheInputHandler::Instance()->clean();
 	TheRenderer::Instance()->clean();
-	SDLWindow::Instance()->clean();
+	TheWindow::Instance()->clean();
 	SDL_Quit();
 }
 

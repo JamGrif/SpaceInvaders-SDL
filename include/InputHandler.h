@@ -1,8 +1,6 @@
 #pragma once
 
 #include "SDL.h"
-#include <vector>
-#include "Vector2D.h"
 
 namespace Mouse
 {

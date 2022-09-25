@@ -1,8 +1,10 @@
+#include "pch.h"
 #include "TextureManager.h"
 
-#include "SDL_image.h"
+#include "Renderer.h"
 
-#include <iostream>
+#include "SDL.h"
+#include "SDL_image.h"
 
 TextureManager* TextureManager::s_pInstance = nullptr;
 
@@ -12,7 +14,7 @@ TextureManager::TextureManager()
 
 TextureManager* TextureManager::Instance()
 {
-	if (s_pInstance == 0)
+	if (!s_pInstance)
 	{
 		s_pInstance = new TextureManager();
 		return s_pInstance;
@@ -21,13 +23,13 @@ TextureManager* TextureManager::Instance()
 	return s_pInstance;
 }
 
-bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer)
+bool TextureManager::load(std::string fileName, std::string id)
 {
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 	if (!pTempSurface)
 		return false;
 
-	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
+	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(TheRenderer::Instance()->getRendererPtr(), pTempSurface);
 	SDL_FreeSurface(pTempSurface);
 
 	// Texture creation successful, add to map
@@ -50,7 +52,7 @@ void TextureManager::clearFromTextureMap(std::string id)
 	m_textureMap.erase(id);
 }
 
-void TextureManager::draw(std::string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip /*= SDL_FLIP_NONE*/)
+void TextureManager::draw(std::string id, int x, int y, int width, int height, bool flipHorizontal)
 {
 	SDL_Rect srcRect;	// What part of the texture to use
 	SDL_Rect destRect;	// Where on the screen/window to draw it
@@ -63,10 +65,12 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height, S
 	destRect.x = x;
 	destRect.y = y;
 
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+	SDL_RendererFlip temp = flipHorizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+
+	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_textureMap[id], &srcRect, &destRect, 0, 0, temp);
 }
 
-void TextureManager::drawframe(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip /*= SDL_FLIP_NONE*/)
+void TextureManager::drawframe(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, bool flipHorizontal)
 {
 	SDL_Rect srcRect;	// What part of the texture to use
 	SDL_Rect destRect;	// Where on the screen/window to draw it
@@ -79,5 +83,7 @@ void TextureManager::drawframe(std::string id, int x, int y, int width, int heig
 	destRect.x = x;
 	destRect.y = y;
 
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+	SDL_RendererFlip temp = flipHorizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+
+	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_textureMap[id], &srcRect, &destRect, 0, 0, temp);
 }

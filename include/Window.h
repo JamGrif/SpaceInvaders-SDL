@@ -6,7 +6,7 @@ struct SDL_Window;
 /// <summary>
 /// Encapsulates the SDL_Window structure and provides utility functions for it
 /// </summary>
-class SDLWindow
+class Window
 {
 public:
 
@@ -22,10 +22,10 @@ public:
 
 	bool getStatus() const;
 
-	static SDLWindow* Instance(); // Singleton
+	static Window* Instance(); // Singleton
 private:
-	SDLWindow();
-	static SDLWindow* s_pInstance;
+	Window();
+	static Window* s_pInstance;
 
 	SDL_Window* m_pWindow;
 
@@ -34,4 +34,4 @@ private:
 
 	bool m_bStatus;
 };
-typedef SDLWindow TheWindow;
+typedef Window TheWindow;

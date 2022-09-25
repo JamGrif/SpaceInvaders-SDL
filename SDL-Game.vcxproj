@@ -21,12 +21,20 @@
   <ItemGroup>
     <ClCompile Include="src\MenuButton.cpp" />
     <ClCompile Include="src\GameStateMachine.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
-    <ClCompile Include="src\SDLRenderer.cpp" />
-    <ClCompile Include="src\SDLWindow.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\SDLGameObject.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -34,7 +42,10 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\Vector2D.cpp" />
+    <ClCompile Include="src\Vector2D.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\SDL\include\begin_code.h" />
@@ -130,11 +141,12 @@
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\SDLGameObject.h" />
-    <ClInclude Include="include\SDLWindow.h" />
-    <ClInclude Include="include\SDLRenderer.h" />
+    <ClInclude Include="include\Window.h" />
+    <ClInclude Include="include\Renderer.h" />
     <ClInclude Include="include\Vector2D.h" />
     <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\MenuState.h" />
@@ -240,6 +252,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -247,10 +261,10 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)
-xcopy /y /d $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir)
-mkdir $(TargetDir)res 
-xcopy /y /d $(ProjectDir)res $(TargetDir)res /S</Command>
+      <Command>xcopy $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)  /d 
+xcopy  $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir) /d 
+mkdir $(TargetDir)res
+xcopy  $(ProjectDir)res $(TargetDir)res /d /s </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -262,6 +276,8 @@ xcopy /y /d $(ProjectDir)res $(TargetDir)res /S</Command>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -271,10 +287,10 @@ xcopy /y /d $(ProjectDir)res $(TargetDir)res /S</Command>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)
-xcopy /y /d $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir)
-mkdir $(TargetDir)res 
-xcopy /y /d $(ProjectDir)res $(TargetDir)res /S</Command>
+      <Command>xcopy $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)  /d 
+xcopy  $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir) /d 
+mkdir $(TargetDir)res
+xcopy  $(ProjectDir)res $(TargetDir)res /d /s </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

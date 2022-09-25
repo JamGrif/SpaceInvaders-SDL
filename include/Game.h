@@ -1,14 +1,15 @@
 #pragma once
 
-#include "SDL.h"
-#include "TextureManager.h"
-#include <string>
-#include "Player.h"
-#include "Enemy.h"
-#include <vector>
-#include "GameStateMachine.h"
+//#include "SDL.h"
+//#include "TextureManager.h"
+//#include "Player.h"
+//#include "Enemy.h"
 
 //#include "SDLRenderer.h"
+
+// Forward Declaration
+class GameStateMachine;
+class GameObject;
 
 class Game
 {

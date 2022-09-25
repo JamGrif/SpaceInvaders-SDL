@@ -1,7 +1,9 @@
+#include "pch.h"
 #include "PlayState.h"
 
-#include "Game.h"
-#include "SDLRenderer.h"
+#include "TextureManager.h"
+#include "Renderer.h"
+#include "Player.h"
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -28,7 +30,7 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("res/sprites/helicopter.png", "helicopter", TheRenderer::Instance()->getRendererPtr()))
+	if (!TheTextureManager::Instance()->load("res/sprites/helicopter.png", "helicopter"))
 		return false;
 
 	GameObject* player = new Player(new LoaderParams(100, 100, 128, 55, "helicopter"));

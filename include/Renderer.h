@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 
 // Forward Declaration
 struct SDL_Renderer;
@@ -8,7 +7,7 @@ struct SDL_Renderer;
 /// <summary>
 /// Encapsulates the SDL_Renderer structure and provides utility functions for it
 /// </summary>
-class SDLRenderer
+class Renderer
 {
 public:
 	void init();
@@ -22,14 +21,14 @@ public:
 
 	bool getStatus() const;
 
-	static SDLRenderer* Instance(); // Singleton
+	static Renderer* Instance(); // Singleton
 private:
-	SDLRenderer();
-	static SDLRenderer* s_pInstance;
+	Renderer();
+	static Renderer* s_pInstance;
 
 	SDL_Renderer* m_pRenderer;
 
 	bool m_bStatus;
 };
-typedef SDLRenderer TheRenderer;
+typedef Renderer TheRenderer;
 

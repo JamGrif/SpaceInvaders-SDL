@@ -1,8 +1,6 @@
+#include "pch.h"
+
 #include "Game.h"
-
-#include <SDL.h>
-
-// test
 
 int main(int argc, char* args[])
 {

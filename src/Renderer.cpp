@@ -1,26 +1,26 @@
-#include "SDLRenderer.h"
+#include "pch.h"
+#include "Renderer.h"
 
-#include "SDLWindow.h"
+#include "Window.h"
 
-#include <SDL.h>
+#include "SDL.h"
 
-#include <iostream>
 
 static int backgroundColour[3] = { 255, 100, 75 };
 
-SDLRenderer* SDLRenderer::s_pInstance = nullptr;
+Renderer* Renderer::s_pInstance = nullptr;
 
-SDLRenderer::SDLRenderer()
+Renderer::Renderer()
 	:m_pRenderer(nullptr), m_bStatus(false)
 {
 	
 }
 
-void SDLRenderer::init()
+void Renderer::init()
 {
 	// 2nd parameter is the index of the rendering driver to initialize (-1 to use first capable driver)
 	// 3rd parameter are the SDL__RendererFlag
-	m_pRenderer = SDL_CreateRenderer(SDLWindow::Instance()->getWindowPtr(), -1, 0);
+	m_pRenderer = SDL_CreateRenderer(TheWindow::Instance()->getWindowPtr(), -1, 0);
 
 	// Check renderer status
 	if (!m_pRenderer)
@@ -34,44 +34,43 @@ void SDLRenderer::init()
 	m_bStatus = true;
 }
 
-void SDLRenderer::clean()
+void Renderer::clean()
 {
 	SDL_DestroyRenderer(m_pRenderer);
 }
 
-void SDLRenderer::startOfFrame()
+void Renderer::startOfFrame()
 {
 	// Clear the window
 	SDL_RenderClear(m_pRenderer);
 }
 
-void SDLRenderer::draw()
+void Renderer::draw()
 {
 
 }
 
-void SDLRenderer::EndOfFrame()
+void Renderer::EndOfFrame()
 {
 	// Show the window
 	SDL_RenderPresent(m_pRenderer);
 }
 
-SDL_Renderer* SDLRenderer::getRendererPtr() const
+SDL_Renderer* Renderer::getRendererPtr() const
 {
 	return m_pRenderer;
 }
 
-bool SDLRenderer::getStatus() const
+bool Renderer::getStatus() const
 {
 	return m_bStatus;
 }
 
-SDLRenderer* SDLRenderer::Instance()
+Renderer* Renderer::Instance()
 {
 	if (!s_pInstance)
 	{
-		std::cout << "Creating first instance of SDLRenderer" << std::endl;
-		s_pInstance = new SDLRenderer();
+		s_pInstance = new Renderer();
 		return s_pInstance;
 	}
 	return s_pInstance;

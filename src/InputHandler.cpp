@@ -1,6 +1,6 @@
+#include "pch.h"
 #include "InputHandler.h"
 
-#include <iostream>
 
 #include "Game.h"
 

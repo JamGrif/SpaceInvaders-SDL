@@ -1,5 +1,7 @@
+#include "pch.h"
 #include "Enemy.h"
 
+#include "SDL.h"
 
 Enemy::Enemy(const LoaderParams* pParams)
 	:SDLGameObject(pParams)

@@ -1,9 +1,5 @@
 #pragma once
 
-#include "SDL.h"
-#include <string>
-#include <iostream>
-#include "TextureManager.h"
 
 class LoaderParams
 {
@@ -11,7 +7,6 @@ public:
 	LoaderParams(int x, int y, int width, int height, std::string textureID)
 		:m_x(x), m_y(y), m_width(width), m_height(height), m_textureID(textureID)
 	{
-
 	}
 
 	int getX() const { return m_x; }
@@ -31,6 +26,9 @@ private:
 	std::string m_textureID;
 };
 
+/// <summary>
+/// Enforces an interface for all SDLGameObject objects
+/// </summary>
 class GameObject
 {
 public:

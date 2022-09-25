@@ -1,8 +1,10 @@
 #include "Vector2D.h"
 
-Vector2D::Vector2D(float x, float y) :m_x(x), m_y(y)
-{
+#include <math.h>
 
+Vector2D::Vector2D(float x, float y)
+	:m_x(x), m_y(y)
+{
 }
 
 float Vector2D::getX()
@@ -27,7 +29,7 @@ void Vector2D::setY(float y)
 
 float Vector2D::length()
 {
-	return sqrt((m_x * m_x) + (m_y * m_y));
+	return static_cast<float>(sqrt((m_x * m_x) + (m_y * m_y)));
 }
 
 Vector2D Vector2D::operator+(const Vector2D& v2) const

@@ -1,7 +1,11 @@
+#include "pch.h"
 #include "MenuState.h"
 
+#include "GameStateMachine.h"
+#include "TextureManager.h"
+
 #include "Game.h"
-#include "SDLRenderer.h"
+#include "Renderer.h"
 #include "MenuButton.h"
 #include "PlayState.h"
 
@@ -39,10 +43,10 @@ void MenuState::render()
 
 bool MenuState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("res/sprites/button.png", "playbutton", TheRenderer::Instance()->getRendererPtr()))
+	if (!TheTextureManager::Instance()->load("res/sprites/button.png", "playbutton"))
 		return false;
 
-	if (!TheTextureManager::Instance()->load("res/sprites/exit.png", "exitbutton", TheRenderer::Instance()->getRendererPtr()))
+	if (!TheTextureManager::Instance()->load("res/sprites/exit.png", "exitbutton"))
 		return false;
 
 	GameObject* button1 = new MenuButton(new LoaderParams(100, 100, 400, 100, "playbutton"), s_menuToPlay);

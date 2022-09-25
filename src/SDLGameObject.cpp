@@ -1,7 +1,9 @@
+#include "pch.h"
 #include "SDLGameObject.h"
 
-
-#include "SDLRenderer.h"
+//#include "SDL.h"
+#include "TextureManager.h"
+#include "Renderer.h"
 
 SDLGameObject::SDLGameObject(const LoaderParams* pParams)
 	:GameObject(pParams), m_position(pParams->getX(), pParams->getY()), m_velocity(0, 0), m_acceleration(0,0)
@@ -19,11 +21,11 @@ void SDLGameObject::draw()
 {
 	if (m_velocity.getX() > 0)
 	{
-		TheTextureManager::Instance()->drawframe(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(), m_width, m_height, m_currentRow, m_currentFrame, TheRenderer::Instance()->getRendererPtr(), SDL_FLIP_HORIZONTAL);
+		TheTextureManager::Instance()->drawframe(m_textureID, static_cast<int>(m_position.getX()), static_cast<int>(m_position.getY()), m_width, m_height, m_currentRow, m_currentFrame, true);
 	}
 	else
 	{
-		TheTextureManager::Instance()->drawframe(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(), m_width, m_height, m_currentRow, m_currentFrame, TheRenderer::Instance()->getRendererPtr());
+		TheTextureManager::Instance()->drawframe(m_textureID, static_cast<int>(m_position.getX()), static_cast<int>(m_position.getY()), m_width, m_height, m_currentRow, m_currentFrame, false);
 	}
 }
 
