@@ -43,16 +43,10 @@ void Player::handleInput()
 {
 	constexpr int MOVEMENT_SPEED = 3;
 
-	Vector2D mousePos = TheInputHandler::Instance()->getMousePosition();
-
-	m_velocity = mousePos - m_position;
-	//m_velocity /= 50;
-	
-
-	if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT))
-	{
-		m_velocity.setX(-1);
-	}
+	//Vector2D mousePos = TheInputHandler::Instance()->getMousePosition();
+	//
+	//m_velocity = mousePos - m_position;
+	////m_velocity /= 50;
 
 	// Set velocity to a vector from the players current position to the mouse position. 
 	// Can get this vector by subtracting the desired location from the current location. 
@@ -60,10 +54,7 @@ void Player::handleInput()
 	//Vector2D vec = TheInputHandler::Instance()->getMousePosition();
 	//m_velocity = (vec - m_position) / 100; 
 
-	if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::RIGHT))
-	{
-		m_velocity.setX(1);
-	}
+	
 
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::RIGHT_ARROW))
 	{

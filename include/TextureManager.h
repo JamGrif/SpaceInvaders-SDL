@@ -12,11 +12,11 @@ struct SDL_Texture;
 class TextureManager
 {
 public:
-	bool load(std::string fileName, std::string id);
-	void clearFromTextureMap(std::string id);
+	bool load(const std::string& fileName, const std::string& id);
+	void clearFromTextureMap(const std::string& id);
 
-	void draw(std::string id, int x, int y, int width, int height, bool flipHorizontal);
-	void drawframe(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, bool flipHorizontal);
+	void draw(const std::string& id, int x, int y, int width, int height, bool flipHorizontal);
+	void drawframe(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame, bool flipHorizontal);
 
 	static TextureManager* Instance(); // Singleton
 private:

@@ -23,7 +23,7 @@ TextureManager* TextureManager::Instance()
 	return s_pInstance;
 }
 
-bool TextureManager::load(std::string fileName, std::string id)
+bool TextureManager::load(const std::string& fileName, const std::string& id)
 {
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 	if (!pTempSurface)
@@ -47,12 +47,12 @@ bool TextureManager::load(std::string fileName, std::string id)
 /// Remove the specified texture from the textureMap
 /// </summary>
 /// <param name="id"></param>
-void TextureManager::clearFromTextureMap(std::string id)
+void TextureManager::clearFromTextureMap(const std::string& id)
 {
 	m_textureMap.erase(id);
 }
 
-void TextureManager::draw(std::string id, int x, int y, int width, int height, bool flipHorizontal)
+void TextureManager::draw(const std::string& id, int x, int y, int width, int height, bool flipHorizontal)
 {
 	SDL_Rect srcRect;	// What part of the texture to use
 	SDL_Rect destRect;	// Where on the screen/window to draw it
@@ -70,7 +70,7 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height, b
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_textureMap[id], &srcRect, &destRect, 0, 0, temp);
 }
 
-void TextureManager::drawframe(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, bool flipHorizontal)
+void TextureManager::drawframe(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame, bool flipHorizontal)
 {
 	SDL_Rect srcRect;	// What part of the texture to use
 	SDL_Rect destRect;	// Where on the screen/window to draw it

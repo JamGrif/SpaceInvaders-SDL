@@ -11,12 +11,12 @@
 
 Game* Game::s_pInstance = 0;
 
-const int FPS = 60;
-const int DELAY_TIME = 1000.0f / FPS; // Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
+constexpr int FPS = 60;
+constexpr int DELAY_TIME = 1000.0f / FPS; // Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
 Uint32 frameStart, frameTime;
 
 Game::Game()
-	:m_bRunning(false)
+	:m_pGameStateMachine(nullptr), m_bRunning(false)
 {
 }
 
@@ -99,24 +99,19 @@ void Game::clean()
 	SDL_Quit();
 }
 
+/// <summary>
+/// Makes the game end at the start of the next frame
+/// </summary>
 void Game::quit()
 {
 	m_bRunning = false;
 }
 
-bool Game::getRunning()
-{
-	return m_bRunning;
-}
-
 Game* Game::Instance()
 {
-	std::cout << "got game instance" << std::endl;
-	if (s_pInstance == 0)
+	if (!s_pInstance)
 	{
-		std::cout << "Created new instance of game" << std::endl;
 		s_pInstance = new Game();
-		return s_pInstance;
 	}
 	return s_pInstance;
 }

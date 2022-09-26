@@ -1,12 +1,5 @@
 #pragma once
 
-//#include "SDL.h"
-//#include "TextureManager.h"
-//#include "Player.h"
-//#include "Enemy.h"
-
-//#include "SDLRenderer.h"
-
 // Forward Declaration
 class GameStateMachine;
 class GameObject;
@@ -24,7 +17,6 @@ public:
 	void clean();
 	void quit();
 
-	bool getRunning();
 	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 
 	static Game* Instance(); // Singleton

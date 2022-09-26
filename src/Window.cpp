@@ -33,9 +33,9 @@ void Window::clean()
 	SDL_DestroyWindow(m_pWindow);
 }
 
-void Window::setWindowIcon(const char* filepath)
+void Window::setWindowIcon(const std::string& filepath)
 {
-	SDL_Surface* tempSurface = SDL_LoadBMP(filepath);
+	SDL_Surface* tempSurface = SDL_LoadBMP(filepath.c_str());
 	SDL_SetWindowIcon(m_pWindow, tempSurface);
 	SDL_FreeSurface(tempSurface);
 }

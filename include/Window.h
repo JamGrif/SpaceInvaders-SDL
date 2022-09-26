@@ -13,7 +13,7 @@ public:
 	void init(int width, int height);
 	void clean();
 
-	inline void setWindowIcon(const char* filepath);
+	inline void setWindowIcon(const std::string& filepath);
 
 	SDL_Window* getWindowPtr() const;
 

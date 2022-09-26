@@ -14,6 +14,10 @@ public:
     virtual void update();
     virtual void clean();
 
+	Vector2D& getPosition() { return m_position; }
+	int getWidth() { return m_width; }
+	int getHeight() { return m_height; }
+
 protected:
 
     Vector2D m_position;

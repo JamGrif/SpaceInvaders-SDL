@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AnimatedGraphic.cpp" />
+    <ClCompile Include="src\GameOverState.cpp" />
+    <ClCompile Include="src\PauseState.cpp" />
     <ClCompile Include="src\MenuButton.cpp" />
     <ClCompile Include="src\GameStateMachine.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -48,6 +51,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\AnimatedGraphic.h" />
     <ClInclude Include="dependencies\SDL\include\begin_code.h" />
     <ClInclude Include="dependencies\SDL\include\close_code.h" />
     <ClInclude Include="dependencies\SDL\include\SDL.h" />
@@ -136,6 +140,7 @@
     <ClInclude Include="dependencies\SDL\include\SDL_version.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_video.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h" />
+    <ClInclude Include="include\GameOverState.h" />
     <ClInclude Include="include\GameStateMachine.h" />
     <ClInclude Include="include\GameState.h" />
     <ClInclude Include="include\Enemy.h" />
@@ -152,6 +157,7 @@
     <ClInclude Include="include\MenuState.h" />
     <ClInclude Include="include\PlayState.h" />
     <ClInclude Include="include\MenuButton.h" />
+    <ClInclude Include="include\PauseState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
