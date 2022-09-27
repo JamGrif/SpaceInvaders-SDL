@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AnimatedGraphic.cpp" />
+    <ClCompile Include="src\GameObjectFactory.cpp" />
     <ClCompile Include="src\GameOverState.cpp" />
     <ClCompile Include="src\PauseState.cpp" />
     <ClCompile Include="src\MenuButton.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="dependencies\SDL\include\SDL_version.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_video.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h" />
+    <ClInclude Include="include\GameObjectFactory.h" />
     <ClInclude Include="include\GameOverState.h" />
     <ClInclude Include="include\GameStateMachine.h" />
     <ClInclude Include="include\GameState.h" />
@@ -212,14 +214,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib\;$(SolutionDir)dependencies\SDL2\_image\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(SolutionDir)dependencies\tinyXML\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib\;$(SolutionDir)dependencies\SDL2\_image\lib\;$(SolutionDir)dependencies\tinyXML\src;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib\;$(SolutionDir)dependencies\SDL2\_image\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(SolutionDir)dependencies\tinyXML\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib\;$(SolutionDir)dependencies\SDL2\_image\lib\;$(SolutionDir)dependencies\tinyXML\src;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
