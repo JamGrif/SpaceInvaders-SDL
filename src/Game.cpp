@@ -7,7 +7,12 @@
 #include "Renderer.h"
 #include "InputHandler.h"
 
-#include "MenuState.h" // Default state on game load
+#include "GameObjectFactory.h"
+#include "MenuButton.h"
+#include "MainMenuState.h" 
+#include "Enemy.h"
+#include "Player.h"
+#include "AnimatedGraphic.h"
 
 Game* Game::s_pInstance = 0;
 
@@ -36,17 +41,17 @@ bool Game::init()
 	TheRenderer::Instance()->init();
 	if (!TheRenderer::Instance()->getStatus())
 		return false; // Renderer creation failed
-	
-	//if (!TheTextureManager::Instance()->load("res/sprites/animate-alpha.png", "animate", TheRenderer::Instance()->getRendererPtr()))
-	//	return false; // Texture failed to load
 
 	TheInputHandler::Instance()->init();
 
-	m_pGameStateMachine = new GameStateMachine();
-	m_pGameStateMachine->changeState(new MenuState());
+	TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
+	TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
+	TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
+	TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
 
-	//m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-	//m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
+	m_pGameStateMachine = new GameStateMachine();
+	m_pGameStateMachine->pushState(new MainMenuState());
+
 
 	m_bRunning = true;
 	return true;

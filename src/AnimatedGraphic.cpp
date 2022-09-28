@@ -3,8 +3,8 @@
 
 #include "SDL.h"
 
-AnimatedGraphic::AnimatedGraphic(const LoaderParams* pParams, int animSpeed)
-	:SDLGameObject(pParams), m_animSpeed(animSpeed)
+AnimatedGraphic::AnimatedGraphic(int animSpeed)
+	:SDLGameObject(), m_animSpeed(animSpeed)
 {
 
 }
@@ -23,4 +23,10 @@ void AnimatedGraphic::update()
 void AnimatedGraphic::clean()
 {
 
+}
+
+void AnimatedGraphic::load(const LoaderParams* pParams)
+{
+	SDLGameObject::load(pParams);
+	m_animSpeed = pParams->getAnimSpeed();
 }

@@ -1,7 +1,8 @@
 #pragma once
-#include "GameState.h"
+#include "MenuState.h"
+
 class GameOverState :
-    public GameState
+    public MenuState
 {
 public:
 	virtual void update();
@@ -11,6 +12,7 @@ public:
 	virtual bool onExit();
 
 	virtual std::string getStateID() const { return s_gameOverID; }
+	virtual void setCallbacks(const std::vector<Callback>& callbacks);
 private:
 	static const std::string s_gameOverID;
 

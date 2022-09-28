@@ -4,8 +4,8 @@
 
 #include "InputHandler.h"
 
-Player::Player(const LoaderParams* pParams)
-	:SDLGameObject(pParams)
+Player::Player()
+	:SDLGameObject()
 {
 
 }
@@ -37,6 +37,11 @@ void Player::update()
 
 void Player::clean()
 {
+}
+
+void Player::load(const LoaderParams* pParams)
+{
+	SDLGameObject::load(pParams);
 }
 
 void Player::handleInput()

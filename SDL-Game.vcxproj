@@ -19,6 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dependencies\tinyXML\src\tinystr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\tinyXML\src\tinyxml.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\tinyXML\src\tinyxmlerror.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\tinyXML\src\tinyxmlparser.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\AnimatedGraphic.cpp" />
     <ClCompile Include="src\GameObjectFactory.cpp" />
     <ClCompile Include="src\GameOverState.cpp" />
@@ -34,7 +51,7 @@
       </PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\PlayState.cpp" />
-    <ClCompile Include="src\MenuState.cpp" />
+    <ClCompile Include="src\MainMenuState.cpp" />
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -50,8 +67,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\StateParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\tinyXML\include\tinystr.h" />
+    <ClInclude Include="dependencies\tinyXML\include\tinyxml.h" />
     <ClInclude Include="include\AnimatedGraphic.h" />
     <ClInclude Include="dependencies\SDL\include\begin_code.h" />
     <ClInclude Include="dependencies\SDL\include\close_code.h" />
@@ -156,10 +176,12 @@
     <ClInclude Include="include\Renderer.h" />
     <ClInclude Include="include\Vector2D.h" />
     <ClInclude Include="include\InputHandler.h" />
-    <ClInclude Include="include\MenuState.h" />
+    <ClInclude Include="include\MainMenuState.h" />
     <ClInclude Include="include\PlayState.h" />
     <ClInclude Include="include\MenuButton.h" />
     <ClInclude Include="include\PauseState.h" />
+    <ClInclude Include="include\StateParser.h" />
+    <ClInclude Include="include\MenuState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -272,7 +294,7 @@
       <Command>xcopy $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)  /d 
 xcopy  $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir) /d 
 mkdir $(TargetDir)res
-xcopy  $(ProjectDir)res $(TargetDir)res /d /s </Command>
+xcopy  $(ProjectDir)res $(TargetDir)res /d /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -298,7 +320,7 @@ xcopy  $(ProjectDir)res $(TargetDir)res /d /s </Command>
       <Command>xcopy $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)  /d 
 xcopy  $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir) /d 
 mkdir $(TargetDir)res
-xcopy  $(ProjectDir)res $(TargetDir)res /d /s </Command>
+xcopy  $(ProjectDir)res $(TargetDir)res /d /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
