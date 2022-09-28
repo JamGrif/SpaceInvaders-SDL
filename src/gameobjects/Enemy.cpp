@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Enemy.h"
+#include "gameobjects/Enemy.h"
 
 #include "SDL.h"
 

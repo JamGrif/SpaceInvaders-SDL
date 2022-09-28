@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "TextureManager.h"
+#include "core/TextureManager.h"
 
-#include "Renderer.h"
+#include "core/Renderer.h"
 
 #include "SDL.h"
 #include "SDL_image.h"

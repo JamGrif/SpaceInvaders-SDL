@@ -1,18 +1,18 @@
 #include "pch.h"
-#include "Game.h"
+#include "core/Game.h"
 
-#include "GameStateMachine.h"
+#include "states/GameStateMachine.h"
 
-#include "Window.h"
-#include "Renderer.h"
-#include "InputHandler.h"
+#include "core/Window.h"
+#include "core/Renderer.h"
+#include "core/InputHandler.h"
 
-#include "GameObjectFactory.h"
-#include "MenuButton.h"
-#include "MainMenuState.h" 
-#include "Enemy.h"
-#include "Player.h"
-#include "AnimatedGraphic.h"
+#include "gameobjects/GameObjectFactory.h"
+#include "gameobjects/MenuButton.h"
+#include "states/MainMenuState.h" 
+#include "gameobjects/Enemy.h"
+#include "gameobjects/Player.h"
+#include "gameobjects/AnimatedGraphic.h"
 
 Game* Game::s_pInstance = 0;
 

@@ -15,70 +15,70 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="src\EntryPoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game.cpp">
+    <ClCompile Include="src\core\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextureManager.cpp">
+    <ClCompile Include="src\core\TextureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject.cpp">
+    <ClCompile Include="src\gameobjects\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player.cpp">
+    <ClCompile Include="src\gameobjects\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Enemy.cpp">
+    <ClCompile Include="src\gameobjects\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SDLGameObject.cpp">
+    <ClCompile Include="src\gameobjects\SDLGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
+    <ClCompile Include="src\core\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
+    <ClCompile Include="src\core\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vector2D.cpp">
+    <ClCompile Include="src\misc\Vector2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputHandler.cpp">
+    <ClCompile Include="src\core\InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameState.cpp">
+    <ClCompile Include="src\states\GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainMenuState.cpp">
+    <ClCompile Include="src\states\MainMenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayState.cpp">
+    <ClCompile Include="src\states\PlayState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameStateMachine.cpp">
+    <ClCompile Include="src\states\GameStateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuButton.cpp">
+    <ClCompile Include="src\gameobjects\MenuButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PauseState.cpp">
+    <ClCompile Include="src\states\PauseState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameOverState.cpp">
+    <ClCompile Include="src\states\GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AnimatedGraphic.cpp">
+    <ClCompile Include="src\gameobjects\AnimatedGraphic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjectFactory.cpp">
+    <ClCompile Include="src\gameobjects\GameObjectFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\StateParser.cpp">
+    <ClCompile Include="src\states\StateParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\tinyXML\src\tinyxmlparser.cpp">
@@ -93,12 +93,12 @@
     <ClCompile Include="dependencies\tinyXML\src\tinyxmlerror.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MenuState.cpp">
+    <ClCompile Include="src\states\MenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Game.h">
+    <ClInclude Include="include\core\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\SDL\include\begin_code.h">
@@ -365,64 +365,64 @@
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\TextureManager.h">
+    <ClInclude Include="include\core\TextureManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameObject.h">
+    <ClInclude Include="include\gameobjects\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Player.h">
+    <ClInclude Include="include\gameobjects\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Enemy.h">
+    <ClInclude Include="include\gameobjects\Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\SDLGameObject.h">
+    <ClInclude Include="include\gameobjects\SDLGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Window.h">
+    <ClInclude Include="include\core\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Renderer.h">
+    <ClInclude Include="include\core\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Vector2D.h">
+    <ClInclude Include="include\misc\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\InputHandler.h">
+    <ClInclude Include="include\core\InputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameState.h">
+    <ClInclude Include="include\states\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\MainMenuState.h">
+    <ClInclude Include="include\states\MainMenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PlayState.h">
+    <ClInclude Include="include\states\PlayState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameStateMachine.h">
+    <ClInclude Include="include\states\GameStateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\MenuButton.h">
+    <ClInclude Include="include\gameobjects\MenuButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PauseState.h">
+    <ClInclude Include="include\states\PauseState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameOverState.h">
+    <ClInclude Include="include\states\GameOverState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AnimatedGraphic.h">
+    <ClInclude Include="include\gameobjects\AnimatedGraphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameObjectFactory.h">
+    <ClInclude Include="include\gameobjects\GameObjectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\StateParser.h">
+    <ClInclude Include="include\states\StateParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\tinyXML\include\tinyxml.h">
@@ -431,7 +431,7 @@
     <ClInclude Include="dependencies\tinyXML\include\tinystr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\MenuState.h">
+    <ClInclude Include="include\states\MenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

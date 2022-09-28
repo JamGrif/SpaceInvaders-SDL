@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Renderer.h"
+#include "core/Renderer.h"
 
-#include "Window.h"
+#include "core/Window.h"
 
 #include "SDL.h"
 

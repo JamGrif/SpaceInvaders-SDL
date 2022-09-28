@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "MenuButton.h"
+#include "gameobjects/MenuButton.h"
 
-#include "InputHandler.h"
+#include "core/InputHandler.h"
 
 MenuButton::MenuButton()
 	:SDLGameObject(), m_bReleased(false), m_callback(0), m_callbackID(0)

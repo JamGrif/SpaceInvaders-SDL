@@ -5,7 +5,7 @@
 // Will register a new type with the factory using a function that takes a string (the ID) and a Creator class and adds them to the factory's map
 
 #include <map>
-#include "GameObject.h"
+#include "gameobjects/GameObject.h"
 
 class BaseCreator
 {

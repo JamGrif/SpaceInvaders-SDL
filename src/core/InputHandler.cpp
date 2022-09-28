@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "InputHandler.h"
+#include "core/InputHandler.h"
 
 
-#include "Game.h"
+#include "core/Game.h"
 
 InputHandler* InputHandler::s_pInstance;
 

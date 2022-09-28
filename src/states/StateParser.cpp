@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "StateParser.h"
+#include "states/StateParser.h"
 
-#include "TextureManager.h"
-#include "GameObjectFactory.h"
+#include "core/TextureManager.h"
+#include "gameobjects/GameObjectFactory.h"
 
 bool StateParser::parseState(const char* stateFile, std::string stateID, std::vector<GameObject*>* pObjects, std::vector<std::string>* pTextureIDs)
 {

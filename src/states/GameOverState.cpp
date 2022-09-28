@@ -1,15 +1,15 @@
 #include "pch.h"
-#include "GameOverState.h"
+#include "states/GameOverState.h"
 
-#include "Game.h"
-#include "GameStateMachine.h"
-#include "MenuState.h"
-#include "PlayState.h"
-#include "TextureManager.h"
-#include "AnimatedGraphic.h"
-#include "MainMenuState.h"
-#include "StateParser.h"
-#include "MenuButton.h"
+#include "core/Game.h"
+#include "states/GameStateMachine.h"
+#include "states/MenuState.h"
+#include "states/PlayState.h"
+#include "core/TextureManager.h"
+#include "gameobjects/AnimatedGraphic.h"
+#include "states/MainMenuState.h"
+#include "states/StateParser.h"
+#include "gameobjects/MenuButton.h"
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 

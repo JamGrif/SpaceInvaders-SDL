@@ -35,44 +35,42 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\MenuState.cpp" />
-    <ClCompile Include="src\AnimatedGraphic.cpp" />
-    <ClCompile Include="src\GameObjectFactory.cpp" />
-    <ClCompile Include="src\GameOverState.cpp" />
-    <ClCompile Include="src\PauseState.cpp" />
-    <ClCompile Include="src\MenuButton.cpp" />
-    <ClCompile Include="src\GameStateMachine.cpp" />
+    <ClCompile Include="src\states\MenuState.cpp" />
+    <ClCompile Include="src\gameobjects\AnimatedGraphic.cpp" />
+    <ClCompile Include="src\gameobjects\GameObjectFactory.cpp" />
+    <ClCompile Include="src\states\GameOverState.cpp" />
+    <ClCompile Include="src\states\PauseState.cpp" />
+    <ClCompile Include="src\gameobjects\MenuButton.cpp" />
+    <ClCompile Include="src\states\GameStateMachine.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\PlayState.cpp" />
-    <ClCompile Include="src\MainMenuState.cpp" />
-    <ClCompile Include="src\GameState.cpp" />
-    <ClCompile Include="src\InputHandler.cpp" />
-    <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\Window.cpp" />
-    <ClCompile Include="src\SDLGameObject.cpp" />
-    <ClCompile Include="src\Enemy.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\Vector2D.cpp">
+    <ClCompile Include="src\states\PlayState.cpp" />
+    <ClCompile Include="src\states\MainMenuState.cpp" />
+    <ClCompile Include="src\states\GameState.cpp" />
+    <ClCompile Include="src\core\InputHandler.cpp" />
+    <ClCompile Include="src\core\Renderer.cpp" />
+    <ClCompile Include="src\core\Window.cpp" />
+    <ClCompile Include="src\gameobjects\SDLGameObject.cpp" />
+    <ClCompile Include="src\gameobjects\Enemy.cpp" />
+    <ClCompile Include="src\gameobjects\Player.cpp" />
+    <ClCompile Include="src\gameobjects\GameObject.cpp" />
+    <ClCompile Include="src\core\Game.cpp" />
+    <ClCompile Include="src\EntryPoint.cpp" />
+    <ClCompile Include="src\core\TextureManager.cpp" />
+    <ClCompile Include="src\misc\Vector2D.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\StateParser.cpp" />
+    <ClCompile Include="src\states\StateParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\tinyXML\include\tinystr.h" />
     <ClInclude Include="dependencies\tinyXML\include\tinyxml.h" />
-    <ClInclude Include="include\AnimatedGraphic.h" />
+    <ClInclude Include="include\gameobjects\AnimatedGraphic.h" />
     <ClInclude Include="dependencies\SDL\include\begin_code.h" />
     <ClInclude Include="dependencies\SDL\include\close_code.h" />
     <ClInclude Include="dependencies\SDL\include\SDL.h" />
@@ -161,27 +159,27 @@
     <ClInclude Include="dependencies\SDL\include\SDL_version.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_video.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h" />
-    <ClInclude Include="include\GameObjectFactory.h" />
-    <ClInclude Include="include\GameOverState.h" />
-    <ClInclude Include="include\GameStateMachine.h" />
-    <ClInclude Include="include\GameState.h" />
-    <ClInclude Include="include\Enemy.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\gameobjects\GameObjectFactory.h" />
+    <ClInclude Include="include\states\GameOverState.h" />
+    <ClInclude Include="include\states\GameStateMachine.h" />
+    <ClInclude Include="include\states\GameState.h" />
+    <ClInclude Include="include\gameobjects\Enemy.h" />
+    <ClInclude Include="include\gameobjects\GameObject.h" />
+    <ClInclude Include="include\core\Game.h" />
     <ClInclude Include="include\pch.h" />
-    <ClInclude Include="include\TextureManager.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\SDLGameObject.h" />
-    <ClInclude Include="include\Window.h" />
-    <ClInclude Include="include\Renderer.h" />
-    <ClInclude Include="include\Vector2D.h" />
-    <ClInclude Include="include\InputHandler.h" />
-    <ClInclude Include="include\MainMenuState.h" />
-    <ClInclude Include="include\PlayState.h" />
-    <ClInclude Include="include\MenuButton.h" />
-    <ClInclude Include="include\PauseState.h" />
-    <ClInclude Include="include\StateParser.h" />
-    <ClInclude Include="include\MenuState.h" />
+    <ClInclude Include="include\core\TextureManager.h" />
+    <ClInclude Include="include\gameobjects\Player.h" />
+    <ClInclude Include="include\gameobjects\SDLGameObject.h" />
+    <ClInclude Include="include\core\Window.h" />
+    <ClInclude Include="include\core\Renderer.h" />
+    <ClInclude Include="include\misc\Vector2D.h" />
+    <ClInclude Include="include\core\InputHandler.h" />
+    <ClInclude Include="include\states\MainMenuState.h" />
+    <ClInclude Include="include\states\PlayState.h" />
+    <ClInclude Include="include\gameobjects\MenuButton.h" />
+    <ClInclude Include="include\states\PauseState.h" />
+    <ClInclude Include="include\states\StateParser.h" />
+    <ClInclude Include="include\states\MenuState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

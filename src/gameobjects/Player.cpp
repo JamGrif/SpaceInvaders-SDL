@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "Player.h"
+#include "gameobjects/Player.h"
 
 
-#include "InputHandler.h"
+#include "core/InputHandler.h"
 
 Player::Player()
 	:SDLGameObject()

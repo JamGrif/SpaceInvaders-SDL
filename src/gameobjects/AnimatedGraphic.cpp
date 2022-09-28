@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "AnimatedGraphic.h"
+#include "gameobjects/AnimatedGraphic.h"
 
 #include "SDL.h"
 

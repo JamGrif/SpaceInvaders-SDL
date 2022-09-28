@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "GameObjectFactory.h"
+#include "gameobjects/GameObjectFactory.h"
 
 //GameObjectFactory* GameObjectFactory::s_pInstance = nullptr;
 GameObjectFactory* GameObjectFactory::s_pInstance = 0;

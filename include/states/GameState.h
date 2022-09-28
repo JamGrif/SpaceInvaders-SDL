@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "gameobjects/GameObject.h"
 
 /// <summary>
 /// Base class for the game state Finite State Machine

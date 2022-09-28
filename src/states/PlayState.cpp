@@ -1,16 +1,16 @@
 #include "pch.h"
-#include "PlayState.h"
+#include "states/PlayState.h"
 
-#include "TextureManager.h"
-#include "Renderer.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "PauseState.h"
-#include "Game.h"
-#include "InputHandler.h"
-#include "GameStateMachine.h"
-#include "GameOverState.h"
-#include "StateParser.h"
+#include "core/TextureManager.h"
+#include "core/Renderer.h"
+#include "gameobjects/Player.h"
+#include "gameobjects/Enemy.h"
+#include "states/PauseState.h"
+#include "core/Game.h"
+#include "core/InputHandler.h"
+#include "states/GameStateMachine.h"
+#include "states/GameOverState.h"
+#include "states/StateParser.h"
 
 const std::string PlayState::s_playID = "PLAY";
 

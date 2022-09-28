@@ -1,15 +1,15 @@
 #include "pch.h"
-#include "MainMenuState.h"
+#include "states/MainMenuState.h"
 
-#include "GameStateMachine.h"
-#include "TextureManager.h"
+#include "states/GameStateMachine.h"
+#include "core/TextureManager.h"
 
-#include "Game.h"
-#include "Renderer.h"
-#include "MenuButton.h"
-#include "PlayState.h"
+#include "core/Game.h"
+#include "core/Renderer.h"
+#include "gameobjects/MenuButton.h"
+#include "states/PlayState.h"
 
-#include "StateParser.h"
+#include "states/StateParser.h"
 
 const std::string MainMenuState::s_menuID = "MENU";
 

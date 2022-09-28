@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "PauseState.h"
+#include "states/PauseState.h"
 
-#include "Game.h"
-#include "GameStateMachine.h"
-#include "MenuState.h"
-#include "TextureManager.h"
-#include "MainMenuState.h"
-#include "StateParser.h"
-#include "MenuButton.h"
+#include "core/Game.h"
+#include "states/GameStateMachine.h"
+#include "states/MenuState.h"
+#include "core/TextureManager.h"
+#include "states/MainMenuState.h"
+#include "states/StateParser.h"
+#include "gameobjects/MenuButton.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
 
