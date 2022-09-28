@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "gameobjects/Player.h"
 
-
 #include "core/InputHandler.h"
 
 Player::Player()

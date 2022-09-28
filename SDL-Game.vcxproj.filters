@@ -57,7 +57,7 @@
     <ClCompile Include="src\states\PlayState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\states\GameStateMachine.cpp">
+    <ClCompile Include="src\states\utility\GameStateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gameobjects\MenuButton.cpp">
@@ -75,10 +75,10 @@
     <ClCompile Include="src\gameobjects\AnimatedGraphic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\GameObjectFactory.cpp">
+    <ClCompile Include="src\gameobjects\utility\GameObjectFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\states\StateParser.cpp">
+    <ClCompile Include="src\states\utility\StateParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\tinyXML\src\tinyxmlparser.cpp">
@@ -401,7 +401,7 @@
     <ClInclude Include="include\states\PlayState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\states\GameStateMachine.h">
+    <ClInclude Include="include\states\utility\GameStateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gameobjects\MenuButton.h">
@@ -419,10 +419,10 @@
     <ClInclude Include="include\gameobjects\AnimatedGraphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gameobjects\GameObjectFactory.h">
+    <ClInclude Include="include\gameobjects\utility\GameObjectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\states\StateParser.h">
+    <ClInclude Include="include\states\utility\StateParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\tinyXML\include\tinyxml.h">

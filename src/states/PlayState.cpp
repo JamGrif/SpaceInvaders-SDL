@@ -1,16 +1,17 @@
 #include "pch.h"
 #include "states/PlayState.h"
 
+#include "core/Game.h"
 #include "core/TextureManager.h"
 #include "core/Renderer.h"
+#include "core/InputHandler.h"
 #include "gameobjects/Player.h"
 #include "gameobjects/Enemy.h"
+#include "gameobjects/GameObject.h"
 #include "states/PauseState.h"
-#include "core/Game.h"
-#include "core/InputHandler.h"
-#include "states/GameStateMachine.h"
 #include "states/GameOverState.h"
-#include "states/StateParser.h"
+#include "states/utility/GameStateMachine.h"
+#include "states/utility/StateParser.h"
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -82,10 +83,10 @@ bool PlayState::onExit()
 
 bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 {
-	int leftA, leftB;
-	int rightA, rightB;
-	int topA, topB;
-	int bottomA, bottomB;
+	float leftA, leftB;
+	float rightA, rightB;
+	float topA, topB;
+	float bottomA, bottomB;
 
 	// Calculate the sides of p1
 	leftA = p1->getPosition().getX();

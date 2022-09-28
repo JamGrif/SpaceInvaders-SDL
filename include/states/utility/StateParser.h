@@ -1,8 +1,7 @@
 #pragma once
 
-#include "tinyxml.h"
-
 class GameObject;
+class TiXmlElement;
 
 class StateParser
 {

@@ -1,5 +1,7 @@
 #include "pch.h"
-#include "states/GameStateMachine.h"
+#include "states/utility/GameStateMachine.h"
+
+#include "states/GameState.h"
 
 /// <summary>
 /// Run the update function of the currently selected state

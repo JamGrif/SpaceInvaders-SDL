@@ -1,6 +1,8 @@
 #pragma once
 #include "MenuState.h"
 
+class GameObject;
+
 class GameOverState :
     public MenuState
 {

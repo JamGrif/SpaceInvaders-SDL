@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "core/InputHandler.h"
 
-
 #include "core/Game.h"
 
-InputHandler* InputHandler::s_pInstance;
+InputHandler* InputHandler::s_pInstance = nullptr;
 
 void InputHandler::init()
 {
@@ -112,8 +111,8 @@ void InputHandler::onKeyUp()
 
 void InputHandler::onMouseMove(SDL_Event& event)
 {
-	m_mousePosition.setX(event.motion.x);
-	m_mousePosition.setY(event.motion.y);
+	m_mousePosition.setX(static_cast<float>(event.motion.x));
+	m_mousePosition.setY(static_cast<float>(event.motion.y));
 }
 
 void InputHandler::onMouseButtonDown(SDL_Event& event)

@@ -1,8 +1,6 @@
 #pragma once
 #include "SDLGameObject.h"
 
-#include "GameObjectFactory.h"
-
 class Enemy :
     public SDLGameObject
 {

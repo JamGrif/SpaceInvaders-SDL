@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "core/TextureManager.h"
 
-#include "core/Renderer.h"
-
 #include "SDL.h"
 #include "SDL_image.h"
+
+#include "core/Renderer.h"
 
 TextureManager* TextureManager::s_pInstance = nullptr;
 

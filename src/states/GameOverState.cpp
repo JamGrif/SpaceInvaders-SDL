@@ -2,14 +2,15 @@
 #include "states/GameOverState.h"
 
 #include "core/Game.h"
-#include "states/GameStateMachine.h"
+#include "core/TextureManager.h"
+#include "gameobjects/MenuButton.h"
+#include "gameobjects/GameObject.h"
+#include "gameobjects/AnimatedGraphic.h"
 #include "states/MenuState.h"
 #include "states/PlayState.h"
-#include "core/TextureManager.h"
-#include "gameobjects/AnimatedGraphic.h"
 #include "states/MainMenuState.h"
-#include "states/StateParser.h"
-#include "gameobjects/MenuButton.h"
+#include "states/utility/GameStateMachine.h"
+#include "states/utility/StateParser.h"
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 

@@ -1,23 +1,21 @@
 #include "pch.h"
 #include "core/Game.h"
 
-#include "states/GameStateMachine.h"
-
 #include "core/Window.h"
 #include "core/Renderer.h"
 #include "core/InputHandler.h"
-
-#include "gameobjects/GameObjectFactory.h"
 #include "gameobjects/MenuButton.h"
-#include "states/MainMenuState.h" 
 #include "gameobjects/Enemy.h"
 #include "gameobjects/Player.h"
 #include "gameobjects/AnimatedGraphic.h"
+#include "gameobjects/utility/GameObjectFactory.h"
+#include "states/MainMenuState.h" 
+#include "states/utility/GameStateMachine.h"
 
-Game* Game::s_pInstance = 0;
+Game* Game::s_pInstance = nullptr;
 
 constexpr int FPS = 60;
-constexpr int DELAY_TIME = 1000.0f / FPS; // Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
+constexpr int DELAY_TIME = static_cast<int>(1000.0f/FPS); // Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
 Uint32 frameStart, frameTime;
 
 Game::Game()

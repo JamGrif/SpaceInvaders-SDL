@@ -1,8 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-//#include "SDL.h"
-
+#include "utility/GameObjectFactory.h"
 
 class SDLGameObject :
     public GameObject

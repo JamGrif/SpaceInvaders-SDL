@@ -1,8 +1,7 @@
 #pragma once
 #include "SDLGameObject.h"
 
-#include "GameObjectFactory.h"
-#include "GameObjectFactory.h"
+
 class AnimatedGraphic :
     public SDLGameObject
 {

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "GameState.h"
-
+class GameState;
 
 /// <summary>
 /// Finite State Machine to handle the game states

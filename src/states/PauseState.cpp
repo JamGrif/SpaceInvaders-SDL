@@ -2,12 +2,12 @@
 #include "states/PauseState.h"
 
 #include "core/Game.h"
-#include "states/GameStateMachine.h"
-#include "states/MenuState.h"
 #include "core/TextureManager.h"
-#include "states/MainMenuState.h"
-#include "states/StateParser.h"
 #include "gameobjects/MenuButton.h"
+#include "states/MenuState.h"
+#include "states/MainMenuState.h"
+#include "states/utility/GameStateMachine.h"
+#include "states/utility/StateParser.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
 

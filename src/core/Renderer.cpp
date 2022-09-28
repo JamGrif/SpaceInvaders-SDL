@@ -1,14 +1,13 @@
 #include "pch.h"
 #include "core/Renderer.h"
 
-#include "core/Window.h"
-
 #include "SDL.h"
 
-
-static int backgroundColour[3] = { 255, 100, 75 };
+#include "core/Window.h"
 
 Renderer* Renderer::s_pInstance = nullptr;
+
+static int backgroundColour[3] = { 255, 100, 75 };
 
 Renderer::Renderer()
 	:m_pRenderer(nullptr), m_bStatus(false)

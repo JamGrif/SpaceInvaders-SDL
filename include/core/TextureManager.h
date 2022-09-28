@@ -1,8 +1,6 @@
 #pragma once
 
 
-#include <map>
-
 // Forward Declaration
 struct SDL_Renderer;
 struct SDL_Texture;

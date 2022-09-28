@@ -37,11 +37,11 @@
     </ClCompile>
     <ClCompile Include="src\states\MenuState.cpp" />
     <ClCompile Include="src\gameobjects\AnimatedGraphic.cpp" />
-    <ClCompile Include="src\gameobjects\GameObjectFactory.cpp" />
+    <ClCompile Include="src\gameobjects\utility\GameObjectFactory.cpp" />
     <ClCompile Include="src\states\GameOverState.cpp" />
     <ClCompile Include="src\states\PauseState.cpp" />
     <ClCompile Include="src\gameobjects\MenuButton.cpp" />
-    <ClCompile Include="src\states\GameStateMachine.cpp" />
+    <ClCompile Include="src\states\utility\GameStateMachine.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
@@ -65,7 +65,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\states\StateParser.cpp" />
+    <ClCompile Include="src\states\utility\StateParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\tinyXML\include\tinystr.h" />
@@ -159,9 +159,9 @@
     <ClInclude Include="dependencies\SDL\include\SDL_version.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_video.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h" />
-    <ClInclude Include="include\gameobjects\GameObjectFactory.h" />
+    <ClInclude Include="include\gameobjects\utility\GameObjectFactory.h" />
     <ClInclude Include="include\states\GameOverState.h" />
-    <ClInclude Include="include\states\GameStateMachine.h" />
+    <ClInclude Include="include\states\utility\GameStateMachine.h" />
     <ClInclude Include="include\states\GameState.h" />
     <ClInclude Include="include\gameobjects\Enemy.h" />
     <ClInclude Include="include\gameobjects\GameObject.h" />
@@ -178,7 +178,7 @@
     <ClInclude Include="include\states\PlayState.h" />
     <ClInclude Include="include\gameobjects\MenuButton.h" />
     <ClInclude Include="include\states\PauseState.h" />
-    <ClInclude Include="include\states\StateParser.h" />
+    <ClInclude Include="include\states\utility\StateParser.h" />
     <ClInclude Include="include\states\MenuState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

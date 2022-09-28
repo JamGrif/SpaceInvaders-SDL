@@ -3,7 +3,6 @@
 
 #include "SDL.h"
 
-
 Window* Window::s_pInstance = nullptr;
 
 Window::Window()
