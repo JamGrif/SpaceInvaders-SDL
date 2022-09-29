@@ -3,6 +3,7 @@
 
 class GameObject;
 class SDLGameObject;
+class Level;
 
 class PlayState :
     public GameState
@@ -23,5 +24,7 @@ private:
 	static const std::string s_playID;
 
 	std::vector<GameObject*> m_gameObjects;
+
+	Level* pLevel;
 };
 

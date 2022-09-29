@@ -15,6 +15,7 @@ public:
 
 	void draw(const std::string& id, int x, int y, int width, int height, bool flipHorizontal);
 	void drawframe(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame, bool flipHorizontal);
+	void drawTile(std::string id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame);
 
 	static TextureManager* Instance(); // Singleton
 private:

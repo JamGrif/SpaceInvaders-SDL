@@ -13,15 +13,13 @@
 #include "states/utility/GameStateMachine.h"
 #include "states/utility/StateParser.h"
 
+#include "Level.h"
+#include "LevelParser.h"
+
 const std::string PlayState::s_playID = "PLAY";
 
 void PlayState::update()
 {
-	//for (int i = 0; i < m_gameObjects.size(); i++)
-	//{
-	//	m_gameObjects[i]->update();
-	//}
-
 	// If esc is pressed then push PauseState into the FSM
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ESC))
 	{
@@ -32,25 +30,24 @@ void PlayState::update()
 	{
 		o->update();
 	}
+	
+	//// dynamic_cast to cast the GameObject* class to an SDLGameObject* class
+	//if (checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]), dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
+	//{
+	//	TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
+	//}
 
-	// dynamic_cast to cast the GameObject* class to an SDLGameObject* class
-	if (checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]), dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
-	{
-		TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
-	}
+	pLevel->update();
 }
 
 void PlayState::render()
 {
-	//for (int i = 0; i < m_gameObjects.size(); i++)
-	//{
-	//	m_gameObjects[i]->draw();
-	//}
-
 	for (auto o : m_gameObjects)
 	{
 		o->draw();
 	}
+
+	pLevel->render();
 }
 
 bool PlayState::onEnter()
@@ -58,6 +55,9 @@ bool PlayState::onEnter()
 	// Parse the state
 	StateParser stateParser;
 	stateParser.parseState("res/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+
+	LevelParser levelParser;
+	pLevel = levelParser.parseLevel("map1.tmx");
 
 
 	std::cout << "Entering PlayState" << std::endl;
