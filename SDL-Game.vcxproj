@@ -39,6 +39,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\ObjectLayer.cpp" />
     <ClCompile Include="src\LevelParser.cpp" />
     <ClCompile Include="src\Layer.cpp" />
     <ClCompile Include="src\Level.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="include\Layer.h" />
     <ClInclude Include="include\LevelParser.h" />
     <ClInclude Include="include\TileLayer.h" />
+    <ClInclude Include="include\ObjectLayer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

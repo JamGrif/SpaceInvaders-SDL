@@ -7,7 +7,7 @@
 
 Renderer* Renderer::s_pInstance = nullptr;
 
-static int backgroundColour[3] = { 255, 100, 75 };
+static int backgroundColour[3] = { 150, 150, 255 };
 
 Renderer::Renderer()
 	:m_pRenderer(nullptr), m_bStatus(false)

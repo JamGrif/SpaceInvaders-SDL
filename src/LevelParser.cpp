@@ -4,8 +4,11 @@
 #include "tinyxml.h"
 #include "Level.h"
 #include "core/TextureManager.h"
+#include "gameobjects/utility/GameObjectFactory.h"
 
 #include "TileLayer.h"
+#include "ObjectLayer.h"
+#include "gameobjects/GameObject.h"
 
 #include "base64.h"
 #include "zlib.h"
@@ -32,6 +35,18 @@ Level* LevelParser::parseLevel(const char* levelFile)
 	pRoot->Attribute("width", &m_width);
 	pRoot->Attribute("height", &m_height);
 
+	// Know that properties is the first child of the root
+	TiXmlElement* pProperties = pRoot->FirstChildElement();
+
+	// Parse the textures needed for this level, which has been added to properties
+	for (TiXmlElement* e = pProperties->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	{
+		if (e->Value() == std::string("property"))
+		{
+			parseTextures(e);
+		}
+	}
+
 	// Parse the tileset
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
@@ -44,12 +59,20 @@ Level* LevelParser::parseLevel(const char* levelFile)
 	// Parse any object layers
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("layer"))
+		if (e->Value() == std::string("objectgroup") || e->Value() == std::string("layer"))
 		{
-			parseTileLayer(e, pLevel->getLayers(), pLevel->getTilesets());
+			if (e->FirstChildElement()->Value() == std::string("object"))
+			{
+				parseObjectLayer(e, pLevel->getLayers());
+			}
+			else if (e->FirstChildElement()->Value() == std::string("data"))
+			{
+				parseTileLayer(e, pLevel->getLayers(), pLevel->getTilesets());
+			}
 		}
 	}
 
+	
 	return pLevel;
 }
 
@@ -134,7 +157,90 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
 		}
 	}
 
+	
+
 	// Finally, set this layers tile data and then push the layer into the layers array of the Level
 	pTileLayer->setTileIDs(data);
 	pLayers->push_back(pTileLayer);
+}
+
+// Gets the texture values from the xml file and adds them to TextureManager
+void LevelParser::parseTextures(TiXmlElement* pTextureRoot)
+{
+	TheTextureManager::Instance()->load(pTextureRoot->Attribute("value"), pTextureRoot->Attribute("name"));
+}
+
+
+void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Layer*>* pLayers)
+{
+	// Create an object layer
+	ObjectLayer* pObjectLayer = new ObjectLayer();
+
+	//std::cout << pObjectElement->FirstChildElement()->Value() << std::endl;;
+
+	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	{
+		
+		//std::cout << e->Value() << std::endl;
+		if (e->Value() == std::string("object"))
+		{
+			
+			int x, y, width, height, numFrames, callbackID, animSpeed;
+			std::string textureID;
+
+			// Get the initial node values type, x and y
+			e->Attribute("x", &x);
+			e->Attribute("y", &y);
+
+			GameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class")); // ----
+
+			// Get the property values
+			for (TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
+			{
+				if (properties->Value() == std::string("properties"))
+				{
+					for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+					{
+						if (property->Value() == std::string("property"))
+						{
+							if (property->Attribute("name") == std::string("numFrames")) // Check for the name of the property rather than grabbing the attribute directly
+							{
+								property->Attribute("value", &numFrames);
+							}
+							else if (property->Attribute("name") == std::string("textureHeight"))
+							{
+								property->Attribute("value", &height);
+							}
+							else if (property->Attribute("name") == std::string("textureID"))
+							{
+								textureID = property->Attribute("value");
+							}
+							else if (property->Attribute("name") == std::string("textureWidth"))
+							{
+								property->Attribute("value", &width);
+							}
+							else if (property->Attribute("name") == std::string("callbackID"))
+							{
+								property->Attribute("value", &callbackID);
+							}
+							else if (e->Attribute("name") == std::string("animSpeed"))
+							{
+								property->Attribute("value", &animSpeed);
+							}
+						}
+					}
+				}
+			}
+			
+			// Create the object just like the state parser
+			pGameObject->load(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed));
+
+			// Add it to this layers game object array
+			pObjectLayer->getGameObjects()->push_back(pGameObject);
+		}
+	}
+
+	// Once loaded all the objects for this layer, we can push it into our level layer array
+	pLayers->push_back(pObjectLayer);
+	
 }

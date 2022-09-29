@@ -17,6 +17,7 @@ void TileLayer::update()
 {
 	// Uses velocity to set the maps position
 	m_position += m_velocity;
+	//m_velocity.setX(1);
 }
 
 void TileLayer::render()
@@ -35,7 +36,7 @@ void TileLayer::render()
 		for (int j = 0; j < m_numColumns; j++)
 		{
 			// Get current tile ID from the array
-			int id = m_tileIDs[i][j] + x;
+			int id = m_tileIDs[i + y][j + x];
 
 			if (id == 0)
 				continue;

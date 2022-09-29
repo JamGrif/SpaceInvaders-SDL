@@ -111,6 +111,9 @@
     <ClCompile Include="dependencies\Base64\src\base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObjectLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\Game.h">
@@ -462,6 +465,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\Base64\include\base64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ObjectLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

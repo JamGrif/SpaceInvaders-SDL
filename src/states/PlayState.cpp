@@ -52,15 +52,15 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
+	std::cout << "Entering PlayState" << std::endl;
 	// Parse the state
-	StateParser stateParser;
-	stateParser.parseState("res/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+	//StateParser stateParser;
+	//stateParser.parseState("res/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
 
 	LevelParser levelParser;
 	pLevel = levelParser.parseLevel("map1.tmx");
 
-
-	std::cout << "Entering PlayState" << std::endl;
+	std::cout << "Entering PlayState2" << std::endl;
 	return true;
 }
 
