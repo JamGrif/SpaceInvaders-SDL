@@ -88,7 +88,7 @@ void TextureManager::drawframe(const std::string& id, int x, int y, int width, i
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_textureMap[id], &srcRect, &destRect, 0, 0, temp);
 }
 
-void TextureManager::drawTile(std::string id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame)
+void TextureManager::drawTile(const std::string& id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame)
 {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;

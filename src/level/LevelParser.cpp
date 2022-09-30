@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "level/LevelParser.h"
 
-#include "tinyxml.h"
+#include "tinyXML/tinyxml.h"
 #include "level/Level.h"
 #include "core/TextureManager.h"
 #include "gameobjects/utility/GameObjectFactory.h"
@@ -10,9 +10,9 @@
 #include "level/ObjectLayer.h"
 #include "gameobjects/GameObject.h"
 
-#include "base64.h"
-#include "zlib.h"
-#include "zconf.h"
+#include "Base64/base64.h"
+#include "zlib/zlib.h"
+#include "zlib/zconf.h"
 
 Level* LevelParser::parseLevel(const char* levelFile)
 {

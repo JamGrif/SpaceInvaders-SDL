@@ -2,28 +2,26 @@
 
 // Forward Declaration
 class GameStateMachine;
-class GameObject;
 
 class Game
 {
 public:
 	bool init();
 	void loop();
+	void clean();
 
 	void render();
 	void update();
 	void handleEvents();
-	void clean();
+
 	void quit();
 
-	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
+	GameStateMachine* getStateMachine();
 
 	static Game* Instance(); // Singleton
 private:
 	Game();
 	static Game* s_pInstance;
-
-	std::vector<GameObject*> m_gameObjects;
 
 	GameStateMachine* m_pGameStateMachine;
 

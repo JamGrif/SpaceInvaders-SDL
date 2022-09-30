@@ -98,11 +98,16 @@ void Game::clean()
 }
 
 /// <summary>
-/// Makes the game end at the start of the next frame
+/// Sets the game to end at the start of next frame
 /// </summary>
 void Game::quit()
 {
 	m_bRunning = false;
+}
+
+GameStateMachine* Game::getStateMachine()
+{
+	return m_pGameStateMachine;
 }
 
 Game* Game::Instance()

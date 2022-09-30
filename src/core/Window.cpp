@@ -32,7 +32,10 @@ void Window::clean()
 void Window::setWindowIcon(const std::string& filepath)
 {
 	SDL_Surface* tempSurface = SDL_LoadBMP(filepath.c_str());
-	SDL_SetWindowIcon(m_pWindow, tempSurface);
+
+	if (tempSurface)
+		SDL_SetWindowIcon(m_pWindow, tempSurface);
+
 	SDL_FreeSurface(tempSurface);
 }
 
@@ -54,9 +57,7 @@ int Window::getWindowHeight() const
 Window* Window::Instance()
 {
 	if (!s_pInstance)
-	{
 		s_pInstance = new Window();
-		return s_pInstance;
-	}
+	
 	return s_pInstance;
 }
