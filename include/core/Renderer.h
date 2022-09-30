@@ -10,7 +10,7 @@ struct SDL_Renderer;
 class Renderer
 {
 public:
-	void init();
+	bool init();
 	void clean();
 
 	void startOfFrame();
@@ -19,16 +19,12 @@ public:
 
 	SDL_Renderer* getRendererPtr() const;
 
-	bool getStatus() const;
-
 	static Renderer* Instance(); // Singleton
 private:
 	Renderer();
 	static Renderer* s_pInstance;
 
 	SDL_Renderer* m_pRenderer;
-
-	bool m_bStatus;
 };
 typedef Renderer TheRenderer;
 

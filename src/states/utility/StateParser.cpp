@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "states/utility/StateParser.h"
 
-#include "tinyxml.h"
+#include "tinyXML/tinyxml.h"
 
 #include "core/TextureManager.h"
 #include "gameobjects/GameObject.h"

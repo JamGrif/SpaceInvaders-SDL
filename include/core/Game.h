@@ -7,7 +7,6 @@ class GameObject;
 class Game
 {
 public:
-
 	bool init();
 	void loop();
 

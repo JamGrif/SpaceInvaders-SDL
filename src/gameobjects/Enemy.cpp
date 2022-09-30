@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "gameobjects/Enemy.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 Enemy::Enemy()
 	:SDLGameObject()

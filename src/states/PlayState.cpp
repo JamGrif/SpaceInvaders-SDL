@@ -13,8 +13,8 @@
 #include "states/utility/GameStateMachine.h"
 #include "states/utility/StateParser.h"
 
-#include "Level.h"
-#include "LevelParser.h"
+#include "level/Level.h"
+#include "level/LevelParser.h"
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -60,7 +60,6 @@ bool PlayState::onEnter()
 	LevelParser levelParser;
 	pLevel = levelParser.parseLevel("map1.tmx");
 
-	std::cout << "Entering PlayState2" << std::endl;
 	return true;
 }
 

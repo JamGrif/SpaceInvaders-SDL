@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "core/TextureManager.h"
 
-#include "SDL.h"
-#include "SDL_image.h"
+#include "SDL2/SDL.h"
+#include "SDL2_image/SDL_image.h"
 
 #include "core/Renderer.h"
 

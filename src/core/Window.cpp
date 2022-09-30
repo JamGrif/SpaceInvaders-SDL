@@ -1,30 +1,27 @@
 #include "pch.h"
 #include "core/Window.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 Window* Window::s_pInstance = nullptr;
 
 Window::Window()
-	:m_pWindow(nullptr), m_windowWidth(0), m_windowHeight(0), m_bStatus(false)
+	:m_pWindow(nullptr), m_windowWidth(0), m_windowHeight(0)
 {	
 }
 
-void Window::init(int width, int height)
+bool Window::init(std::string windowTitle, int width, int height)
 {
-	m_pWindow = SDL_CreateWindow("Jamie", 100, 100, width, height, NULL);
+	m_pWindow = SDL_CreateWindow(windowTitle.c_str(), 100, 100, width, height, NULL);
 	if (!m_pWindow)
-	{
-		m_bStatus = false;
-		return;
-	}
+		return false;
 
 	setWindowIcon("res/misc/icon.bmp");
 
 	m_windowWidth = width;
 	m_windowHeight = height;
 
-	m_bStatus = true;
+	return true;
 }
 
 void Window::clean()
@@ -52,11 +49,6 @@ int Window::getWindowWidth() const
 int Window::getWindowHeight() const
 {
 	return m_windowHeight;
-}
-
-bool Window::getStatus() const
-{
-	return m_bStatus;
 }
 
 Window* Window::Instance()

@@ -32,14 +32,12 @@ bool Game::init()
 		return false;
 	}
 
-	TheWindow::Instance()->init(640, 480);
-	if (!TheWindow::Instance()->getStatus())
-		return false; // Window creation failed
+	if (!TheWindow::Instance()->init("Jamie's Really Cool Game", 640, 480))
+		return false;
 
-	TheRenderer::Instance()->init();
-	if (!TheRenderer::Instance()->getStatus())
-		return false; // Renderer creation failed
-
+	if (!TheRenderer::Instance()->init())
+		return false;
+	
 	TheInputHandler::Instance()->init();
 
 	TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
@@ -49,7 +47,6 @@ bool Game::init()
 
 	m_pGameStateMachine = new GameStateMachine();
 	m_pGameStateMachine->pushState(new MainMenuState());
-
 
 	m_bRunning = true;
 	return true;
@@ -69,9 +66,7 @@ void Game::loop()
 		frameTime = SDL_GetTicks() - frameStart; // Stores how long it took for frame to run
 
 		if (frameTime < DELAY_TIME) // If it is less than the time we want a frame to take, we call SDL_Delay to make the loop wait for the amount of time we want, subtracting how long the loop already took to complete
-		{
 			SDL_Delay((int)(DELAY_TIME - frameTime));
-		}
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "gameobjects/AnimatedGraphic.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 AnimatedGraphic::AnimatedGraphic(int animSpeed)
 	:SDLGameObject(), m_animSpeed(animSpeed)

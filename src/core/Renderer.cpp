@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "core/Renderer.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 #include "core/Window.h"
 
@@ -10,27 +10,21 @@ Renderer* Renderer::s_pInstance = nullptr;
 static int backgroundColour[3] = { 150, 150, 255 };
 
 Renderer::Renderer()
-	:m_pRenderer(nullptr), m_bStatus(false)
+	:m_pRenderer(nullptr)
 {
-	
 }
 
-void Renderer::init()
+bool Renderer::init()
 {
 	// 2nd parameter is the index of the rendering driver to initialize (-1 to use first capable driver)
 	// 3rd parameter are the SDL__RendererFlag
 	m_pRenderer = SDL_CreateRenderer(TheWindow::Instance()->getWindowPtr(), -1, 0);
-
-	// Check renderer status
 	if (!m_pRenderer)
-	{
-		m_bStatus = false;
-		return;
-	}
-
+		return false;
+	
 	SDL_SetRenderDrawColor(m_pRenderer, backgroundColour[0], backgroundColour[1], backgroundColour[2], SDL_ALPHA_OPAQUE);
 
-	m_bStatus = true;
+	return true;
 }
 
 void Renderer::clean()
@@ -46,7 +40,6 @@ void Renderer::startOfFrame()
 
 void Renderer::draw()
 {
-
 }
 
 void Renderer::EndOfFrame()
@@ -58,11 +51,6 @@ void Renderer::EndOfFrame()
 SDL_Renderer* Renderer::getRendererPtr() const
 {
 	return m_pRenderer;
-}
-
-bool Renderer::getStatus() const
-{
-	return m_bStatus;
 }
 
 Renderer* Renderer::Instance()

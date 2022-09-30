@@ -68,16 +68,9 @@ Vector2D InputHandler::getMousePosition()
 
 bool InputHandler::isKeyDown(int keyboardKey)
 {
-	if (m_keystates != 0)
+	if (m_keystates)
 	{
-		if (m_keystates[keyboardKey] == 1)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return m_keystates[keyboardKey] ? true : false;
 	}
 
 	return false;

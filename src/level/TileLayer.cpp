@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "TileLayer.h"
+#include "level/TileLayer.h"
 
 #include "core/Window.h"
-#include "Level.h"
+#include "level/Level.h"
 #include "core/TextureManager.h"
 
 TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets)

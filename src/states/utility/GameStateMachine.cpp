@@ -40,21 +40,13 @@ void GameStateMachine::pushState(GameState* pState)
 /// </summary>
 void GameStateMachine::changeState(GameState* pState)
 {
-	//std::cout << "hi" << std::endl;
-
 	if (!m_gameStates.empty())
 	{
-		//std::cout << m_gameStates.back()->getStateID() << std::endl;
-		//std::cout << pState->getStateID() << std::endl;
-
 		if (m_gameStates.back()->getStateID() == pState->getStateID())
-		{
-			return; // do nothing
-		}
-		//std::cout << "hi2" << std::endl;
+			return; 
+		
 		if (m_gameStates.back()->onExit())
 		{
-			//std::cout << "hi3" << std::endl;
 			delete m_gameStates.back();
 			m_gameStates.pop_back();
 		}

@@ -96,22 +96,22 @@
     <ClCompile Include="src\states\MenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Level.cpp">
+    <ClCompile Include="src\level\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Layer.cpp">
+    <ClCompile Include="src\level\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TileLayer.cpp">
+    <ClCompile Include="src\level\TileLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\LevelParser.cpp">
+    <ClCompile Include="src\level\LevelParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\Base64\src\base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectLayer.cpp">
+    <ClCompile Include="src\level\ObjectLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -452,22 +452,22 @@
     <ClInclude Include="include\states\MenuState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Level.h">
+    <ClInclude Include="include\level\Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Layer.h">
+    <ClInclude Include="include\level\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\TileLayer.h">
+    <ClInclude Include="include\level\TileLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\LevelParser.h">
+    <ClInclude Include="include\level\LevelParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\Base64\include\base64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\ObjectLayer.h">
+    <ClInclude Include="include\level\ObjectLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

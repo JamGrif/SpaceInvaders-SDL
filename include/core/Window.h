@@ -10,7 +10,7 @@ class Window
 {
 public:
 
-	void init(int width, int height);
+	bool init(std::string windowTitle, int width, int height);
 	void clean();
 
 	inline void setWindowIcon(const std::string& filepath);
@@ -19,8 +19,6 @@ public:
 
 	int getWindowWidth() const;
 	int getWindowHeight() const;
-
-	bool getStatus() const;
 
 	static Window* Instance(); // Singleton
 private:
@@ -32,6 +30,5 @@ private:
 	int m_windowWidth;
 	int m_windowHeight;
 
-	bool m_bStatus;
 };
 typedef Window TheWindow;

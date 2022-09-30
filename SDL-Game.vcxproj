@@ -39,10 +39,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\ObjectLayer.cpp" />
-    <ClCompile Include="src\LevelParser.cpp" />
-    <ClCompile Include="src\Layer.cpp" />
-    <ClCompile Include="src\Level.cpp" />
+    <ClCompile Include="src\level\ObjectLayer.cpp" />
+    <ClCompile Include="src\level\LevelParser.cpp" />
+    <ClCompile Include="src\level\Layer.cpp" />
+    <ClCompile Include="src\level\Level.cpp" />
     <ClCompile Include="src\states\MenuState.cpp" />
     <ClCompile Include="src\gameobjects\AnimatedGraphic.cpp" />
     <ClCompile Include="src\gameobjects\utility\GameObjectFactory.cpp" />
@@ -74,7 +74,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\states\utility\StateParser.cpp" />
-    <ClCompile Include="src\TileLayer.cpp" />
+    <ClCompile Include="src\level\TileLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\Base64\include\base64.h" />
@@ -190,11 +190,11 @@
     <ClInclude Include="include\states\PauseState.h" />
     <ClInclude Include="include\states\utility\StateParser.h" />
     <ClInclude Include="include\states\MenuState.h" />
-    <ClInclude Include="include\Level.h" />
-    <ClInclude Include="include\Layer.h" />
-    <ClInclude Include="include\LevelParser.h" />
-    <ClInclude Include="include\TileLayer.h" />
-    <ClInclude Include="include\ObjectLayer.h" />
+    <ClInclude Include="include\level\Level.h" />
+    <ClInclude Include="include\level\Layer.h" />
+    <ClInclude Include="include\level\LevelParser.h" />
+    <ClInclude Include="include\level\TileLayer.h" />
+    <ClInclude Include="include\level\ObjectLayer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

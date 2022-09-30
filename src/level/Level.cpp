@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Level.h"
+#include "level/Level.h"
 
-#include "Layer.h"
+#include "level/Layer.h"
 
 Level::~Level()
 {
@@ -36,5 +36,4 @@ std::vector<Layer*>* Level::getLayers()
 
 Level::Level()
 {
-
 }

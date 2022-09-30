@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "LevelParser.h"
+#include "level/LevelParser.h"
 
 #include "tinyxml.h"
-#include "Level.h"
+#include "level/Level.h"
 #include "core/TextureManager.h"
 #include "gameobjects/utility/GameObjectFactory.h"
 
-#include "TileLayer.h"
-#include "ObjectLayer.h"
+#include "level/TileLayer.h"
+#include "level/ObjectLayer.h"
 #include "gameobjects/GameObject.h"
 
 #include "base64.h"
