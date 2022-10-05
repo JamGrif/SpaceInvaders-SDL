@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="6">
+ <properties>
+  <property name="mainMenuButton" value="mainMenuButton.png"/>
+  <property name="resumeButton" value="resumeButton.png"/>
+ </properties>
+ <tileset firstgid="1" name="blocks1" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="12" columns="12">
+  <image source="blocks1.png" width="410" height="36"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="20" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYKISZgRiZgbqAZZR80bNGzVvSJsHKhNYqYRBZgEAlGMA3g==
+  </data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="4" name="PlayButton" class="MenuButton" x="170" y="100" width="10" height="10">
+   <properties>
+    <property name="callbackID" type="int" value="1"/>
+    <property name="numFrames" type="int" value="3"/>
+    <property name="textureHeight" type="int" value="80"/>
+    <property name="textureID" value="resumeButton"/>
+    <property name="textureWidth" type="int" value="200"/>
+   </properties>
+  </object>
+  <object id="5" name="ExitButton" class="MenuButton" x="170" y="250" width="10" height="10">
+   <properties>
+    <property name="callbackID" type="int" value="2"/>
+    <property name="numFrames" type="int" value="3"/>
+    <property name="textureHeight" type="int" value="80"/>
+    <property name="textureID" value="mainMenuButton"/>
+    <property name="textureWidth" type="int" value="200"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

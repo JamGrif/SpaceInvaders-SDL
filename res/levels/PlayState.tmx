@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="57">
+ <properties>
+  <property name="alienDead" value="alienDead.png"/>
+  <property name="alienLower" value="alienLower.png"/>
+  <property name="alienMiddle" value="alienMiddle.png"/>
+  <property name="alienUpper" value="alienUpper.png"/>
+  <property name="helicopter" value="helicopter.png"/>
+  <property name="lives" value="lives.png"/>
+  <property name="player" value="player.png"/>
+  <property name="playerBullet" value="playerBullet.png"/>
+  <property name="score" value="score.png"/>
+ </properties>
+ <tileset firstgid="1" name="blocks1" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="12" columns="12">
+  <image source="blocks1.png" width="410" height="36"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="20" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYKISZgRiZgbqARaomWxUwrRw36h5o+aNmofbPFCeY6USBpkFACfNAUU=
+  </data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="2" name="Player" class="Player" x="293" y="425" width="10" height="10">
+   <properties>
+    <property name="movementSpeed" type="int" value="2"/>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="player"/>
+   </properties>
+  </object>
+  <object id="4" name="AlienUpper" class="Alien" x="320" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="5" name="AlienMiddle" class="Alien" x="320" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="6" name="AlienLower" class="Alien" x="320" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="7" name="AlienMiddle" class="Alien" x="320" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="8" name="AlienLower" class="Alien" x="320" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="14" name="AlienUpper" class="Alien" x="280" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="15" name="AlienMiddle" class="Alien" x="280" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="16" name="AlienLower" class="Alien" x="280" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="17" name="AlienMiddle" class="Alien" x="280" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="18" name="AlienLower" class="Alien" x="280" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="19" name="AlienUpper" class="Alien" x="240" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="20" name="AlienMiddle" class="Alien" x="240" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="21" name="AlienLower" class="Alien" x="240" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="22" name="AlienMiddle" class="Alien" x="240" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="23" name="AlienLower" class="Alien" x="240" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="24" name="AlienUpper" class="Alien" x="200" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="25" name="AlienMiddle" class="Alien" x="200" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="26" name="AlienLower" class="Alien" x="200" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="27" name="AlienMiddle" class="Alien" x="200" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="28" name="AlienLower" class="Alien" x="200" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="29" name="AlienUpper" class="Alien" x="440" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="30" name="AlienMiddle" class="Alien" x="440" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="31" name="AlienLower" class="Alien" x="440" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="32" name="AlienMiddle" class="Alien" x="440" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="33" name="AlienLower" class="Alien" x="440" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="34" name="AlienUpper" class="Alien" x="400" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="35" name="AlienMiddle" class="Alien" x="400" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="36" name="AlienLower" class="Alien" x="400" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="37" name="AlienMiddle" class="Alien" x="400" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="38" name="AlienLower" class="Alien" x="400" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="39" name="AlienUpper" class="Alien" x="360" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="40" name="AlienMiddle" class="Alien" x="360" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="41" name="AlienLower" class="Alien" x="360" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="42" name="AlienMiddle" class="Alien" x="360" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="43" name="AlienLower" class="Alien" x="360" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="45" name="Text" class="SDLGameObject" x="50" y="25" width="10" height="10">
+   <properties>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="lives"/>
+   </properties>
+  </object>
+  <object id="46" name="Text" class="SDLGameObject" x="350" y="25" width="10" height="10">
+   <properties>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="score"/>
+   </properties>
+  </object>
+  <object id="47" name="AlienUpper" class="Alien" x="160" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="48" name="AlienMiddle" class="Alien" x="160" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="49" name="AlienLower" class="Alien" x="160" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="50" name="AlienMiddle" class="Alien" x="160" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="51" name="AlienLower" class="Alien" x="160" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="52" name="AlienUpper" class="Alien" x="480" y="125" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="53" name="AlienMiddle" class="Alien" x="480" y="160" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="54" name="AlienLower" class="Alien" x="480" y="230" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="55" name="AlienMiddle" class="Alien" x="480" y="195" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="56" name="AlienLower" class="Alien" x="480" y="265" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="500"/>
+    <property name="movementSpeed" type="float" value="0.4"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
