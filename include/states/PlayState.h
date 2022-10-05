@@ -1,30 +1,32 @@
 #pragma once
-#include "GameState.h"
+#include "BaseState.h"
 
-class GameObject;
+//class GameObject;
 class SDLGameObject;
-class Level;
+//class Level;
+
+class Alien;
 
 class PlayState :
-    public GameState
+    public BaseState
 {
 public:
+	virtual bool onEnterState() override;
+	virtual bool onExitState() override;
 
-	virtual void update();
-	virtual void render();
+	virtual void updateState() override;
+	virtual void renderState() override;
 
-	virtual bool onEnter();
-	virtual bool onExit();
-
-	bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
-
-	virtual std::string getStateID() const { return s_playID; }
+	virtual std::string getStateID() const override { return s_playID; }
 
 private:
 	static const std::string s_playID;
 
-	std::vector<GameObject*> m_gameObjects;
+	std::vector<Alien*>* m_allAliens;
 
-	Level* pLevel;
+	int m_totalAliens;
+	int m_currentAliensDead;
+
+	bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
 };
 

@@ -1,47 +1,78 @@
 #include "pch.h"
 #include "gameobjects/SDLGameObject.h"
 
-#include "core/TextureManager.h"
-#include "core/Renderer.h"
+#include "core/SpriteManager.h"
+#include "core/Window.h"
+//#include "core/Renderer.h"
 
 SDLGameObject::SDLGameObject()
-	:GameObject(), m_position(0, 0), m_velocity(0, 0), m_acceleration(0,0), m_height(0), m_width(0), m_currentRow(1), m_currentFrame(1)
+	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_acceleration(0,0), m_objectWidth(0), m_objectHeight(0), m_currentSpriteFrame(1), m_bFlipImage(false)
 {
 }
 
-void SDLGameObject::draw()
+SDLGameObject::~SDLGameObject()
 {
-	if (m_velocity.getX() > 0)
-	{
-		TheTextureManager::Instance()->drawframe(m_textureID, static_cast<int>(m_position.getX()), static_cast<int>(m_position.getY()), m_width, m_height, m_currentRow, m_currentFrame, true);
-	}
-	else
-	{
-		TheTextureManager::Instance()->drawframe(m_textureID, static_cast<int>(m_position.getX()), static_cast<int>(m_position.getY()), m_width, m_height, m_currentRow, m_currentFrame, false);
-	}
 }
 
-void SDLGameObject::update()
+/// <summary>
+/// Responsible for setting all variables used in SDLGameObject
+/// </summary>
+void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+{
+	m_position = Vector2D(static_cast<float>(pParams->x), static_cast<float>(pParams->y));
+
+	m_objectTextureID = pParams->textureID;
+	m_framesInSprite = pParams->numFrames;
+	m_animationSpeed = pParams->animationSpeed;
+	m_movementSpeed = pParams->movementSpeed;
+
+	m_screenWidth = TheWindow::Instance()->getWindowWidth();
+	m_screenHeight = TheWindow::Instance()->getWindowHeight();
+
+	// The Object width and height is the dimensions of the current sprite frame on its sprite sheet
+	Sprite* s = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
+
+	s->setUpIndividualSpriteDimensions(pParams->numFrames);
+	m_objectWidth = s->getIndividualDimensions().w;
+	m_objectHeight = s->getIndividualDimensions().h;
+}
+
+void SDLGameObject::drawObject()
+{
+	//if (m_velocity.getX() != 0)
+	//	m_bFlipImage = m_velocity.getX() > 0 ? true : false;
+	
+	SpriteManager::Instance()->drawSpriteFrame(
+		m_objectTextureID,
+		static_cast<int>(m_position.getX()),
+		static_cast<int>(m_position.getY()),
+		m_objectWidth,
+		m_objectHeight,
+		m_currentSpriteFrame,
+		m_bFlipImage);
+}
+
+void SDLGameObject::updateObject()
 {
 	// Allows gradual increase of velocity through acceleration
 	m_velocity += m_acceleration;
 	m_position += m_velocity;
+
+	// Set correct sprite frame
+	m_currentSpriteFrame = static_cast<int>(((SDL_GetTicks() / m_animationSpeed) % m_framesInSprite));
 }
 
-void SDLGameObject::clean()
+Vector2D& SDLGameObject::getPosition()
 {
-
+	return m_position;
 }
 
-void SDLGameObject::load(const LoaderParams* pParams)
+int SDLGameObject::getWidth()
 {
-	m_position = Vector2D(static_cast<float>(pParams->getX()), static_cast<float>(pParams->getY()));
-	m_velocity = Vector2D(0, 0);
-	m_acceleration = Vector2D(0, 0);
-	m_width = pParams->getWidth();
-	m_height = pParams->getHeight();
-	m_textureID = pParams->getTextureID();
-	m_currentRow = 1;
-	m_currentFrame = 1;
-	//m_numFrames = pParams->getNumFrames();
+	return m_objectWidth;
+}
+
+int SDLGameObject::getHeight()
+{
+	return m_objectHeight;
 }

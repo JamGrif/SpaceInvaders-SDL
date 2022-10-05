@@ -3,35 +3,57 @@
 
 #include "core/InputHandler.h"
 
+enum button_state
+{
+	MOUSE_OUT = 0,
+	MOUSE_OVER = 1,
+	CLICKED = 2
+};
+
 MenuButton::MenuButton()
 	:SDLGameObject(), m_bReleased(false), m_callback(0), m_callbackID(0)
 {
-	m_currentFrame = MOUSE_OUT; // Start at frame 0
 }
 
-void MenuButton::draw()
+MenuButton::~MenuButton()
 {
-	SDLGameObject::draw(); // Uses base class drawing
 }
 
-void MenuButton::update()
+/// <summary>
+/// Responsible for setting all variables used in MenuButton and inherited class
+/// </summary>
+/// <param name="pParams"></param>
+void MenuButton::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+{
+	SDLGameObject::loadObject(pParams);
+
+	m_callbackID = pParams->callbackID;
+	m_currentSpriteFrame = MOUSE_OUT;
+}
+
+void MenuButton::drawObject()
+{
+	SDLGameObject::drawObject();
+}
+
+void MenuButton::updateObject()
 {
 	// Get coordinates of the mouse pointer
 	Vector2D pMousePos = TheInputHandler::Instance()->getMousePosition();
 
 	// Check if mouse is within the bounds of the button
-	if (pMousePos.getX() < (m_position.getX() + m_width)
+	if (pMousePos.getX() < (m_position.getX() + m_objectWidth)
 		&& pMousePos.getX() > m_position.getX()
-		&& pMousePos.getY() < (m_position.getY() + m_height)
+		&& pMousePos.getY() < (m_position.getY() + m_objectHeight)
 		&& pMousePos.getY() > m_position.getY())
 	{
-		m_currentFrame = MOUSE_OVER;
+		m_currentSpriteFrame = MOUSE_OVER;
 
 		// Moused over and clicked button
 		if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT)
 			&& m_bReleased)
 		{
-			m_currentFrame = CLICKED;
+			m_currentSpriteFrame = CLICKED;
 
 			m_callback(); // Call the callback function
 
@@ -40,23 +62,23 @@ void MenuButton::update()
 		else if (!TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT))
 		{
 			m_bReleased = true;
-			m_currentFrame = MOUSE_OVER;
+			m_currentSpriteFrame = MOUSE_OVER;
 		}
 	}
 	else
 	{
-		m_currentFrame = MOUSE_OUT;
+		m_currentSpriteFrame = MOUSE_OUT;
 	}
 }
 
-void MenuButton::clean()
+void MenuButton::setCallback(void(*callback)())
 {
-	SDLGameObject::clean();
+	m_callback = callback;
 }
 
-void MenuButton::load(const LoaderParams* pParams)
+int MenuButton::getCallbackID()
 {
-	SDLGameObject::load(pParams);
-	m_callbackID = pParams->getCallBackID();
-	m_currentFrame = MOUSE_OUT;
+	return m_callbackID;
 }
+
+

@@ -1,6 +1,19 @@
 #pragma once
 
-class GameState;
+class BaseState;
+
+enum class StateMachineAction
+{
+	Nothing			= 0,
+	Quit			= 1,
+	MainMenuToPlay	= 2,
+	PauseToMain		= 3,
+	ResumePlay		= 4,
+	GameOverToMain	= 5,
+	RestartPlay		= 6,
+	Pause			= 7,
+	GameOver		= 8,
+};
 
 /// <summary>
 /// Finite State Machine to handle the game states
@@ -8,17 +21,26 @@ class GameState;
 class GameStateMachine
 {
 public:
+	GameStateMachine();
+	~GameStateMachine();
 
 	// State Actions
-	void update();
-	void render();
+	void updateCurrentState();
+	void renderCurrentState();
 
-	void pushState(GameState* pState);		// Add a state without removing the previous state
-	void changeState(GameState* pState);	// Remove the previous state before adding another
+	// State Selection
+	void pushState(BaseState* pState);		// Add a state without removing the previous state
+	void changeState(BaseState* pState);	// Remove the previous state before adding another
 	void popState();						// Remove the state currently being used without adding another
 
-private:
-	std::vector<GameState*> m_gameStates;
+	bool IsActionToChange() { return m_bNeedToChange; }
+	void indicateAChange(StateMachineAction change);
+	void doAChange();
 
+private:
+	std::vector<BaseState*> m_currentGameStates;
+
+	bool m_bNeedToChange;
+	StateMachineAction m_actionToTake;
 };
 

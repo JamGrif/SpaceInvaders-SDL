@@ -1,20 +1,52 @@
 #include "pch.h"
 #include "level/ObjectLayer.h"
 
-#include "gameobjects/GameObject.h"
+#include "gameobjects/BaseGameObject.h"
+#include "gameobjects/Alien.h"
 
-void ObjectLayer::update()
+ObjectLayer::ObjectLayer()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
+
+}
+
+ObjectLayer::~ObjectLayer()
+{
+	for (auto object : m_layerGameObjects)
 	{
-		m_gameObjects[i]->update();
+		delete object;
+	}
+	m_layerGameObjects.clear();
+
+	for (auto alien : m_layerAlienObjects)
+	{
+		delete alien;
+	}
+	m_layerAlienObjects.clear();
+}
+
+void ObjectLayer::updateLayer()
+{
+	for (auto object : m_layerGameObjects)
+	{
+		object->updateObject();
+	}
+
+	for (auto alien : m_layerAlienObjects)
+	{
+		alien->updateObject();
 	}
 }
 
-void ObjectLayer::render()
+void ObjectLayer::renderLayer()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
+	for (auto object : m_layerGameObjects)
 	{
-		m_gameObjects[i]->draw();
+		object->drawObject();
+	}
+
+	for (auto alien : m_layerAlienObjects)
+	{
+		alien->drawObject();
 	}
 }
+

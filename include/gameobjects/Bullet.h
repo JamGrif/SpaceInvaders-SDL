@@ -1,28 +1,28 @@
 #pragma once
 #include "SDLGameObject.h"
 
-class Player :
+
+class PlayerBullet :
     public SDLGameObject
 {
 public:
-    Player();
-    ~Player();
+	PlayerBullet();
+	~PlayerBullet();
 
 	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
 
-    virtual void drawObject();
-    virtual void updateObject();
+	virtual void drawObject();
+	virtual void updateObject();
 
-private:
 
 };
 
-class PlayerCreator :
+class PlayerBulletCreator :
 	public BaseCreator
 {
 	BaseGameObject* createGameObject() const
 	{
-		return new Player();
+		return new PlayerBullet();
 	}
 };
 

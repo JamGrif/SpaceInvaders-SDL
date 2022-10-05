@@ -7,22 +7,17 @@ class MenuButton :
 {
 public:
 	MenuButton();
+	~MenuButton();
 
-	virtual void draw();
-	virtual void update();
-	virtual void clean();
-	virtual void load(const LoaderParams* pParams);
+	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
 
-	void setCallback(void(*callback)()) { m_callback = callback; }
-	int getCallbackID() { return m_callbackID; }
+	virtual void drawObject();
+	virtual void updateObject();
+
+	void setCallback(void(*callback)());
+	int getCallbackID();
 
 private:
-	enum button_state
-	{
-		MOUSE_OUT = 0,
-		MOUSE_OVER = 1,
-		CLICKED = 2
-	};
 
 	bool m_bReleased;
 	void (*m_callback)(); // function pointer to store what function will run when the button is clicked on
@@ -32,7 +27,7 @@ private:
 class MenuButtonCreator :
 	public BaseCreator
 {
-	GameObject* createGameObject() const
+	BaseGameObject* createGameObject() const
 	{
 		return new MenuButton();
 	}

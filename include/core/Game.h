@@ -6,19 +6,23 @@ class GameStateMachine;
 class Game
 {
 public:
-	bool init();
-	void loop();
-	void clean();
 
-	void render();
-	void update();
-	void handleEvents();
+	// Called from EntryPoint.cpp
+	bool gameInit();
+	void gameLoop();
+	void gameClean();
 
-	void quit();
+	// Called from gameLoop()
+	void renderGame();
+	void updateGame();
+	void handleEventsGame();
+
+	void quitGame();
 
 	GameStateMachine* getStateMachine();
 
-	static Game* Instance(); // Singleton
+	// Singleton instance get
+	static Game* Instance(); 
 private:
 	Game();
 	static Game* s_pInstance;

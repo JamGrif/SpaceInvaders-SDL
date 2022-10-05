@@ -1,23 +1,34 @@
 #pragma once
-#include "Layer.h"
+#include "BaseLayer.h"
 
-class GameObject;
+class BaseGameObject;
+class Alien;
 
 // The ObjectLayer draws and updates the objects for this layer
 class ObjectLayer :
-    public Layer
+    public BaseLayer
 {
 public:
-	virtual void update();
-	virtual void render();
+	ObjectLayer();
+	~ObjectLayer();
 
-	std::vector<GameObject*>* getGameObjects()
+	virtual void updateLayer();
+	virtual void renderLayer();
+
+	std::vector<BaseGameObject*>& getGameObjects()
 	{
-		return &m_gameObjects;
+		return m_layerGameObjects;
 	}
 
+	std::vector<Alien*>& getAlienObjects()
+	{
+		return m_layerAlienObjects;
+	}
+	
+
 private:
-	std::vector<GameObject*> m_gameObjects;
+	std::vector<BaseGameObject*> m_layerGameObjects;
+	std::vector<Alien*> m_layerAlienObjects;
 
 };
 

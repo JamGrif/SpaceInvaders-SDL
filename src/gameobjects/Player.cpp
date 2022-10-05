@@ -2,80 +2,60 @@
 #include "gameobjects/Player.h"
 
 #include "core/InputHandler.h"
+#include "core/SpriteManager.h"
+
+#include "gameobjects/utility/BulletHandler.h"
 
 Player::Player()
 	:SDLGameObject()
 {
-
 }
 
 Player::~Player()
 {
-
 }
 
-
-
-void Player::draw()
+/// <summary>
+/// Responsible for setting all variables used in Player and inherited class
+/// </summary>
+void Player::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
-	SDLGameObject::draw();
+	SDLGameObject::loadObject(pParams);
 }
 
-void Player::update()
+void Player::drawObject()
 {
+	SDLGameObject::drawObject();
+}
+
+void Player::updateObject()
+{
+	SDLGameObject::updateObject();
 
 	m_velocity.setX(0);
 	m_velocity.setY(0);
 
-	handleInput();
-
-	SDLGameObject::update();
-	// Animation stuff
-	m_currentFrame = int(((SDL_GetTicks() / 100) % 5));
-}
-
-void Player::clean()
-{
-}
-
-void Player::load(const LoaderParams* pParams)
-{
-	SDLGameObject::load(pParams);
-}
-
-void Player::handleInput()
-{
-	constexpr int MOVEMENT_SPEED = 3;
-
-	//Vector2D mousePos = TheInputHandler::Instance()->getMousePosition();
-	//
-	//m_velocity = mousePos - m_position;
-	////m_velocity /= 50;
-
-	// Set velocity to a vector from the players current position to the mouse position. 
-	// Can get this vector by subtracting the desired location from the current location. 
-	// Divide the vector by 100 to dampen the speed slightly so that we can see it following rather than just sticking to the mouse position
-	//Vector2D vec = TheInputHandler::Instance()->getMousePosition();
-	//m_velocity = (vec - m_position) / 100; 
-
+	if (m_position.getX() + m_objectWidth < m_screenWidth - edgeScreenBuffer)
+	{
+		if (TheInputHandler::Instance()->isKeyDown(Keyboard::D))
+		{
+			m_velocity.setX(m_movementSpeed);
+		}
+	}
 	
-
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::RIGHT_ARROW))
+	if (m_position.getX() > edgeScreenBuffer)
 	{
-		m_velocity.setX(2);
-	}
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::LEFT_ARROW))
-	{
-		m_velocity.setX(-2);
+		if (TheInputHandler::Instance()->isKeyDown(Keyboard::A))
+		{
+			m_velocity.setX(-m_movementSpeed);
+		}
 	}
 
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::UP_ARROW))
+	// Spawn PlayerBullet
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::SPACE))
 	{
-		m_velocity.setY(-2);
+		TheBulletHandler::Instance()->addPlayerBullet(m_position.getX()+(m_objectWidth/2), m_position.getY() - m_objectHeight);
 	}
 
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::DOWN_ARROW))
-	{
-		m_velocity.setY(2);
-	}
 }
+

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameobjects\utility\BulletHandler.cpp" />
     <ClCompile Include="dependencies\Base64\src\base64.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -39,13 +40,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\Bullet.cpp" />
+    <ClCompile Include="src\core\ProgramClock.cpp" />
     <ClCompile Include="src\core\SoundManager.cpp" />
     <ClCompile Include="src\level\ObjectLayer.cpp" />
     <ClCompile Include="src\level\LevelParser.cpp" />
-    <ClCompile Include="src\level\Layer.cpp" />
+    <ClCompile Include="src\level\BaseLayer.cpp" />
     <ClCompile Include="src\level\Level.cpp" />
-    <ClCompile Include="src\states\MenuState.cpp" />
-    <ClCompile Include="src\gameobjects\AnimatedGraphic.cpp" />
     <ClCompile Include="src\gameobjects\utility\GameObjectFactory.cpp" />
     <ClCompile Include="src\states\GameOverState.cpp" />
     <ClCompile Include="src\states\PauseState.cpp" />
@@ -59,30 +60,29 @@
     </ClCompile>
     <ClCompile Include="src\states\PlayState.cpp" />
     <ClCompile Include="src\states\MainMenuState.cpp" />
-    <ClCompile Include="src\states\GameState.cpp" />
+    <ClCompile Include="src\states\BaseState.cpp" />
     <ClCompile Include="src\core\InputHandler.cpp" />
     <ClCompile Include="src\core\Renderer.cpp" />
     <ClCompile Include="src\core\Window.cpp" />
     <ClCompile Include="src\gameobjects\SDLGameObject.cpp" />
-    <ClCompile Include="src\gameobjects\Enemy.cpp" />
+    <ClCompile Include="src\gameobjects\Alien.cpp" />
     <ClCompile Include="src\gameobjects\Player.cpp" />
-    <ClCompile Include="src\gameobjects\GameObject.cpp" />
+    <ClCompile Include="src\gameobjects\BaseGameObject.cpp" />
     <ClCompile Include="src\core\Game.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
-    <ClCompile Include="src\core\TextureManager.cpp" />
+    <ClCompile Include="src\core\SpriteManager.cpp" />
     <ClCompile Include="src\misc\Vector2D.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\states\utility\StateParser.cpp" />
     <ClCompile Include="src\level\TileLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\gameobjects\utility\BulletHandler.h" />
     <ClInclude Include="dependencies\Base64\include\base64.h" />
     <ClInclude Include="dependencies\SDL2\_mixer\include\SDL2_mixer\include\SDL_mixer.h" />
     <ClInclude Include="dependencies\tinyXML\include\tinystr.h" />
     <ClInclude Include="dependencies\tinyXML\include\tinyxml.h" />
-    <ClInclude Include="include\gameobjects\AnimatedGraphic.h" />
     <ClInclude Include="dependencies\SDL\include\begin_code.h" />
     <ClInclude Include="dependencies\SDL\include\close_code.h" />
     <ClInclude Include="dependencies\SDL\include\SDL.h" />
@@ -174,12 +174,12 @@
     <ClInclude Include="include\gameobjects\utility\GameObjectFactory.h" />
     <ClInclude Include="include\states\GameOverState.h" />
     <ClInclude Include="include\states\utility\GameStateMachine.h" />
-    <ClInclude Include="include\states\GameState.h" />
-    <ClInclude Include="include\gameobjects\Enemy.h" />
-    <ClInclude Include="include\gameobjects\GameObject.h" />
+    <ClInclude Include="include\states\BaseState.h" />
+    <ClInclude Include="include\gameobjects\Alien.h" />
+    <ClInclude Include="include\gameobjects\BaseGameObject.h" />
     <ClInclude Include="include\core\Game.h" />
     <ClInclude Include="include\pch.h" />
-    <ClInclude Include="include\core\TextureManager.h" />
+    <ClInclude Include="include\core\SpriteManager.h" />
     <ClInclude Include="include\gameobjects\Player.h" />
     <ClInclude Include="include\gameobjects\SDLGameObject.h" />
     <ClInclude Include="include\core\Window.h" />
@@ -190,14 +190,22 @@
     <ClInclude Include="include\states\PlayState.h" />
     <ClInclude Include="include\gameobjects\MenuButton.h" />
     <ClInclude Include="include\states\PauseState.h" />
-    <ClInclude Include="include\states\utility\StateParser.h" />
-    <ClInclude Include="include\states\MenuState.h" />
     <ClInclude Include="include\level\Level.h" />
-    <ClInclude Include="include\level\Layer.h" />
+    <ClInclude Include="include\level\BaseLayer.h" />
     <ClInclude Include="include\level\LevelParser.h" />
     <ClInclude Include="include\level\TileLayer.h" />
     <ClInclude Include="include\level\ObjectLayer.h" />
     <ClInclude Include="include\core\SoundManager.h" />
+    <ClInclude Include="include\core\ProgramClock.h" />
+    <ClInclude Include="include\gameobjects\Bullet.h" />
+    <ClInclude Include="res\misc\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\misc\icon.bmp" />
+    <Image Include="res\misc\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\misc\SDL-Game.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

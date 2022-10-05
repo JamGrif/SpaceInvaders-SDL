@@ -2,88 +2,62 @@
 #include "states/GameOverState.h"
 
 #include "core/Game.h"
-#include "core/TextureManager.h"
+#include "core/SpriteManager.h"
 #include "gameobjects/MenuButton.h"
-#include "gameobjects/GameObject.h"
-#include "gameobjects/AnimatedGraphic.h"
-#include "states/MenuState.h"
+#include "gameobjects/BaseGameObject.h"
 #include "states/PlayState.h"
 #include "states/MainMenuState.h"
 #include "states/utility/GameStateMachine.h"
-#include "states/utility/StateParser.h"
+
+#include "level/Level.h"
+#include "level/ObjectLayer.h"
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
 void GameOverState::s_gameOverToMain()
 {
-	TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
+	//TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
+	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::GameOverToMain);
 }
 
 void GameOverState::s_restartPlay()
 {
-	TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+	//TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::RestartPlay);
 }
 
-void GameOverState::update()
+void GameOverState::updateState()
 {
-	for (auto o : m_gameObjects)
-	{
-		o->update();
-	}
+	BaseState::updateState();
 }
 
-void GameOverState::render()
+void GameOverState::renderState()
 {
-	for (auto o : m_gameObjects)
-	{
-		o->draw();
-	}
+	BaseState::renderState();
 }
 
-bool GameOverState::onEnter()
+bool GameOverState::onEnterState()
 {
-	// Parse the state
-	StateParser stateParser;
-	stateParser.parseState("res/test.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
+	std::cout << "-=-=-=-=-=-Entering GameOverState-=-=-=-=-=-" << std::endl;
 
-	m_callbacks.push_back(0);
-	m_callbacks.push_back(s_gameOverToMain);
-	m_callbacks.push_back(s_restartPlay);
+	loadLevel("GameOverState.tmx");
+
+	m_stateCallbackFunctions.push_back(0);
+	m_stateCallbackFunctions.push_back(s_gameOverToMain);
+	m_stateCallbackFunctions.push_back(s_restartPlay);
 
 	// Set the callbacks for menu items
-	setCallbacks(m_callbacks);
+	setCallbacks();
 
-	std::cout << "Entering GameOverState" << std::endl;
 	return true;
 }
 
-bool GameOverState::onExit()
+bool GameOverState::onExitState()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->clean();
-	}
-	m_gameObjects.clear();
+	std::cout << "-=-=-=-=-=-Exiting GameOverState-=-=-=-=-=-" << std::endl;
 
-	for (int i = 0; i < m_textureIDList.size(); i++)
-	{
-		TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
-	}
+	delete m_pStateLevel;
 
-	std::cout << "Exiting GameOverState" << std::endl;
 	return true;
 }
-
-void GameOverState::setCallbacks(const std::vector<Callback>& callbacks)
-{
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		if (dynamic_cast<MenuButton*>(m_gameObjects[i]))
-		{
-			MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
-			pButton->setCallback(callbacks[pButton->getCallbackID()]);
-		}
-	}
-}
-
 

@@ -5,12 +5,12 @@
 // Will register a new type with the factory using a function that takes a string (the ID) and a Creator class and adds them to the factory's map
 
 
-class GameObject;
+class BaseGameObject;
 
 class BaseCreator
 {
 public:
-	virtual GameObject* createGameObject() const = 0;
+	virtual BaseGameObject* createGameObject() const = 0;
 	virtual ~BaseCreator() {}
 };
 
@@ -28,7 +28,9 @@ public:
 
 	// The function looks for the type in the map, but if the type is not found it returns 0
 	// If the type is found then we use the creator object for that type to return a new instance of it as a pointer to GameObject
-	GameObject* create(std::string typeID);
+	BaseGameObject* create(std::string typeID);
+
+	bool checkIfExist(std::string typeID);
 
 	static GameObjectFactory* Instance(); // Singleton
 private:

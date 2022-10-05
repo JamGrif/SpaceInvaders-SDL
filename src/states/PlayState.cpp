@@ -1,84 +1,122 @@
 #include "pch.h"
 #include "states/PlayState.h"
 
+#include <ctime>
+#include <cstdlib>
+
 #include "core/Game.h"
-#include "core/TextureManager.h"
+#include "core/SpriteManager.h"
 #include "core/Renderer.h"
 #include "core/InputHandler.h"
 #include "gameobjects/Player.h"
-#include "gameobjects/Enemy.h"
-#include "gameobjects/GameObject.h"
+#include "gameobjects/Alien.h"
+#include "gameobjects/BaseGameObject.h"
 #include "states/PauseState.h"
 #include "states/GameOverState.h"
 #include "states/utility/GameStateMachine.h"
-#include "states/utility/StateParser.h"
-
 #include "level/Level.h"
-#include "level/LevelParser.h"
+#include "level/BaseLayer.h"
+#include "level/ObjectLayer.h"
+#include "gameobjects/utility/BulletHandler.h"
 
 const std::string PlayState::s_playID = "PLAY";
 
-void PlayState::update()
+float currentTime = 0.0f;
+float maxTime = 1000.0;
+
+void PlayState::updateState()
 {
+	BaseState::updateState();
+
 	// If esc is pressed then push PauseState into the FSM
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ESC))
 	{
-		TheGame::Instance()->getStateMachine()->pushState(new PauseState());
+		TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::Pause);
 	}
 
-	for (auto o : m_gameObjects)
+	// If esc is pressed then push PauseState into the FSM
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::One))
 	{
-		o->update();
+		TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::GameOver);
 	}
+
+	// Check
 	
-	//// dynamic_cast to cast the GameObject* class to an SDLGameObject* class
-	//if (checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]), dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
-	//{
-	//	TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
-	//}
-
-	pLevel->update();
-}
-
-void PlayState::render()
-{
-	for (auto o : m_gameObjects)
+	currentTime += TheProgramClock::Instance()->getDeltaTime();
+	if (currentTime >= maxTime)
 	{
-		o->draw();
+		currentTime = 0.0f;
+		if (m_allAliens->size())
+		{
+			int randomNumber = rand() % ((m_allAliens->size() - 1) - 0 + 1);
+			m_allAliens->at(randomNumber)->setDying();
+		}
 	}
 
-	pLevel->render();
+	// Check all aliens and remove any dead ones
+	for (int i = 0; i < m_allAliens->size(); i++)
+	{
+		if (m_allAliens->at(i)->isDead())
+		{
+			// remove alien from vector
+			m_allAliens->erase(m_allAliens->begin() + i);
+			continue;
+		}
+	}
+
+	for (auto aliens : *m_allAliens)
+	{
+		// If any aliens have reached the edge of the screen, they will all need to move down next frame
+		if (aliens->checkIfReachedEdge())
+		{
+			// Tell all the aliens they need to switch
+			for (auto aliens : *m_allAliens)
+			{
+				aliens->switchDirections();
+			}
+			break;
+		}
+	}
+
+	TheBulletHandler::Instance()->updateBullets();
+	
 }
 
-bool PlayState::onEnter()
+void PlayState::renderState()
 {
-	std::cout << "Entering PlayState" << std::endl;
-	// Parse the state
-	//StateParser stateParser;
-	//stateParser.parseState("res/test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+	BaseState::renderState();
 
-	LevelParser levelParser;
-	pLevel = levelParser.parseLevel("map1.tmx");
+	TheBulletHandler::Instance()->drawBullets();
+}
+
+bool PlayState::onEnterState()
+{
+	std::cout << "-=-=-=-=-=-Entering PlayState-=-=-=-=-=-" << std::endl;
+
+	loadLevel("PlayState.tmx");
+
+
+	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_pStateLevel->getLayer(LayerIndex::objectLayer));
+	m_allAliens = &temp->getAlienObjects();
+
+	srand(time(0));
 
 	return true;
 }
 
-bool PlayState::onExit()
+bool PlayState::onExitState()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->clean();
-	}
-	m_gameObjects.clear();
+	std::cout << "-=-=-=-=-=-Exiting PlayState-=-=-=-=-=-" << std::endl;
 
-	for (int i = 0; i < m_textureIDList.size(); i++)
-	{
-		TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
-	}
+	m_allAliens = nullptr;
 
-	std::cout << "Exiting PlayState" << std::endl;
+	TheBulletHandler::Instance()->cleanBullets();
+
+	delete m_pStateLevel;
+
 	return true;
 }
+
 
 bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 {

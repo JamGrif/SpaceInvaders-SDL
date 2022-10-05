@@ -1,94 +1,66 @@
 #include "pch.h"
 #include "states/MainMenuState.h"
 
-#include "core/TextureManager.h"
+#include "core/SpriteManager.h"
 #include "core/Game.h"
 #include "core/Renderer.h"
 #include "gameobjects/MenuButton.h"
-#include "gameobjects/GameObject.h"
+#include "gameobjects/BaseGameObject.h"
 #include "states/PlayState.h"
 #include "states/utility/GameStateMachine.h"
-#include "states/utility/StateParser.h"
+
+#include "level/Level.h"
+#include "level/ObjectLayer.h"
 
 const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::s_menuToPlay()
 {
-	TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::MainMenuToPlay);
+	//TheGame::Instance()->getStateMachine()->changeState(new PlayState());
 }
-
 
 void MainMenuState::s_exitFromMenu()
 {
-	TheGame::Instance()->quit();
+	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::Quit);
+	//TheGame::Instance()->quitGame();
 }
 
-void MainMenuState::update()
+void MainMenuState::updateState()
 {
-	// i think because when you click the first button it unloads the stuff but then it tries to update the second button
-	for (auto o : m_gameObjects)
-	{
-		o->update();
-	}
+	BaseState::updateState();
 }
 
-void MainMenuState::render()
+void MainMenuState::renderState()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->draw();
-	}
+	BaseState::renderState();
 }
 
-bool MainMenuState::onEnter()
+bool MainMenuState::onEnterState()
 {
-	// Parse the state
-	StateParser stateParser;
-	stateParser.parseState("res/test.xml", s_menuID, &m_gameObjects, &m_textureIDList);
+	std::cout << "-=-=-=-=-=-Entering MenuState-=-=-=-=-=-" << std::endl;
+
+	loadLevel("MainMenuState.tmx");
 
 	// Push any callbacks into the m_callbacks array, inherited from MenuState
-	m_callbacks.push_back(0); // pushback = callbackID starts from 1
-	m_callbacks.push_back(s_menuToPlay);
-	m_callbacks.push_back(s_exitFromMenu);
+	m_stateCallbackFunctions.push_back(0); // pushback = callbackID starts from 1
+	m_stateCallbackFunctions.push_back(s_menuToPlay);
+	m_stateCallbackFunctions.push_back(s_exitFromMenu);
 
 	// Set the callbacks for menu items
-	setCallbacks(m_callbacks);
+	setCallbacks();
 
-
-	std::cout << "Entering MenuState" << std::endl;
 	return true;
 }
 
-bool MainMenuState::onExit()
+bool MainMenuState::onExitState()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->clean();
-	}
+	std::cout << "-=-=-=-=-=-Exiting MenuState-=-=-=-=-=-" << std::endl;
+	
 
-	m_gameObjects.clear();
+	delete m_pStateLevel;
 
-	// Clear the texture manager
-	for (int i = 0; i < m_textureIDList.size(); i++)
-	{
-		TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
-	}
-
-	std::cout << "Exiting MenuState" << std::endl;
 	return true;
 }
 
-void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
-{
-	// Go through the game objects
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		// If they are of type MenuButton then assign a callback based on the id passed in from the file
-		if (dynamic_cast<MenuButton*>(m_gameObjects[i])) // use dynamic_cast to check if the object is a MenuButton type
-		{
-			// Use the objects callbackID as the index into the callbacks vector and assign the correct function
-			MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
-			pButton->setCallback(callbacks[pButton->getCallbackID()]);
-		}
-	}
-}
+

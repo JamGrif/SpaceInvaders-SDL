@@ -3,25 +3,28 @@
 
 #include "tinyXML/tinyxml.h"
 #include "level/Level.h"
-#include "core/TextureManager.h"
+#include "core/SpriteManager.h"
 #include "gameobjects/utility/GameObjectFactory.h"
 
 #include "level/TileLayer.h"
 #include "level/ObjectLayer.h"
-#include "gameobjects/GameObject.h"
+#include "gameobjects/BaseGameObject.h"
+#include "gameobjects/Alien.h"
 
 #include "Base64/base64.h"
 #include "zlib/zlib.h"
-#include "zlib/zconf.h"
+
 
 Level* LevelParser::parseLevel(const char* levelFile)
 {
 	// Create the TinyXML document and load the map XML
 	TiXmlDocument levelDocument;
 
-	if (!levelDocument.LoadFile(levelFile))
+	std::string filepath = "res/levels/" + std::string(levelFile);
+
+	if (!levelDocument.LoadFile(filepath))
 	{
-		std::cout << "Couldn't find doucment" << std::endl;
+		std::cout << "Couldn't find document at filepath: " << filepath << std::endl;
 		std::cout << levelDocument.ErrorDesc() << std::endl;
 	}
 
@@ -52,22 +55,22 @@ Level* LevelParser::parseLevel(const char* levelFile)
 	{
 		if (e->Value() == std::string("tileset"))
 		{
-			parseTilesets(e, pLevel->getTilesets());
+			parseTilesets(e, pLevel->getLevelTilesets());
 		}
 	}
 
-	// Parse any object layers
+	// Parse any layers
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("objectgroup") || e->Value() == std::string("layer"))
 		{
 			if (e->FirstChildElement()->Value() == std::string("object"))
 			{
-				parseObjectLayer(e, pLevel->getLayers());
+				parseObjectLayer(e, pLevel->getLevelLayers());
 			}
 			else if (e->FirstChildElement()->Value() == std::string("data"))
 			{
-				parseTileLayer(e, pLevel->getLayers(), pLevel->getTilesets());
+				parseTileLayer(e, pLevel->getLevelLayers(), pLevel->getLevelTilesets());
 			}
 		}
 	}
@@ -78,8 +81,9 @@ Level* LevelParser::parseLevel(const char* levelFile)
 
 void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
 {
-	// First add the tileset to texture manager
-	TheTextureManager::Instance()->load(pTilesetRoot->FirstChildElement()->Attribute("source"), pTilesetRoot->Attribute("name"));
+	std::string tilesetFilepath = "res/levels/" + std::string(pTilesetRoot->FirstChildElement()->Attribute("source"));
+
+	TheSpriteManager::Instance()->loadSprite(tilesetFilepath, pTilesetRoot->Attribute("name"));
 
 	// Create a tileset object and fill it out
 	Tileset tileset;
@@ -101,7 +105,7 @@ void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>
 
 // The tile IDs are compressed and encoded in the .tmx file.
 // Uses the Base64 and zlib libraries to help decode and decompress the data
-void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>* pLayers, const std::vector<Tileset>* pTilesets)
+void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLayer*>* pLayers, const std::vector<Tileset>* pTilesets)
 {
 	// Create new TileLayer instance
 	TileLayer* pTileLayer = new TileLayer(m_tileSize, *pTilesets);
@@ -138,7 +142,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
 
 	std::vector<unsigned int> gids(numGids);
 
-	uncompress((Bytef*)&gids[0], &numGids, (const Bytef*)decodedIDs.c_str(), decodedIDs.size());
+	uncompress((Bytef*)&gids[0], &numGids, (const Bytef*)decodedIDs.c_str(), static_cast<uLong>(decodedIDs.size()));
 
 	// The ids vector now contains all of the tile IDs
 	// Now to set the size of the data vector so it can be filled with the tile IDs
@@ -157,21 +161,20 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
 		}
 	}
 
-	
-
 	// Finally, set this layers tile data and then push the layer into the layers array of the Level
 	pTileLayer->setTileIDs(data);
 	pLayers->push_back(pTileLayer);
 }
 
-// Gets the texture values from the xml file and adds them to TextureManager
+// Gets the texture name and value from file and adds to TextureManager
 void LevelParser::parseTextures(TiXmlElement* pTextureRoot)
 {
-	TheTextureManager::Instance()->load(pTextureRoot->Attribute("value"), pTextureRoot->Attribute("name"));
+	std::string textureFilepath = "res/sprites/" + std::string(pTextureRoot->Attribute("value"));
+	TheSpriteManager::Instance()->loadSprite(textureFilepath, pTextureRoot->Attribute("name"));
 }
 
 
-void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Layer*>* pLayers)
+void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<BaseLayer*>* pLayers)
 {
 	// Create an object layer
 	ObjectLayer* pObjectLayer = new ObjectLayer();
@@ -180,19 +183,22 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Lay
 
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		
-		//std::cout << e->Value() << std::endl;
 		if (e->Value() == std::string("object"))
 		{
-			
-			int x, y, width, height, numFrames, callbackID, animSpeed;
-			std::string textureID;
+			//std::cout << e->Attribute("class") << std::endl;
+
+			// Check if type exists
+			if (!TheGameObjectFactory::Instance()->checkIfExist(e->Attribute("class")))
+			{
+				std::cout << "Could not create object of type: " << e->Attribute("class") << std::endl;
+				continue;
+			}
+
+			std::unique_ptr<LoaderParams> tempLoaderParams = std::make_unique<LoaderParams>();
 
 			// Get the initial node values type, x and y
-			e->Attribute("x", &x);
-			e->Attribute("y", &y);
-
-			GameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class")); // ----
+			e->Attribute("x", &tempLoaderParams->x);
+			e->Attribute("y", &tempLoaderParams->y);
 
 			// Get the property values
 			for (TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
@@ -205,38 +211,47 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Lay
 						{
 							if (property->Attribute("name") == std::string("numFrames")) // Check for the name of the property rather than grabbing the attribute directly
 							{
-								property->Attribute("value", &numFrames);
-							}
-							else if (property->Attribute("name") == std::string("textureHeight"))
-							{
-								property->Attribute("value", &height);
+								property->Attribute("value", &tempLoaderParams->numFrames);
 							}
 							else if (property->Attribute("name") == std::string("textureID"))
 							{
-								textureID = property->Attribute("value");
-							}
-							else if (property->Attribute("name") == std::string("textureWidth"))
-							{
-								property->Attribute("value", &width);
+								tempLoaderParams->textureID = property->Attribute("value");
 							}
 							else if (property->Attribute("name") == std::string("callbackID"))
 							{
-								property->Attribute("value", &callbackID);
+								property->Attribute("value", &tempLoaderParams->callbackID);
 							}
-							else if (e->Attribute("name") == std::string("animSpeed"))
+							else if (property->Attribute("name") == std::string("animationSpeed"))
 							{
-								property->Attribute("value", &animSpeed);
+								property->Attribute("value", &tempLoaderParams->animationSpeed);
+							}
+							else if (property->Attribute("name") == std::string("movementSpeed"))
+							{
+								double x;
+								property->Attribute("value", &x);
+								tempLoaderParams->movementSpeed = static_cast<float>(x);
 							}
 						}
 					}
 				}
 			}
-			
-			// Create the object just like the state parser
-			pGameObject->load(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed));
 
-			// Add it to this layers game object array
-			pObjectLayer->getGameObjects()->push_back(pGameObject);
+			BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class"));
+
+			// Create the object just like the state parser
+			pGameObject->loadObject(tempLoaderParams);
+
+			// If the object is an Alien then put it in a separate vector, otherwise put it in the normal vector
+			if (dynamic_cast<Alien*>(pGameObject))
+			{
+				Alien* temp = dynamic_cast<Alien*>(pGameObject);
+				pObjectLayer->getAlienObjects().push_back(temp);
+			}
+			else 
+			{
+				pObjectLayer->getGameObjects().push_back(pGameObject);
+			}
+			
 		}
 	}
 

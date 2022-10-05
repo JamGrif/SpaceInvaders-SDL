@@ -1,27 +1,25 @@
 #pragma once
-#include "MenuState.h"
+#include "BaseState.h"
 
-class GameObject;
+//class GameObject;
+//class Level;
 
 class GameOverState :
-    public MenuState
+    public BaseState
 {
 public:
-	virtual void update();
-	virtual void render();
+	virtual bool onEnterState() override;
+	virtual bool onExitState() override;
 
-	virtual bool onEnter();
-	virtual bool onExit();
+	virtual void updateState()override;
+	virtual void renderState()override;
 
 	virtual std::string getStateID() const { return s_gameOverID; }
-	virtual void setCallbacks(const std::vector<Callback>& callbacks);
+
 private:
 	static const std::string s_gameOverID;
 
 	static void s_gameOverToMain();
 	static void s_restartPlay();
-
-	std::vector <GameObject*> m_gameObjects;
-
 };
 

@@ -16,8 +16,6 @@ bool Window::init(std::string windowTitle, int width, int height)
 	if (!m_pWindow)
 		return false;
 
-	setWindowIcon("res/misc/icon.bmp");
-
 	m_windowWidth = width;
 	m_windowHeight = height;
 
@@ -27,16 +25,6 @@ bool Window::init(std::string windowTitle, int width, int height)
 void Window::clean()
 {
 	SDL_DestroyWindow(m_pWindow);
-}
-
-void Window::setWindowIcon(const std::string& filepath)
-{
-	SDL_Surface* tempSurface = SDL_LoadBMP(filepath.c_str());
-
-	if (tempSurface)
-		SDL_SetWindowIcon(m_pWindow, tempSurface);
-
-	SDL_FreeSurface(tempSurface);
 }
 
 SDL_Window* Window::getWindowPtr() const

@@ -21,16 +21,16 @@
     <ClCompile Include="src\core\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\TextureManager.cpp">
+    <ClCompile Include="src\core\SpriteManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\GameObject.cpp">
+    <ClCompile Include="src\gameobjects\BaseGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gameobjects\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\Enemy.cpp">
+    <ClCompile Include="src\gameobjects\Alien.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gameobjects\SDLGameObject.cpp">
@@ -48,7 +48,7 @@
     <ClCompile Include="src\core\InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\states\GameState.cpp">
+    <ClCompile Include="src\states\BaseState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\states\MainMenuState.cpp">
@@ -72,13 +72,7 @@
     <ClCompile Include="src\states\GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\AnimatedGraphic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\gameobjects\utility\GameObjectFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\states\utility\StateParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\tinyXML\src\tinyxmlparser.cpp">
@@ -93,13 +87,10 @@
     <ClCompile Include="dependencies\tinyXML\src\tinyxmlerror.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\states\MenuState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\level\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\level\Layer.cpp">
+    <ClCompile Include="src\level\BaseLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\level\TileLayer.cpp">
@@ -115,6 +106,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\ProgramClock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\utility\BulletHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -386,16 +386,16 @@
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\core\TextureManager.h">
+    <ClInclude Include="include\core\SpriteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gameobjects\GameObject.h">
+    <ClInclude Include="include\gameobjects\BaseGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gameobjects\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gameobjects\Enemy.h">
+    <ClInclude Include="include\gameobjects\Alien.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gameobjects\SDLGameObject.h">
@@ -413,7 +413,7 @@
     <ClInclude Include="include\core\InputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\states\GameState.h">
+    <ClInclude Include="include\states\BaseState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\states\MainMenuState.h">
@@ -437,13 +437,7 @@
     <ClInclude Include="include\states\GameOverState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gameobjects\AnimatedGraphic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\gameobjects\utility\GameObjectFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\states\utility\StateParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\tinyXML\include\tinyxml.h">
@@ -452,13 +446,10 @@
     <ClInclude Include="dependencies\tinyXML\include\tinystr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\states\MenuState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\level\Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\level\Layer.h">
+    <ClInclude Include="include\level\BaseLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\level\TileLayer.h">
@@ -479,5 +470,30 @@
     <ClInclude Include="dependencies\SDL2\_mixer\include\SDL2_mixer\include\SDL_mixer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="res\misc\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\ProgramClock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameobjects\Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gameobjects\utility\BulletHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\misc\icon.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\misc\icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\misc\SDL-Game.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

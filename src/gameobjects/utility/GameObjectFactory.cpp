@@ -20,7 +20,7 @@ bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)
 	return true;
 }
 
-GameObject* GameObjectFactory::create(std::string typeID)
+BaseGameObject* GameObjectFactory::create(std::string typeID)
 {
 	std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
 
@@ -32,6 +32,24 @@ GameObject* GameObjectFactory::create(std::string typeID)
 
 	BaseCreator* pCreator = (*it).second;
 	return pCreator->createGameObject();
+}
+
+/// <summary>
+/// Checks if a type exists and returns true or false on result
+/// </summary>
+/// <param name="typeID"></param>
+/// <returns></returns>
+bool GameObjectFactory::checkIfExist(std::string typeID)
+{
+	std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
+
+	//if (it == m_creators.end())
+	//{
+	//	return false;
+	//}
+
+	return it == m_creators.end() ? false : true;
+
 }
 
 GameObjectFactory* GameObjectFactory::Instance()

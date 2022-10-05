@@ -23,7 +23,7 @@ void InputHandler::update()
 		switch (event.type)
 		{
 			case SDL_QUIT:
-				TheGame::Instance()->quit();
+				TheGame::Instance()->quitGame();
 				break;
 
 			case SDL_MOUSEMOTION:

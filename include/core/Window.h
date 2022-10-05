@@ -12,8 +12,6 @@ public:
 	bool init(std::string windowTitle, int width, int height);
 	void clean();
 
-	inline void setWindowIcon(const std::string& filepath);
-
 	SDL_Window* getWindowPtr() const;
 
 	int getWindowWidth() const;

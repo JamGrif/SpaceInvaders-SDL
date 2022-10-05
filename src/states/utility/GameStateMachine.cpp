@@ -1,62 +1,85 @@
 #include "pch.h"
 #include "states/utility/GameStateMachine.h"
 
-#include "states/GameState.h"
+#include "states/BaseState.h"
 
-/// <summary>
-/// Run the update function of the currently selected state
-/// </summary>
-void GameStateMachine::update()
+#include "core/Game.h"
+#include "core/SpriteManager.h"
+#include "states/PlayState.h"
+#include "states/MainMenuState.h"
+#include "states/PauseState.h"
+#include "states/GameOverState.h"
+
+GameStateMachine::GameStateMachine()
+	:m_bNeedToChange(false), m_actionToTake(StateMachineAction::Nothing)
 {
-	if (!m_gameStates.empty())
+}
+
+GameStateMachine::~GameStateMachine()
+{
+	SpriteManager::Instance()->clearAllFromSpriteMap();
+
+	// Pop all remaining states left
+	while (!m_currentGameStates.empty())
 	{
-		m_gameStates.back()->update();
+		popState();
 	}
 }
 
 /// <summary>
-/// Run the render function of the currently selected state
+/// Update the currently selected state
 /// </summary>
-void GameStateMachine::render()
+void GameStateMachine::updateCurrentState()
 {
-	if (!m_gameStates.empty())
+	//std::cout << "hi4" << std::endl;
+	if (!m_currentGameStates.empty())
 	{
-		m_gameStates.back()->render();
+		m_currentGameStates.back()->updateState();
+	}
+}
+
+/// <summary>
+/// Render the currently selected state
+/// </summary>
+void GameStateMachine::renderCurrentState()
+{
+	//std::cout << "hi5" << std::endl;
+	if (!m_currentGameStates.empty())
+	{
+		m_currentGameStates.back()->renderState();
 	}
 }
 
 /// <summary>
 /// Simply push the passed-in state into the gameStates array and then call its onEnter function
 /// </summary>
-void GameStateMachine::pushState(GameState* pState)
+void GameStateMachine::pushState(BaseState* pState)
 {
-	m_gameStates.push_back(pState);
-	m_gameStates.back()->onEnter();
+	m_currentGameStates.push_back(pState);
+	m_currentGameStates.back()->onEnterState();
 }
 
 /// <summary>
-/// First check if there are any states in the array, and if so, check wheter their stateID is the same as the current one, and if so, do nothing.
+/// First check if there are any states in the array, and if so, check whether their stateID is the same as the current one, and if so, do nothing.
 /// If the stateID does not match, then remove the current state, add the new pState and call its onEnter function
 /// </summary>
-void GameStateMachine::changeState(GameState* pState)
+void GameStateMachine::changeState(BaseState* pState)
 {
-	if (!m_gameStates.empty())
+	if (m_currentGameStates.back()->getStateID() == pState->getStateID())
+		return;
+
+	// Pop all remaining states left before changing state
+	while (!m_currentGameStates.empty())
 	{
-		if (m_gameStates.back()->getStateID() == pState->getStateID())
-			return; 
-		
-		if (m_gameStates.back()->onExit())
-		{
-			delete m_gameStates.back();
-			m_gameStates.pop_back();
-		}
+		popState();
 	}
 
-	// Push back our new state
-	m_gameStates.push_back(pState);
+	TheSpriteManager::Instance()->clearAllFromSpriteMap();
 
+	// Push back our new state
+	m_currentGameStates.push_back(pState);
 	// Initialize it
-	m_gameStates.back()->onEnter();
+	m_currentGameStates.back()->onEnterState();
 }
 
 /// <summary>
@@ -64,12 +87,62 @@ void GameStateMachine::changeState(GameState* pState)
 /// </summary>
 void GameStateMachine::popState()
 {
-	if (!m_gameStates.empty())
+	if (!m_currentGameStates.empty())
 	{
-		if (m_gameStates.back()->onExit())
+		if (m_currentGameStates.back()->onExitState())
 		{
-			delete m_gameStates.back();
-			m_gameStates.pop_back();
+			delete m_currentGameStates.back();
+			m_currentGameStates.pop_back();
 		}
+	}
+}
+
+void GameStateMachine::indicateAChange(StateMachineAction change)
+{
+	m_bNeedToChange = true;
+	m_actionToTake = change;
+}
+
+void GameStateMachine::doAChange()
+{
+	StateMachineAction action = m_actionToTake;
+
+	// Reset values
+	m_actionToTake = StateMachineAction::Nothing;
+	m_bNeedToChange = true;
+
+	switch (action)
+	{
+		case StateMachineAction::Quit:
+			TheGame::Instance()->quitGame();
+			break;
+
+		case StateMachineAction::MainMenuToPlay:
+			changeState(new PlayState());
+			break;
+
+		case StateMachineAction::PauseToMain:
+			changeState(new MainMenuState());
+			break;
+
+		case StateMachineAction::ResumePlay:
+			popState();
+			break;
+
+		case StateMachineAction::GameOverToMain:
+			changeState(new MainMenuState());
+			break;
+
+		case StateMachineAction::RestartPlay:
+			changeState(new PlayState());
+			break;
+
+		case StateMachineAction::Pause:
+			pushState(new PauseState());
+			break;
+
+		case StateMachineAction::GameOver:
+			changeState(new GameOverState());
+			break;
 	}
 }

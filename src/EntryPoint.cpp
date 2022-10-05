@@ -32,14 +32,27 @@
 
 #include "core/Game.h"
 
+class MyClass
+{
+public:
+	MyClass() {}
+	~MyClass() {}
+private:
+
+};
+
 int main(int argc, char* args[])
 {
-	if (!TheGame::Instance()->init())
+
+	MyClass* test = new MyClass;
+	delete test;
+
+	if (!TheGame::Instance()->gameInit())
 		return 1;
 	else
-		TheGame::Instance()->loop();
+		TheGame::Instance()->gameLoop();
 
-	TheGame::Instance()->clean();
+	TheGame::Instance()->gameClean();
 
 	return 0;
 }

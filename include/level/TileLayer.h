@@ -1,17 +1,18 @@
 #pragma once
-#include "Layer.h"
+#include "BaseLayer.h"
 
 struct Tileset;
 
 // TileLayer is made up entirely of tiles and does not contain anything else
 class TileLayer :
-    public Layer
+    public BaseLayer
 {
 public:
 	TileLayer(int tileSize, const std::vector<Tileset>& tilesets);
+	~TileLayer();
 
-	virtual void update();
-	virtual void render();
+	virtual void updateLayer();
+	virtual void renderLayer();
 
 	void setTileIDs(const std::vector<std::vector<int>>& data);
 
@@ -30,8 +31,5 @@ private:
 
 	const std::vector<Tileset>& m_tilesets;
 	std::vector<std::vector<int>> m_tileIDs;
-
-
-
 };
 

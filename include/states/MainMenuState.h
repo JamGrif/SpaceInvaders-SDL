@@ -1,27 +1,23 @@
 #pragma once
-#include "MenuState.h"
+#include "BaseState.h"
 
-class GameObject;
+//class GameObject;
+//class Level;
 
 class MainMenuState :
-    public MenuState
+    public BaseState
 {
 public:
+	virtual bool onEnterState() override;
+	virtual bool onExitState() override;
 
-	virtual void update();
-	virtual void render();
-
-	virtual bool onEnter();
-	virtual bool onExit();
+	virtual void updateState() override;
+	virtual void renderState() override;
 
 	virtual std::string getStateID() const { return s_menuID; }
 
 private:
 	static const std::string s_menuID;
-
-	virtual void setCallbacks(const std::vector<Callback>& callbacks);
-
-	std::vector<GameObject*> m_gameObjects;
 
 	// callback functions for menu items
 	static void s_menuToPlay(); // Static as the functionality will only support static functions. Bit more complicated to handle regular member functions as function pointers.

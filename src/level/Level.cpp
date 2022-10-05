@@ -1,37 +1,45 @@
 #include "pch.h"
 #include "level/Level.h"
 
-#include "level/Layer.h"
+#include "level/BaseLayer.h"
 
 Level::~Level()
 {
-
-}
-
-void Level::update()
-{
-	for (int i = 0; i < m_layers.size(); i++)
+	for (auto layer : m_layers)
 	{
-		m_layers[i]->update();
+		delete layer;
 	}
 }
 
-void Level::render()
+void Level::updateLevel()
 {
-	for (int i = 0; i < m_layers.size(); i++)
+	for (auto layer : m_layers)
 	{
-		m_layers[i]->render();
+		layer->updateLayer();
 	}
 }
 
-std::vector<Tileset>* Level::getTilesets()
+void Level::renderLevel()
+{
+	for (auto layer : m_layers)
+	{
+		layer->renderLayer();
+	}
+}
+
+std::vector<Tileset>* Level::getLevelTilesets()
 {
 	return &m_tilesets;
 }
 
-std::vector<Layer*>* Level::getLayers()
+std::vector<BaseLayer*>* Level::getLevelLayers()
 {
 	return &m_layers;
+}
+
+BaseLayer* Level::getLayer(LayerIndex layerIndex)
+{
+	return m_layers.at(static_cast<size_t>(layerIndex));
 }
 
 Level::Level()
