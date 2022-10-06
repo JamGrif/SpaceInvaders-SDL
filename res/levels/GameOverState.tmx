@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="7">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="7">
  <properties>
   <property name="gameOverText" value="gameover.png"/>
   <property name="mainMenuButton" value="mainMenuButton.png"/>
   <property name="restartButton" value="restartButton.png"/>
  </properties>
- <tileset firstgid="1" name="blocks1" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="198" columns="18">
-  <image source="blocks1.png" width="640" height="400"/>
+ <tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="12" columns="12">
+  <image source="levelTileset.png" width="410" height="36"/>
  </tileset>
- <layer id="1" name="Tile Layer 1" width="20" height="15">
+ <layer id="1" name="Tile Layer 1" width="25" height="22">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYKISZgRiZgbqAZZR80bNGzVvSJsHKhNYqYRBZgEAlGMA3g==
+   eJxjZGBgYKIhZgRiZgbaApZRO0btGLVj1I5RO0btGLWD5naA6nRWGmKQ+QALAAEy
   </data>
  </layer>
  <objectgroup id="2" name="Object Layer 1">
-  <object id="4" name="MainMenuButton" class="MenuButton" x="170" y="300" width="10" height="10">
+  <object id="4" name="MainMenuButton" class="MenuButton" x="230" y="460" width="10" height="10">
    <properties>
     <property name="callbackID" type="int" value="1"/>
     <property name="numFrames" type="int" value="3"/>
@@ -23,7 +23,7 @@
     <property name="textureWidth" type="int" value="200"/>
    </properties>
   </object>
-  <object id="5" name="RestartButton" class="MenuButton" x="170" y="150" width="10" height="10">
+  <object id="5" name="RestartButton" class="MenuButton" x="230" y="300" width="10" height="10">
    <properties>
     <property name="callbackID" type="int" value="2"/>
     <property name="numFrames" type="int" value="3"/>
@@ -32,7 +32,7 @@
     <property name="textureWidth" type="int" value="200"/>
    </properties>
   </object>
-  <object id="6" name="GameOverText" class="SDLGameObject" x="170" y="75" width="10" height="10">
+  <object id="6" name="GameOverText" class="SDLGameObject" x="230" y="140" width="10" height="10">
    <properties>
     <property name="animationSpeed" type="int" value="1000"/>
     <property name="numFrames" type="int" value="2"/>
