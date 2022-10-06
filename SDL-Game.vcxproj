@@ -41,7 +41,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\gameobjects\Bullet.cpp" />
-    <ClCompile Include="src\core\ProgramClock.cpp" />
+    <ClCompile Include="src\misc\ProgramClock.cpp" />
     <ClCompile Include="src\core\SoundManager.cpp" />
     <ClCompile Include="src\level\ObjectLayer.cpp" />
     <ClCompile Include="src\level\LevelParser.cpp" />
@@ -172,6 +172,7 @@
     <ClInclude Include="dependencies\SDL\include\SDL_video.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h" />
     <ClInclude Include="include\gameobjects\utility\GameObjectFactory.h" />
+    <ClInclude Include="include\misc\Collision.h" />
     <ClInclude Include="include\states\GameOverState.h" />
     <ClInclude Include="include\states\utility\GameStateMachine.h" />
     <ClInclude Include="include\states\BaseState.h" />
@@ -196,7 +197,7 @@
     <ClInclude Include="include\level\TileLayer.h" />
     <ClInclude Include="include\level\ObjectLayer.h" />
     <ClInclude Include="include\core\SoundManager.h" />
-    <ClInclude Include="include\core\ProgramClock.h" />
+    <ClInclude Include="include\misc\ProgramClock.h" />
     <ClInclude Include="include\gameobjects\Bullet.h" />
     <ClInclude Include="res\misc\resource.h" />
   </ItemGroup>

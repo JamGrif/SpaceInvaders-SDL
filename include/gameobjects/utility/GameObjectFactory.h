@@ -38,6 +38,6 @@ private:
 	static GameObjectFactory* s_pInstance;
 
 	// Map holds the important elements of the factory, the functions of the class either add or remove from this map.
-	std::map<std::string, BaseCreator*> m_creators;
+	std::unordered_map<std::string, BaseCreator*> m_creators;
 };
 typedef GameObjectFactory TheGameObjectFactory;

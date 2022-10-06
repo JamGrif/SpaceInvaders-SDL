@@ -1,7 +1,5 @@
 #pragma once
 
-
-// Forward Declaration
 struct SDL_Renderer;
 
 /// <summary>

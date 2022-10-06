@@ -49,7 +49,9 @@ void PlayState::updateState()
 		if (m_allAliens->size())
 		{
 			int randomNumber = rand() % ((m_allAliens->size() - 1) - 0 + 1);
-			m_allAliens->at(randomNumber)->setDying();
+
+			Alien* temp = m_allAliens->at(randomNumber);
+			TheBulletHandler::Instance()->addAlienBullet(temp->getPosition().getX(), temp->getPosition().getY());
 		}
 	}
 
@@ -64,6 +66,7 @@ void PlayState::updateState()
 		}
 	}
 
+	// Check direction of aliens
 	for (auto aliens : *m_allAliens)
 	{
 		// If any aliens have reached the edge of the screen, they will all need to move down next frame
@@ -76,6 +79,12 @@ void PlayState::updateState()
 			}
 			break;
 		}
+	}
+
+	// If all aliens are dead
+	if (m_allAliens->empty())
+	{
+		TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::GameOver);
 	}
 
 	TheBulletHandler::Instance()->updateBullets();
@@ -99,7 +108,9 @@ bool PlayState::onEnterState()
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_pStateLevel->getLayer(LayerIndex::objectLayer));
 	m_allAliens = &temp->getAlienObjects();
 
-	srand(time(0));
+	BulletHandler::Instance()->setLevel(m_pStateLevel);
+
+	srand(static_cast<unsigned int>(time(0)));
 
 	return true;
 }
@@ -117,31 +128,3 @@ bool PlayState::onExitState()
 	return true;
 }
 
-
-bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
-{
-	float leftA, leftB;
-	float rightA, rightB;
-	float topA, topB;
-	float bottomA, bottomB;
-
-	// Calculate the sides of p1
-	leftA = p1->getPosition().getX();
-	rightA = p1->getPosition().getX() + p1->getWidth();
-	topA = p1->getPosition().getY();
-	bottomA = p1->getPosition().getY() + p1->getHeight();
-
-	// Calculate the sides of p2
-	leftB = p2->getPosition().getX();
-	rightB = p2->getPosition().getX() + p2->getWidth();
-	topB = p2->getPosition().getY();
-	bottomB = p2->getPosition().getY() + p2->getHeight();
-
-	// If any of the sides from A are outside of B
-	if (bottomA <= topB) { return false; }
-	if (topA >= bottomB) { return false; }
-	if (rightA <= leftB) { return false; }
-	if (leftA >= rightB) { return false; }
-
-	return true;
-}

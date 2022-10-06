@@ -26,7 +26,5 @@ private:
 
 	int m_totalAliens;
 	int m_currentAliensDead;
-
-	bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
 };
 

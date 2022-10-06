@@ -31,8 +31,8 @@ public:
 private:
 	static SoundManager* s_pInstance; // Singleton as there should only be one place the sounds are stored and should be accessible from anywhere in the game
 
-	std::map<std::string, Mix_Chunk*> m_sfxs;	// Mix_Chunk used for sound effects only
-	std::map<std::string, Mix_Music*> m_music;	// Mix_Music used for music tracks only
+	std::unordered_map<std::string, Mix_Chunk*> m_sfxs;	// Mix_Chunk used for sound effects only
+	std::unordered_map<std::string, Mix_Music*> m_music;	// Mix_Music used for music tracks only
 
 	SoundManager();
 	~SoundManager();

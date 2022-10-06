@@ -6,7 +6,7 @@ GameObjectFactory* GameObjectFactory::s_pInstance = nullptr;
 
 bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)
 {
-	std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
+	std::unordered_map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
 
 	// if the type is already registered, do nothing
 	if (it != m_creators.end())
@@ -22,7 +22,7 @@ bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)
 
 BaseGameObject* GameObjectFactory::create(std::string typeID)
 {
-	std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
+	std::unordered_map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
 
 	if (it == m_creators.end())
 	{
@@ -41,7 +41,7 @@ BaseGameObject* GameObjectFactory::create(std::string typeID)
 /// <returns></returns>
 bool GameObjectFactory::checkIfExist(std::string typeID)
 {
-	std::map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
+	std::unordered_map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
 
 	//if (it == m_creators.end())
 	//{

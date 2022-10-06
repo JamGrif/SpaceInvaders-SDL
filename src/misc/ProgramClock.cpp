@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "core/ProgramClock.h"
+#include "misc/ProgramClock.h"
 
 #include "SDL2/SDL.h"
 
@@ -39,6 +39,11 @@ double ProgramClock::getDeltaTime()
 int ProgramClock::getFrameCount()
 {
 	return m_frameCountToDisplay;
+}
+
+double ProgramClock::getLastFrame()
+{
+	return m_lastFrame;
 }
 
 ProgramClock* ProgramClock::Instance()

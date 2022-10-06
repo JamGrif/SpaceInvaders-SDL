@@ -8,6 +8,7 @@ public:
 
 	double getDeltaTime();
 	int getFrameCount();
+	double getLastFrame();
 
 	static ProgramClock* Instance();
 private:

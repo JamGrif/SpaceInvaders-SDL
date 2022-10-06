@@ -35,6 +35,7 @@ void Player::updateObject()
 	m_velocity.setX(0);
 	m_velocity.setY(0);
 
+	// Move Right
 	if (m_position.getX() + m_objectWidth < m_screenWidth - edgeScreenBuffer)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::D))
@@ -42,7 +43,8 @@ void Player::updateObject()
 			m_velocity.setX(m_movementSpeed);
 		}
 	}
-	
+
+	// Move Left
 	if (m_position.getX() > edgeScreenBuffer)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::A))
@@ -54,7 +56,7 @@ void Player::updateObject()
 	// Spawn PlayerBullet
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::SPACE))
 	{
-		TheBulletHandler::Instance()->addPlayerBullet(m_position.getX()+(m_objectWidth/2), m_position.getY() - m_objectHeight);
+		TheBulletHandler::Instance()->addPlayerBullet(static_cast<int>(m_position.getX()+(m_objectWidth/2)), static_cast<int>(m_position.getY() - m_objectHeight));
 	}
 
 }

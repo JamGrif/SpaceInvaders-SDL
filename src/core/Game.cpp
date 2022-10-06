@@ -18,6 +18,9 @@ constexpr int FPS = 60;
 constexpr int DELAY_TIME = static_cast<int>(1000.0f/FPS); // Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
 Uint32 frameStart, frameTime;
 
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 704
+
 
 /// <summary>
 /// Initializes all SDL and program systems
@@ -31,7 +34,7 @@ bool Game::gameInit()
 		return false;
 	}
 
-	if (!TheWindow::Instance()->init("Jamie's Really Cool Game", 640, 480))
+	if (!TheWindow::Instance()->init("SpaceInvaders-SDL", WINDOW_WIDTH, WINDOW_HEIGHT))
 		return false;
 
 	if (!TheRenderer::Instance()->init())
@@ -39,13 +42,14 @@ bool Game::gameInit()
 	
 	TheInputHandler::Instance()->init();
 
-	TheProgramClock::Instance()->init();
-
+	
+	// Register types for the LevelParser
 	TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
 	TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
 	TheGameObjectFactory::Instance()->registerType("Alien", new AlienCreator());
 	TheGameObjectFactory::Instance()->registerType("SDLGameObject", new SDLGameObjectCreator());
 	TheGameObjectFactory::Instance()->registerType("PlayerBullet", new PlayerBulletCreator());
+	TheGameObjectFactory::Instance()->registerType("AlienBullet", new AlienBulletCreator());
 
 	m_pGameStateMachine = new GameStateMachine();
 	m_pGameStateMachine->pushState(new MainMenuState());
@@ -59,6 +63,8 @@ bool Game::gameInit()
 /// </summary>
 void Game::gameLoop()
 {
+	TheProgramClock::Instance()->init();
+
 	// SDL_GetTicks() returns the amount of milliseconds since SDL_Init was called
 	while (m_bRunning)
 	{
