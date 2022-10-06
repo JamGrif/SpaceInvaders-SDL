@@ -58,15 +58,15 @@ SoundManager::SoundManager()
 		4096);		// Chunksize
 }
 
-SoundManager::SoundManager(const SoundManager&)
-{
-
-}
-
-SoundManager& SoundManager::operator=(const SoundManager&)
-{
-
-}
+//SoundManager::SoundManager(const SoundManager&)
+//{
+//
+//}
+//
+//SoundManager& SoundManager::operator=(const SoundManager&)
+//{
+//
+//}
 
 SoundManager::~SoundManager()
 {

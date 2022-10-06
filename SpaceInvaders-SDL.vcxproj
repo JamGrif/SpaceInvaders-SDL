@@ -206,7 +206,7 @@
     <Image Include="res\misc\icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\misc\SDL-Game.rc" />
+    <ResourceCompile Include="res\misc\SpaceInvaders-SDL.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

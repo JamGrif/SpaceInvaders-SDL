@@ -470,9 +470,6 @@
     <ClInclude Include="dependencies\SDL2\_mixer\include\SDL2_mixer\include\SDL_mixer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\misc\resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\misc\ProgramClock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -493,10 +490,5 @@
     <Image Include="res\misc\icon.ico">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="res\misc\SDL-Game.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

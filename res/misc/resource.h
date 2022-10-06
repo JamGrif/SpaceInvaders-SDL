@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by SDL-Game.rc
+// Used by SpaceInvaders-SDL.rc
 //
 #define IDI_ICON1                       101
 
