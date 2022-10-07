@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="68">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="73">
  <properties>
   <property name="alienBullet" value="alienBullet.png"/>
   <property name="alienDead" value="alienDead.png"/>
@@ -10,6 +10,7 @@
   <property name="lives" value="lives.png"/>
   <property name="player" value="player.png"/>
   <property name="playerBullet" value="playerBullet.png"/>
+  <property name="playerDead" value="playerDead.png"/>
   <property name="score" value="score.png"/>
  </properties>
  <tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="13" columns="13">
@@ -23,6 +24,7 @@
  <objectgroup id="2" name="Object Layer 1">
   <object id="2" name="Player" class="Player" x="400" y="638" width="10" height="10">
    <properties>
+    <property name="animationSpeed" type="int" value="150"/>
     <property name="movementSpeed" type="int" value="4"/>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="player"/>
@@ -314,7 +316,7 @@
     <property name="textureID" value="lives"/>
    </properties>
   </object>
-  <object id="46" name="Text" class="SDLGameObject" x="350" y="25" width="10" height="10">
+  <object id="46" name="Text" class="SDLGameObject" x="420" y="25" width="10" height="10">
    <properties>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="score"/>
@@ -478,6 +480,27 @@
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
     <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="68" name="Life" class="PlayerLives" x="184" y="28" width="50" height="32">
+   <properties>
+    <property name="livesRequired" type="int" value="1"/>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="player"/>
+   </properties>
+  </object>
+  <object id="69" name="Life" class="PlayerLives" x="244.333" y="28" width="50" height="32">
+   <properties>
+    <property name="livesRequired" type="int" value="2"/>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="player"/>
+   </properties>
+  </object>
+  <object id="72" name="Life" class="PlayerLives" x="304.667" y="28" width="50" height="32">
+   <properties>
+    <property name="livesRequired" type="int" value="3"/>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="player"/>
    </properties>
   </object>
  </objectgroup>

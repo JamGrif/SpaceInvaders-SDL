@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="6">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="7">
  <properties>
+  <property name="logo" value="logo.png"/>
   <property name="mainMenuButton" value="mainMenuButton.png"/>
   <property name="resumeButton" value="resumeButton.png"/>
  </properties>
- <tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="12" columns="12">
-  <image source="levelTileset.png" width="410" height="36"/>
+ <tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="13" columns="13">
+  <image source="levelTileset.png" width="444" height="36"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="25" height="22">
   <data encoding="base64" compression="zlib">
@@ -29,6 +30,12 @@
     <property name="textureHeight" type="int" value="80"/>
     <property name="textureID" value="mainMenuButton"/>
     <property name="textureWidth" type="int" value="200"/>
+   </properties>
+  </object>
+  <object id="6" name="Logo" class="SDLGameObject" x="230" y="50" width="10" height="10">
+   <properties>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="logo"/>
    </properties>
   </object>
  </objectgroup>
