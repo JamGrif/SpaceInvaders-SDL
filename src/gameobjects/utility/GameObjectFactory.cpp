@@ -27,7 +27,7 @@ BaseGameObject* GameObjectFactory::create(std::string typeID)
 	if (it == m_creators.end())
 	{
 		std::cout << "Could not find type: " << typeID << std::endl;
-		return NULL;
+		return nullptr;
 	}
 
 	BaseCreator* pCreator = (*it).second;
@@ -37,26 +37,10 @@ BaseGameObject* GameObjectFactory::create(std::string typeID)
 /// <summary>
 /// Checks if a type exists and returns true or false on result
 /// </summary>
-/// <param name="typeID"></param>
-/// <returns></returns>
 bool GameObjectFactory::checkIfExist(std::string typeID)
 {
 	std::unordered_map<std::string, BaseCreator*>::iterator it = m_creators.find(typeID);
 
-	//if (it == m_creators.end())
-	//{
-	//	return false;
-	//}
-
 	return it == m_creators.end() ? false : true;
 
-}
-
-GameObjectFactory* GameObjectFactory::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new GameObjectFactory();
-	}
-	return s_pInstance;
 }

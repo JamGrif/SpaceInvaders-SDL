@@ -43,11 +43,19 @@ public:
 	void update();
 	void clean();
 
-	bool isMouseButtonDown(int mouseButton);
-	bool isKeyDown(int keyboardKey);
-	Vector2D getMousePosition();
+	bool isMouseButtonDown(int mouseButton) const { return m_mouseButtonStates[mouseButton]; }
 
-	static InputHandler* Instance();
+	bool isKeyDown(int keyboardKey) const;
+
+	Vector2D getMousePosition() const { return m_mousePosition; }
+
+	static InputHandler* Instance()
+	{
+		if (!s_pInstance)
+			s_pInstance = new InputHandler();
+		return s_pInstance;
+	}
+
 private:
 	InputHandler();
 	static InputHandler* s_pInstance;

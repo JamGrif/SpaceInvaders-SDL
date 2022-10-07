@@ -26,26 +26,3 @@ void Window::clean()
 {
 	SDL_DestroyWindow(m_pWindow);
 }
-
-SDL_Window* Window::getWindowPtr() const
-{
-	return m_pWindow;
-}
-
-int Window::getWindowWidth() const
-{
-	return m_windowWidth;
-}
-
-int Window::getWindowHeight() const
-{
-	return m_windowHeight;
-}
-
-Window* Window::Instance()
-{
-	if (!s_pInstance)
-		s_pInstance = new Window();
-	
-	return s_pInstance;
-}

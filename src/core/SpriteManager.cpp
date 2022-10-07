@@ -12,17 +12,6 @@ SpriteManager::SpriteManager()
 {
 }
 
-SpriteManager* SpriteManager::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new SpriteManager();
-		return s_pInstance;
-	}
-
-	return s_pInstance;
-}
-
 bool SpriteManager::loadSprite(const std::string& fileName, const std::string& id)
 {
 	// Ensure texture doesn't currently exist
@@ -104,9 +93,4 @@ void SpriteManager::drawSpriteTile(const std::string& id, int margin, int spacin
 
 
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
-}
-
-Sprite* SpriteManager::getSpriteViaID(const std::string& id)
-{
-	return m_spriteMap.at(id);
 }

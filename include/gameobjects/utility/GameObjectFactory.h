@@ -32,7 +32,14 @@ public:
 
 	bool checkIfExist(std::string typeID);
 
-	static GameObjectFactory* Instance(); // Singleton
+
+	static GameObjectFactory* Instance() // Instance get
+	{
+		if (!s_pInstance)
+			s_pInstance = new GameObjectFactory();
+		return s_pInstance;
+	}
+
 private:
 	//GameObjectFactory();
 	static GameObjectFactory* s_pInstance;

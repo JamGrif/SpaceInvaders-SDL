@@ -21,8 +21,13 @@
 
 const std::string PlayState::s_playID = "PLAY";
 
-float currentTime = 0.0f;
-float maxTime = 1000.0;
+#define alienWinLineHeight 500
+
+static float currentTime = 0.0f;
+static float maxTime = 1000.0;
+
+static bool bFirstCheckDying = false;
+static bool allowedToSpawnBullets = true;
 
 void PlayState::updateState()
 {
@@ -31,29 +36,27 @@ void PlayState::updateState()
 	// If esc is pressed then push PauseState into the FSM
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ESC))
 	{
-		TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::Pause);
+		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::pushPause);
 	}
 
-	// If esc is pressed then push PauseState into the FSM
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::One))
+	// If player is dead, determine whether to respawn them or change state to gameover
+	if (m_player->getDead())
 	{
-		TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::GameOver);
-	}
-
-	// Check
-	
-	currentTime += TheProgramClock::Instance()->getDeltaTime();
-	if (currentTime >= maxTime)
-	{
-		currentTime = 0.0f;
-		if (m_allAliens->size())
+		// Player has run out of lives
+		if (m_player->getPlayerLives() <= 0)
 		{
-			int randomNumber = rand() % ((m_allAliens->size() - 1) - 0 + 1);
-
-			Alien* temp = m_allAliens->at(randomNumber);
-			TheBulletHandler::Instance()->addAlienBullet(temp->getPosition().getX(), temp->getPosition().getY());
+			TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
+		}
+		else
+		{
+			bFirstCheckDying = false;
+			allowedToSpawnBullets = true;
+			m_player->respawn();
 		}
 	}
+
+
+
 
 	// Check all aliens and remove any dead ones
 	for (int i = 0; i < m_allAliens->size(); i++)
@@ -65,6 +68,33 @@ void PlayState::updateState()
 			continue;
 		}
 	}
+
+	// Spawn a bullet at a random alien
+	if (allowedToSpawnBullets)
+	{
+		currentTime += static_cast<float>(TheProgramClock::Instance()->getDeltaTime());
+		if (currentTime >= maxTime)
+		{
+			currentTime = 0.0f;
+			if (m_allAliens->size())
+			{
+				int randomNumber = rand() % ((m_allAliens->size() - 1) - 0 + 1);
+
+				Alien* temp = m_allAliens->at(randomNumber);
+				TheBulletHandler::Instance()->addAlienBullet(static_cast<int>((temp->getPosition().getX() + (temp->getWidth() / 2))), static_cast<int>(temp->getPosition().getY()));
+			}
+		}
+	}
+
+	// Check if any alien has reached finish line
+	for (auto alien : *m_allAliens)
+	{
+		if (alien->getPosition().getY() >= alienWinLineHeight)
+		{
+			TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
+		}
+	}
+	
 
 	// Check direction of aliens
 	for (auto aliens : *m_allAliens)
@@ -84,8 +114,19 @@ void PlayState::updateState()
 	// If all aliens are dead
 	if (m_allAliens->empty())
 	{
-		TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::GameOver);
+		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
 	}
+
+	if (!bFirstCheckDying)
+	{
+		if (m_player->getDying())
+		{
+			bFirstCheckDying = true;
+			allowedToSpawnBullets = false;
+			TheBulletHandler::Instance()->clearBullets();
+		}
+	}
+
 
 	TheBulletHandler::Instance()->updateBullets();
 	
@@ -107,6 +148,8 @@ bool PlayState::onEnterState()
 
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_pStateLevel->getLayer(LayerIndex::objectLayer));
 	m_allAliens = &temp->getAlienObjects();
+	m_player = temp->getPlayerObject();
+	allowedToSpawnBullets = true;
 
 	BulletHandler::Instance()->setLevel(m_pStateLevel);
 
@@ -120,8 +163,9 @@ bool PlayState::onExitState()
 	std::cout << "-=-=-=-=-=-Exiting PlayState-=-=-=-=-=-" << std::endl;
 
 	m_allAliens = nullptr;
+	m_player = nullptr;
 
-	TheBulletHandler::Instance()->cleanBullets();
+	TheBulletHandler::Instance()->clearBullets();
 
 	delete m_pStateLevel;
 

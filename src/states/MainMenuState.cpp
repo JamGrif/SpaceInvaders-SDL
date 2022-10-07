@@ -16,13 +16,13 @@ const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::s_menuToPlay()
 {
-	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::MainMenuToPlay);
+	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToPlay);
 	//TheGame::Instance()->getStateMachine()->changeState(new PlayState());
 }
 
 void MainMenuState::s_exitFromMenu()
 {
-	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::Quit);
+	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::Quit);
 	//TheGame::Instance()->quitGame();
 }
 

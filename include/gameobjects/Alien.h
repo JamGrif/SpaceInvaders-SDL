@@ -17,7 +17,8 @@ public:
 	void switchDirections();
 
 	void setDying();
-	bool isDead();
+
+	bool isDead() const { return m_bDead; }
 
 private:
 

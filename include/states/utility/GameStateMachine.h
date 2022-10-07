@@ -4,15 +4,13 @@ class BaseState;
 
 enum class StateMachineAction
 {
-	Nothing			= 0,
-	Quit			= 1,
-	MainMenuToPlay	= 2,
-	PauseToMain		= 3,
-	ResumePlay		= 4,
-	GameOverToMain	= 5,
-	RestartPlay		= 6,
-	Pause			= 7,
-	GameOver		= 8,
+	Nothing				= 0,
+	Quit				= 1,
+	changeToPlay		= 2,
+	changeToMain		= 3,
+	changeToGameOver	= 4,
+	popPause			= 5,
+	pushPause			= 6,
 };
 
 /// <summary>
@@ -28,17 +26,17 @@ public:
 	void updateCurrentState();
 	void renderCurrentState();
 
+	bool checkForStateChange() const { return m_bNeedToChange; }
+	void setStateUpdate(StateMachineAction change);
+	void changeCurrentState();
+
+private:
+	std::vector<BaseState*> m_currentGameStates;
+
 	// State Selection
 	void pushState(BaseState* pState);		// Add a state without removing the previous state
 	void changeState(BaseState* pState);	// Remove the previous state before adding another
 	void popState();						// Remove the state currently being used without adding another
-
-	bool IsActionToChange() { return m_bNeedToChange; }
-	void indicateAChange(StateMachineAction change);
-	void doAChange();
-
-private:
-	std::vector<BaseState*> m_currentGameStates;
 
 	bool m_bNeedToChange;
 	StateMachineAction m_actionToTake;

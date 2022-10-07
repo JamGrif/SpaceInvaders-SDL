@@ -10,6 +10,8 @@
 #include "level/ObjectLayer.h"
 #include "gameobjects/BaseGameObject.h"
 #include "gameobjects/Alien.h"
+#include "gameobjects/Player.h"
+#include "gameobjects/PlayerLives.h"
 
 #include "Base64/base64.h"
 #include "zlib/zlib.h"
@@ -225,6 +227,10 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 							{
 								property->Attribute("value", &tempLoaderParams->animationSpeed);
 							}
+							else if (property->Attribute("name") == std::string("livesRequired"))
+							{
+								property->Attribute("value", &tempLoaderParams->livesRequired);
+							}
 							else if (property->Attribute("name") == std::string("movementSpeed"))
 							{
 								double x;
@@ -247,15 +253,28 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 				Alien* temp = dynamic_cast<Alien*>(pGameObject);
 				pObjectLayer->getAlienObjects().push_back(temp);
 			}
-			else 
+			else
 			{
+				// If object is a player, then also store its address
+				if (dynamic_cast<Player*>(pGameObject))
+				{
+					pObjectLayer->setPlayer(dynamic_cast<Player*>(pGameObject));
+				}
 				pObjectLayer->getGameObjects().push_back(pGameObject);
 			}
-			
+		}
+	}
+
+	// Set the player ptr in all PlayerLives objects
+	for (auto object : pObjectLayer->getGameObjects())
+	{
+		if (dynamic_cast<PlayerLives*>(object))
+		{
+			PlayerLives* temp = dynamic_cast<PlayerLives*>(object);
+			temp->setPlayer(pObjectLayer->getPlayerObject());
 		}
 	}
 
 	// Once loaded all the objects for this layer, we can push it into our level layer array
 	pLayers->push_back(pObjectLayer);
-	
 }

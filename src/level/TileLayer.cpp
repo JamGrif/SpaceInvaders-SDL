@@ -69,17 +69,9 @@ void TileLayer::renderLayer()
 	}
 }
 
-void TileLayer::setTileIDs(const std::vector<std::vector<int>>& data)
-{
-	m_tileIDs = data;
-}
 
-void TileLayer::setTileSize(int tileSize)
-{
-	m_tileSize = tileSize;
-}
 
-Tileset TileLayer::getTilesetByID(int tileID)
+Tileset TileLayer::getTilesetByID(int tileID) const
 {
 	// Compares each tilesets firstgid value and returns the correct tileset
 	for (int i = 0; i < m_tilesets.size(); i++)

@@ -53,13 +53,13 @@ bool PauseState::onExitState()
 void PauseState::s_pauseToMain()
 {
 	//TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
-	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::PauseToMain);
+	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToMain);
 }
 
 void PauseState::s_resumePlay()
 {
 	//TheGame::Instance()->getStateMachine()->popState();
-	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::ResumePlay);
+	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::popPause);
 }
 
 

@@ -2,6 +2,10 @@
 
 #include "gameobjects/SDLGameObject.h"
 
+/// <summary>
+/// Bounding box collision check between two SDLGameObjects
+/// </summary>
+/// <returns>True if collision</returns>
 bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 {
 	float leftA, leftB;

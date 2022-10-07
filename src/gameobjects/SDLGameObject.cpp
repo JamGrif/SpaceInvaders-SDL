@@ -62,17 +62,3 @@ void SDLGameObject::updateObject()
 	m_currentSpriteFrame = static_cast<int>(((SDL_GetTicks() / m_animationSpeed) % m_framesInSprite));
 }
 
-Vector2D& SDLGameObject::getPosition()
-{
-	return m_position;
-}
-
-int SDLGameObject::getWidth()
-{
-	return m_objectWidth;
-}
-
-int SDLGameObject::getHeight()
-{
-	return m_objectHeight;
-}

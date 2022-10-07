@@ -13,7 +13,27 @@ public:
     virtual void drawObject();
     virtual void updateObject();
 
+	void respawn();
+
+	void setDying();
+
+	bool getDead() const { return m_bDead; }
+	bool getDying() const { return m_bDying; }
+
+	int getPlayerLives() const { return m_playerCurrentLives; }
+
 private:
+
+	bool m_bDead;
+	bool m_bDying;
+
+	float m_timeSpentDying = 0;
+	float m_timeMaxDying = 2000;
+
+	Vector2D m_respawnPosition;
+
+	int m_playerMaxLives;
+	int m_playerCurrentLives;
 
 };
 

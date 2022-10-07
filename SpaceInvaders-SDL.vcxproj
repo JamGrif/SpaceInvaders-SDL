@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameobjects\PlayerLives.cpp" />
     <ClCompile Include="src\gameobjects\utility\BulletHandler.cpp" />
     <ClCompile Include="dependencies\Base64\src\base64.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -199,6 +200,7 @@
     <ClInclude Include="include\core\SoundManager.h" />
     <ClInclude Include="include\misc\ProgramClock.h" />
     <ClInclude Include="include\gameobjects\Bullet.h" />
+    <ClInclude Include="include\gameobjects\PlayerLives.h" />
     <ClInclude Include="res\misc\resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +311,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -335,6 +338,7 @@ xcopy $(ProjectDir)dependencies\zlib\lib\zlibwapi.dll $(TargetDir)  /d </Command
       <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

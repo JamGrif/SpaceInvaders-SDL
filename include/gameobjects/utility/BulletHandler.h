@@ -13,19 +13,24 @@ public:
 	void updateBullets();
 	void drawBullets();
 
-	void cleanBullets();
+	void clearBullets();
 
 	void setLevel(Level* level) { m_level = level; };
 
-	// Singleton instance get
-	static BulletHandler* Instance();
+	static BulletHandler* Instance() // Instance get
+	{
+		if (!s_pInstance)
+			s_pInstance = new BulletHandler();
+		return s_pInstance;
+	}
+
 private:
 	BulletHandler();
 	static BulletHandler* s_pInstance;
 
 	PlayerBullet* m_playerBullet; // Only one PlayerBullet can exist at one time
-
 	std::vector<AlienBullet*> m_alienBullets;
+
 	const int m_maxAlienBullets = 5;
 
 	Level* m_level;

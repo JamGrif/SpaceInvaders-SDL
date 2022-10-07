@@ -11,6 +11,8 @@
 #include "gameobjects/Bullet.h"
 #include "states/MainMenuState.h" 
 #include "states/utility/GameStateMachine.h"
+#include "core/SoundManager.h"
+#include "gameobjects/PlayerLives.h"
 
 Game* Game::s_pInstance = nullptr;
 
@@ -42,6 +44,14 @@ bool Game::gameInit()
 	
 	TheInputHandler::Instance()->init();
 
+	TheSoundManager::Instance()->init();
+
+	TheSoundManager::Instance()->loadSound("res/audio/playerShoot.wav", "playerShoot");
+	TheSoundManager::Instance()->loadSound("res/audio/playerExplosion.wav", "playerExplosion");
+	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav", "alienExplosion");
+	TheSoundManager::Instance()->loadSound("res/audio/menuMouseOver.wav", "menuMouseOver");
+	 
+	TheSoundManager::Instance()->playSound("playerShoot");
 	
 	// Register types for the LevelParser
 	TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
@@ -50,9 +60,10 @@ bool Game::gameInit()
 	TheGameObjectFactory::Instance()->registerType("SDLGameObject", new SDLGameObjectCreator());
 	TheGameObjectFactory::Instance()->registerType("PlayerBullet", new PlayerBulletCreator());
 	TheGameObjectFactory::Instance()->registerType("AlienBullet", new AlienBulletCreator());
+	TheGameObjectFactory::Instance()->registerType("PlayerLives", new PlayerLivesCreator());
 
 	m_pGameStateMachine = new GameStateMachine();
-	m_pGameStateMachine->pushState(new MainMenuState());
+	m_pGameStateMachine->setStateUpdate(StateMachineAction::changeToMain);
 
 	m_bRunning = true;
 	return true;
@@ -65,7 +76,6 @@ void Game::gameLoop()
 {
 	TheProgramClock::Instance()->init();
 
-	// SDL_GetTicks() returns the amount of milliseconds since SDL_Init was called
 	while (m_bRunning)
 	{
 		TheProgramClock::Instance()->tick();
@@ -88,6 +98,8 @@ void Game::gameLoop()
 void Game::gameClean()
 {
 	delete m_pGameStateMachine;
+	TheSoundManager::Instance()->clean();
+	TheSoundManager::Instance()->loadSound("test", "test");
 	TheInputHandler::Instance()->clean();
 	TheRenderer::Instance()->clean();
 	TheWindow::Instance()->clean();
@@ -121,9 +133,10 @@ void Game::handleEventsGame()
 {
 	TheInputHandler::Instance()->update();
 
-	if (m_pGameStateMachine->IsActionToChange())
+	// Check if the current state is set to change
+	if (m_pGameStateMachine->checkForStateChange())
 	{
-		m_pGameStateMachine->doAChange();
+		m_pGameStateMachine->changeCurrentState();
 	}
 }
 
@@ -133,20 +146,6 @@ void Game::handleEventsGame()
 void Game::quitGame()
 {
 	m_bRunning = false;
-}
-
-GameStateMachine* Game::getStateMachine()
-{
-	return m_pGameStateMachine;
-}
-
-Game* Game::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new Game();
-	}
-	return s_pInstance;
 }
 
 Game::Game()

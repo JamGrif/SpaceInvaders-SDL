@@ -5,9 +5,10 @@
 #include "core/SpriteManager.h"
 
 #include "gameobjects/utility/BulletHandler.h"
+#include "core/SoundManager.h"
 
 Player::Player()
-	:SDLGameObject()
+	:SDLGameObject(), m_bDead(false), m_bDying(false), m_respawnPosition(0,0), m_playerMaxLives(3), m_playerCurrentLives(m_playerMaxLives)
 {
 }
 
@@ -21,10 +22,16 @@ Player::~Player()
 void Player::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
 	SDLGameObject::loadObject(pParams);
+
+	// Use the starting position as the respawn position
+	m_respawnPosition.setX(pParams->x);
+	m_respawnPosition.setY(pParams->y);
 }
 
 void Player::drawObject()
 {
+	std::cout << "X: " << static_cast<int>(m_position.getX()) << std::endl;
+
 	SDLGameObject::drawObject();
 }
 
@@ -34,6 +41,21 @@ void Player::updateObject()
 
 	m_velocity.setX(0);
 	m_velocity.setY(0);
+
+	if (m_bDead)
+	{
+		std::cout << "dead" << std::endl;
+		return;
+	}
+
+	if (m_bDying)
+	{
+		m_timeSpentDying += static_cast<float>(TheProgramClock::Instance()->getDeltaTime());
+		if (m_timeSpentDying >= m_timeMaxDying)
+			m_bDead = true;
+		
+		return;
+	}
 
 	// Move Right
 	if (m_position.getX() + m_objectWidth < m_screenWidth - edgeScreenBuffer)
@@ -59,5 +81,34 @@ void Player::updateObject()
 		TheBulletHandler::Instance()->addPlayerBullet(static_cast<int>(m_position.getX()+(m_objectWidth/2)), static_cast<int>(m_position.getY() - m_objectHeight));
 	}
 
+}
+
+/// <summary>
+/// Reset all values to default
+/// </summary>
+void Player::respawn()
+{
+	m_objectTextureID = "player";
+	m_framesInSprite = 1;
+
+	m_position.setX(m_respawnPosition.getX());
+	m_position.setY(m_respawnPosition.getY());
+
+	m_bDead = false;
+	m_bDying = false;
+
+	m_timeSpentDying = 0.0f;
+
+	m_playerCurrentLives--;
+}
+
+void Player::setDying()
+{
+	m_bDying = true;
+	m_objectTextureID = "playerDead";
+	m_framesInSprite = 2;
+	m_animationSpeed = 150;
+
+	TheSoundManager::Instance()->playSound("playerExplosion");
 }
 

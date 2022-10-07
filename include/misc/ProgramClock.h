@@ -1,4 +1,5 @@
 #pragma once
+
 class ProgramClock
 {
 public:
@@ -6,11 +7,17 @@ public:
 	void init();
 	void tick();
 
-	double getDeltaTime();
-	int getFrameCount();
-	double getLastFrame();
+	double getDeltaTime() const { return m_deltaTime; }
+	int getFrameCount() const { return m_frameCountToDisplay; }
+	double getLastFrame() const { return m_lastFrame; }
 
-	static ProgramClock* Instance();
+	static ProgramClock* Instance() // Instance get
+	{
+		if (!s_pInstance)
+			s_pInstance = new ProgramClock();
+		return s_pInstance;
+	}
+
 private:
 	ProgramClock();
 	static ProgramClock* s_pInstance;

@@ -48,17 +48,3 @@ void Renderer::EndOfFrame()
 	SDL_RenderPresent(m_pRenderer);
 }
 
-SDL_Renderer* Renderer::getRendererPtr() const
-{
-	return m_pRenderer;
-}
-
-Renderer* Renderer::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new Renderer();
-		return s_pInstance;
-	}
-	return s_pInstance;
-}

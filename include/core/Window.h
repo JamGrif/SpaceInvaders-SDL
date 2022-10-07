@@ -12,12 +12,18 @@ public:
 	bool init(std::string windowTitle, int width, int height);
 	void clean();
 
-	SDL_Window* getWindowPtr() const;
+	SDL_Window* getWindowPtr() const { return m_pWindow; }
 
-	int getWindowWidth() const;
-	int getWindowHeight() const;
+	int getWindowWidth() const { return m_windowWidth; };
+	int getWindowHeight() const { return m_windowHeight; };
 
-	static Window* Instance(); // Singleton
+	static Window* Instance() // Singleton
+	{
+		if (!s_pInstance)
+			s_pInstance = new Window();
+		return s_pInstance;
+	}
+
 private:
 	Window();
 	static Window* s_pInstance;

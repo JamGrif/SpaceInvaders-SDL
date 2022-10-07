@@ -2,16 +2,17 @@
 #include "gameobjects/MenuButton.h"
 
 #include "core/InputHandler.h"
+#include "core/SoundManager.h"
 
 enum button_state
 {
 	MOUSE_OUT = 0,
 	MOUSE_OVER = 1,
 	CLICKED = 2
-};
+}; 
 
 MenuButton::MenuButton()
-	:SDLGameObject(), m_bReleased(false), m_callback(0), m_callbackID(0)
+	:SDLGameObject(), m_bReleased(false), m_callback(0), m_callbackID(0), m_bPlayedSound(false)
 {
 }
 
@@ -49,6 +50,13 @@ void MenuButton::updateObject()
 	{
 		m_currentSpriteFrame = MOUSE_OVER;
 
+		if (!m_bPlayedSound)
+		{
+			//TheSoundManager::Instance()->playSound("menuMouseOver");
+			m_bPlayedSound = true;
+		}
+			
+
 		// Moused over and clicked button
 		if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT)
 			&& m_bReleased)
@@ -58,6 +66,8 @@ void MenuButton::updateObject()
 			m_callback(); // Call the callback function
 
 			m_bReleased = false; // Uses this value to ensure we release the mouse button before doing the callback again.
+
+			
 		}
 		else if (!TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT))
 		{
@@ -68,17 +78,6 @@ void MenuButton::updateObject()
 	else
 	{
 		m_currentSpriteFrame = MOUSE_OUT;
+		m_bPlayedSound = false;
 	}
 }
-
-void MenuButton::setCallback(void(*callback)())
-{
-	m_callback = callback;
-}
-
-int MenuButton::getCallbackID()
-{
-	return m_callbackID;
-}
-
-

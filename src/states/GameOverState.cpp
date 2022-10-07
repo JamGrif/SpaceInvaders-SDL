@@ -17,13 +17,13 @@ const std::string GameOverState::s_gameOverID = "GAMEOVER";
 void GameOverState::s_gameOverToMain()
 {
 	//TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
-	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::GameOverToMain);
+	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToMain);
 }
 
 void GameOverState::s_restartPlay()
 {
 	//TheGame::Instance()->getStateMachine()->changeState(new PlayState());
-	TheGame::Instance()->getStateMachine()->indicateAChange(StateMachineAction::RestartPlay);
+	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToPlay);
 }
 
 void GameOverState::updateState()

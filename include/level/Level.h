@@ -33,10 +33,11 @@ public:
 	void updateLevel();
 	void renderLevel();
 
-	std::vector<Tileset>* getLevelTilesets();
-	std::vector<BaseLayer*>* getLevelLayers();
+	std::vector<Tileset>* getLevelTilesets() { return &m_tilesets; }
 
-	BaseLayer* getLayer(LayerIndex layerIndex);
+	std::vector<BaseLayer*>* getLevelLayers() { return &m_layers;}
+
+	BaseLayer* getLayer(LayerIndex layerIndex) { return m_layers.at(static_cast<size_t>(layerIndex)); }
 
 private:
 	std::vector<Tileset> m_tilesets;

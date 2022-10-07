@@ -1,9 +1,6 @@
 #pragma once
 #include "BaseState.h"
 
-//class GameObject;
-//class Level;
-
 class PauseState :
     public BaseState
 {

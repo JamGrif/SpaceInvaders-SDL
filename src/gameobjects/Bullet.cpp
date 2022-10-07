@@ -4,11 +4,12 @@
 #include "core/Window.h"
 
 #include "gameobjects/Alien.h"
+#include "gameobjects/Player.h"
 
 #include "misc/Collision.h"
 
 #define playerBulletScreenEdge 115
-#define alienBulletScreenEdge 30
+#define alienBulletScreenEdge 40
 
 PlayerBullet::PlayerBullet()
 	:SDLGameObject(), m_bDestroy(false), m_pAllAliens(nullptr)
@@ -22,8 +23,6 @@ PlayerBullet::~PlayerBullet()
 void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr)
 {
 	SDLGameObject::loadObject(pParams);
-
-	m_movementSpeed = 6;
 
 	m_pAllAliens = levelAliensPtr;
 }
@@ -39,31 +38,28 @@ void PlayerBullet::updateObject()
 
 	m_velocity.setY(-m_movementSpeed);
 
-	// Bullet gets destroyed if it collides with an alien or reaches edge of screen
+	// If bullet reached edge of screen
 	if (m_position.getY() + m_objectHeight <= playerBulletScreenEdge)
 	{
 		m_bDestroy = true;
 	}
 
+	// If bullet collided with an alien
 	for (auto alien : *m_pAllAliens)
 	{
 		if (checkCollision(this, alien))
 		{
 			alien->setDying();
 			m_bDestroy = true;
+			break;
 		}
 	}
-}
-
-bool PlayerBullet::getDestroy()
-{
-	return m_bDestroy;
 }
 
 // ----------------
 
 AlienBullet::AlienBullet()
-	:m_bDestroy(false), m_pPlayer(nullptr), m_screenHeight(TheWindow::Instance()->getWindowHeight())
+	:m_bDestroy(false), m_pLevelPlayer(nullptr), m_screenHeight(TheWindow::Instance()->getWindowHeight())
 {
 }
 
@@ -71,12 +67,11 @@ AlienBullet::~AlienBullet()
 {
 }
 
-void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, Player* levelPlayer)
 {
-	pParams->numFrames = 2;
 	SDLGameObject::loadObject(pParams);
 
-	m_movementSpeed = 5;
+	m_pLevelPlayer = levelPlayer;
 }
 
 void AlienBullet::drawObject()
@@ -95,9 +90,11 @@ void AlienBullet::updateObject()
 	{
 		m_bDestroy = true;
 	}
-}
 
-bool AlienBullet::getDestroy()
-{
-	return m_bDestroy;
+	// If bullet collided with an alien
+	if (checkCollision(this, m_pLevelPlayer))
+	{
+		m_bDestroy = true;
+		m_pLevelPlayer->setDying();
+	}
 }

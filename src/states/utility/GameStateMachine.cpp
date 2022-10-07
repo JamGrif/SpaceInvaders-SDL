@@ -65,8 +65,11 @@ void GameStateMachine::pushState(BaseState* pState)
 /// </summary>
 void GameStateMachine::changeState(BaseState* pState)
 {
-	if (m_currentGameStates.back()->getStateID() == pState->getStateID())
-		return;
+	if (!m_currentGameStates.empty())
+	{
+		if (m_currentGameStates.back()->getStateID() == pState->getStateID())
+			return;
+	}
 
 	// Pop all remaining states left before changing state
 	while (!m_currentGameStates.empty())
@@ -97,52 +100,48 @@ void GameStateMachine::popState()
 	}
 }
 
-void GameStateMachine::indicateAChange(StateMachineAction change)
+void GameStateMachine::setStateUpdate(StateMachineAction change)
 {
 	m_bNeedToChange = true;
 	m_actionToTake = change;
 }
 
-void GameStateMachine::doAChange()
+void GameStateMachine::changeCurrentState()
 {
-	StateMachineAction action = m_actionToTake;
+	//StateMachineAction action = m_actionToTake;
 
-	// Reset values
-	m_actionToTake = StateMachineAction::Nothing;
-	m_bNeedToChange = true;
+	
 
-	switch (action)
+	switch (m_actionToTake)
 	{
 		case StateMachineAction::Quit:
 			TheGame::Instance()->quitGame();
 			break;
 
-		case StateMachineAction::MainMenuToPlay:
+		case StateMachineAction::changeToPlay:
 			changeState(new PlayState());
 			break;
 
-		case StateMachineAction::PauseToMain:
+		case StateMachineAction::changeToMain:
 			changeState(new MainMenuState());
 			break;
 
-		case StateMachineAction::ResumePlay:
+		case StateMachineAction::changeToGameOver:
+			changeState(new GameOverState());
+			break;
+
+		case StateMachineAction::popPause:
 			popState();
 			break;
 
-		case StateMachineAction::GameOverToMain:
-			changeState(new MainMenuState());
-			break;
-
-		case StateMachineAction::RestartPlay:
-			changeState(new PlayState());
-			break;
-
-		case StateMachineAction::Pause:
+		case StateMachineAction::pushPause:
 			pushState(new PauseState());
 			break;
 
-		case StateMachineAction::GameOver:
-			changeState(new GameOverState());
-			break;
+		
 	}
+
+	// Reset values
+	m_actionToTake = StateMachineAction::Nothing;
+	m_bNeedToChange = false;
 }

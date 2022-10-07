@@ -1,10 +1,7 @@
 #pragma once
 #include "BaseState.h"
 
-//class GameObject;
-class SDLGameObject;
-//class Level;
-
+class Player;
 class Alien;
 
 class PlayState :
@@ -22,6 +19,7 @@ public:
 private:
 	static const std::string s_playID;
 
+	Player*	m_player;
 	std::vector<Alien*>* m_allAliens;
 
 	int m_totalAliens;

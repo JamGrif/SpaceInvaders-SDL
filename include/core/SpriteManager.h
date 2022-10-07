@@ -51,9 +51,16 @@ public:
 	void drawSpriteFrame(const std::string& id, int x, int y, int width, int height, int currentFrame, bool flipHorizontal);
 	void drawSpriteTile(const std::string& id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame);
 
-	Sprite* getSpriteViaID(const std::string& id);
 
-	static SpriteManager* Instance(); // Singleton
+	Sprite* getSpriteViaID(const std::string& id) const { return m_spriteMap.at(id); }
+
+	static SpriteManager* Instance() // Singleton
+	{
+		if (!s_pInstance)
+			s_pInstance = new SpriteManager();
+		return s_pInstance;
+	}
+
 private:
 	SpriteManager();
 	static SpriteManager* s_pInstance;

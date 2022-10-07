@@ -3,6 +3,8 @@
 
 #include "SDL2/SDL.h"
 
+#include "core/SoundManager.h"
+
 Alien::Alien()
 	:SDLGameObject(), m_bMoveLeft(true), m_downAmount(15), m_bDying(false), m_bDead(false), m_timeSpentDying(0), m_timeAloudDying(200)
 {
@@ -29,7 +31,10 @@ void Alien::drawObject()
 		return;
 
 	if (m_bDying)
+	{
 		m_objectTextureID = m_deadTextureID;
+		
+	}
 	
 	SDLGameObject::drawObject();
 }
@@ -41,7 +46,7 @@ void Alien::updateObject()
 	
 	if (m_bDying)
 	{
-		m_timeSpentDying += TheProgramClock::Instance()->getDeltaTime();
+		m_timeSpentDying += static_cast<float>(TheProgramClock::Instance()->getDeltaTime());
 		if (m_timeSpentDying >= m_timeAloudDying)
 			m_bDead = true;
 	
@@ -81,10 +86,6 @@ void Alien::switchDirections()
 void Alien::setDying()
 {
 	m_bDying = true;
-}
-
-bool Alien::isDead()
-{
-	return m_bDead;
+	TheSoundManager::Instance()->playSound("alienExplosion");
 }
 

@@ -3,6 +3,13 @@
 // Forward Declaration
 class GameStateMachine;
 
+enum class EndingOutcome
+{
+	Win_KilledAllAliens = 0,
+	Lose_NoLives = 1,
+	Lose_AliensReachedEnd = 2
+};
+
 class Game
 {
 public:
@@ -19,10 +26,15 @@ public:
 
 	void quitGame();
 
-	GameStateMachine* getStateMachine();
+	GameStateMachine* getStateMachine() const { return m_pGameStateMachine; }
 
-	// Singleton instance get
-	static Game* Instance(); 
+	static Game* Instance() // Get instance
+	{
+		if (!s_pInstance)
+			s_pInstance = new Game();
+		return s_pInstance;
+	}
+
 private:
 	Game();
 	static Game* s_pInstance;
@@ -30,5 +42,7 @@ private:
 	GameStateMachine* m_pGameStateMachine;
 
 	bool m_bRunning;
+
+
 };
 typedef Game TheGame;

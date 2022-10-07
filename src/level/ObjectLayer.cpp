@@ -5,6 +5,7 @@
 #include "gameobjects/Alien.h"
 
 ObjectLayer::ObjectLayer()
+	:m_layerPlayer(nullptr)
 {
 
 }
@@ -22,6 +23,8 @@ ObjectLayer::~ObjectLayer()
 		delete alien;
 	}
 	m_layerAlienObjects.clear();
+
+	m_layerPlayer = nullptr;
 }
 
 void ObjectLayer::updateLayer()

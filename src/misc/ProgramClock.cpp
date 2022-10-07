@@ -31,30 +31,6 @@ void ProgramClock::tick()
 	}
 }
 
-double ProgramClock::getDeltaTime()
-{
-	return m_deltaTime;
-}
-
-int ProgramClock::getFrameCount()
-{
-	return m_frameCountToDisplay;
-}
-
-double ProgramClock::getLastFrame()
-{
-	return m_lastFrame;
-}
-
-ProgramClock* ProgramClock::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new ProgramClock();
-	}
-	return s_pInstance;
-}
-
 ProgramClock::ProgramClock()
 {
 }

@@ -14,11 +14,12 @@ public:
 	virtual void updateLayer();
 	virtual void renderLayer();
 
-	void setTileIDs(const std::vector<std::vector<int>>& data);
 
-	void setTileSize(int tileSize);
+	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
 
-	Tileset getTilesetByID(int tileID);
+	void setTileSize(int tileSize) { m_tileSize = tileSize; }
+
+	Tileset getTilesetByID(int tileID) const;
 
 private:
 	int m_numColumns;

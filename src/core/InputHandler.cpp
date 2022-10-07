@@ -56,17 +56,7 @@ void InputHandler::clean()
 {
 }
 
-bool InputHandler::isMouseButtonDown(int mouseButton)
-{
-	return m_mouseButtonStates[mouseButton];
-}
-
-Vector2D InputHandler::getMousePosition()
-{
-	return m_mousePosition;
-}
-
-bool InputHandler::isKeyDown(int keyboardKey)
+bool InputHandler::isKeyDown(int keyboardKey) const
 {
 	if (m_keystates)
 	{
@@ -74,16 +64,6 @@ bool InputHandler::isKeyDown(int keyboardKey)
 	}
 
 	return false;
-}
-
-InputHandler* InputHandler::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new InputHandler();
-	}
-
-	return s_pInstance;
 }
 
 InputHandler::InputHandler()

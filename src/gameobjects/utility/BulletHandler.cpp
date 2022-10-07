@@ -5,6 +5,8 @@
 #include "level/Level.h"
 #include "level/ObjectLayer.h"
 
+#include "core/SoundManager.h"
+
 BulletHandler* BulletHandler::s_pInstance = nullptr;
 
 
@@ -23,10 +25,14 @@ void BulletHandler::addPlayerBullet(int xPos, int yPos)
 	tempLoaderParams->x = xPos;
 	tempLoaderParams->y = yPos;
 	tempLoaderParams->textureID = "playerBullet";
+	tempLoaderParams->movementSpeed = 6;
+
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer)); // Give the bullet the vector of the level aliens
 
 	// Set initial bullet values
 	m_playerBullet->loadObject(tempLoaderParams, &temp->getAlienObjects());
+
+	TheSoundManager::Instance()->playSound("playerShoot");
 }
 
 void BulletHandler::addAlienBullet(int xPos, int yPos)
@@ -43,8 +49,13 @@ void BulletHandler::addAlienBullet(int xPos, int yPos)
 	tempLoaderParams->x = xPos;
 	tempLoaderParams->y = yPos;
 	tempLoaderParams->textureID = "alienBullet";
+	tempLoaderParams->numFrames = 2;
+	tempLoaderParams->animationSpeed = 250;
+	tempLoaderParams->movementSpeed = 6;
 
-	alienBullet->loadObject(tempLoaderParams);
+	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer));
+
+	alienBullet->loadObject(tempLoaderParams, temp->getPlayerObject());
 	m_alienBullets.push_back(alienBullet);
 }
 
@@ -62,11 +73,6 @@ void BulletHandler::updateBullets()
 			m_playerBullet->updateObject();
 		}
 	}
-
-	//for (auto alien : m_alienBullets)
-	//{
-	//	alien->updateObject();
-	//}
 
 	for (int i = 0; i < m_alienBullets.size(); i++)
 	{
@@ -96,22 +102,22 @@ void BulletHandler::drawBullets()
 
 }
 
-void BulletHandler::cleanBullets()
+void BulletHandler::clearBullets()
 {
 	if (m_playerBullet)
 	{
 		delete m_playerBullet;
 		m_playerBullet = nullptr;
 	}
-}
 
-BulletHandler* BulletHandler::Instance()
-{
-	if (!s_pInstance)
+	if (!m_alienBullets.empty())
 	{
-		s_pInstance = new BulletHandler();
+		for (auto bullet : m_alienBullets)
+		{
+			delete bullet;
+		}
+		m_alienBullets.clear();
 	}
-	return s_pInstance;
 }
 
 BulletHandler::BulletHandler()

@@ -10,11 +10,6 @@ public:
 
 	virtual void renderLayer() = 0;
 	virtual void updateLayer() = 0;
-
-
-
-protected:
-
 	
 };
 

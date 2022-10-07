@@ -15,9 +15,14 @@ public:
 	void draw();
 	void EndOfFrame();
 
-	SDL_Renderer* getRendererPtr() const;
+	SDL_Renderer* getRendererPtr() const { return m_pRenderer; }
 
-	static Renderer* Instance(); // Singleton
+	static Renderer* Instance() // Singleton
+	{
+		if (!s_pInstance)
+			s_pInstance = new Renderer();
+		return s_pInstance;
+	}
 private:
 	Renderer();
 	static Renderer* s_pInstance;

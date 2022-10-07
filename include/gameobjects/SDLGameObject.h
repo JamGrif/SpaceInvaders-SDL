@@ -18,9 +18,10 @@ public:
     virtual void drawObject();
     virtual void updateObject();
 
-	Vector2D& getPosition();
-	int getWidth();
-	int getHeight();
+	Vector2D& getPosition() { return m_position; }
+
+	int getWidth() const { return m_objectWidth; }
+	int getHeight() const { return m_objectHeight; };
 
 protected:
 

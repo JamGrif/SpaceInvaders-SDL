@@ -27,20 +27,7 @@ void Level::renderLevel()
 	}
 }
 
-std::vector<Tileset>* Level::getLevelTilesets()
-{
-	return &m_tilesets;
-}
 
-std::vector<BaseLayer*>* Level::getLevelLayers()
-{
-	return &m_layers;
-}
-
-BaseLayer* Level::getLayer(LayerIndex layerIndex)
-{
-	return m_layers.at(static_cast<size_t>(layerIndex));
-}
 
 Level::Level()
 {

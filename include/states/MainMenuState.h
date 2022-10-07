@@ -1,8 +1,6 @@
 #pragma once
 #include "BaseState.h"
 
-//class GameObject;
-//class Level;
 
 class MainMenuState :
     public BaseState
