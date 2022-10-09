@@ -1,11 +1,9 @@
-#pragma once
+#include "misc/Utility.h"
+#include "pch.h"
 
 #include "gameobjects/SDLGameObject.h"
+#include <cstdlib>
 
-/// <summary>
-/// Bounding box collision check between two SDLGameObjects
-/// </summary>
-/// <returns>True if collision</returns>
 bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 {
 	float leftA, leftB;
@@ -33,3 +31,11 @@ bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 
 	return true;
 }
+
+
+
+int getRandomNumber(int minimumNum, int maximumNum)
+{
+	return rand() % (maximumNum - minimumNum + 1) + minimumNum;
+}
+
