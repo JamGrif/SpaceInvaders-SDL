@@ -4,19 +4,26 @@ class LoaderParams
 {
 public:
 	LoaderParams()
-		:x(0), y(0), numFrames(1), animationSpeed(1), callbackID(0), movementSpeed(0.0f), livesRequired(0) {}
+		:xPos(0), yPos(0), numFrames(1), movementSpeed(0.0f), animationSpeed(1), scoreWorth(0), selectCallbackID(0),
+		checkboxStateCallbackID(0), livesRequired(0), textCallbackID(0), textSize(10) {}
 	~LoaderParams(){}
 
-	int x;
-	int y;
+	int xPos;
+	int yPos;
 
-	int numFrames;			// Number of separate frames in sprite
-	float movementSpeed;	// Speed at which the object moves 
-	int animationSpeed;		// Used with sprites with more than one frame
-	int callbackID;			// Used in MenuButton
-	int livesRequired;		// Used in PlayerLives
+	std::string textureID;			// Texture the object uses by default
+	int numFrames;					// Number of separate frames in sprite
+	float movementSpeed;			// Speed at which the object moves
 
-	std::string textureID;	// Texture the object uses by default
+	int animationSpeed;				// Used with sprites with more than one frame
+
+	int scoreWorth;					// Used in Alien - How much the alien increases the current score by
+	int selectCallbackID;			// Used in Button (MenuButton | CheckboxButton)
+	int checkboxStateCallbackID;	// Used in CheckboxButton
+	int livesRequired;				// Used in PlayerLives
+	std::string text;				// Used in TextObject
+	int textCallbackID;				// Used in TextObject - Lets a text object copy a variable value
+	int textSize;					// Used in TextObject - Sets the size of the font
 };
 
 /// <summary>

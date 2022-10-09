@@ -3,10 +3,9 @@
 
 #include "core/SpriteManager.h"
 #include "core/Window.h"
-//#include "core/Renderer.h"
 
 SDLGameObject::SDLGameObject()
-	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_acceleration(0,0), m_objectWidth(0), m_objectHeight(0), m_currentSpriteFrame(1), m_bFlipImage(false)
+	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_objectWidth(0), m_objectHeight(0), m_currentSpriteFrame(1), m_bFlipImage(false)
 {
 }
 
@@ -19,7 +18,7 @@ SDLGameObject::~SDLGameObject()
 /// </summary>
 void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
-	m_position = Vector2D(static_cast<float>(pParams->x), static_cast<float>(pParams->y));
+	m_position = Vector2D(static_cast<float>(pParams->xPos), static_cast<float>(pParams->yPos));
 
 	m_objectTextureID = pParams->textureID;
 	m_framesInSprite = pParams->numFrames;
@@ -31,10 +30,12 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 
 	// The Object width and height is the dimensions of the current sprite frame on its sprite sheet
 	Sprite* s = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
-
-	s->setUpIndividualSpriteDimensions(pParams->numFrames);
-	m_objectWidth = s->getIndividualDimensions().w;
-	m_objectHeight = s->getIndividualDimensions().h;
+	if (s)
+	{
+		s->setUpIndividualSpriteDimensions(pParams->numFrames);
+		m_objectWidth = s->getIndividualDimensions().w;
+		m_objectHeight = s->getIndividualDimensions().h;
+	}
 }
 
 void SDLGameObject::drawObject()
@@ -55,10 +56,11 @@ void SDLGameObject::drawObject()
 void SDLGameObject::updateObject()
 {
 	// Allows gradual increase of velocity through acceleration
-	m_velocity += m_acceleration;
 	m_position += m_velocity;
 
 	// Set correct sprite frame
+	//if (m_framesInSprite > 1)
+
 	m_currentSpriteFrame = static_cast<int>(((SDL_GetTicks() / m_animationSpeed) % m_framesInSprite));
 }
 

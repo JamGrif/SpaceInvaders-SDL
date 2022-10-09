@@ -4,7 +4,7 @@
 #include "utility/GameObjectFactory.h"
 
 // How close an object can get to the edge of the screen
-#define edgeScreenBuffer 35
+#define edgeScreenBuffer 40
 
 class SDLGameObject :
     public BaseGameObject
@@ -27,7 +27,7 @@ protected:
 
     Vector2D m_position;
     Vector2D m_velocity;
-    Vector2D m_acceleration;
+    //Vector2D m_acceleration;
 
 	// The dimensions of the object is the dimensions of an individual sprite frame
     int m_objectWidth;	
