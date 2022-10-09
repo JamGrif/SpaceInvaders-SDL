@@ -16,8 +16,8 @@
  <objectgroup id="2" name="Object Layer 1">
   <object id="4" name="PlayButton" class="MenuButton" x="230" y="300" width="10" height="10">
    <properties>
-    <property name="callbackID" type="int" value="1"/>
     <property name="numFrames" type="int" value="3"/>
+    <property name="selectCallbackID" type="int" value="1"/>
     <property name="textureHeight" type="int" value="80"/>
     <property name="textureID" value="resumeButton"/>
     <property name="textureWidth" type="int" value="200"/>
@@ -25,8 +25,8 @@
   </object>
   <object id="5" name="ExitButton" class="MenuButton" x="230" y="460" width="10" height="10">
    <properties>
-    <property name="callbackID" type="int" value="2"/>
     <property name="numFrames" type="int" value="3"/>
+    <property name="selectCallbackID" type="int" value="2"/>
     <property name="textureHeight" type="int" value="80"/>
     <property name="textureID" value="mainMenuButton"/>
     <property name="textureWidth" type="int" value="200"/>

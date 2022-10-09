@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="73">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="85">
  <properties>
+  <property name="alienBoss" value="alienBoss.png"/>
+  <property name="alienBossDead" value="alienBossDead.png"/>
   <property name="alienBullet" value="alienBullet.png"/>
   <property name="alienDead" value="alienDead.png"/>
   <property name="alienLower" value="alienLower.png"/>
   <property name="alienMiddle" value="alienMiddle.png"/>
   <property name="alienUpper" value="alienUpper.png"/>
+  <property name="block" value="block.png"/>
   <property name="helicopter" value="helicopter.png"/>
   <property name="lives" value="lives.png"/>
   <property name="player" value="player.png"/>
@@ -22,7 +25,7 @@
   </data>
  </layer>
  <objectgroup id="2" name="Object Layer 1">
-  <object id="2" name="Player" class="Player" x="400" y="638" width="10" height="10">
+  <object id="2" name="Player" class="Player" x="400" y="650" width="10" height="10">
    <properties>
     <property name="animationSpeed" type="int" value="150"/>
     <property name="movementSpeed" type="int" value="4"/>
@@ -35,6 +38,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -43,6 +47,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -51,6 +56,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -59,6 +65,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -67,6 +74,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -75,6 +83,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -83,6 +92,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -91,6 +101,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -99,6 +110,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -107,6 +119,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -115,6 +128,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -123,6 +137,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -131,6 +146,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -139,6 +155,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -147,6 +164,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -155,6 +173,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -163,6 +182,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -171,6 +191,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -179,6 +200,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -187,6 +209,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -195,6 +218,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -203,6 +227,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -211,6 +236,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -219,6 +245,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -227,6 +254,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -235,6 +263,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -243,6 +272,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -251,6 +281,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -259,6 +290,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -267,6 +299,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -275,6 +308,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -283,6 +317,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -291,6 +326,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -299,6 +335,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -307,19 +344,8 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
-   </properties>
-  </object>
-  <object id="45" name="Text" class="SDLGameObject" x="50" y="25" width="10" height="10">
-   <properties>
-    <property name="numFrames" type="int" value="1"/>
-    <property name="textureID" value="lives"/>
-   </properties>
-  </object>
-  <object id="46" name="Text" class="SDLGameObject" x="420" y="25" width="10" height="10">
-   <properties>
-    <property name="numFrames" type="int" value="1"/>
-    <property name="textureID" value="score"/>
    </properties>
   </object>
   <object id="47" name="AlienUpper" class="Alien" x="235" y="135" width="10" height="10">
@@ -327,6 +353,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -335,6 +362,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -343,6 +371,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -351,6 +380,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -359,6 +389,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -367,6 +398,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -375,6 +407,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -383,6 +416,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -391,6 +425,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -399,6 +434,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -407,6 +443,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -415,6 +452,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -423,6 +461,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -431,6 +470,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -439,6 +479,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -447,6 +488,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="30"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
@@ -455,6 +497,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -463,6 +506,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
@@ -471,6 +515,7 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="20"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
@@ -479,28 +524,103 @@
     <property name="animationSpeed" type="int" value="500"/>
     <property name="movementSpeed" type="float" value="0.6"/>
     <property name="numFrames" type="int" value="2"/>
+    <property name="scoreWorth" type="int" value="10"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
-  <object id="68" name="Life" class="PlayerLives" x="184" y="28" width="50" height="32">
+  <object id="68" name="Life" class="PlayerLives" x="220" y="29" width="50" height="32">
    <properties>
     <property name="livesRequired" type="int" value="1"/>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="player"/>
    </properties>
   </object>
-  <object id="69" name="Life" class="PlayerLives" x="244.333" y="28" width="50" height="32">
+  <object id="69" name="Life" class="PlayerLives" x="280" y="29" width="50" height="32">
    <properties>
     <property name="livesRequired" type="int" value="2"/>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="player"/>
    </properties>
   </object>
-  <object id="72" name="Life" class="PlayerLives" x="304.667" y="28" width="50" height="32">
+  <object id="72" name="Life" class="PlayerLives" x="340" y="29" width="50" height="32">
    <properties>
     <property name="livesRequired" type="int" value="3"/>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="player"/>
+   </properties>
+  </object>
+  <object id="73" name="Test" class="TextObject" x="44" y="25" width="10" height="10">
+   <properties>
+    <property name="text" value="Lives:"/>
+    <property name="textSize" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="74" name="Test" class="TextObject" x="420" y="25" width="10" height="10">
+   <properties>
+    <property name="text" value="Score:"/>
+    <property name="textSize" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="75" name="Block" class="SDLGameObject" x="160" y="592" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="76" name="Block" class="SDLGameObject" x="192" y="560" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="77" name="Block" class="SDLGameObject" x="160" y="576" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="78" name="Block" class="SDLGameObject" x="176" y="576" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="79" name="Block" class="SDLGameObject" x="208" y="560" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="80" name="Block" class="SDLGameObject" x="240" y="592" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="81" name="Block" class="SDLGameObject" x="224" y="576" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="82" name="Block" class="SDLGameObject" x="240" y="576" width="16" height="16">
+   <properties>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="83" name="Test" class="TextObject" x="615" y="25" width="10" height="10">
+   <properties>
+    <property name="text" value="hi"/>
+    <property name="textCallbackID" type="int" value="1"/>
+    <property name="textSize" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="84" name="AlienBoss" class="AlienBoss" x="254" y="100" width="10" height="10">
+   <properties>
+    <property name="movementSpeed" type="float" value="0.1"/>
+    <property name="numFrames" type="int" value="1"/>
+    <property name="textureID" value="alienBoss"/>
    </properties>
   </object>
  </objectgroup>
