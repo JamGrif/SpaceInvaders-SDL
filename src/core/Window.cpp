@@ -12,7 +12,7 @@ Window::Window()
 
 bool Window::init(std::string windowTitle, int width, int height)
 {
-	m_pWindow = SDL_CreateWindow(windowTitle.c_str(), 100, 100, width, height, NULL);
+	m_pWindow = SDL_CreateWindow(windowTitle.c_str(), width/2, height/4, width, height, NULL);
 	if (!m_pWindow)
 		return false;
 

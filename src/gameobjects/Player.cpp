@@ -2,13 +2,12 @@
 #include "gameobjects/Player.h"
 
 #include "core/InputHandler.h"
-#include "core/SpriteManager.h"
-
+#include "core/Game.h"
 #include "gameobjects/utility/BulletHandler.h"
 #include "core/SoundManager.h"
 
 Player::Player()
-	:SDLGameObject(), m_bDead(false), m_bDying(false), m_respawnPosition(0,0), m_playerMaxLives(3), m_playerCurrentLives(m_playerMaxLives)
+	:SDLGameObject(), m_bDead(false), m_bDying(false), m_respawnPosition(0,0)
 {
 }
 
@@ -24,14 +23,12 @@ void Player::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 	SDLGameObject::loadObject(pParams);
 
 	// Use the starting position as the respawn position
-	m_respawnPosition.setX(pParams->x);
-	m_respawnPosition.setY(pParams->y);
+	m_respawnPosition.setX(static_cast<float>(pParams->xPos));
+	m_respawnPosition.setY(static_cast<float>(pParams->yPos));
 }
 
 void Player::drawObject()
 {
-	std::cout << "X: " << static_cast<int>(m_position.getX()) << std::endl;
-
 	SDLGameObject::drawObject();
 }
 
@@ -99,7 +96,7 @@ void Player::respawn()
 
 	m_timeSpentDying = 0.0f;
 
-	m_playerCurrentLives--;
+	TheGame::Instance()->decreaseCurrentLives();
 }
 
 void Player::setDying()

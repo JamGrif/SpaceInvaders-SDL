@@ -3,10 +3,8 @@
 
 BaseLayer::BaseLayer()
 {
-
 }
 
 BaseLayer::~BaseLayer()
 {
-
 }

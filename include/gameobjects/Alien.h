@@ -29,13 +29,12 @@ private:
 
 	bool m_bDead;
 	bool m_bDying;
-	float m_timeSpentDying; // Current time spent dying
-	float m_timeAloudDying; // When alien has been dying for this amount of time, change to dead
+	int m_timeSpentDying; // Current time spent dying
+	int m_timeAloudDying;  // When alien has been dying for this amount of time, change to dead
 
 	std::string m_deadTextureID;
 
-	
-
+	int m_scoreWorth;
 };
 
 class AlienCreator :

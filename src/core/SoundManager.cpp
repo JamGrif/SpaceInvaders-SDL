@@ -6,12 +6,21 @@
 #define CHANNELS 2
 #define CHUNK_SIZE 4096
 
+#define VOLUME_MINIMUM 0
+#define VOLUME_MAXIMUM 50
+
+#define ALL_CHANNELS -1
+
 SoundManager* SoundManager::s_pInstance = nullptr;
 
 void SoundManager::init()
 {
 	// Must be called to setup audio for the game (before sound can be used)
-	Mix_OpenAudio(FREQUENCY, FORMAT, CHANNELS, CHUNK_SIZE);		
+	Mix_OpenAudio(FREQUENCY, FORMAT, CHANNELS, CHUNK_SIZE);
+
+	// Set initial volume
+	Mix_Volume(ALL_CHANNELS, VOLUME_MAXIMUM);
+	Mix_VolumeMusic(VOLUME_MAXIMUM);
 }
 
 void SoundManager::clean()
@@ -29,7 +38,6 @@ void SoundManager::clean()
 		Mix_FreeMusic(value);
 	}
 	m_music.clear();
-
 
 	Mix_CloseAudio();
 	Mix_Quit();
@@ -53,7 +61,6 @@ bool SoundManager::loadSound(const std::string& fileName, const std::string& id)
 
 bool SoundManager::loadMusic(const std::string& fileName, const std::string& id)
 {
-	
 	Mix_Music* pMusic = Mix_LoadMUS(fileName.c_str());
 
 	if (!pMusic)
@@ -74,7 +81,25 @@ void SoundManager::playMusic(const std::string& id, int loop)
 void SoundManager::playSound(const std::string& id, int loop)
 {
 	// First parameter is for the channel that the sound be played on. -1 tells SDL_mixer to play the sound on any available channel
-	Mix_PlayChannel(-1, m_sfxs[id], loop);
+	Mix_PlayChannel(ALL_CHANNELS, m_sfxs[id], loop);
 }
 
+/// <summary>
+/// Toggle the Sound volume
+/// </summary>
+void SoundManager::toggleSound()
+{
+	m_bPlayingSound = !m_bPlayingSound;
 
+	m_bPlayingSound ? Mix_Volume(ALL_CHANNELS, VOLUME_MAXIMUM) : Mix_Volume(ALL_CHANNELS, VOLUME_MINIMUM);
+}
+
+/// <summary>
+/// Toggle the Music volume
+/// </summary>
+void SoundManager::toggleMusic()
+{
+	m_bPlayingMusic = !m_bPlayingMusic;
+
+	m_bPlayingMusic ? Mix_VolumeMusic(VOLUME_MAXIMUM) : Mix_VolumeMusic(VOLUME_MINIMUM);
+}

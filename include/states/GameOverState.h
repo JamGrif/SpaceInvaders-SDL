@@ -16,6 +16,9 @@ public:
 private:
 	static const std::string s_gameOverID;
 
+	static std::string s_textCallback1();
+	static std::string s_textCallback2();
+
 	static void s_gameOverToMain();
 	static void s_restartPlay();
 };

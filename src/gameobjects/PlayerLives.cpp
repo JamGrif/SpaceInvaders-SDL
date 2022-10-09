@@ -3,14 +3,16 @@
 
 #include "gameobjects/Player.h"
 
+#include "core/Game.h"
+
 PlayerLives::PlayerLives()
-	:SDLGameObject(), m_livesRequired(0), m_bDraw(true), m_pPlayer(nullptr)
+	:SDLGameObject(), m_livesRequired(0), m_bDraw(true)
 {
 }
 
 PlayerLives::~PlayerLives()
 {
-	m_pPlayer = nullptr;
+	//m_pPlayer = nullptr;
 }
 
 void PlayerLives::loadObject(std::unique_ptr<LoaderParams> const& pParams)
@@ -22,7 +24,7 @@ void PlayerLives::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 
 void PlayerLives::drawObject()
 {
-	if (m_livesRequired > m_pPlayer->getPlayerLives())
+	if (m_livesRequired > TheGame::Instance()->getCurrentLives())
 		return;
 
 	SDLGameObject::drawObject();

@@ -65,11 +65,11 @@ void GameStateMachine::pushState(BaseState* pState)
 /// </summary>
 void GameStateMachine::changeState(BaseState* pState)
 {
-	if (!m_currentGameStates.empty())
-	{
-		if (m_currentGameStates.back()->getStateID() == pState->getStateID())
-			return;
-	}
+	//if (!m_currentGameStates.empty())
+	//{
+	//	if (m_currentGameStates.back()->getStateID() == pState->getStateID())
+	//		return;
+	//}
 
 	// Pop all remaining states left before changing state
 	while (!m_currentGameStates.empty())
@@ -79,8 +79,9 @@ void GameStateMachine::changeState(BaseState* pState)
 
 	TheSpriteManager::Instance()->clearAllFromSpriteMap();
 
-	// Push back our new state
+	// Push back the new state
 	m_currentGameStates.push_back(pState);
+
 	// Initialize it
 	m_currentGameStates.back()->onEnterState();
 }
@@ -90,14 +91,12 @@ void GameStateMachine::changeState(BaseState* pState)
 /// </summary>
 void GameStateMachine::popState()
 {
-	if (!m_currentGameStates.empty())
-	{
-		if (m_currentGameStates.back()->onExitState())
-		{
-			delete m_currentGameStates.back();
-			m_currentGameStates.pop_back();
-		}
-	}
+	if (m_currentGameStates.empty())
+		return;
+
+	m_currentGameStates.back()->onExitState();
+	delete m_currentGameStates.back();
+	m_currentGameStates.pop_back();
 }
 
 void GameStateMachine::setStateUpdate(StateMachineAction change)
@@ -108,10 +107,6 @@ void GameStateMachine::setStateUpdate(StateMachineAction change)
 
 void GameStateMachine::changeCurrentState()
 {
-	//StateMachineAction action = m_actionToTake;
-
-	
-
 	switch (m_actionToTake)
 	{
 		case StateMachineAction::Quit:
@@ -137,8 +132,6 @@ void GameStateMachine::changeCurrentState()
 		case StateMachineAction::pushPause:
 			pushState(new PauseState());
 			break;
-
-		
 	}
 
 	// Reset values

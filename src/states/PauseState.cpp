@@ -2,26 +2,21 @@
 #include "states/PauseState.h"
 
 #include "core/Game.h"
-#include "core/SpriteManager.h"
-#include "gameobjects/MenuButton.h"
-#include "states/MainMenuState.h"
 #include "states/utility/GameStateMachine.h"
 
-#include "level/Level.h"
-#include "level/ObjectLayer.h"
+//#include "level/Level.h"
+//#include "level/ObjectLayer.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
 
 void PauseState::updateState()
 {
 	BaseState::updateState();
-	//m_pStateLevel->update();
 }
 
 void PauseState::renderState()
 {
 	BaseState::renderState();
-	//m_pStateLevel->render();
 }
 
 bool PauseState::onEnterState()
@@ -43,22 +38,20 @@ bool PauseState::onExitState()
 {
 	std::cout << "-=-=-=-=-=-Exiting PauseState-=-=-=-=-=-" << std::endl;
 
-	delete m_pStateLevel;
+	BaseState::onExitState();
+
+	//delete m_pStateLevel;
 
 	return true;
 }
 
-
-
 void PauseState::s_pauseToMain()
 {
-	//TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
 	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToMain);
 }
 
 void PauseState::s_resumePlay()
 {
-	//TheGame::Instance()->getStateMachine()->popState();
 	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::popPause);
 }
 

@@ -8,7 +8,7 @@
 	#dependencies libraries include 
 	#
 	#other this app files include
-	#	core -> gameobjects -> states -> misc
+	#	core -> gameobjects -> level -> states -> misc
 	#
 	# forward declaration
 
@@ -21,7 +21,7 @@
 	#dependencies libraries include
 	#
 	#other this app files include
-	#	core -> gameobjects -> states -> misc
+	#	core -> gameobjects -> level -> states -> misc
 	#
 	# static variable definitions
 
@@ -30,23 +30,12 @@
 
 #include "pch.h"
 
+#include "SDL2/SDL.h"
+
 #include "core/Game.h"
-
-class MyClass
-{
-public:
-	MyClass() {}
-	~MyClass() {}
-private:
-
-};
 
 int main(int argc, char* args[])
 {
-
-	MyClass* test = new MyClass;
-	delete test;
-
 	if (!TheGame::Instance()->gameInit())
 		return 1;
 	else

@@ -15,13 +15,14 @@ public:
 	Level* parseLevel(const char* levelFile);
 
 private:
-	// Level
-	void parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets);
-	void parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLayer*>* pLayers, const std::vector<Tileset>* pTilesets);
 
-	// ObjectLayer
-	void parseTextures(TiXmlElement* pTextureRoot);
+	// Layers
+	void parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLayer*>* pLayers, const std::vector<Tileset>* pTilesets);
 	void parseObjectLayer(TiXmlElement* pObjectElement, std::vector<BaseLayer*>* pLayers);
+
+	// Textures
+	void parseTextures(TiXmlElement* pTextureRoot);
+	void parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets);
 
 	int m_tileSize;
 	int m_width;

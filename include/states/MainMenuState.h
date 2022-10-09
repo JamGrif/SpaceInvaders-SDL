@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseState.h"
 
+class SDLGameObject;
 
 class MainMenuState :
     public BaseState
@@ -20,5 +21,10 @@ private:
 	// callback functions for menu items
 	static void s_menuToPlay(); // Static as the functionality will only support static functions. Bit more complicated to handle regular member functions as function pointers.
 	static void s_exitFromMenu();
+	static void s_toggleSound();
+	static void s_toggleMusic();
+
+	static bool s_checkboxState1();
+	static bool s_checkboxState2();
 };
 

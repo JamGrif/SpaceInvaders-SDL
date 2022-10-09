@@ -1,10 +1,8 @@
 #include "pch.h"
 #include "level/LevelParser.h"
 
-#include "tinyXML/tinyxml.h"
 #include "level/Level.h"
 #include "core/SpriteManager.h"
-#include "gameobjects/utility/GameObjectFactory.h"
 
 #include "level/TileLayer.h"
 #include "level/ObjectLayer.h"
@@ -12,9 +10,11 @@
 #include "gameobjects/Alien.h"
 #include "gameobjects/Player.h"
 #include "gameobjects/PlayerLives.h"
+#include "gameobjects/AlienBoss.h"
 
 #include "Base64/base64.h"
 #include "zlib/zlib.h"
+#include "tinyXML/tinyxml.h"
 
 
 Level* LevelParser::parseLevel(const char* levelFile)
@@ -35,6 +35,10 @@ Level* LevelParser::parseLevel(const char* levelFile)
 
 	// Get the root node
 	TiXmlElement* pRoot = levelDocument.RootElement();
+
+	//int m_tileSize;
+	//int m_width;
+	//int m_height;
 
 	pRoot->Attribute("tilewidth", &m_tileSize);
 	pRoot->Attribute("width", &m_width);
@@ -185,95 +189,110 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("object"))
+		if (e->Value() != std::string("object"))
+			continue;
+		
+		//std::cout << e->Attribute("class") << std::endl;
+
+		// Check if type exists
+		if (!TheGameObjectFactory::Instance()->checkIfExist(e->Attribute("class")))
 		{
-			//std::cout << e->Attribute("class") << std::endl;
+			std::cout << "Could not create object of type: " << e->Attribute("class") << std::endl;
+			continue;
+		}
 
-			// Check if type exists
-			if (!TheGameObjectFactory::Instance()->checkIfExist(e->Attribute("class")))
+		std::unique_ptr<LoaderParams> tempLoaderParams = std::make_unique<LoaderParams>();
+
+		// Get the initial node values type, x and y
+		e->Attribute("x", &tempLoaderParams->xPos);
+		e->Attribute("y", &tempLoaderParams->yPos);
+
+		// Get the property values
+		for (TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
+		{
+			if (properties->Value() == std::string("properties"))
 			{
-				std::cout << "Could not create object of type: " << e->Attribute("class") << std::endl;
-				continue;
-			}
-
-			std::unique_ptr<LoaderParams> tempLoaderParams = std::make_unique<LoaderParams>();
-
-			// Get the initial node values type, x and y
-			e->Attribute("x", &tempLoaderParams->x);
-			e->Attribute("y", &tempLoaderParams->y);
-
-			// Get the property values
-			for (TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
-			{
-				if (properties->Value() == std::string("properties"))
+				for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 				{
-					for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+					// Only read the property element of properties
+					if (property->Value() != std::string("property"))
+						continue;
+
+					if (property->Attribute("name") == std::string("numFrames")) // Check for the name of the property rather than grabbing the attribute directly
 					{
-						if (property->Value() == std::string("property"))
-						{
-							if (property->Attribute("name") == std::string("numFrames")) // Check for the name of the property rather than grabbing the attribute directly
-							{
-								property->Attribute("value", &tempLoaderParams->numFrames);
-							}
-							else if (property->Attribute("name") == std::string("textureID"))
-							{
-								tempLoaderParams->textureID = property->Attribute("value");
-							}
-							else if (property->Attribute("name") == std::string("callbackID"))
-							{
-								property->Attribute("value", &tempLoaderParams->callbackID);
-							}
-							else if (property->Attribute("name") == std::string("animationSpeed"))
-							{
-								property->Attribute("value", &tempLoaderParams->animationSpeed);
-							}
-							else if (property->Attribute("name") == std::string("livesRequired"))
-							{
-								property->Attribute("value", &tempLoaderParams->livesRequired);
-							}
-							else if (property->Attribute("name") == std::string("movementSpeed"))
-							{
-								double x;
-								property->Attribute("value", &x);
-								tempLoaderParams->movementSpeed = static_cast<float>(x);
-							}
-						}
+						property->Attribute("value", &tempLoaderParams->numFrames);
 					}
+					else if (property->Attribute("name") == std::string("textureID"))
+					{
+						tempLoaderParams->textureID = property->Attribute("value");
+					}
+					else if (property->Attribute("name") == std::string("selectCallbackID"))
+					{
+						property->Attribute("value", &tempLoaderParams->selectCallbackID);
+					}
+					else if (strcmp(property->Attribute("name"), "animationSpeed") == 0)
+					{
+						property->Attribute("value", &tempLoaderParams->animationSpeed);
+					}
+					else if (property->Attribute("name") == std::string("livesRequired"))
+					{
+						property->Attribute("value", &tempLoaderParams->livesRequired);
+					}
+					else if (property->Attribute("name") == std::string("movementSpeed"))
+					{
+						double x;
+						property->Attribute("value", &x);
+						tempLoaderParams->movementSpeed = static_cast<float>(x);
+					}
+					else if (property->Attribute("name") == std::string("text"))
+					{
+						tempLoaderParams->text = property->Attribute("value");
+					}
+					else if (property->Attribute("name") == std::string("checkboxStateCallbackID"))
+					{
+						property->Attribute("value", &tempLoaderParams->checkboxStateCallbackID);
+					}
+					else if (property->Attribute("name") == std::string("scoreWorth"))
+					{
+						property->Attribute("value", &tempLoaderParams->scoreWorth);
+					}
+					else if (property->Attribute("name") == std::string("textCallbackID"))
+					{
+						property->Attribute("value", &tempLoaderParams->textCallbackID);
+					}
+					else if (property->Attribute("name") == std::string("textSize"))
+					{
+						property->Attribute("value", &tempLoaderParams->textSize);
+					}
+
 				}
-			}
-
-			BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class"));
-
-			// Create the object just like the state parser
-			pGameObject->loadObject(tempLoaderParams);
-
-			// If the object is an Alien then put it in a separate vector, otherwise put it in the normal vector
-			if (dynamic_cast<Alien*>(pGameObject))
-			{
-				Alien* temp = dynamic_cast<Alien*>(pGameObject);
-				pObjectLayer->getAlienObjects().push_back(temp);
-			}
-			else
-			{
-				// If object is a player, then also store its address
-				if (dynamic_cast<Player*>(pGameObject))
-				{
-					pObjectLayer->setPlayer(dynamic_cast<Player*>(pGameObject));
-				}
-				pObjectLayer->getGameObjects().push_back(pGameObject);
 			}
 		}
-	}
 
-	// Set the player ptr in all PlayerLives objects
-	for (auto object : pObjectLayer->getGameObjects())
-	{
-		if (dynamic_cast<PlayerLives*>(object))
+		BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class"));
+
+		// Create the object just like the state parser
+		pGameObject->loadObject(tempLoaderParams);
+
+		// If the object is an Alien then put it in a separate vector, otherwise put it in the normal vector
+		if (dynamic_cast<Alien*>(pGameObject))
 		{
-			PlayerLives* temp = dynamic_cast<PlayerLives*>(object);
-			temp->setPlayer(pObjectLayer->getPlayerObject());
+			Alien* temp = dynamic_cast<Alien*>(pGameObject);
+			pObjectLayer->getAlienObjects().push_back(temp);
 		}
+		else
+		{
+			pObjectLayer->getGameObjects().push_back(pGameObject);
+
+			if (dynamic_cast<Player*>(pGameObject))
+				pObjectLayer->setPlayer(dynamic_cast<Player*>(pGameObject));
+
+			if (dynamic_cast<AlienBoss*>(pGameObject))
+				pObjectLayer->setAlienBoss(dynamic_cast<AlienBoss*>(pGameObject));
+		}
+		
 	}
+
 
 	// Once loaded all the objects for this layer, we can push it into our level layer array
 	pLayers->push_back(pObjectLayer);

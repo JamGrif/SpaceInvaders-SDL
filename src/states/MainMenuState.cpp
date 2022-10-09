@@ -1,29 +1,43 @@
 #include "pch.h"
 #include "states/MainMenuState.h"
 
-#include "core/SpriteManager.h"
 #include "core/Game.h"
-#include "core/Renderer.h"
-#include "gameobjects/MenuButton.h"
-#include "gameobjects/BaseGameObject.h"
-#include "states/PlayState.h"
 #include "states/utility/GameStateMachine.h"
-
-#include "level/Level.h"
-#include "level/ObjectLayer.h"
+#include "core/SoundManager.h"
 
 const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::s_menuToPlay()
 {
 	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToPlay);
-	//TheGame::Instance()->getStateMachine()->changeState(new PlayState());
 }
 
 void MainMenuState::s_exitFromMenu()
 {
 	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::Quit);
-	//TheGame::Instance()->quitGame();
+}
+
+void MainMenuState::s_toggleSound()
+{
+	TheSoundManager::Instance()->toggleSound();
+}
+
+
+void MainMenuState::s_toggleMusic()
+{
+	TheSoundManager::Instance()->toggleMusic();
+}
+
+
+bool MainMenuState::s_checkboxState1()
+{
+	return TheSoundManager::Instance()->isSoundPlaying();
+}
+
+
+bool MainMenuState::s_checkboxState2()
+{
+	return TheSoundManager::Instance()->isMusicPlaying();
 }
 
 void MainMenuState::updateState()
@@ -46,6 +60,12 @@ bool MainMenuState::onEnterState()
 	m_stateCallbackFunctions.push_back(0); // pushback = callbackID starts from 1
 	m_stateCallbackFunctions.push_back(s_menuToPlay);
 	m_stateCallbackFunctions.push_back(s_exitFromMenu);
+	m_stateCallbackFunctions.push_back(s_toggleSound);
+	m_stateCallbackFunctions.push_back(s_toggleMusic);
+
+	m_checkBoxStateCallbackFunctions.push_back(0);
+	m_checkBoxStateCallbackFunctions.push_back(s_checkboxState1);
+	m_checkBoxStateCallbackFunctions.push_back(s_checkboxState2);
 
 	// Set the callbacks for menu items
 	setCallbacks();
@@ -56,9 +76,10 @@ bool MainMenuState::onEnterState()
 bool MainMenuState::onExitState()
 {
 	std::cout << "-=-=-=-=-=-Exiting MenuState-=-=-=-=-=-" << std::endl;
-	
 
-	delete m_pStateLevel;
+	BaseState::onExitState();
+
+	//delete m_pStateLevel;
 
 	return true;
 }

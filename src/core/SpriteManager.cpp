@@ -8,19 +8,13 @@
 
 SpriteManager* SpriteManager::s_pInstance = nullptr;
 
-SpriteManager::SpriteManager()
-{
-}
 
 bool SpriteManager::loadSprite(const std::string& fileName, const std::string& id)
 {
-	// Ensure texture doesn't currently exist
-	if (m_spriteMap.find(id) != m_spriteMap.end())
-	{
-		//std::cout << fileName << " already exists " << std::endl;
+	// Sprite at filepath already exists
+	if (m_spriteMap.count(id))
 		return false;
-	}
-
+	
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 	if (!pTempSurface)
 		return false;
@@ -28,16 +22,13 @@ bool SpriteManager::loadSprite(const std::string& fileName, const std::string& i
 	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(TheRenderer::Instance()->getRendererPtr(), pTempSurface);
 	SDL_FreeSurface(pTempSurface);
 
-	// Texture creation successful, create sprite and add to map
-	if (pTexture)
-	{
-		Sprite* s = new Sprite(pTexture, fileName, id);
-		m_spriteMap[id] = s;
-		return true;
-	}
+	if (!pTexture)
+		return false;
+	
+	Sprite* s = new Sprite(pTexture, fileName, id);
+	m_spriteMap[id] = s;
 
-	// Reaching here means something went wrong
-	return false;
+	return true;
 }
 
 void SpriteManager::clearAllFromSpriteMap()
@@ -79,13 +70,13 @@ void SpriteManager::drawSpriteFrame(const std::string& id, int x, int y, int wid
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &frameToDraw, &destRect, 0, 0, flag);
 }
 
-void SpriteManager::drawSpriteTile(const std::string& id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame)
+void SpriteManager::drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame)
 {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 
-	srcRect.x = margin + (spacing + width) * currentFrame;
-	srcRect.y = margin + (spacing + height) * currentRow;
+	srcRect.x = m_tilesetPixelMargin + (m_tilesetPixelSpacing + width) * currentFrame;
+	srcRect.y = m_tilesetPixelMargin + (m_tilesetPixelSpacing + height) * currentRow;
 	srcRect.w = destRect.w = width;
 	srcRect.h = destRect.h = height;
 	destRect.x = x;
@@ -94,3 +85,10 @@ void SpriteManager::drawSpriteTile(const std::string& id, int margin, int spacin
 
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
 }
+
+// Returns sprite at id, nullptr if doesn't exist
+Sprite* SpriteManager::getSpriteViaID(const std::string& id) const
+{
+	return m_spriteMap.count(id) ? m_spriteMap.at(id) : nullptr;
+}
+

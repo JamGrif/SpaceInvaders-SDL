@@ -21,7 +21,7 @@ TileLayer::~TileLayer()
 void TileLayer::updateLayer()
 {
 	// Uses velocity to set the maps position
-	m_position += m_velocity;
+	//m_position += m_velocity;
 	//m_velocity.setX(1);
 }
 
@@ -56,9 +56,7 @@ void TileLayer::renderLayer()
 
 			// Use the drawTile function to copy across the correct tile using the tileset we grabbed earlier.
 			TheSpriteManager::Instance()->drawSpriteTile(
-				tileset.name,												// Name of the texture
-				tileset.margin,												// Margin of the tilesheet	(pixel space from the edge to first picture)
-				tileset.spacing,											// Spacing of the tilesheet (pixel space between each picture)
+				tileset.name,
 				(j * m_tileSize),											// X position to draw the tile at
 				(i * m_tileSize),											// Y position to draw the tile at
 				m_tileSize,													// Width of tile

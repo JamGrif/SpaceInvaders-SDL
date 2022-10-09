@@ -5,11 +5,12 @@
 
 #include "gameobjects/Alien.h"
 #include "gameobjects/Player.h"
+#include "gameobjects/AlienBoss.h"
 
-#include "misc/Collision.h"
+//#include "misc/Collision.h"
 
-#define playerBulletScreenEdge 115
-#define alienBulletScreenEdge 40
+#define PBULLET_SCREEN_BUFFER 115	// How close the player bullet can get to the screen edge before something happens
+#define ABULLET_SCREEN_BUFFER 40	// How close the alien bullet can get to the screen edge before something happens
 
 PlayerBullet::PlayerBullet()
 	:SDLGameObject(), m_bDestroy(false), m_pAllAliens(nullptr)
@@ -20,11 +21,12 @@ PlayerBullet::~PlayerBullet()
 {
 }
 
-void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr)
+void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr, AlienBoss* alienBossPtr)
 {
 	SDLGameObject::loadObject(pParams);
 
 	m_pAllAliens = levelAliensPtr;
+	m_pAlienBoss = alienBossPtr;
 }
 
 void PlayerBullet::drawObject()
@@ -39,7 +41,7 @@ void PlayerBullet::updateObject()
 	m_velocity.setY(-m_movementSpeed);
 
 	// If bullet reached edge of screen
-	if (m_position.getY() + m_objectHeight <= playerBulletScreenEdge)
+	if (m_position.getY() + m_objectHeight <= PBULLET_SCREEN_BUFFER)
 	{
 		m_bDestroy = true;
 	}
@@ -53,6 +55,14 @@ void PlayerBullet::updateObject()
 			m_bDestroy = true;
 			break;
 		}
+	}
+
+	// If bullet collided with alienboss
+	if (checkCollision(this, m_pAlienBoss))
+	{
+		m_pAlienBoss->setDying();
+		m_bDestroy = true;
+		return;
 	}
 }
 
@@ -86,7 +96,7 @@ void AlienBullet::updateObject()
 	m_velocity.setY(m_movementSpeed);
 
 	// Bullet gets destroyed if it collides with an alien or reaches edge of screen
-	if (m_position.getY() >= m_screenHeight - alienBulletScreenEdge)
+	if (m_position.getY() >= m_screenHeight - ABULLET_SCREEN_BUFFER)
 	{
 		m_bDestroy = true;
 	}

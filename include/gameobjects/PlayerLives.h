@@ -15,7 +15,7 @@ public:
 	virtual void drawObject();
 	virtual void updateObject();
 
-	void setPlayer(Player* player) { m_pPlayer = player; }
+	//void setPlayer(Player* player) { m_pPlayer = player; }
 
 private:
 
@@ -23,7 +23,7 @@ private:
 
 	bool m_bDraw;
 
-	Player* m_pPlayer;
+	//Player* m_pPlayer;
 };
 
 class PlayerLivesCreator :

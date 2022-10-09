@@ -3,6 +3,8 @@
 
 #include "core/Game.h"
 
+#include "SDL2/SDL.h"
+
 InputHandler* InputHandler::s_pInstance = nullptr;
 
 void InputHandler::init()

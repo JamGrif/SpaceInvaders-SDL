@@ -2,7 +2,6 @@
 
 #include "SDL2/SDL.h"
 
-/* SDL_Texture* m_pTexture;	// The image itself */
 
 struct Sprite
 {
@@ -49,10 +48,16 @@ public:
 	void clearFromSpriteMap(const std::string& id);
 
 	void drawSpriteFrame(const std::string& id, int x, int y, int width, int height, int currentFrame, bool flipHorizontal);
-	void drawSpriteTile(const std::string& id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame);
+	void drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame);
+
+	int m_tilesetPixelMargin = 2;	// Number of pixels between the edge of a tileset picture
+	int m_tilesetPixelSpacing = 2;	// Number of pixels between each sprite in a tileset picture
+
+	//int m_spritePixelMargin = 2;	// Number of pixels between the edge of the sprite sheet
+	//int m_spritePixelSpacing = 2;	// Number of pixels between each sprite in a sprite sheet
 
 
-	Sprite* getSpriteViaID(const std::string& id) const { return m_spriteMap.at(id); }
+	Sprite* getSpriteViaID(const std::string& id) const;
 
 	static SpriteManager* Instance() // Singleton
 	{
@@ -62,7 +67,9 @@ public:
 	}
 
 private:
-	SpriteManager();
+	SpriteManager() {};
+	SpriteManager(const SpriteManager&) {};
+	SpriteManager& operator=(const SpriteManager&) {};
 	static SpriteManager* s_pInstance;
 
 	std::unordered_map<std::string, Sprite*> m_spriteMap;

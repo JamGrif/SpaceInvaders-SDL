@@ -1,12 +1,11 @@
 #include "pch.h"
 #include "gameobjects/Alien.h"
 
-#include "SDL2/SDL.h"
-
+#include "core/Game.h"
 #include "core/SoundManager.h"
 
 Alien::Alien()
-	:SDLGameObject(), m_bMoveLeft(true), m_downAmount(15), m_bDying(false), m_bDead(false), m_timeSpentDying(0), m_timeAloudDying(200)
+	:SDLGameObject(), m_bMoveLeft(true), m_downAmount(15), m_bDying(false), m_bDead(false), m_timeSpentDying(0), m_timeAloudDying(200), m_scoreWorth(0)
 {
 }
 
@@ -22,6 +21,7 @@ void Alien::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 	SDLGameObject::loadObject(pParams);
 
 	m_deadTextureID = "alienDead";
+	m_scoreWorth = pParams->scoreWorth;
 }
 
 
@@ -46,7 +46,7 @@ void Alien::updateObject()
 	
 	if (m_bDying)
 	{
-		m_timeSpentDying += static_cast<float>(TheProgramClock::Instance()->getDeltaTime());
+		m_timeSpentDying += static_cast<int>(TheProgramClock::Instance()->getDeltaTime());
 		if (m_timeSpentDying >= m_timeAloudDying)
 			m_bDead = true;
 	
@@ -87,5 +87,6 @@ void Alien::setDying()
 {
 	m_bDying = true;
 	TheSoundManager::Instance()->playSound("alienExplosion");
+	TheGame::Instance()->increaseCurrentScore(m_scoreWorth);
 }
 

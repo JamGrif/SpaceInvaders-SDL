@@ -3,26 +3,27 @@
 
 #include "core/Game.h"
 #include "core/SpriteManager.h"
-#include "gameobjects/MenuButton.h"
-#include "gameobjects/BaseGameObject.h"
-#include "states/PlayState.h"
-#include "states/MainMenuState.h"
 #include "states/utility/GameStateMachine.h"
-
-#include "level/Level.h"
-#include "level/ObjectLayer.h"
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
+std::string GameOverState::s_textCallback1()
+{
+	return std::to_string(TheGame::Instance()->getCurrentScore());
+}
+
+std::string GameOverState::s_textCallback2()
+{
+	return TheGame::Instance()->getGameOutcome();
+}
+
 void GameOverState::s_gameOverToMain()
 {
-	//TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
 	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToMain);
 }
 
 void GameOverState::s_restartPlay()
 {
-	//TheGame::Instance()->getStateMachine()->changeState(new PlayState());
 	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToPlay);
 }
 
@@ -46,8 +47,14 @@ bool GameOverState::onEnterState()
 	m_stateCallbackFunctions.push_back(s_gameOverToMain);
 	m_stateCallbackFunctions.push_back(s_restartPlay);
 
+	m_textCallbackFunctions.push_back(0);
+	m_textCallbackFunctions.push_back(s_textCallback1);
+	m_textCallbackFunctions.push_back(s_textCallback2);
+
 	// Set the callbacks for menu items
 	setCallbacks();
+
+	
 
 	return true;
 }
@@ -56,7 +63,9 @@ bool GameOverState::onExitState()
 {
 	std::cout << "-=-=-=-=-=-Exiting GameOverState-=-=-=-=-=-" << std::endl;
 
-	delete m_pStateLevel;
+	BaseState::onExitState();
+
+	//delete m_pStateLevel;
 
 	return true;
 }

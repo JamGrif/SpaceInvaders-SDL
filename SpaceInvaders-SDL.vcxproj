@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameobjects\AlienBoss.cpp" />
+    <ClCompile Include="src\gameobjects\Button.cpp" />
+    <ClCompile Include="src\gameobjects\CheckboxButton.cpp" />
     <ClCompile Include="src\gameobjects\PlayerLives.cpp" />
     <ClCompile Include="src\gameobjects\utility\BulletHandler.cpp" />
     <ClCompile Include="dependencies\Base64\src\base64.cpp">
@@ -49,6 +52,7 @@
     <ClCompile Include="src\level\BaseLayer.cpp" />
     <ClCompile Include="src\level\Level.cpp" />
     <ClCompile Include="src\gameobjects\utility\GameObjectFactory.cpp" />
+    <ClCompile Include="src\misc\Utility.cpp" />
     <ClCompile Include="src\states\GameOverState.cpp" />
     <ClCompile Include="src\states\PauseState.cpp" />
     <ClCompile Include="src\gameobjects\MenuButton.cpp" />
@@ -77,8 +81,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\level\TileLayer.cpp" />
+    <ClCompile Include="src\gameobjects\TextObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\gameobjects\AlienBoss.h" />
+    <ClInclude Include="include\gameobjects\Button.h" />
+    <ClInclude Include="include\gameobjects\CheckboxButton.h" />
     <ClInclude Include="include\gameobjects\utility\BulletHandler.h" />
     <ClInclude Include="dependencies\Base64\include\base64.h" />
     <ClInclude Include="dependencies\SDL2\_mixer\include\SDL2_mixer\include\SDL_mixer.h" />
@@ -173,7 +181,8 @@
     <ClInclude Include="dependencies\SDL\include\SDL_video.h" />
     <ClInclude Include="dependencies\SDL\include\SDL_vulkan.h" />
     <ClInclude Include="include\gameobjects\utility\GameObjectFactory.h" />
-    <ClInclude Include="include\misc\Collision.h" />
+    <ClInclude Include="include\misc\Utility.h" />
+    <ClInclude Include="include\misc\Keycodes.h" />
     <ClInclude Include="include\states\GameOverState.h" />
     <ClInclude Include="include\states\utility\GameStateMachine.h" />
     <ClInclude Include="include\states\BaseState.h" />
@@ -202,6 +211,7 @@
     <ClInclude Include="include\gameobjects\Bullet.h" />
     <ClInclude Include="include\gameobjects\PlayerLives.h" />
     <ClInclude Include="res\misc\resource.h" />
+    <ClInclude Include="include\gameobjects\TextObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\misc\icon.bmp" />
@@ -263,14 +273,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(SolutionDir)dependencies\SDL2\_mixer\include;$(SolutionDir)dependencies\tinyXML\include;$(SolutionDir)dependencies\Base64\include;$(SolutionDir)dependencies\zlib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib;$(SolutionDir)dependencies\SDL2\_image\lib;$(SolutionDir)dependencies\SDL2\_mixer\lib;$(SolutionDir)dependencies\tinyXML\src;$(SolutionDir)dependencies\Base64\src;$(SolutionDir)dependencies\zlib\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(SolutionDir)dependencies\SDL2\_mixer\include;$(SolutionDir)dependencies\SDL2\_ttf\include;$(SolutionDir)dependencies\tinyXML\include;$(SolutionDir)dependencies\Base64\include;$(SolutionDir)dependencies\zlib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib;$(SolutionDir)dependencies\SDL2\_image\lib;$(SolutionDir)dependencies\SDL2\_mixer\lib;$(SolutionDir)dependencies\SDL2\_ttf\lib;$(SolutionDir)dependencies\tinyXML\src;$(SolutionDir)dependencies\Base64\src;$(SolutionDir)dependencies\zlib\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(SolutionDir)dependencies\SDL2\_mixer\include;$(SolutionDir)dependencies\tinyXML\include;$(SolutionDir)dependencies\Base64\include;$(SolutionDir)dependencies\zlib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib;$(SolutionDir)dependencies\SDL2\_image\lib;$(SolutionDir)dependencies\SDL2\_mixer\lib;$(SolutionDir)dependencies\tinyXML\src;$(SolutionDir)dependencies\Base64\src;$(SolutionDir)dependencies\zlib\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\SDL2\core\include;$(SolutionDir)dependencies\SDL2\_image\include;$(SolutionDir)dependencies\SDL2\_mixer\include;$(SolutionDir)dependencies\SDL2\_ttf\include;$(SolutionDir)dependencies\tinyXML\include;$(SolutionDir)dependencies\Base64\include;$(SolutionDir)dependencies\zlib\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\SDL2\core\lib;$(SolutionDir)dependencies\SDL2\_image\lib;$(SolutionDir)dependencies\SDL2\_mixer\lib;$(SolutionDir)dependencies\SDL2\_ttf\lib;$(SolutionDir)dependencies\tinyXML\src;$(SolutionDir)dependencies\Base64\src;$(SolutionDir)dependencies\zlib\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -316,12 +326,13 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;zlibwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;zlibwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)  /d 
 xcopy  $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir) /d 
 xcopy  $(ProjectDir)dependencies\SDL2\_mixer\lib\SDL2_mixer.dll $(TargetDir) /d 
+xcopy  $(ProjectDir)dependencies\SDL2\_ttf\lib\SDL2_ttf.dll $(TargetDir) /d 
 mkdir $(TargetDir)res
 xcopy  $(ProjectDir)res $(TargetDir)res /d /s /y
 xcopy $(ProjectDir)dependencies\zlib\lib\zlibwapi.dll $(TargetDir)  /d </Command>
@@ -345,12 +356,13 @@ xcopy $(ProjectDir)dependencies\zlib\lib\zlibwapi.dll $(TargetDir)  /d </Command
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;zlibwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;zlibwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy $(ProjectDir)dependencies\SDL2\core\lib\SDL2.dll $(TargetDir)  /d 
 xcopy  $(ProjectDir)dependencies\SDL2\_image\lib\SDL2_image.dll $(TargetDir) /d 
 xcopy  $(ProjectDir)dependencies\SDL2\_mixer\lib\SDL2_mixer.dll $(TargetDir) /d 
+xcopy  $(ProjectDir)dependencies\SDL2\_ttf\lib\SDL2_ttf.dll $(TargetDir) /d 
 mkdir $(TargetDir)res
 xcopy  $(ProjectDir)res $(TargetDir)res /d /s /y
 xcopy $(ProjectDir)dependencies\zlib\lib\zlibwapi.dll $(TargetDir)  /d </Command>

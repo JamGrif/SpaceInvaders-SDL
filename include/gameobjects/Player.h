@@ -20,7 +20,7 @@ public:
 	bool getDead() const { return m_bDead; }
 	bool getDying() const { return m_bDying; }
 
-	int getPlayerLives() const { return m_playerCurrentLives; }
+	//int getPlayerLives() const { return m_playerCurrentLives; }
 
 private:
 
@@ -32,9 +32,8 @@ private:
 
 	Vector2D m_respawnPosition;
 
-	int m_playerMaxLives;
-	int m_playerCurrentLives;
-
+	//int m_playerMaxLives;
+	//int m_playerCurrentLives;
 };
 
 class PlayerCreator :

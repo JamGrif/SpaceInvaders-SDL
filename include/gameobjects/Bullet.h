@@ -2,6 +2,7 @@
 #include "SDLGameObject.h"
 
 class Alien;
+class AlienBoss;
 class Player;
 
 
@@ -12,7 +13,7 @@ public:
 	PlayerBullet();
 	~PlayerBullet();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr);
+	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr, AlienBoss* alienBossPtr);
 
 	virtual void drawObject();
 	virtual void updateObject();
@@ -24,8 +25,9 @@ private:
 
 	bool m_bDestroy;
 
-	// All alive aliens to perform collision checks with
+	// All alive aliens + boss to perform collision checks with
 	std::vector<Alien*>* m_pAllAliens;
+	AlienBoss* m_pAlienBoss;
 };
 
 class AlienBullet

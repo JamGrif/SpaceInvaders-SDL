@@ -9,6 +9,8 @@
 
 BulletHandler* BulletHandler::s_pInstance = nullptr;
 
+#define PBULLET_SPEED 6
+
 
 void BulletHandler::addPlayerBullet(int xPos, int yPos)
 {
@@ -22,15 +24,15 @@ void BulletHandler::addPlayerBullet(int xPos, int yPos)
 	// Setup initial bullet values
 	std::unique_ptr<LoaderParams> tempLoaderParams = std::make_unique<LoaderParams>();
 
-	tempLoaderParams->x = xPos;
-	tempLoaderParams->y = yPos;
+	tempLoaderParams->xPos = xPos;
+	tempLoaderParams->yPos = yPos;
 	tempLoaderParams->textureID = "playerBullet";
-	tempLoaderParams->movementSpeed = 6;
+	tempLoaderParams->movementSpeed = PBULLET_SPEED;
 
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer)); // Give the bullet the vector of the level aliens
 
 	// Set initial bullet values
-	m_playerBullet->loadObject(tempLoaderParams, &temp->getAlienObjects());
+	m_playerBullet->loadObject(tempLoaderParams, &temp->getAlienObjects(), temp->getAlienBossObject());
 
 	TheSoundManager::Instance()->playSound("playerShoot");
 }
@@ -46,8 +48,8 @@ void BulletHandler::addAlienBullet(int xPos, int yPos)
 	// Setup initial bullet values
 	std::unique_ptr<LoaderParams> tempLoaderParams = std::make_unique<LoaderParams>();
 
-	tempLoaderParams->x = xPos;
-	tempLoaderParams->y = yPos;
+	tempLoaderParams->xPos = xPos;
+	tempLoaderParams->yPos = yPos;
 	tempLoaderParams->textureID = "alienBullet";
 	tempLoaderParams->numFrames = 2;
 	tempLoaderParams->animationSpeed = 250;
@@ -99,7 +101,6 @@ void BulletHandler::drawBullets()
 	{
 		bullet->drawObject();
 	}
-
 }
 
 void BulletHandler::clearBullets()
@@ -122,6 +123,5 @@ void BulletHandler::clearBullets()
 
 BulletHandler::BulletHandler()
 	:m_playerBullet(nullptr), m_level(nullptr)
-
 {
 }

@@ -7,7 +7,9 @@
 
 Renderer* Renderer::s_pInstance = nullptr;
 
-static int backgroundColour[3] = { 0, 0, 0 };
+
+#define BLACK 0
+#define WHITE 255
 
 Renderer::Renderer()
 	:m_pRenderer(nullptr)
@@ -22,7 +24,7 @@ bool Renderer::init()
 	if (!m_pRenderer)
 		return false;
 	
-	SDL_SetRenderDrawColor(m_pRenderer, backgroundColour[0], backgroundColour[1], backgroundColour[2], SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(m_pRenderer, BLACK, BLACK, BLACK, SDL_ALPHA_OPAQUE);
 
 	return true;
 }

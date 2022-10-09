@@ -3,12 +3,6 @@
 
 #include "SDL2_mixer/SDL_mixer.h"
 
-//enum sound_type
-//{
-//	SOUND_MUSIC = 0,
-//	SOUND_SFX = 1
-//};
-
 // .ogg for music | .wav for sound effects
 class SoundManager
 {
@@ -21,6 +15,13 @@ public:
 
 	void playSound(const std::string& id, int loop = false);
 	void playMusic(const std::string& id, int loop = false);
+
+	void toggleSound();
+	void toggleMusic();
+
+	bool isSoundPlaying() const { return m_bPlayingSound; }
+
+	bool isMusicPlaying() const { return m_bPlayingMusic; }
 
 	static SoundManager* Instance() // Instance Get
 	{
@@ -35,10 +36,12 @@ private:
 	std::unordered_map<std::string, Mix_Chunk*> m_sfxs;		// Mix_Chunk used for sound effects only
 	std::unordered_map<std::string, Mix_Music*> m_music;	// Mix_Music used for music tracks only
 
-	SoundManager() {};									// Prevent construction
-	SoundManager(const SoundManager&) {};				// Prevent construction by copying
-	SoundManager& operator=(const SoundManager&) {};	// Prevent assignment
-	~SoundManager() {};									// Prevent unwanted destruction
+	bool m_bPlayingSound;
+	bool m_bPlayingMusic;
+
+	SoundManager() :m_bPlayingSound(true), m_bPlayingMusic(true) {};					// Prevent construction
+	SoundManager(const SoundManager&) :m_bPlayingSound(true), m_bPlayingMusic(true) {};	// Prevent construction by copying
+	SoundManager& operator=(const SoundManager&) {};									// Prevent assignment
+	~SoundManager() {};																	// Prevent unwanted destruction
 };
 typedef SoundManager TheSoundManager;
-

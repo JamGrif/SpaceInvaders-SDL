@@ -27,8 +27,6 @@ void Level::renderLevel()
 	}
 }
 
-
-
 Level::Level()
 {
 }

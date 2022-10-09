@@ -1,40 +1,8 @@
 #pragma once
 
-#include "SDL2/SDL.h"
+#include "misc/Keycodes.h"
 
-namespace Mouse
-{
-	enum Buttons // Mouse buttons
-	{
-		LEFT = 0,
-		MIDDLE = 1,
-		RIGHT = 2
-	};
-}
-
-namespace Keyboard
-{
-	enum Keys // Keyboard keys
-	{
-		W = SDL_SCANCODE_W,
-		A = SDL_SCANCODE_A,
-		D = SDL_SCANCODE_D,
-		S = SDL_SCANCODE_S,
-
-		One = SDL_SCANCODE_1,
-
-		ENTER = SDL_SCANCODE_RETURN,
-		BACKSPACE = SDL_SCANCODE_BACKSPACE,
-		ESC = SDL_SCANCODE_ESCAPE,
-		SPACE = SDL_SCANCODE_SPACE,
-
-		UP_ARROW = SDL_SCANCODE_UP,
-		DOWN_ARROW = SDL_SCANCODE_DOWN,
-		RIGHT_ARROW = SDL_SCANCODE_RIGHT,
-		LEFT_ARROW = SDL_SCANCODE_LEFT
-	};
-}
-
+union SDL_Event;
 
 class InputHandler
 {
@@ -76,7 +44,7 @@ private:
 	Vector2D m_mousePosition;
 
 	// Keyboard Buttons
-	Uint8* m_keystates;
+	uint8_t* m_keystates;
 
 };
 typedef InputHandler TheInputHandler;
