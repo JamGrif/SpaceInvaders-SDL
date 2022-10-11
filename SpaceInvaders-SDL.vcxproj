@@ -19,9 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameobjects\Block.cpp" />
+    <ClCompile Include="src\core\Sprite.cpp" />
+    <ClCompile Include="src\core\TextManager.cpp" />
     <ClCompile Include="src\gameobjects\AlienBoss.cpp" />
+    <ClCompile Include="src\gameobjects\AlienBullet.cpp" />
     <ClCompile Include="src\gameobjects\Button.cpp" />
     <ClCompile Include="src\gameobjects\CheckboxButton.cpp" />
+    <ClCompile Include="src\gameobjects\PlayerBullet.cpp" />
     <ClCompile Include="src\gameobjects\PlayerLives.cpp" />
     <ClCompile Include="src\gameobjects\utility\BulletHandler.cpp" />
     <ClCompile Include="dependencies\Base64\src\base64.cpp">
@@ -44,7 +49,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\Bullet.cpp" />
+    <ClCompile Include="src\gameobjects\BaseBullet.cpp" />
     <ClCompile Include="src\misc\ProgramClock.cpp" />
     <ClCompile Include="src\core\SoundManager.cpp" />
     <ClCompile Include="src\level\ObjectLayer.cpp" />
@@ -84,9 +89,14 @@
     <ClCompile Include="src\gameobjects\TextObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\gameobjects\Block.h" />
+    <ClInclude Include="include\core\Sprite.h" />
+    <ClInclude Include="include\core\TextManager.h" />
     <ClInclude Include="include\gameobjects\AlienBoss.h" />
+    <ClInclude Include="include\gameobjects\AlienBullet.h" />
     <ClInclude Include="include\gameobjects\Button.h" />
     <ClInclude Include="include\gameobjects\CheckboxButton.h" />
+    <ClInclude Include="include\gameobjects\PlayerBullet.h" />
     <ClInclude Include="include\gameobjects\utility\BulletHandler.h" />
     <ClInclude Include="dependencies\Base64\include\base64.h" />
     <ClInclude Include="dependencies\SDL2\_mixer\include\SDL2_mixer\include\SDL_mixer.h" />
@@ -208,7 +218,7 @@
     <ClInclude Include="include\level\ObjectLayer.h" />
     <ClInclude Include="include\core\SoundManager.h" />
     <ClInclude Include="include\misc\ProgramClock.h" />
-    <ClInclude Include="include\gameobjects\Bullet.h" />
+    <ClInclude Include="include\gameobjects\BaseBullet.h" />
     <ClInclude Include="include\gameobjects\PlayerLives.h" />
     <ClInclude Include="res\misc\resource.h" />
     <ClInclude Include="include\gameobjects\TextObject.h" />

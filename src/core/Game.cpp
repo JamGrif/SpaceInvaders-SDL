@@ -5,22 +5,11 @@
 #include "core/Renderer.h"
 #include "core/InputHandler.h"
 #include "core/SoundManager.h"
+#include "core/TextManager.h"
 #include "states/MainMenuState.h" 
 #include "states/utility/GameStateMachine.h"
 #include "gameobjects/utility/GameObjectFactory.h"
-#include "gameobjects/MenuButton.h"
-#include "gameobjects/Alien.h"
-#include "gameobjects/Player.h"
-#include "gameobjects/TextObject.h"
-#include "gameobjects/PlayerLives.h"
-#include "gameobjects/CheckboxButton.h"
-#include "gameobjects/AlienBoss.h"
 
-#include "SDL2/SDL.h"
-#include "SDL2_ttf/SDL_ttf.h"
-
-#include <ctime>
-#include <cstdlib>
 
 Game* Game::s_pInstance = nullptr;
 
@@ -48,44 +37,31 @@ bool Game::gameInit()
 		return false;
 	}
 
-	if (TTF_Init() != INITIALIZE_SUCCESS)
-	{
-		std::cout << "TTF could not initialize" << std::endl;
-		return false;
-	}
 
 	if (!TheWindow::Instance()->init("SpaceInvaders-SDL", WINDOW_WIDTH, WINDOW_HEIGHT))
 		return false;
 
 	if (!TheRenderer::Instance()->init())
 		return false;
-	
-	TheInputHandler::Instance()->init();
 
-	TheSoundManager::Instance()->init();
+	if (!TheInputHandler::Instance()->init())
+		return false;
 
-	TheSoundManager::Instance()->loadSound("res/audio/playerShoot.wav", "playerShoot");
-	TheSoundManager::Instance()->loadSound("res/audio/playerExplosion.wav", "playerExplosion");
-	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav", "alienExplosion");
-	TheSoundManager::Instance()->loadSound("res/audio/menuMouseOver.wav", "menuMouseOver");
-	TheSoundManager::Instance()->loadMusic("res/audio/music.ogg", "music");
-	 
-	TheSoundManager::Instance()->playMusic("music");
+	if (!TheSoundManager::Instance()->init())
+		return false;
+
+	if (!TheTextManager::Instance()->init())
+		return false;
 	
-	// Register types for the LevelParser (only ones that appear in .tmx files)
-	TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
-	TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
-	TheGameObjectFactory::Instance()->registerType("Alien", new AlienCreator());
-	TheGameObjectFactory::Instance()->registerType("SDLGameObject", new SDLGameObjectCreator());
-	TheGameObjectFactory::Instance()->registerType("PlayerLives", new PlayerLivesCreator());
-	TheGameObjectFactory::Instance()->registerType("TextObject", new TextObjectCreator());
-	TheGameObjectFactory::Instance()->registerType("CheckboxButton", new CheckboxButtonCreator());
-	TheGameObjectFactory::Instance()->registerType("AlienBoss", new AlienBossCreator());
+	if (!TheGameObjectFactory::Instance()->init())
+		return false;
 
 	m_pGameStateMachine = new GameStateMachine();
 	m_pGameStateMachine->setStateUpdate(StateMachineAction::changeToMain);
 
 	setGameOutcome(GameStateOutcome::None);
+
+	TheSoundManager::Instance()->playMusic("music");
 
 	m_bRunning = true;
 	return true;
@@ -120,6 +96,9 @@ void Game::gameLoop()
 void Game::gameClean()
 {
 	delete m_pGameStateMachine;
+
+	TheGameObjectFactory::Instance()->clean();
+	TheTextManager::Instance()->clean();
 	TheSoundManager::Instance()->clean();
 	TheInputHandler::Instance()->clean();
 	TheRenderer::Instance()->clean();

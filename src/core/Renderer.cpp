@@ -40,9 +40,9 @@ void Renderer::startOfFrame()
 	SDL_RenderClear(m_pRenderer);
 }
 
-void Renderer::draw()
-{
-}
+//void Renderer::draw()
+//{
+//}
 
 void Renderer::EndOfFrame()
 {

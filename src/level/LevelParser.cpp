@@ -11,10 +11,15 @@
 #include "gameobjects/Player.h"
 #include "gameobjects/PlayerLives.h"
 #include "gameobjects/AlienBoss.h"
+#include "gameobjects/Block.h"
 
 #include "Base64/base64.h"
 #include "zlib/zlib.h"
 #include "tinyXML/tinyxml.h"
+
+#define LEVEL_PATH_PREFIX "res/levels/"
+#define TILESET_PATH_PREFIX "res/levels/"
+#define SPRITE_PATH_PREFIX "res/sprites/"
 
 
 Level* LevelParser::parseLevel(const char* levelFile)
@@ -22,12 +27,10 @@ Level* LevelParser::parseLevel(const char* levelFile)
 	// Create the TinyXML document and load the map XML
 	TiXmlDocument levelDocument;
 
-	std::string filepath = "res/levels/" + std::string(levelFile);
-
-	if (!levelDocument.LoadFile(filepath))
+	if (!levelDocument.LoadFile(LEVEL_PATH_PREFIX + std::string(levelFile)))
 	{
-		std::cout << "Couldn't find document at filepath: " << filepath << std::endl;
 		std::cout << levelDocument.ErrorDesc() << std::endl;
+		return nullptr;
 	}
 
 	// Create the level object
@@ -35,10 +38,6 @@ Level* LevelParser::parseLevel(const char* levelFile)
 
 	// Get the root node
 	TiXmlElement* pRoot = levelDocument.RootElement();
-
-	//int m_tileSize;
-	//int m_width;
-	//int m_height;
 
 	pRoot->Attribute("tilewidth", &m_tileSize);
 	pRoot->Attribute("width", &m_width);
@@ -87,9 +86,7 @@ Level* LevelParser::parseLevel(const char* levelFile)
 
 void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
 {
-	std::string tilesetFilepath = "res/levels/" + std::string(pTilesetRoot->FirstChildElement()->Attribute("source"));
-
-	TheSpriteManager::Instance()->loadSprite(tilesetFilepath, pTilesetRoot->Attribute("name"));
+	TheSpriteManager::Instance()->loadSprite(TILESET_PATH_PREFIX + std::string(pTilesetRoot->FirstChildElement()->Attribute("source")), pTilesetRoot->Attribute("name"));
 
 	// Create a tileset object and fill it out
 	Tileset tileset;
@@ -175,8 +172,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLay
 // Gets the texture name and value from file and adds to TextureManager
 void LevelParser::parseTextures(TiXmlElement* pTextureRoot)
 {
-	std::string textureFilepath = "res/sprites/" + std::string(pTextureRoot->Attribute("value"));
-	TheSpriteManager::Instance()->loadSprite(textureFilepath, pTextureRoot->Attribute("name"));
+	TheSpriteManager::Instance()->loadSprite(SPRITE_PATH_PREFIX + std::string(pTextureRoot->Attribute("value")), pTextureRoot->Attribute("name"));
 }
 
 
@@ -185,21 +181,16 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 	// Create an object layer
 	ObjectLayer* pObjectLayer = new ObjectLayer();
 
-	//std::cout << pObjectElement->FirstChildElement()->Value() << std::endl;;
 
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() != std::string("object"))
 			continue;
-		
-		//std::cout << e->Attribute("class") << std::endl;
 
-		// Check if type exists
-		if (!TheGameObjectFactory::Instance()->checkIfExist(e->Attribute("class")))
-		{
-			std::cout << "Could not create object of type: " << e->Attribute("class") << std::endl;
+		// Create object of type and check it was made
+		BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class"));
+		if (!pGameObject)
 			continue;
-		}
 
 		std::unique_ptr<LoaderParams> tempLoaderParams = std::make_unique<LoaderParams>();
 
@@ -269,12 +260,27 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 			}
 		}
 
-		BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class"));
+		
 
 		// Create the object just like the state parser
 		pGameObject->loadObject(tempLoaderParams);
 
 		// If the object is an Alien then put it in a separate vector, otherwise put it in the normal vector
+
+		if (dynamic_cast<AlienBoss*>(pGameObject))
+		{
+			pObjectLayer->setAlienBoss(dynamic_cast<AlienBoss*>(pGameObject));
+			pObjectLayer->getGameObjects().push_back(pGameObject);
+			continue;
+		}
+
+		if (dynamic_cast<Block*>(pGameObject))
+		{
+			Block* temp = dynamic_cast<Block*>(pGameObject);
+			pObjectLayer->getBlockObjects().push_back(temp);
+			continue;
+		}
+
 		if (dynamic_cast<Alien*>(pGameObject))
 		{
 			Alien* temp = dynamic_cast<Alien*>(pGameObject);
@@ -286,9 +292,6 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 
 			if (dynamic_cast<Player*>(pGameObject))
 				pObjectLayer->setPlayer(dynamic_cast<Player*>(pGameObject));
-
-			if (dynamic_cast<AlienBoss*>(pGameObject))
-				pObjectLayer->setAlienBoss(dynamic_cast<AlienBoss*>(pGameObject));
 		}
 		
 	}

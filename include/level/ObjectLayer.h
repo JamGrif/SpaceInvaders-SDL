@@ -5,6 +5,7 @@ class BaseGameObject;
 class Alien;
 class Player;
 class AlienBoss;
+class Block;
 
 #include "level/LevelParser.h"
 
@@ -27,9 +28,13 @@ public:
 
 	AlienBoss* getAlienBossObject() const { return m_layerAlienBoss; }
 
+	std::vector<Block*>& getBlockObjects() { return m_layerBlocks; }
+
 private:
 	std::vector<BaseGameObject*> m_layerGameObjects;
+
 	std::vector<Alien*> m_layerAlienObjects;
+	std::vector<Block*> m_layerBlocks;
 	Player* m_layerPlayer;
 	AlienBoss* m_layerAlienBoss;
 

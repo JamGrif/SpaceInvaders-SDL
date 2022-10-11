@@ -7,13 +7,15 @@
 
 InputHandler* InputHandler::s_pInstance = nullptr;
 
-void InputHandler::init()
+bool InputHandler::init()
 {
 	// Set all mouse button states to false (not pressed)
 	for (int i = 0; i < 3; i++)
 	{
 		m_mouseButtonStates.push_back(false);
 	}
+
+	return true;
 }
 
 void InputHandler::update()

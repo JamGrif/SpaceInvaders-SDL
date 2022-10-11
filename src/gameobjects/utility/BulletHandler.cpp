@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "gameobjects/utility/BulletHandler.h"
-#include "gameobjects/Bullet.h"
+
+#include "gameobjects/PlayerBullet.h"
+#include "gameobjects/AlienBullet.h"
 
 #include "level/Level.h"
 #include "level/ObjectLayer.h"
@@ -32,7 +34,7 @@ void BulletHandler::addPlayerBullet(int xPos, int yPos)
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer)); // Give the bullet the vector of the level aliens
 
 	// Set initial bullet values
-	m_playerBullet->loadObject(tempLoaderParams, &temp->getAlienObjects(), temp->getAlienBossObject());
+	m_playerBullet->loadObject(tempLoaderParams, &temp->getAlienObjects(), temp->getAlienBossObject(), &temp->getBlockObjects());
 
 	TheSoundManager::Instance()->playSound("playerShoot");
 }
@@ -57,7 +59,7 @@ void BulletHandler::addAlienBullet(int xPos, int yPos)
 
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer));
 
-	alienBullet->loadObject(tempLoaderParams, temp->getPlayerObject());
+	alienBullet->loadObject(tempLoaderParams, temp->getPlayerObject(), &temp->getBlockObjects());
 	m_alienBullets.push_back(alienBullet);
 }
 

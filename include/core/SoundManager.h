@@ -1,13 +1,15 @@
 #pragma once
 
-
-#include "SDL2_mixer/SDL_mixer.h"
+// Forward Declarations
+struct Mix_Chunk;
+struct _Mix_Music;
+typedef struct _Mix_Music Mix_Music; // Defined in SDL_mixer.h
 
 // .ogg for music | .wav for sound effects
 class SoundManager
 {
 public:
-	void init();
+	bool init();
 	void clean();
 
 	bool loadSound(const std::string& fileName, const std::string& id);

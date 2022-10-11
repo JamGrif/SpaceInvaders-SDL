@@ -12,7 +12,7 @@ public:
 	void clean();
 
 	void startOfFrame();
-	void draw();
+	//void draw();
 	void EndOfFrame();
 
 	SDL_Renderer* getRendererPtr() const { return m_pRenderer; }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="85">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="137">
  <properties>
   <property name="alienBoss" value="alienBoss.png"/>
   <property name="alienBossDead" value="alienBossDead.png"/>
@@ -25,7 +25,7 @@
   </data>
  </layer>
  <objectgroup id="2" name="Object Layer 1">
-  <object id="2" name="Player" class="Player" x="400" y="650" width="10" height="10">
+  <object id="2" name="Player" class="Player" x="377" y="650" width="10" height="10">
    <properties>
     <property name="animationSpeed" type="int" value="150"/>
     <property name="movementSpeed" type="int" value="4"/>
@@ -561,50 +561,58 @@
     <property name="textSize" type="int" value="40"/>
    </properties>
   </object>
-  <object id="75" name="Block" class="SDLGameObject" x="160" y="592" width="16" height="16">
+  <object id="75" name="Block" class="Block" x="80" y="592" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
   </object>
-  <object id="76" name="Block" class="SDLGameObject" x="192" y="560" width="16" height="16">
+  <object id="76" name="Block" class="Block" x="112" y="560" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
   </object>
-  <object id="77" name="Block" class="SDLGameObject" x="160" y="576" width="16" height="16">
+  <object id="77" name="Block" class="Block" x="80" y="576" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
   </object>
-  <object id="78" name="Block" class="SDLGameObject" x="176" y="576" width="16" height="16">
+  <object id="78" name="Block" class="Block" x="96" y="576" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
   </object>
-  <object id="79" name="Block" class="SDLGameObject" x="208" y="560" width="16" height="16">
+  <object id="79" name="Block" class="Block" x="128" y="560" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
   </object>
-  <object id="80" name="Block" class="SDLGameObject" x="240" y="592" width="16" height="16">
+  <object id="80" name="Block" class="Block" x="160" y="592" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
   </object>
-  <object id="81" name="Block" class="SDLGameObject" x="224" y="576" width="16" height="16">
+  <object id="81" name="Block" class="Block" x="144" y="576" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
   </object>
-  <object id="82" name="Block" class="SDLGameObject" x="240" y="576" width="16" height="16">
+  <object id="82" name="Block" class="Block" x="160" y="576" width="16" height="16">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="4"/>
     <property name="textureID" value="block"/>
    </properties>
@@ -616,11 +624,347 @@
     <property name="textSize" type="int" value="40"/>
    </properties>
   </object>
-  <object id="84" name="AlienBoss" class="AlienBoss" x="254" y="100" width="10" height="10">
+  <object id="84" name="AlienBoss" class="AlienBoss" x="95" y="-69" width="10" height="10">
    <properties>
-    <property name="movementSpeed" type="float" value="0.1"/>
+    <property name="movementSpeed" type="float" value="2"/>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="alienBoss"/>
+   </properties>
+  </object>
+  <object id="89" name="Block" class="Block" x="96" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="90" name="Block" class="Block" x="144" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="91" name="Block" class="Block" x="64" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="92" name="Block" class="Block" x="176" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="93" name="Block" class="Block" x="64" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="94" name="Block" class="Block" x="176" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="95" name="Block" class="Block" x="624" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="96" name="Block" class="Block" x="656" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="97" name="Block" class="Block" x="624" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="98" name="Block" class="Block" x="640" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="99" name="Block" class="Block" x="672" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="100" name="Block" class="Block" x="704" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="101" name="Block" class="Block" x="688" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="102" name="Block" class="Block" x="704" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="103" name="Block" class="Block" x="640" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="104" name="Block" class="Block" x="688" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="105" name="Block" class="Block" x="608" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="106" name="Block" class="Block" x="720" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="107" name="Block" class="Block" x="608" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="108" name="Block" class="Block" x="720" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="109" name="Block" class="Block" x="261" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="110" name="Block" class="Block" x="293" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="111" name="Block" class="Block" x="261" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="112" name="Block" class="Block" x="277" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="113" name="Block" class="Block" x="309" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="114" name="Block" class="Block" x="341" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="115" name="Block" class="Block" x="325" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="116" name="Block" class="Block" x="341" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="117" name="Block" class="Block" x="277" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="118" name="Block" class="Block" x="325" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="119" name="Block" class="Block" x="245" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="120" name="Block" class="Block" x="357" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="121" name="Block" class="Block" x="245" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="122" name="Block" class="Block" x="357" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="123" name="Block" class="Block" x="444" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="124" name="Block" class="Block" x="476" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="125" name="Block" class="Block" x="444" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="126" name="Block" class="Block" x="460" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="127" name="Block" class="Block" x="492" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="128" name="Block" class="Block" x="524" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="129" name="Block" class="Block" x="508" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="130" name="Block" class="Block" x="524" y="576" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="131" name="Block" class="Block" x="460" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="132" name="Block" class="Block" x="508" y="560" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="133" name="Block" class="Block" x="428" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="134" name="Block" class="Block" x="540" y="592" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="135" name="Block" class="Block" x="428" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
+   </properties>
+  </object>
+  <object id="136" name="Block" class="Block" x="540" y="608" width="16" height="16">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="4"/>
+    <property name="textureID" value="block"/>
    </properties>
   </object>
  </objectgroup>

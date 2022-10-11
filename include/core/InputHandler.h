@@ -1,5 +1,6 @@
 #pragma once
 
+// To use InputHandler you will need enums in Keycodes.h
 #include "misc/Keycodes.h"
 
 union SDL_Event;
@@ -7,7 +8,7 @@ union SDL_Event;
 class InputHandler
 {
 public:
-	void init();
+	bool init();
 	void update();
 	void clean();
 

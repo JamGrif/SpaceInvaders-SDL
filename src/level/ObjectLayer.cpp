@@ -3,6 +3,7 @@
 
 #include "gameobjects/BaseGameObject.h"
 #include "gameobjects/Alien.h"
+#include "gameobjects/Block.h"
 
 ObjectLayer::ObjectLayer()
 	:m_layerPlayer(nullptr)
@@ -38,6 +39,11 @@ void ObjectLayer::updateLayer()
 	{
 		alien->updateObject();
 	}
+
+	for (auto block : m_layerBlocks)
+	{
+		block->updateObject();
+	}
 }
 
 void ObjectLayer::renderLayer()
@@ -50,6 +56,11 @@ void ObjectLayer::renderLayer()
 	for (auto alien : m_layerAlienObjects)
 	{
 		alien->drawObject();
+	}
+
+	for (auto block : m_layerBlocks)
+	{
+		block->drawObject();
 	}
 }
 

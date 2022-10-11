@@ -4,6 +4,7 @@
 class Player;
 class Alien;
 class AlienBoss;
+class Block;
 
 class PlayState :
     public BaseState
@@ -28,6 +29,7 @@ private:
 	Player*	m_player;
 	std::vector<Alien*>* m_allAliens;
 	AlienBoss* m_alienBoss;
+	std::vector<Block*>* m_allBlocks;
 
 	int m_totalAliens;
 	int m_currentAliensDead;
@@ -41,5 +43,9 @@ private:
 
 	bool m_bFirstCheckDying = false;
 	bool m_bAllowedToSpawnBullets = true;
+
+	//// Static to persist upon PlayState resets
+	//static bool m_bResetLives;
+	//static bool m_bResetScore;
 };
 

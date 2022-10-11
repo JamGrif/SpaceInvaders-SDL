@@ -5,7 +5,8 @@
 #include "core/SoundManager.h"
 
 Alien::Alien()
-	:SDLGameObject(), m_bMoveLeft(true), m_downAmount(15), m_bDying(false), m_bDead(false), m_timeSpentDying(0), m_timeAloudDying(200), m_scoreWorth(0)
+	:SDLGameObject(), m_downAmount(15), m_bDying(false), m_bDead(false), m_timeSpentDying_ms(0), m_timeAloudDying_ms(200), m_selectedScoreWorth(0),
+	m_direction(MovingDirection::None)
 {
 }
 
@@ -21,21 +22,13 @@ void Alien::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 	SDLGameObject::loadObject(pParams);
 
 	m_deadTextureID = "alienDead";
-	m_scoreWorth = pParams->scoreWorth;
+	m_selectedScoreWorth = pParams->scoreWorth;
+	m_direction = MovingDirection::Left;
 }
 
 
 void Alien::drawObject()
 {
-	if (m_bDead)
-		return;
-
-	if (m_bDying)
-	{
-		m_objectTextureID = m_deadTextureID;
-		
-	}
-	
 	SDLGameObject::drawObject();
 }
 
@@ -46,8 +39,8 @@ void Alien::updateObject()
 	
 	if (m_bDying)
 	{
-		m_timeSpentDying += static_cast<int>(TheProgramClock::Instance()->getDeltaTime());
-		if (m_timeSpentDying >= m_timeAloudDying)
+		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime();
+		if (m_timeSpentDying_ms >= m_timeAloudDying_ms)
 			m_bDead = true;
 	
 		return;
@@ -55,11 +48,11 @@ void Alien::updateObject()
 
 	SDLGameObject::updateObject();
 
-	if (m_bMoveLeft)
+	if (m_direction == MovingDirection::Left)
 	{
 		m_position.setX(m_position.getX() - m_movementSpeed);
 	}
-	else
+	else if (m_direction == MovingDirection::Right)
 	{
 		m_position.setX(m_position.getX() + m_movementSpeed);
 	}
@@ -77,9 +70,12 @@ bool Alien::checkIfReachedEdge()
 	return false;
 }
 
-void Alien::switchDirections()
+void Alien::switchDirection()
 {
-	m_bMoveLeft = !m_bMoveLeft;
+	// Swap direction
+	m_direction = m_direction == MovingDirection::Left ? MovingDirection::Right : MovingDirection::Left;
+
+	// Move aliens down
 	m_position.setY(m_position.getY() + m_downAmount);
 }
 
@@ -87,6 +83,7 @@ void Alien::setDying()
 {
 	m_bDying = true;
 	TheSoundManager::Instance()->playSound("alienExplosion");
-	TheGame::Instance()->increaseCurrentScore(m_scoreWorth);
+	TheGame::Instance()->increaseCurrentScore(m_selectedScoreWorth);
+	m_objectTextureID = m_deadTextureID;
 }
 

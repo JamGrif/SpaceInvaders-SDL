@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "core/SoundManager.h"
 
+#include "SDL2_mixer/SDL_mixer.h"
+
 #define FREQUENCY 22050
 #define FORMAT AUDIO_S16
 #define CHANNELS 2
@@ -13,7 +15,7 @@
 
 SoundManager* SoundManager::s_pInstance = nullptr;
 
-void SoundManager::init()
+bool SoundManager::init()
 {
 	// Must be called to setup audio for the game (before sound can be used)
 	Mix_OpenAudio(FREQUENCY, FORMAT, CHANNELS, CHUNK_SIZE);
@@ -21,6 +23,14 @@ void SoundManager::init()
 	// Set initial volume
 	Mix_Volume(ALL_CHANNELS, VOLUME_MAXIMUM);
 	Mix_VolumeMusic(VOLUME_MAXIMUM);
+
+	TheSoundManager::Instance()->loadSound("res/audio/playerShoot.wav", "playerShoot");
+	TheSoundManager::Instance()->loadSound("res/audio/playerExplosion.wav", "playerExplosion");
+	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav", "alienExplosion");
+	TheSoundManager::Instance()->loadSound("res/audio/menuMouseOver.wav", "menuMouseOver");
+	TheSoundManager::Instance()->loadMusic("res/audio/music.ogg", "music");
+
+	return true;
 }
 
 void SoundManager::clean()

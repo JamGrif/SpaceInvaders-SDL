@@ -8,6 +8,7 @@
 #include "gameobjects/Player.h"
 #include "gameobjects/Alien.h"
 #include "gameobjects/AlienBoss.h"
+#include "gameobjects/Block.h"
 #include "gameobjects/BaseGameObject.h"
 #include "gameobjects/utility/BulletHandler.h"
 #include "level/Level.h"
@@ -32,17 +33,14 @@ void PlayState::updateState()
 {
 	BaseState::updateState();
 
-	//std::cout << m_alienBoss->getPosition().getX() << std::endl;
-
 	// If esc is pressed then push PauseState into the FSM
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ESC))
-	{
 		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::pushPause);
-	}
+	
 
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ONE))
 	{
-		m_alienBoss->setDead();
+		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
 	}
 
 	// If player is dead, determine whether to respawn them or change state to game over
@@ -83,9 +81,8 @@ void PlayState::updateState()
 		{
 			// Set time until next alien shoots (between minNextShotTime and maxNextShotTime)
 			m_SelectedNextShotTime_ms = getRandomNumber(m_minNextShotTime_ms, m_maxNextShotTime_ms);
-			//m_SelectedNextShotTime_ms = rand() % (m_maxNextShotTime_ms - m_minNextShotTime_ms + 1) + m_minNextShotTime_ms;
-			//std::cout << m_SelectedNextShotTime_ms << std::endl;
 		}
+
 		if (m_currentNextShotTime_ms >= m_SelectedNextShotTime_ms)
 		{
 			// Reset timings
@@ -126,7 +123,7 @@ void PlayState::updateState()
 			// Tell all the aliens they need to switch
 			for (auto aliens : *m_allAliens)
 			{
-				aliens->switchDirections();
+				aliens->switchDirection();
 			}
 			break;
 		}
@@ -137,10 +134,9 @@ void PlayState::updateState()
 	{
 		g_bResetLives = false;
 		g_bResetScore = false;
+
 		TheGame::Instance()->increaseCurrentLives();
 		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToPlay);
-		//TheGame::Instance()->setGameOutcome(GameStateOutcome::Win_KilledAllAliens);
-		//TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
 	}
 
 	// When player is dying, take action (clearing bullets) once until they next start dying
@@ -154,8 +150,21 @@ void PlayState::updateState()
 		}
 	}
 
+	// Check all blocks and remove any destroyed
+	for (int i = 0; i < m_allBlocks->size(); i++)
+	{
+		if (m_allBlocks->at(i)->isDestroyed())
+		{
+			// remove block from vector
+			m_allBlocks->erase(m_allBlocks->begin() + i);
+			continue;
+		}
+	}
+
 	// Update all bullets
 	TheBulletHandler::Instance()->updateBullets();
+
+	
 	
 }
 
@@ -189,6 +198,7 @@ bool PlayState::onEnterState()
 	m_allAliens = &temp->getAlienObjects();
 	m_player = temp->getPlayerObject();
 	m_alienBoss = temp->getAlienBossObject();
+	m_allBlocks = &temp->getBlockObjects();
 
 	//bFirstCheckDying = false;
 	//allowedToSpawnBullets = true;

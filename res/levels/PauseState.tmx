@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="7">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="15">
  <properties>
+  <property name="alienLower" value="alienLower.png"/>
   <property name="logo" value="logo.png"/>
   <property name="mainMenuButton" value="mainMenuButton.png"/>
   <property name="resumeButton" value="resumeButton.png"/>
@@ -32,10 +33,56 @@
     <property name="textureWidth" type="int" value="200"/>
    </properties>
   </object>
-  <object id="6" name="Logo" class="SDLGameObject" x="230" y="50" width="10" height="10">
+  <object id="7" name="AlienLower" class="SDLGameObject" x="322" y="60" width="10" height="10">
    <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienLower"/>
+   </properties>
+  </object>
+  <object id="8" name="AlienMiddle" class="SDLGameObject" x="322" y="120" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienMiddle"/>
+   </properties>
+  </object>
+  <object id="9" name="AlienUpper" class="SDLGameObject" x="322" y="180" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
+    <property name="numFrames" type="int" value="2"/>
+    <property name="textureID" value="alienUpper"/>
+   </properties>
+  </object>
+  <object id="10" name="Test" class="TextObject" x="410" y="60" width="10" height="10">
+   <properties>
+    <property name="text" value="= 10"/>
+    <property name="textSize" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="11" name="Test" class="TextObject" x="410" y="120" width="10" height="10">
+   <properties>
+    <property name="text" value="= 20"/>
+    <property name="textSize" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="12" name="Test" class="TextObject" x="410" y="180" width="10" height="10">
+   <properties>
+    <property name="text" value="= 30"/>
+    <property name="textSize" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="13" name="AlienBoss" class="SDLGameObject" x="307" y="240" width="10" height="10">
+   <properties>
+    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="1"/>
-    <property name="textureID" value="logo"/>
+    <property name="textureID" value="alienBoss"/>
+   </properties>
+  </object>
+  <object id="14" name="Test" class="TextObject" x="410" y="240" width="10" height="10">
+   <properties>
+    <property name="text" value="= ???"/>
+    <property name="textSize" type="int" value="30"/>
    </properties>
   </object>
  </objectgroup>

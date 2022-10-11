@@ -1,60 +1,42 @@
 #pragma once
-#include "SDLGameObject.h"
+#include "Alien.h"
 
-enum class MovingDirection
-{
-	None = 0,
-	Left = 1,
-	Right = 2
-};
 
 class AlienBoss :
-    public SDLGameObject
+    public Alien
 {
 public:
 	AlienBoss();
 	~AlienBoss();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
 
-	virtual void drawObject();
-	virtual void updateObject();
-
-	void reset();
-
-	void setDying();
-	void setDead();
-
+	virtual void drawObject() override;
+	virtual void updateObject() override;
 
 private:
+	void resetAlien();
 
-	// Alien is currently moving through the level, allowing the player to shoot it
-	bool m_bActive;
-
+	// Store alive texture ID to use when alien respawns
 	std::string m_aliveTextureID;
-	std::string m_deadTextureID = "alienBossDead";
 
-	//bool m_bDead;
-	bool m_bDying = false;
-	int m_timeSpentDying = 0;; // Current time spent dying
-	int m_timeAloudDying = 200; // When alien has been dying for this amount of time, change to dead
-
-	// The AlienBoss will repsawn between this range and its chosen respawn time is stored in m_selectedRespawnTime_ms;
+	// The AlienBoss will respawn between this range
 	const int m_minimumRespawnTime_ms;
 	const int m_maximumRespawnTime_ms;
+
+	// Selected respawn time between minimum and maximum respawn time
 	int m_selectedRespawnTime_ms;
 
+	// Current time AlienBoss has spent dying
 	int m_currentRespawnTime_ms;
 
 	// The AlienBoss will select a random score to give upon its death between a range
 	const int m_minimumScoreWorth;
 	const int m_maximumScoreWorth;
-	int m_selectedScoreWorth;
 
-	MovingDirection m_direction = MovingDirection::None;
-
-	Vector2D leftSpawnPosition{-100, 100};
-	Vector2D rightSpawnPosition{800, 100};
+	// Position the AlienBoss will spawn in when it respawns
+	Vector2D leftSpawnPosition;
+	Vector2D rightSpawnPosition;
 };
 
 

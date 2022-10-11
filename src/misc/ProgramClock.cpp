@@ -16,8 +16,8 @@ void ProgramClock::tick()
 {
 	// Delta time
 	m_currentFrame = SDL_GetTicks();
-	m_deltaTime = m_currentFrame - m_lastFrame;
-	m_lastFrame = m_currentFrame;
+	m_deltaTime_ms = m_currentFrame - m_lastFrame_ms;
+	m_lastFrame_ms = m_currentFrame;
 
 	// Calculate framecount
 	m_frameCount++;
