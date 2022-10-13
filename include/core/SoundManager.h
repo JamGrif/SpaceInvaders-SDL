@@ -1,31 +1,33 @@
 #pragma once
 
-// Forward Declarations
 struct Mix_Chunk;
 struct _Mix_Music;
 typedef struct _Mix_Music Mix_Music; // Defined in SDL_mixer.h
 
-// .ogg for music | .wav for sound effects
+/// <summary>
+/// Encapsulates the audio for the program, providing utility functions to use it
+/// .ogg for music and .wav for sound effects
+/// </summary>
 class SoundManager
 {
 public:
 	bool init();
 	void clean();
 
-	bool loadSound(const std::string& fileName, const std::string& id);
-	bool loadMusic(const std::string& fileName, const std::string& id);
+	bool loadSound(const std::string& filepath, const std::string& id);
+	bool loadMusic(const std::string& filepath, const std::string& id);
 
 	void playSound(const std::string& id, int loop = false);
 	void playMusic(const std::string& id, int loop = false);
 
-	void toggleSound();
+	void toggleSoundEffects();
 	void toggleMusic();
 
 	bool isSoundPlaying() const { return m_bPlayingSound; }
 
 	bool isMusicPlaying() const { return m_bPlayingMusic; }
 
-	static SoundManager* Instance() // Instance Get
+	static SoundManager* Instance() // Get instance
 	{
 		if (!s_pInstance)
 			s_pInstance = new SoundManager();

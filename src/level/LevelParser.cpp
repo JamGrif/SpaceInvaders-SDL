@@ -1,33 +1,34 @@
 #include "pch.h"
 #include "level/LevelParser.h"
 
-#include "level/Level.h"
 #include "core/SpriteManager.h"
-
-#include "level/TileLayer.h"
-#include "level/ObjectLayer.h"
-#include "gameobjects/BaseGameObject.h"
 #include "gameobjects/Alien.h"
+#include "gameobjects/AlienBoss.h"
+#include "gameobjects/BaseGameObject.h"
+#include "gameobjects/Block.h"
 #include "gameobjects/Player.h"
 #include "gameobjects/PlayerLives.h"
-#include "gameobjects/AlienBoss.h"
-#include "gameobjects/Block.h"
+#include "level/Level.h"
+#include "level/TileLayer.h"
+#include "level/ObjectLayer.h"
 
-#include "Base64/base64.h"
-#include "zlib/zlib.h"
-#include "tinyXML/tinyxml.h"
+#include "Base64/base64.h"		// Decode the level data
+#include "zlib/zlib.h"			// Decompress the level data
+#include "tinyXML/tinyxml.h"	// Read the level data
 
 #define LEVEL_PATH_PREFIX "res/levels/"
 #define TILESET_PATH_PREFIX "res/levels/"
 #define SPRITE_PATH_PREFIX "res/sprites/"
 
-
-Level* LevelParser::parseLevel(const char* levelFile)
+/// <summary>
+/// Called whenever a .tmx file needs to be parsed at filepath
+/// </summary>
+Level* LevelParser::parseLevel(const std::string& filepath)
 {
 	// Create the TinyXML document and load the map XML
 	TiXmlDocument levelDocument;
 
-	if (!levelDocument.LoadFile(LEVEL_PATH_PREFIX + std::string(levelFile)))
+	if (!levelDocument.LoadFile(LEVEL_PATH_PREFIX + filepath))
 	{
 		std::cout << levelDocument.ErrorDesc() << std::endl;
 		return nullptr;
@@ -80,34 +81,14 @@ Level* LevelParser::parseLevel(const char* levelFile)
 		}
 	}
 
-	
+	// .tmx file has been fully parsed, so return newly created level
 	return pLevel;
 }
 
-void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
-{
-	TheSpriteManager::Instance()->loadSprite(TILESET_PATH_PREFIX + std::string(pTilesetRoot->FirstChildElement()->Attribute("source")), pTilesetRoot->Attribute("name"));
-
-	// Create a tileset object and fill it out
-	Tileset tileset;
-	pTilesetRoot->FirstChildElement()->Attribute("width", &tileset.width);
-	pTilesetRoot->FirstChildElement()->Attribute("height", &tileset.height);
-	pTilesetRoot->Attribute("firstgid", &tileset.firstGridID);
-	pTilesetRoot->Attribute("tilewidth", &tileset.tileWidth);
-	pTilesetRoot->Attribute("tileheight", &tileset.tileHeight);
-	pTilesetRoot->Attribute("spacing", &tileset.spacing);
-	pTilesetRoot->Attribute("margin", &tileset.margin);
-	tileset.name = pTilesetRoot->Attribute("name");
-
-	tileset.numColumns = tileset.width / (tileset.tileWidth + tileset.spacing);
-
-	pTilesets->push_back(tileset);
-
-
-}
-
-// The tile IDs are compressed and encoded in the .tmx file.
-// Uses the Base64 and zlib libraries to help decode and decompress the data
+/// <summary>
+/// The TileLayer is the layer the tileset is drawn too in the level editor
+/// Uses the Base64 and zlib libraries to decode and decompress the data
+/// </summary>
 void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLayer*>* pLayers, const std::vector<Tileset>* pTilesets)
 {
 	// Create new TileLayer instance
@@ -169,18 +150,14 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLay
 	pLayers->push_back(pTileLayer);
 }
 
-// Gets the texture name and value from file and adds to TextureManager
-void LevelParser::parseTextures(TiXmlElement* pTextureRoot)
-{
-	TheSpriteManager::Instance()->loadSprite(SPRITE_PATH_PREFIX + std::string(pTextureRoot->Attribute("value")), pTextureRoot->Attribute("name"));
-}
-
-
+/// <summary>
+/// The object layer is all the objects added in the level editor
+/// The object layer handles all the updating and drawing of only the objects created from this layer
+/// </summary>
 void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<BaseLayer*>* pLayers)
 {
 	// Create an object layer
 	ObjectLayer* pObjectLayer = new ObjectLayer();
-
 
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
@@ -188,7 +165,7 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 			continue;
 
 		// Create object of type and check it was made
-		BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("class"));
+		BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->createGameObject(e->Attribute("class"));
 		if (!pGameObject)
 			continue;
 
@@ -260,13 +237,10 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 			}
 		}
 
-		
-
 		// Create the object just like the state parser
 		pGameObject->loadObject(tempLoaderParams);
 
 		// If the object is an Alien then put it in a separate vector, otherwise put it in the normal vector
-
 		if (dynamic_cast<AlienBoss*>(pGameObject))
 		{
 			pObjectLayer->setAlienBoss(dynamic_cast<AlienBoss*>(pGameObject));
@@ -293,10 +267,44 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 			if (dynamic_cast<Player*>(pGameObject))
 				pObjectLayer->setPlayer(dynamic_cast<Player*>(pGameObject));
 		}
-		
+
 	}
 
 
 	// Once loaded all the objects for this layer, we can push it into our level layer array
 	pLayers->push_back(pObjectLayer);
+}
+
+/// <summary>
+/// Creates all the sprites used in the level file
+/// Sprites to load are specified in the map properties in the level editor
+/// </summary>
+void LevelParser::parseTextures(TiXmlElement* pTextureRoot)
+{
+	TheSpriteManager::Instance()->loadSprite(SPRITE_PATH_PREFIX + std::string(pTextureRoot->Attribute("value")), pTextureRoot->Attribute("name"));
+}
+
+/// <summary>
+/// Creates all the tilesets used in the level file
+/// Tilesets to load are specified in the level editor
+/// </summary>
+void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
+{
+	// Load the tileset (the filepath is the same as the .tmx file path)
+	TheSpriteManager::Instance()->loadSprite(TILESET_PATH_PREFIX + std::string(pTilesetRoot->FirstChildElement()->Attribute("source")), pTilesetRoot->Attribute("name"));
+
+	// Create a tileset object and fill it out
+	Tileset tileset;
+	pTilesetRoot->FirstChildElement()->Attribute("width", &tileset.width);
+	pTilesetRoot->FirstChildElement()->Attribute("height", &tileset.height);
+	pTilesetRoot->Attribute("firstgid", &tileset.firstGridID);
+	pTilesetRoot->Attribute("tilewidth", &tileset.tileWidth);
+	pTilesetRoot->Attribute("tileheight", &tileset.tileHeight);
+	pTilesetRoot->Attribute("spacing", &tileset.spacing);
+	pTilesetRoot->Attribute("margin", &tileset.margin);
+	tileset.name = pTilesetRoot->Attribute("name");
+
+	tileset.numColumns = tileset.width / (tileset.tileWidth + tileset.spacing);
+
+	pTilesets->push_back(tileset);
 }

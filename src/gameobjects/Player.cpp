@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "gameobjects/Player.h"
 
-#include "core/InputHandler.h"
 #include "core/Game.h"
-#include "gameobjects/utility/BulletHandler.h"
+#include "core/InputHandler.h"
 #include "core/SoundManager.h"
+#include "gameobjects/utility/BulletHandler.h"
 
 Player::Player()
-	:SDLGameObject(), m_bDead(false), m_bDying(false), m_respawnPosition(0,0)
+	:SDLGameObject(), m_bDead(false), m_bDying(false),
+	m_timeSpentDying_ms(0), m_timeAloudDying_ms(2000), m_respawnPosition(0,0)
 {
 }
 
@@ -16,7 +17,7 @@ Player::~Player()
 }
 
 /// <summary>
-/// Responsible for setting all variables used in Player and inherited class
+/// Set all values in Player and parent classes
 /// </summary>
 void Player::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
@@ -27,34 +28,39 @@ void Player::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 	m_respawnPosition.setY(static_cast<float>(pParams->yPos));
 }
 
+/// <summary>
+/// Call parent class draw function
+/// </summary>
 void Player::drawObject()
 {
 	SDLGameObject::drawObject();
 }
 
+/// <summary>
+/// Call parent class update function and update values used in this class
+/// </summary>
 void Player::updateObject()
 {
 	SDLGameObject::updateObject();
 
+	// Reset velocity
 	m_velocity.setX(0);
 	m_velocity.setY(0);
 
 	if (m_bDead)
-	{
-		std::cout << "dead" << std::endl;
 		return;
-	}
 
+	// If dying, continue dying timer
 	if (m_bDying)
 	{
-		m_timeSpentDying += static_cast<float>(TheProgramClock::Instance()->getDeltaTime());
-		if (m_timeSpentDying >= m_timeMaxDying)
+		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime_ms();
+		if (m_timeSpentDying_ms >= m_timeAloudDying_ms)
 			m_bDead = true;
 		
 		return;
 	}
 
-	// Move Right
+	// Move player in direction from input
 	if (m_position.getX() + m_objectWidth < m_screenWidth - edgeScreenBuffer)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::D))
@@ -63,7 +69,6 @@ void Player::updateObject()
 		}
 	}
 
-	// Move Left
 	if (m_position.getX() > edgeScreenBuffer)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::A))
@@ -72,7 +77,7 @@ void Player::updateObject()
 		}
 	}
 
-	// Spawn PlayerBullet
+	// Spawn PlayerBullet on input
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::SPACE))
 	{
 		TheBulletHandler::Instance()->addPlayerBullet(static_cast<int>(m_position.getX()+(m_objectWidth/2)), static_cast<int>(m_position.getY() - m_objectHeight));
@@ -83,7 +88,7 @@ void Player::updateObject()
 /// <summary>
 /// Reset all values to default
 /// </summary>
-void Player::respawn()
+void Player::respawnPlayer()
 {
 	m_objectTextureID = "player";
 	m_framesInSprite = 1;
@@ -94,11 +99,14 @@ void Player::respawn()
 	m_bDead = false;
 	m_bDying = false;
 
-	m_timeSpentDying = 0.0f;
+	m_timeSpentDying_ms = 0;
 
 	TheGame::Instance()->decreaseCurrentLives();
 }
 
+/// <summary>
+/// Set player status to dying and do any other actions related to that
+/// </summary>
 void Player::setDying()
 {
 	m_bDying = true;

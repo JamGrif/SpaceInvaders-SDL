@@ -1,8 +1,10 @@
 #pragma once
-#include "BaseState.h"
+#include "states/BaseState.h"
 
-class SDLGameObject;
 
+/// <summary>
+/// The state when game is first launched
+/// </summary>
 class MainMenuState :
     public BaseState
 {
@@ -18,8 +20,7 @@ public:
 private:
 	static const std::string s_menuID;
 
-	// callback functions for menu items
-	static void s_menuToPlay(); // Static as the functionality will only support static functions. Bit more complicated to handle regular member functions as function pointers.
+	static void s_menuToPlay(); 
 	static void s_exitFromMenu();
 	static void s_toggleSound();
 	static void s_toggleMusic();

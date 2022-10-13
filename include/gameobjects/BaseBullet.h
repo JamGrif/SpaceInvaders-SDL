@@ -1,5 +1,5 @@
 #pragma once
-#include "SDLGameObject.h"
+#include "gameobjects/SDLGameObject.h"
 
 #define LevelFinishLineY 520
 
@@ -13,12 +13,12 @@ public:
 	BaseBullet();
 	~BaseBullet();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
+	virtual void	loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
 
-	virtual void drawObject() override;
-	virtual void updateObject() = 0;
+	virtual void	drawObject() override;
+	virtual void	updateObject() = 0;
 
-	bool getDestroy() const { return m_bDestroy; }
+	bool			getDestroy() const { return m_bDestroy; }
 
 protected:
 

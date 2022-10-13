@@ -1,9 +1,12 @@
 #pragma once
-#include "BaseLayer.h"
+#include "level/BaseLayer.h"
 
 struct Tileset;
 
-// TileLayer is made up entirely of tiles and does not contain anything else
+/// <summary>
+/// Only contains all the tilesets used by the level
+/// Handles the updating and drawing of the tilesets
+/// </summary>
 class TileLayer :
     public BaseLayer
 {
@@ -11,9 +14,8 @@ public:
 	TileLayer(int tileSize, const std::vector<Tileset>& tilesets);
 	~TileLayer();
 
-	virtual void updateLayer();
-	virtual void renderLayer();
-
+	virtual void updateLayer() override;
+	virtual void renderLayer() override;
 
 	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
 
@@ -22,8 +24,11 @@ public:
 	Tileset getTilesetByID(int tileID) const;
 
 private:
+	// Number of columns and rows to draw tiles too, determined from size of window
 	int m_numColumns;
 	int m_numRows;
+
+	// Pixel size of individual tile frame
 	int m_tileSize;
 
 	// Used for scrolling the map

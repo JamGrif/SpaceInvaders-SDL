@@ -19,15 +19,14 @@ public:
 class GameObjectFactory
 {
 public:
-
 	bool init();
 	void clean();
 
-	bool registerType(std::string typeID, BaseCreator* pCreator);
+	bool registerType(const std::string& typeID, BaseCreator* pCreator);
 
-	BaseGameObject* create(std::string typeID);
+	BaseGameObject* createGameObject(const std::string& typeID);
 
-	static GameObjectFactory* Instance() // Instance get
+	static GameObjectFactory* Instance() // Get instance
 	{
 		if (!s_pInstance)
 			s_pInstance = new GameObjectFactory();
@@ -39,5 +38,10 @@ private:
 
 	// Maps a string (the typeID of the object) to its class creator
 	std::unordered_map<std::string, BaseCreator*> m_creators;
+
+	GameObjectFactory() {}										// Prevent outside unwanted construction
+	GameObjectFactory(const GameObjectFactory&) {}				// Prevent construction by copying
+	GameObjectFactory& operator=(const GameObjectFactory&) {}	// Prevent assignment
+	~GameObjectFactory() {}										// Prevent outside unwanted destruction
 };
 typedef GameObjectFactory TheGameObjectFactory;

@@ -3,27 +3,23 @@
 // Everything that uses SpriteManager will need access to Sprite too
 #include "core/Sprite.h"
 
+/// <summary>
+/// Controls creation, usage and destruction of Sprite objects
+/// </summary>
 class SpriteManager
 {
 public:
-	bool loadSprite(const std::string& fileName, const std::string& id);
+	bool	loadSprite(const std::string& filepath, const std::string& id);
 
-	void clearAllFromSpriteMap();
-	void clearFromSpriteMap(const std::string& id);
+	void	clearAllFromSpriteMap();
+	void	clearFromSpriteMap(const std::string& id);
 
-	void drawSpriteFrame(const std::string& id, int x, int y, int width, int height, int currentFrame, bool flipHorizontal);
-	void drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame);
+	void	drawSpriteFrame(const std::string& id, int x, int y, int width, int height, int currentFrame, bool flipHorizontal);
+	void	drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame);
 
-	int m_tilesetPixelMargin = 2;	// Number of pixels between the edge of a tileset picture
-	int m_tilesetPixelSpacing = 2;	// Number of pixels between each sprite in a tileset picture
+	Sprite*	getSpriteViaID(const std::string& id) const;
 
-	//int m_spritePixelMargin = 2;	// Number of pixels between the edge of the sprite sheet
-	//int m_spritePixelSpacing = 2;	// Number of pixels between each sprite in a sprite sheet
-
-
-	Sprite* getSpriteViaID(const std::string& id) const;
-
-	static SpriteManager* Instance() // Singleton
+	static SpriteManager* Instance() // Get instance
 	{
 		if (!s_pInstance)
 			s_pInstance = new SpriteManager();
@@ -31,11 +27,19 @@ public:
 	}
 
 private:
-	SpriteManager() {};
-	SpriteManager(const SpriteManager&) {};
-	SpriteManager& operator=(const SpriteManager&) {};
 	static SpriteManager* s_pInstance;
 
 	std::unordered_map<std::string, Sprite*> m_spriteMap;
+
+	// Number of pixels between the edge of a tileset picture
+	const int m_tilesetPixelMargin;
+
+	// Number of pixels between each sprite in a tileset picture
+	const int m_tilesetPixelSpacing;
+		
+	SpriteManager() :m_tilesetPixelMargin(2), m_tilesetPixelSpacing(2) {};						// Prevent outside unwanted construction
+	SpriteManager(const SpriteManager&) :m_tilesetPixelMargin(2), m_tilesetPixelSpacing(2) {};	// Prevent construction by copying
+	SpriteManager& operator=(const SpriteManager&) {};											// Prevent assignment
+	~SpriteManager() {};																		// Prevent outside unwanted destruction
 };
 typedef SpriteManager TheSpriteManager;

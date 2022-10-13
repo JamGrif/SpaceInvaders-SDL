@@ -5,21 +5,16 @@
 
 #include "core/Window.h"
 
-Renderer* Renderer::s_pInstance = nullptr;
-
-
 #define BLACK 0
 #define WHITE 255
 
-Renderer::Renderer()
-	:m_pRenderer(nullptr)
-{
-}
+Renderer* Renderer::s_pInstance = nullptr;
 
+/// <summary>
+/// Initializes the Renderer systems
+/// </summary>
 bool Renderer::init()
 {
-	// 2nd parameter is the index of the rendering driver to initialize (-1 to use first capable driver)
-	// 3rd parameter are the SDL__RendererFlag
 	m_pRenderer = SDL_CreateRenderer(TheWindow::Instance()->getWindowPtr(), -1, 0);
 	if (!m_pRenderer)
 		return false;
@@ -29,24 +24,33 @@ bool Renderer::init()
 	return true;
 }
 
+/// <summary>
+/// Clean up the Renderer systems
+/// </summary>
 void Renderer::clean()
 {
 	SDL_DestroyRenderer(m_pRenderer);
 }
 
+/// <summary>
+/// Prepares SDL for next frame of rendering
+/// </summary>
 void Renderer::startOfFrame()
 {
 	// Clear the window
 	SDL_RenderClear(m_pRenderer);
 }
 
-//void Renderer::draw()
-//{
-//}
-
+/// <summary>
+/// Present newly created frame
+/// </summary>
 void Renderer::EndOfFrame()
 {
 	// Show the window
 	SDL_RenderPresent(m_pRenderer);
 }
 
+Renderer::Renderer()
+	:m_pRenderer(nullptr)
+{
+}

@@ -5,33 +5,21 @@
 
 ProgramClock* ProgramClock::s_pInstance = nullptr;
 
+/// <summary>
+/// Initializes the program clock
+/// </summary>
 void ProgramClock::init()
 {
-	m_previousTime = SDL_GetTicks();
-	m_frameCount = 0;
-	m_currentFrame = 0;
 }
 
+/// <summary>
+/// Tick the clock, updating the values for this frame
+/// Called at the start of every frame
+/// </summary>
 void ProgramClock::tick()
 {
 	// Delta time
 	m_currentFrame = SDL_GetTicks();
 	m_deltaTime_ms = m_currentFrame - m_lastFrame_ms;
 	m_lastFrame_ms = m_currentFrame;
-
-	// Calculate framecount
-	m_frameCount++;
-
-	// If a second has passed
-	if (m_currentFrame - m_previousTime >= 1.0)
-	{
-		m_frameCountToDisplay = m_frameCount;
-		m_frameCount = 0;
-		m_previousTime = m_currentFrame;
-	}
 }
-
-ProgramClock::ProgramClock()
-{
-}
-

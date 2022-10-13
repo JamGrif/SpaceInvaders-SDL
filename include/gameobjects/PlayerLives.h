@@ -1,8 +1,10 @@
 #pragma once
-#include "SDLGameObject.h"
+#include "gameobjects/SDLGameObject.h"
 
-class Player;
-
+/// <summary>
+/// Represents the player lives icon during gameplay
+/// Only gets drawn if current lives is higher than m_livesRequired
+/// </summary>
 class PlayerLives :
     public SDLGameObject
 {
@@ -15,15 +17,12 @@ public:
 	virtual void drawObject();
 	virtual void updateObject();
 
-	//void setPlayer(Player* player) { m_pPlayer = player; }
-
 private:
 
+	// Minimum lives required for the player lives icon to get drawn
 	int m_livesRequired;
 
 	bool m_bDraw;
-
-	//Player* m_pPlayer;
 };
 
 class PlayerLivesCreator :

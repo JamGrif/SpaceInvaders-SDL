@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "level/TileLayer.h"
 
+#include "core/SpriteManager.h"
 #include "core/Window.h"
 #include "level/Level.h"
-#include "core/SpriteManager.h"
 
 TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets)
 	:m_position(0,0), m_velocity(0,0), m_tilesets(tilesets), m_tileSize(tileSize)
@@ -15,25 +15,24 @@ TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets)
 
 TileLayer::~TileLayer()
 {
-
 }
 
+/// <summary>
+/// Update the tileset
+/// </summary>
 void TileLayer::updateLayer()
 {
-	// Uses velocity to set the maps position
-	//m_position += m_velocity;
-	//m_velocity.setX(1);
 }
 
+/// <summary>
+/// Draw the tileset
+/// </summary>
 void TileLayer::renderLayer()
 {
 	int x, y;
 
 	x = static_cast<int>(m_position.getX()) / m_tileSize;
 	y = static_cast<int>(m_position.getY()) / m_tileSize;
-
-	//x2 = static_cast<int>(m_position.getX()) % m_tileSize;
-	//y2 = static_cast<int>(m_position.getY()) % m_tileSize;
 
 	// Loop through the number of columns and number of rows
 	for (int i = 0; i < m_numRows; i++)
@@ -45,8 +44,6 @@ void TileLayer::renderLayer()
 
 			if (id == 0) // id == 0 is empty air / no texture in that position
 				continue;
-			
-				
 
 			// Grab the correct tileset
 			Tileset tileset = getTilesetByID(id);
@@ -67,8 +64,10 @@ void TileLayer::renderLayer()
 	}
 }
 
-
-
+/// <summary>
+/// Supports multiple different tilesets used in the level editor for one level
+/// Used to find the correct sprite tile through all available tilesets
+/// </summary>
 Tileset TileLayer::getTilesetByID(int tileID) const
 {
 	// Compares each tilesets firstgid value and returns the correct tileset

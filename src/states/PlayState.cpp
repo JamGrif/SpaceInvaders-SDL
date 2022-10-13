@@ -1,26 +1,17 @@
 #include "pch.h"
 #include "states/PlayState.h"
 
-
 #include "core/Game.h"
 #include "core/InputHandler.h"
-#include "states/utility/GameStateMachine.h"
-#include "gameobjects/Player.h"
 #include "gameobjects/Alien.h"
 #include "gameobjects/AlienBoss.h"
-#include "gameobjects/Block.h"
 #include "gameobjects/BaseGameObject.h"
+#include "gameobjects/Block.h"
+#include "gameobjects/Player.h"
 #include "gameobjects/utility/BulletHandler.h"
 #include "level/Level.h"
 #include "level/ObjectLayer.h"
-
-const std::string PlayState::s_playID = "PLAY";
-
-
-std::string PlayState::s_textCallback1()
-{
-	return std::to_string(TheGame::Instance()->getCurrentScore());
-}
+#include "states/utility/GameStateMachine.h"
 
 // Required Y value of alien for them to win
 #define alienWinLineHeight 500
@@ -28,7 +19,19 @@ std::string PlayState::s_textCallback1()
 static bool g_bResetLives = true;
 static bool g_bResetScore = true;
 
+const std::string PlayState::s_playID = "PLAY";
 
+/// <summary>
+/// Set in editor: textCallbackID 1
+/// </summary>
+std::string PlayState::s_textCallback1()
+{
+	return std::to_string(TheGame::Instance()->getCurrentScore());
+}
+
+/// <summary>
+/// Calls parent class update function and updates the game objects used in the game
+/// </summary>
 void PlayState::updateState()
 {
 	BaseState::updateState();
@@ -38,10 +41,10 @@ void PlayState::updateState()
 		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::pushPause);
 	
 
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ONE))
-	{
-		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
-	}
+	//if (TheInputHandler::Instance()->isKeyDown(Keyboard::ONE))
+	//{
+	//	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
+	//}
 
 	// If player is dead, determine whether to respawn them or change state to game over
 	if (m_player->getDead())
@@ -58,14 +61,14 @@ void PlayState::updateState()
 		{
 			m_bFirstCheckDying = false;
 			m_bAllowedToSpawnBullets = true;
-			m_player->respawn();
+			m_player->respawnPlayer();
 		}
 	}
 
 	// Check all aliens and remove any dead ones
 	for (int i = 0; i < m_allAliens->size(); i++)
 	{
-		if (m_allAliens->at(i)->isDead())
+		if (m_allAliens->at(i)->getDead())
 		{
 			// remove alien from vector
 			m_allAliens->erase(m_allAliens->begin() + i);
@@ -76,7 +79,7 @@ void PlayState::updateState()
 	// Spawn a bullet at a random alien
 	if (m_bAllowedToSpawnBullets)
 	{
-		m_currentNextShotTime_ms += static_cast<int>(TheProgramClock::Instance()->getDeltaTime());
+		m_currentNextShotTime_ms += static_cast<int>(TheProgramClock::Instance()->getDeltaTime_ms());
 		if (m_SelectedNextShotTime_ms == 0)
 		{
 			// Set time until next alien shoots (between minNextShotTime and maxNextShotTime)
@@ -163,11 +166,11 @@ void PlayState::updateState()
 
 	// Update all bullets
 	TheBulletHandler::Instance()->updateBullets();
-
-	
-	
 }
 
+/// <summary>
+/// Call parent class render function and draw any spawned in bullets
+/// </summary>
 void PlayState::renderState()
 {
 	BaseState::renderState();
@@ -175,24 +178,15 @@ void PlayState::renderState()
 	TheBulletHandler::Instance()->drawBullets();
 }
 
-PlayState::PlayState()
-	:m_currentNextShotTime_ms(0), m_maxNextShotTime_ms(2000), m_minNextShotTime_ms(500), m_SelectedNextShotTime_ms(0)
-{
-
-}
-
-
-PlayState::~PlayState()
-{
-
-}
-
+/// <summary>
+/// Loads the level and sets the callback functions used in PlayState
+/// Also sets up pointers to specific game objects, used during gameplay
+/// </summary>
 bool PlayState::onEnterState()
 {
 	std::cout << "-=-=-=-=-=-Entering PlayState-=-=-=-=-=-" << std::endl;
 
 	loadLevel("PlayState.tmx");
-
 
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_pStateLevel->getLayer(LayerIndex::objectLayer));
 	m_allAliens = &temp->getAlienObjects();
@@ -200,9 +194,7 @@ bool PlayState::onEnterState()
 	m_alienBoss = temp->getAlienBossObject();
 	m_allBlocks = &temp->getBlockObjects();
 
-	//bFirstCheckDying = false;
-	//allowedToSpawnBullets = true;
-
+	// Assign IDs to functions, push 0 first so IDs start at 1
 	m_textCallbackFunctions.push_back(0);
 	m_textCallbackFunctions.push_back(s_textCallback1);
 
@@ -210,29 +202,32 @@ bool PlayState::onEnterState()
 
 	BulletHandler::Instance()->setLevel(m_pStateLevel);
 
+	// If required, reset current lives and score
 	if (g_bResetLives)
 		TheGame::Instance()->resetCurrentLives();
 
 	if (g_bResetScore)
 		TheGame::Instance()->resetCurrentScore();
 
-	
-
 	return true;
 }
 
+/// <summary>
+/// Call parent class onExitState function and clear any active bullets
+/// </summary>
+/// <returns></returns>
 bool PlayState::onExitState()
 {
 	std::cout << "-=-=-=-=-=-Exiting PlayState-=-=-=-=-=-" << std::endl;
 
 	BaseState::onExitState();
 
-	m_allAliens = nullptr;
 	m_player = nullptr;
+	m_alienBoss = nullptr;
+	m_allAliens = nullptr;
+	m_allBlocks = nullptr;
 
 	TheBulletHandler::Instance()->clearBullets();
-
-	//delete m_pStateLevel;
 
 	return true;
 }

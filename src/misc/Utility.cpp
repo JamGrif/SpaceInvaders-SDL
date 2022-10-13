@@ -1,8 +1,9 @@
 #include "misc/Utility.h"
 #include "pch.h"
 
+//#include <cstdlib>
+
 #include "gameobjects/SDLGameObject.h"
-#include <cstdlib>
 
 bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 {

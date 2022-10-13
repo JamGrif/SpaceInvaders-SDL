@@ -4,14 +4,16 @@
 
 #define FONT_SIZE int
 
+/// <summary>
+/// Encapsulates the SDL TTF library, allowing loading and usage of TTF_Font objects
+/// </summary>
 class TextManager
 {
 public:
+	bool		init();
+	void		clean();
 
-	bool init();
-	void clean();
-
-	TTF_Font* getFont(int textSize);
+	TTF_Font*	getFont(int textSize);
 
 	static TextManager* Instance() // Get instance
 	{
@@ -23,7 +25,7 @@ public:
 private:
 	static TextManager* s_pInstance;
 
-	// Prevents reconstruction of fonts with same font size (key is font size)
+	// Prevents reconstruction of fonts with same font size
 	std::unordered_map<FONT_SIZE, TTF_Font*> m_loadedFonts;
 
 	TextManager() {};								// Prevent construction

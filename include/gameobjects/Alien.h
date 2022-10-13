@@ -1,5 +1,5 @@
 #pragma once
-#include "SDLGameObject.h"
+#include "gameobjects/SDLGameObject.h"
 
 enum class MovingDirection
 {
@@ -8,6 +8,9 @@ enum class MovingDirection
 	Right = 2
 };
 
+/// <summary>
+/// Alien objects that appear during gameplay
+/// </summary>
 class Alien :
     public SDLGameObject
 {
@@ -15,30 +18,34 @@ public:
 	Alien();
 	~Alien();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
+	virtual void	loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
 
-    virtual void drawObject() override;
-    virtual void updateObject() override;
+    virtual void	drawObject() override;
+    virtual void	updateObject() override;
 
-	void setDying();
+	void			setDying();
+	bool			getDead() const { return m_bDead; }
 
-	bool checkIfReachedEdge();
-	void switchDirection();
-
-	bool isDead() const { return m_bDead; }
+	bool			checkIfReachedEdge();
+	void			switchDirection();
 
 protected:
 
-	float m_downAmount; // Amount the alien will move down by when it reaches an edge
+	// Amount the alien will move down by when it reaches an edge
+	float m_downAmount; 
 
 	bool m_bDead;
 	bool m_bDying;
 
 	MovingDirection m_direction;
 
-	int m_timeSpentDying_ms; // Current time spent dying
-	int m_timeAloudDying_ms;  // When alien has been dying for this amount of time, change to dead
+	// Current time spent dying
+	int m_timeSpentDying_ms;
 
+	// When alien has been dying for this amount of time, set to dead
+	int m_timeAloudDying_ms;  
+
+	// Sprite the Alien will use upon death
 	std::string m_deadTextureID;
 
 	// Score to give upon alien death

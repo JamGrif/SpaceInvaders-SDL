@@ -1,6 +1,9 @@
 #pragma once
-#include "SDLGameObject.h"
+#include "gameobjects/SDLGameObject.h"
 
+/// <summary>
+/// Player object that appear during gameplay, controlled by the user
+/// </summary>
 class Player :
     public SDLGameObject
 {
@@ -13,27 +16,25 @@ public:
     virtual void drawObject();
     virtual void updateObject();
 
-	void respawn();
+	void respawnPlayer();
 
 	void setDying();
 
 	bool getDead() const { return m_bDead; }
 	bool getDying() const { return m_bDying; }
 
-	//int getPlayerLives() const { return m_playerCurrentLives; }
-
 private:
 
 	bool m_bDead;
 	bool m_bDying;
 
-	float m_timeSpentDying = 0;
-	float m_timeMaxDying = 2000;
+	// Current time spent dying
+	int m_timeSpentDying_ms;
+
+	// When player has been dying for this amount of time, set to dead
+	const int m_timeAloudDying_ms;
 
 	Vector2D m_respawnPosition;
-
-	//int m_playerMaxLives;
-	//int m_playerCurrentLives;
 };
 
 class PlayerCreator :

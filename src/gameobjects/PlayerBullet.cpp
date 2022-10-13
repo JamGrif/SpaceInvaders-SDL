@@ -11,7 +11,7 @@
 
 
 PlayerBullet::PlayerBullet()
-	:BaseBullet(), m_pAllAliens(nullptr), m_pAlienBoss(nullptr)
+	:BaseBullet(), m_pAllAliens(nullptr), m_pAllBlocks(nullptr), m_pAlienBoss(nullptr)
 {
 }
 
@@ -19,6 +19,9 @@ PlayerBullet::~PlayerBullet()
 {
 }
 
+/// <summary>
+/// Set all values in PlayerBullet class and parent classes
+/// </summary>
 void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr, AlienBoss* alienBossPtr, std::vector<Block*>* levelBlocksPtr)
 {
 	BaseBullet::loadObject(pParams);
@@ -28,11 +31,17 @@ void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std:
 	m_pAllBlocks = levelBlocksPtr;
 }
 
+/// <summary>
+/// Call parent class draw function
+/// </summary>
 void PlayerBullet::drawObject()
 {
 	BaseBullet::drawObject();
 }
 
+/// <summary>
+/// Call parent class update function and update values used in this class
+/// </summary>
 void PlayerBullet::updateObject()
 {
 	SDLGameObject::updateObject();
@@ -49,13 +58,11 @@ void PlayerBullet::updateObject()
 	// Only check for block collision if below finish line (where the blocks are)
 	if (m_position.getY() >= LevelFinishLineY)
 	{
-		//std::cout << "checking collision of blocks" << std::endl;
 		// Check collision of bullet against blocks
 		for (auto block : *m_pAllBlocks)
 		{
 			if (checkCollision(this, block))
 			{
-				
 				block->hit();
 				m_bDestroy = true;
 				return;
@@ -67,7 +74,6 @@ void PlayerBullet::updateObject()
 	// Only check for alien collision if above finish line (where only aliens will be)
 	if (m_position.getY() <= LevelFinishLineY)
 	{
-		//std::cout << "checking collision of aliens" << std::endl;
 		// Check collision of bullet against aliens
 		for (auto alien : *m_pAllAliens)
 		{
@@ -83,7 +89,6 @@ void PlayerBullet::updateObject()
 	// Only check for collision of alien boss if above specified line (where the alien boss will always be)
 	if (m_position.getY() <= AlienBossPathY)
 	{
-		//std::cout << "checking collision of alienboss" << std::endl;
 		// If bullet collided with alienboss
 		if (checkCollision(this, m_pAlienBoss))
 		{
@@ -92,6 +97,4 @@ void PlayerBullet::updateObject()
 			return;
 		}
 	}
-
-	
 }

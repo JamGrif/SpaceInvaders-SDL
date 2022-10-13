@@ -60,7 +60,7 @@
     <ClCompile Include="src\misc\Utility.cpp" />
     <ClCompile Include="src\states\GameOverState.cpp" />
     <ClCompile Include="src\states\PauseState.cpp" />
-    <ClCompile Include="src\gameobjects\MenuButton.cpp" />
+    <ClCompile Include="src\gameobjects\ClickButton.cpp" />
     <ClCompile Include="src\states\utility\GameStateMachine.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -209,7 +209,7 @@
     <ClInclude Include="include\core\InputHandler.h" />
     <ClInclude Include="include\states\MainMenuState.h" />
     <ClInclude Include="include\states\PlayState.h" />
-    <ClInclude Include="include\gameobjects\MenuButton.h" />
+    <ClInclude Include="include\gameobjects\ClickButton.h" />
     <ClInclude Include="include\states\PauseState.h" />
     <ClInclude Include="include\level\Level.h" />
     <ClInclude Include="include\level\BaseLayer.h" />

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "gameobjects/MenuButton.h"
+#include "gameobjects/ClickButton.h"
 
 #include "core/InputHandler.h"
 
@@ -10,37 +10,42 @@ enum MenuButtonState
 	CLICKED = 2
 }; 
 
-MenuButton::MenuButton()
-	:Button(), m_bPlayedSound(false)
+ClickButton::ClickButton()
+	:Button()
 {
 }
 
-MenuButton::~MenuButton()
+ClickButton::~ClickButton()
 {
 }
 
 /// <summary>
-/// Responsible for setting all variables used in MenuButton and inherited class
+/// Set all values in ClickButton and parent classes
 /// </summary>
-/// <param name="pParams"></param>
-void MenuButton::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void ClickButton::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
 	Button::loadObject(pParams);
 
 	m_currentSpriteFrame = MOUSE_OUT;
 }
 
-void MenuButton::drawObject()
+/// <summary>
+/// Call parent class draw function
+/// </summary>
+void ClickButton::drawObject()
 {
 	Button::drawObject();
 }
 
-void MenuButton::updateObject()
+/// <summary>
+/// Update values used in this class
+/// </summary>
+void ClickButton::updateObject()
 {
 	// Get coordinates of the mouse pointer
 	Vector2D pMousePos = TheInputHandler::Instance()->getMousePosition();
 
-	// Check if mouse is within the bounds of the button
+	// Check if mouse is within bounds of the button
 	if (pMousePos.getX() < (m_position.getX() + m_objectWidth)
 		&& pMousePos.getX() > m_position.getX()
 		&& pMousePos.getY() < (m_position.getY() + m_objectHeight)
@@ -48,24 +53,17 @@ void MenuButton::updateObject()
 	{
 		m_currentSpriteFrame = MOUSE_OVER;
 
-		if (!m_bPlayedSound)
-		{
-			//TheSoundManager::Instance()->playSound("menuMouseOver");
-			m_bPlayedSound = true;
-		}
-			
-
 		// Moused over and clicked button
 		if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT)
 			&& m_bReleased)
 		{
 			m_currentSpriteFrame = CLICKED;
 
-			m_selectCallback(); // Call the callback function
+			// Call the callback function
+			m_selectCallback(); 
 
-			m_bReleased = false; // Uses this value to ensure we release the mouse button before doing the callback again.
-
-			
+			//  Value ensured mouse is released before calling callback function again
+			m_bReleased = false; 
 		}
 		else if (!TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT))
 		{
@@ -76,6 +74,5 @@ void MenuButton::updateObject()
 	else
 	{
 		m_currentSpriteFrame = MOUSE_OUT;
-		m_bPlayedSound = false;
 	}
 }

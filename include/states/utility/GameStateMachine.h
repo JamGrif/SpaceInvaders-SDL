@@ -14,7 +14,8 @@ enum class StateMachineAction
 };
 
 /// <summary>
-/// Finite State Machine to handle the game states
+/// Finite State Machine to update and render the game states
+/// Provides utility functions to swap out current states
 /// </summary>
 class GameStateMachine
 {
@@ -34,9 +35,9 @@ private:
 	std::vector<BaseState*> m_currentGameStates;
 
 	// State Selection
-	void pushState(BaseState* pState);		// Add a state without removing the previous state
-	void changeState(BaseState* pState);	// Remove the previous state before adding another
-	void popState();						// Remove the state currently being used without adding another
+	void pushState(BaseState* pState);		
+	void changeState(BaseState* pState);	
+	void popState();						
 
 	bool m_bNeedToChange;
 	StateMachineAction m_actionToTake;

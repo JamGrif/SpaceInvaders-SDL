@@ -1,7 +1,5 @@
 #pragma once
-#include "SDLGameObject.h"
-
-
+#include "gameobjects/SDLGameObject.h"
 
 enum class BlockHealth
 {
@@ -12,6 +10,9 @@ enum class BlockHealth
 	Gone = 4
 };
 
+/// <summary>
+/// Blocks that appear during gameplay
+/// </summary>
 class Block :
     public SDLGameObject
 {
@@ -19,21 +20,20 @@ public:
 	Block();
 	~Block();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> const& pParams);
 
-	virtual void drawObject();
-	virtual void updateObject();
+	virtual void	drawObject();
+	virtual void	updateObject();
 
-	bool isDestroyed() { return m_bDestoryed; }
+	bool			isDestroyed() { return m_bDestoryed; }
 
-	void hit();
+	void			hit();
 
 private:
 
-	bool m_bDestoryed = false;
+	bool m_bDestoryed;
 
-	int m_blockHealth = 0;
-
+	int m_blockHealth;
 };
 
 class BlockCreator :

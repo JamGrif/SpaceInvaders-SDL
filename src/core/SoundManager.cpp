@@ -15,6 +15,9 @@
 
 SoundManager* SoundManager::s_pInstance = nullptr;
 
+/// <summary>
+/// Initializes the SoundManager systems
+/// </summary>
 bool SoundManager::init()
 {
 	// Must be called to setup audio for the game (before sound can be used)
@@ -24,6 +27,7 @@ bool SoundManager::init()
 	Mix_Volume(ALL_CHANNELS, VOLUME_MAXIMUM);
 	Mix_VolumeMusic(VOLUME_MAXIMUM);
 
+	// Load all sounds and music used in the program
 	TheSoundManager::Instance()->loadSound("res/audio/playerShoot.wav", "playerShoot");
 	TheSoundManager::Instance()->loadSound("res/audio/playerExplosion.wav", "playerExplosion");
 	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav", "alienExplosion");
@@ -33,6 +37,9 @@ bool SoundManager::init()
 	return true;
 }
 
+/// <summary>
+/// Clean the SoundManager systems
+/// </summary>
 void SoundManager::clean()
 {
 	// Loop through chunks and delete them
@@ -49,15 +56,17 @@ void SoundManager::clean()
 	}
 	m_music.clear();
 
+	// Close SDL_mixer
 	Mix_CloseAudio();
 	Mix_Quit();
-
-	delete s_pInstance;
 }
 
-bool SoundManager::loadSound(const std::string& fileName, const std::string& id)
+/// <summary>
+/// Load sound at filepath and assign an id to it
+/// </summary>
+bool SoundManager::loadSound(const std::string& filepath, const std::string& id)
 {
-	Mix_Chunk* pChunk = Mix_LoadWAV(fileName.c_str());
+	Mix_Chunk* pChunk = Mix_LoadWAV(filepath.c_str());
 
 	if (!pChunk)
 	{
@@ -69,9 +78,12 @@ bool SoundManager::loadSound(const std::string& fileName, const std::string& id)
 	return true;
 }
 
-bool SoundManager::loadMusic(const std::string& fileName, const std::string& id)
+/// <summary>
+/// Load music at filepath and assign an id to it
+/// </summary>
+bool SoundManager::loadMusic(const std::string& filepath, const std::string& id)
 {
-	Mix_Music* pMusic = Mix_LoadMUS(fileName.c_str());
+	Mix_Music* pMusic = Mix_LoadMUS(filepath.c_str());
 
 	if (!pMusic)
 	{
@@ -83,21 +95,26 @@ bool SoundManager::loadMusic(const std::string& fileName, const std::string& id)
 	return true;
 }
 
+/// <summary>
+/// Play specified sound effect, using the id assigned to choose it
+/// </summary>
+void SoundManager::playSound(const std::string& id, int loop)
+{
+	Mix_PlayChannel(ALL_CHANNELS, m_sfxs[id], loop);
+}
+
+/// <summary>
+/// Play specified music, using the id assigned to choose it
+/// </summary>
 void SoundManager::playMusic(const std::string& id, int loop)
 {
 	Mix_PlayMusic(m_music[id], loop);
 }
 
-void SoundManager::playSound(const std::string& id, int loop)
-{
-	// First parameter is for the channel that the sound be played on. -1 tells SDL_mixer to play the sound on any available channel
-	Mix_PlayChannel(ALL_CHANNELS, m_sfxs[id], loop);
-}
-
 /// <summary>
-/// Toggle the Sound volume
+/// Toggle the sound effect volume between on and off
 /// </summary>
-void SoundManager::toggleSound()
+void SoundManager::toggleSoundEffects()
 {
 	m_bPlayingSound = !m_bPlayingSound;
 
@@ -105,7 +122,7 @@ void SoundManager::toggleSound()
 }
 
 /// <summary>
-/// Toggle the Music volume
+/// Toggle the music volume between on and off
 /// </summary>
 void SoundManager::toggleMusic()
 {

@@ -1,6 +1,9 @@
 #pragma once
-#include "BaseState.h"
+#include "states/BaseState.h"
 
+/// <summary>
+/// The state used when the game is finished
+/// </summary>
 class GameOverState :
     public BaseState
 {

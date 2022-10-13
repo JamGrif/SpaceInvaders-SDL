@@ -1,5 +1,7 @@
 #pragma once
-#include "BaseLayer.h"
+#include "level/BaseLayer.h"
+
+#include "level/LevelParser.h"
 
 class BaseGameObject;
 class Alien;
@@ -7,9 +9,10 @@ class Player;
 class AlienBoss;
 class Block;
 
-#include "level/LevelParser.h"
-
-// The ObjectLayer draws and updates the objects for this layer
+/// <summary>
+/// ObjectLayer draws and updates any objects created from the level parser in the level editor
+/// Only objects that are created in the object layer in the level editor are here
+/// </summary>
 class ObjectLayer :
     public BaseLayer
 {
@@ -17,9 +20,10 @@ public:
 	ObjectLayer();
 	~ObjectLayer();
 
-	virtual void updateLayer();
-	virtual void renderLayer();
+	virtual void updateLayer() override;
+	virtual void renderLayer() override;
 
+	// Get specific objects in current level
 	std::vector<BaseGameObject*>& getGameObjects() { return m_layerGameObjects; }
 
 	std::vector<Alien*>& getAlienObjects() { return m_layerAlienObjects; }

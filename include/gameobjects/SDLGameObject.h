@@ -1,11 +1,15 @@
 #pragma once
-#include "BaseGameObject.h"
+#include "gameobjects/BaseGameObject.h"
 
-#include "utility/GameObjectFactory.h"
+#include "gameobjects/utility/GameObjectFactory.h"
 
 // How close an object can get to the edge of the screen
 #define edgeScreenBuffer 40
 
+/// <summary>
+/// Basic game object
+/// ALL game objects that can appear in the game inherit or use this class
+/// </summary>
 class SDLGameObject :
     public BaseGameObject
 {
@@ -24,28 +28,40 @@ public:
 	int getHeight() const { return m_objectHeight; };
 
 protected:
-
     Vector2D m_position;
     Vector2D m_velocity;
-    //Vector2D m_acceleration;
 
 	// The dimensions of the object is the dimensions of an individual sprite frame
     int m_objectWidth;	
     int m_objectHeight;	
 
+	// Current sprite frame in use of loaded sprite
     int m_currentSpriteFrame;
-	int m_framesInSprite; // Amount of separate sprite frames in sprite
+
+	// Total amount of separate sprite frames of loaded sprite
+	int m_framesInSprite;
+
+	// Speed that the current sprite frame is changed
 	int m_animationSpeed;
+
 	float m_movementSpeed;
 
+	// Dimensions of game window
 	int m_screenWidth;
 	int m_screenHeight;
 
+	// ID of sprite this object uses
     std::string m_objectTextureID;
 
+	// Flip sprite on draw?
 	bool m_bFlipImage;
 };
 
+/// <summary>
+/// Registers an object with the GameObjectFactory which is used to create objects from the level editor files (.tmx)
+/// Only required for objects that are spawned from the level editor
+/// Any new inherited game objects must also inherit and implement this class 
+/// </summary>
 class SDLGameObjectCreator :
 	public BaseCreator
 {

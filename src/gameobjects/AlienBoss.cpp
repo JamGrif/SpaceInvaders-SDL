@@ -2,8 +2,8 @@
 #include "gameobjects/AlienBoss.h"
 
 AlienBoss::AlienBoss()
-	:Alien(), m_minimumRespawnTime_ms(2000), m_maximumRespawnTime_ms(4000),
-	m_selectedRespawnTime_ms(0), m_currentRespawnTime_ms(0), m_minimumScoreWorth(60), m_maximumScoreWorth(140),
+	:Alien(), m_minimumRespawnTime_ms(2000), m_maximumRespawnTime_ms(4000), m_selectedRespawnTime_ms(0),
+	m_currentRespawnTime_ms(0), m_minimumScoreWorth(60), m_maximumScoreWorth(140),
 	leftSpawnPosition{-100, 100}, rightSpawnPosition{820, 100}
 {
 }
@@ -12,9 +12,14 @@ AlienBoss::~AlienBoss()
 {
 }
 
+/// <summary>
+/// Set all values in AlienBoss class and parent classes
+/// </summary>
+/// <param name="pParams"></param>
 void AlienBoss::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
 	SDLGameObject::loadObject(pParams);
+
 	m_aliveTextureID = pParams->textureID;
 
 	m_deadTextureID = "alienBossDead";
@@ -22,40 +27,46 @@ void AlienBoss::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 	resetAlien();
 }
 
+/// <summary>
+/// Call parent class draw function
+/// </summary>
 void AlienBoss::drawObject()
 {
 	Alien::drawObject();
 }
 
+/// <summary>
+/// Call parent class update function and update values used in this class
+/// </summary>
 void AlienBoss::updateObject()
 {
 	SDLGameObject::updateObject();
 
 	m_velocity.setX(0);
 
-	// If alien is dying, it is waiting to die
+	// If dying, continue dying timer
 	if (m_bDying)
 	{
-		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime();
+		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime_ms();
 		if (m_timeSpentDying_ms >= m_timeAloudDying_ms)
 			resetAlien();
 		
 		return;
 	}
 	
-	// If alien is dead, it is waiting to respawn
+	// If dead, continue respawn timer
 	if (m_bDead)
 	{
-		m_currentRespawnTime_ms += TheProgramClock::Instance()->getDeltaTime();
+		m_currentRespawnTime_ms += TheProgramClock::Instance()->getDeltaTime_ms();
 		if (m_currentRespawnTime_ms >= m_selectedRespawnTime_ms)
 			m_bDead = false;
 		
 		return;
 	}
 
-	// Here if alien is not dying / dead
 	
-	// AlienBoss moving right
+	
+	// Move alien in specified direction
 	if (m_direction == MovingDirection::Right)
 	{
 		m_velocity.setX(m_movementSpeed);
@@ -63,10 +74,7 @@ void AlienBoss::updateObject()
 		//Alien has left the screen
 		if (m_position.getX() >= rightSpawnPosition.getX())
 			resetAlien();
-		
-
 	}
-	// AlienBoss moving left
 	else if (m_direction == MovingDirection::Left)
 	{
 		m_velocity.setX(-m_movementSpeed);
@@ -74,7 +82,6 @@ void AlienBoss::updateObject()
 		//Alien has left the screen
 		if (m_position.getX() <= leftSpawnPosition.getX())
 			resetAlien();
-		
 	}
 }
 

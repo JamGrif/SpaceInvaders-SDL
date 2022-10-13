@@ -1,15 +1,17 @@
 #include "pch.h"
 #include "states/BaseState.h"
 
-#include "level/Level.h"
-#include "level/LevelParser.h"
 #include "gameobjects/BaseGameObject.h"
-
 #include "gameobjects/Button.h"
 #include "gameobjects/CheckboxButton.h"
 #include "gameobjects/TextObject.h"
+#include "level/Level.h"
+#include "level/LevelParser.h"
 #include "level/ObjectLayer.h"
 
+/// <summary>
+/// Called when state is removed from game state machine
+/// </summary>
 bool BaseState::onExitState()
 {
 	delete m_pStateLevel;
@@ -17,26 +19,30 @@ bool BaseState::onExitState()
 	return true;
 }
 
+/// <summary>
+/// Update the level used in this state
+/// </summary>
 void BaseState::updateState()
 {
 	m_pStateLevel->updateLevel();
 }
 
+/// <summary>
+/// Draw the level used in this state
+/// </summary>
 void BaseState::renderState()
 {
 	m_pStateLevel->renderLevel();
 }
 
 /// <summary>
-/// Link any state MenuButton objects with any states callback functions
+/// Link any callback functions with their respective objects
+/// The ID of the callback function itself is set in each state object that derives from BaseState
+/// The ID of the function the object uses is set in the level editor
+/// This function links the two IDs together allowing an object can call its specified function
 /// </summary>
 void BaseState::setCallbacks()
 {
-	//if (m_stateCallbackFunctions.empty())
-	//{
-	//	std::cout << "m_stateCallbackFunctions is empty" << std::endl;
-	//	return;
-	//}
 
 	// Get the list of game objects
 	ObjectLayer& oLayer = dynamic_cast<ObjectLayer&>(*m_pStateLevel->getLayer(LayerIndex::objectLayer)); 
@@ -66,13 +72,15 @@ void BaseState::setCallbacks()
 			{
 				text->setTextCallback(m_textCallbackFunctions.at(text->getTextCallbackID()));
 			}
-			//text->setTextCallback(m_textCallbackFunctions.at(text->getTextCallbackID()));
 		}
 	}
 }
 
-void BaseState::loadLevel(const std::string& level)
+/// <summary>
+/// Use the LevelParser to load .tmx file at filepath
+/// </summary>
+void BaseState::loadLevel(const std::string& filepath)
 {
 	LevelParser levelParser;
-	m_pStateLevel = levelParser.parseLevel(level.c_str());
+	m_pStateLevel = levelParser.parseLevel(filepath);
 }

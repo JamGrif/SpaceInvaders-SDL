@@ -8,16 +8,15 @@ struct SDL_Window;
 class Window
 {
 public:
+	bool			init(const std::string& windowTitle, int width, int height);
+	void			clean();
 
-	bool init(std::string windowTitle, int width, int height);
-	void clean();
+	SDL_Window*		getWindowPtr() const { return m_pWindow; }
 
-	SDL_Window* getWindowPtr() const { return m_pWindow; }
+	int				getWindowWidth() const { return m_windowWidth; };
+	int				getWindowHeight() const { return m_windowHeight; };
 
-	int getWindowWidth() const { return m_windowWidth; };
-	int getWindowHeight() const { return m_windowHeight; };
-
-	static Window* Instance() // Singleton
+	static Window*	Instance() // Get instance
 	{
 		if (!s_pInstance)
 			s_pInstance = new Window();
@@ -25,13 +24,17 @@ public:
 	}
 
 private:
-	Window();
 	static Window* s_pInstance;
 
 	SDL_Window* m_pWindow;
 
 	int m_windowWidth;
 	int m_windowHeight;
+
+	Window() :m_pWindow(nullptr), m_windowWidth(0), m_windowHeight(0) {};				// Prevent outside unwanted construction
+	Window(const Window&) :m_pWindow(nullptr), m_windowWidth(0), m_windowHeight(0) {};	// Prevent construction by copying
+	Window& operator=(const Window&) {};												// Prevent assignment
+	~Window() {};																		// Prevent outside unwanted destruction
 
 };
 typedef Window TheWindow;

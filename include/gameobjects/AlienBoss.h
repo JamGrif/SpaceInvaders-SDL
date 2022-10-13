@@ -1,7 +1,9 @@
 #pragma once
-#include "Alien.h"
+#include "gameobjects/Alien.h"
 
-
+/// <summary>
+/// AlienBoss objects that that appear during gameplay
+/// </summary>
 class AlienBoss :
     public Alien
 {

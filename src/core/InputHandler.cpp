@@ -1,12 +1,15 @@
 #include "pch.h"
 #include "core/InputHandler.h"
 
-#include "core/Game.h"
-
 #include "SDL2/SDL.h"
+
+#include "core/Game.h"
 
 InputHandler* InputHandler::s_pInstance = nullptr;
 
+/// <summary>
+/// Initializes the InputHandler systems
+/// </summary>
 bool InputHandler::init()
 {
 	// Set all mouse button states to false (not pressed)
@@ -18,10 +21,15 @@ bool InputHandler::init()
 	return true;
 }
 
+/// <summary>
+/// Check and handle events from the mouse and keyboard
+/// Called every frame
+/// </summary>
 void InputHandler::update()
 {
-	// Called each frame to update the event state
 	SDL_Event event;
+
+	// Deal with any events
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -56,11 +64,17 @@ void InputHandler::update()
 	}
 }
 
+/// <summary>
+/// Clean up the InputHandler systems
+/// </summary>
 void InputHandler::clean()
 {
 }
 
-bool InputHandler::isKeyDown(int keyboardKey) const
+/// <summary>
+/// See if specified keyboard key is pressed down
+/// </summary>
+bool InputHandler::isKeyDown(Keyboard::Keys keyboardKey) const
 {
 	if (m_keystates)
 	{
@@ -70,49 +84,67 @@ bool InputHandler::isKeyDown(int keyboardKey) const
 	return false;
 }
 
-InputHandler::InputHandler()
-	:m_mousePosition(0,0), m_keystates(0)
-{
-}
-
-
+/// <summary>
+/// Update the current state of the keyboard
+/// Called when a key press event has been made
+/// </summary>
 void InputHandler::onKeyDown()
 {
 	m_keystates = const_cast<Uint8*>(SDL_GetKeyboardState(0));
 }
 
+/// <summary>
+/// Update the current state of the keyboard
+/// Called when a key press event has been made
+/// </summary>
 void InputHandler::onKeyUp()
 {
 	m_keystates = const_cast<Uint8*>(SDL_GetKeyboardState(0));
 }
 
+/// <summary>
+/// Update the current mouse's position
+/// Called when a mouse movement event has been made
+/// </summary>
 void InputHandler::onMouseMove(SDL_Event& event)
 {
 	m_mousePosition.setX(static_cast<float>(event.motion.x));
 	m_mousePosition.setY(static_cast<float>(event.motion.y));
 }
 
+/// <summary>
+/// Update which mouse button is pressed down
+/// Called when a mouse button event has been made
+/// </summary>
 void InputHandler::onMouseButtonDown(SDL_Event& event)
 {
-	if (event.button.button == SDL_BUTTON_LEFT)
+	if (event.button.button == Mouse::Buttons::LEFT)
 		m_mouseButtonStates[Mouse::LEFT] = true;
 
-	if (event.button.button == SDL_BUTTON_MIDDLE)
+	if (event.button.button == Mouse::Buttons::MIDDLE)
 		m_mouseButtonStates[Mouse::MIDDLE] = true;
 	
-	if (event.button.button == SDL_BUTTON_RIGHT)
+	if (event.button.button == Mouse::Buttons::RIGHT)
 		m_mouseButtonStates[Mouse::RIGHT] = true;
 }
 
+/// <summary>
+/// Update which mouse button is no longer pressed
+/// Called when a mouse button event has been made
+/// </summary>
 void InputHandler::onMouseButtonUp(SDL_Event& event)
 {
-	if (event.button.button == SDL_BUTTON_LEFT)
+	if (event.button.button == Mouse::Buttons::LEFT)
 		m_mouseButtonStates[Mouse::LEFT] = false;
 
-	if (event.button.button == SDL_BUTTON_MIDDLE)
+	if (event.button.button == Mouse::Buttons::MIDDLE)
 		m_mouseButtonStates[Mouse::MIDDLE] = false;
 	
-	if (event.button.button == SDL_BUTTON_RIGHT)
+	if (event.button.button == Mouse::Buttons::RIGHT)
 		m_mouseButtonStates[Mouse::RIGHT] = false;
 }
 
+InputHandler::InputHandler()
+	:m_mousePosition(0, 0), m_keystates(0)
+{
+}

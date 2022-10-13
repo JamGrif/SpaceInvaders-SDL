@@ -11,6 +11,8 @@
 	#	core -> gameobjects -> level -> states -> misc
 	#
 	# forward declaration
+	#
+	# #defines
 
 	.cpp
 	#pch.h
@@ -23,15 +25,12 @@
 	#other this app files include
 	#	core -> gameobjects -> level -> states -> misc
 	#
+	# #defines
+	#
 	# static variable definitions
-
-
 */
 
 #include "pch.h"
-
-#include "SDL2/SDL.h"
-
 #include "core/Game.h"
 
 int main(int argc, char* args[])

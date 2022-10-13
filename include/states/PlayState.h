@@ -1,17 +1,24 @@
 #pragma once
-#include "BaseState.h"
+#include "states/BaseState.h"
 
 class Player;
 class Alien;
 class AlienBoss;
 class Block;
 
+/// <summary>
+/// The state which has the main Space Invader game
+/// </summary>
 class PlayState :
     public BaseState
 {
 public:
-	PlayState();
-	~PlayState(); 
+	PlayState()
+		:m_player(nullptr), m_alienBoss(nullptr), m_allAliens(nullptr), m_allBlocks(nullptr),
+		m_SelectedNextShotTime_ms(0), m_maxNextShotTime_ms(2000), m_minNextShotTime_ms(500),
+		m_currentNextShotTime_ms(0), m_bFirstCheckDying(false), m_bAllowedToSpawnBullets(true)
+	{
+	}
 
 	virtual bool onEnterState() override;
 	virtual bool onExitState() override;
@@ -27,25 +34,19 @@ private:
 	static std::string s_textCallback1();
 
 	Player*	m_player;
-	std::vector<Alien*>* m_allAliens;
 	AlienBoss* m_alienBoss;
+	std::vector<Alien*>* m_allAliens;
 	std::vector<Block*>* m_allBlocks;
 
-	int m_totalAliens;
-	int m_currentAliensDead;
-
-	// Time until the next alien is chosen to shoot
+	// Time until the next alien is chosen to shoot, chosen randomly between minNextShotTime and maxNextShotTime
+	int m_SelectedNextShotTime_ms;
 	int m_minNextShotTime_ms;
 	int m_maxNextShotTime_ms;
-	int m_SelectedNextShotTime_ms;
 
+	// Current time waited for next shot
 	int m_currentNextShotTime_ms;
 
-	bool m_bFirstCheckDying = false;
-	bool m_bAllowedToSpawnBullets = true;
-
-	//// Static to persist upon PlayState resets
-	//static bool m_bResetLives;
-	//static bool m_bResetScore;
+	bool m_bFirstCheckDying;
+	bool m_bAllowedToSpawnBullets;
 };
 

@@ -1,21 +1,26 @@
 #include "pch.h"
 #include "gameobjects/utility/GameObjectFactory.h"
 
-#include "gameobjects/MenuButton.h"
 #include "gameobjects/Alien.h"
-#include "gameobjects/Player.h"
-#include "gameobjects/TextObject.h"
-#include "gameobjects/PlayerLives.h"
-#include "gameobjects/CheckboxButton.h"
 #include "gameobjects/AlienBoss.h"
 #include "gameobjects/Block.h"
+#include "gameobjects/CheckboxButton.h"
+#include "gameobjects/ClickButton.h"
+#include "gameobjects/Player.h"
+#include "gameobjects/PlayerLives.h"
+#include "gameobjects/TextObject.h"
 
 GameObjectFactory* GameObjectFactory::s_pInstance = nullptr;
 
-// Register types for the LevelParser (only ones that appear in .tmx files)
+// 
+
+/// <summary>
+///	Initialize the GameObjectFactory, registering the types for the LevelParser
+/// Note only the ones that appear in .tmx files need to be registered
+/// </summary>
 bool GameObjectFactory::init()
 {
-	registerType("MenuButton", new MenuButtonCreator());
+	registerType("ClickButton", new ClickButtonCreator());
 	registerType("Player", new PlayerCreator());
 	registerType("Alien", new AlienCreator());
 	registerType("SDLGameObject", new SDLGameObjectCreator());
@@ -28,7 +33,9 @@ bool GameObjectFactory::init()
 	return true;
 }
 
-
+/// <summary>
+/// Clean up the GameObjectFactory
+/// </summary>
 void GameObjectFactory::clean()
 {
 	// loop through m_creators to destroy all creator classes
@@ -37,7 +44,7 @@ void GameObjectFactory::clean()
 /// <summary>
 /// Register a new type with the factory and add it to the map
 /// </summary>
-bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)
+bool GameObjectFactory::registerType(const std::string& typeID, BaseCreator* pCreator)
 {
 	// Ensure type doesn't already exist
 	if (m_creators.count(typeID))
@@ -53,9 +60,10 @@ bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)
 }
 
 /// <summary>
-/// If typeID exists, use the creator object for that type to create and return a new instance of it as a pointer to BaseGameObject
+/// If typeID exists, use the creator object for that type to create
+/// and return a new instance of it as a pointer to BaseGameObject
 /// </summary>
-BaseGameObject* GameObjectFactory::create(std::string typeID)
+BaseGameObject* GameObjectFactory::createGameObject(const std::string& typeID)
 {
 	// Verify that type exists
 	if (!m_creators.count(typeID))

@@ -1,5 +1,9 @@
 #pragma once
 
+/// <summary>
+/// Represents a vector in 2D space
+/// X and Y axis
+/// </summary>
 class Vector2D
 {
 public:

@@ -1,6 +1,9 @@
 #pragma once
 #include "gameobjects/SDLGameObject.h"
 
+/// <summary>
+/// Base class for a button object
+/// </summary>
 class Button :
     public SDLGameObject
 {
@@ -8,19 +11,25 @@ public:
 	Button();
 	~Button();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> const& pParams);
 
-	virtual void drawObject();
-	virtual void updateObject() = 0; // Each button type has its own implementation of how it works
+	virtual void	drawObject();
+	virtual void	updateObject() = 0;
 
-	void setSelectCallback(void(*callback)()) { m_selectCallback = callback; }
-	int getSelectCallbackID() const { return m_selectCallbackID; }
+	// Set what function is called when the button is pressed, called during OnEnterState function in current state
+	void			setSelectCallback(void(*callback)()) { m_selectCallback = callback; }
+
+	// The function callback ID is set in the level editor (.tmx file)
+	int				getSelectCallbackID() const { return m_selectCallbackID; }
 
 protected:
 
+	// Ensure button is only clicked once until mouse button is released
 	bool m_bReleased;
-	void (*m_selectCallback)(); // function pointer to store what function will run when the button is clicked on
+
+	// Function pointer to store what function will run when the button is clicked on
+	void (*m_selectCallback)();
+
+	// ID of function used to determine which function to call on click (ID set in level editor)
 	int m_selectCallbackID;
-
 };
-

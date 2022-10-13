@@ -1,10 +1,13 @@
 #pragma once
-#include "BaseBullet.h"
+#include "gameobjects/BaseBullet.h"
 
 class Alien;
 class AlienBoss;
 class Block;
 
+/// <summary>
+/// 
+/// </summary>
 class PlayerBullet :
 	public BaseBullet
 {
@@ -17,17 +20,12 @@ public:
 	virtual void drawObject() override;
 	virtual void updateObject() override;
 
-
-	//bool getDestroy() const { return m_bDestroy; }
-
 private:
 
-	//bool m_bDestroy;
-
-	// All alive aliens + boss + blocks to perform collision checks with
+	// Pointers to other level objects to perform collision checks against
 	std::vector<Alien*>* m_pAllAliens;
-	AlienBoss* m_pAlienBoss;
 	std::vector<Block*>* m_pAllBlocks;
+	AlienBoss* m_pAlienBoss;
 };
 
 class PlayerBulletCreator :

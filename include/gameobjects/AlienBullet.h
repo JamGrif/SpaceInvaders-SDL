@@ -1,11 +1,14 @@
 #pragma once
-#include "BaseBullet.h"
+#include "gameobjects/BaseBullet.h"
 
 class Player;
 class Block;
 
-class AlienBullet
-	: public BaseBullet
+/// <summary>
+/// Alien bullet object that appear during gameplay
+/// </summary>
+class AlienBullet :
+	public BaseBullet
 {
 public:
 	AlienBullet();
@@ -16,16 +19,13 @@ public:
 	virtual void drawObject() override;
 	virtual void updateObject() override;
 
-
-	//bool getDestroy() const { return m_bDestroy; }
-
 private:
 
-	//bool m_bDestroy;
-
-	Player* m_pLevelPlayer;
+	// Pointers to other level objects to perform collision checks against
 	std::vector<Block*>* m_pAllBlocks;
+	Player* m_pLevelPlayer;
 
+	// Used to find if alien has left screen
 	int m_screenHeight;
 };
 

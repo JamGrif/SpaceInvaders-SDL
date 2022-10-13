@@ -12,22 +12,26 @@ public:
 	void clean();
 
 	void startOfFrame();
-	//void draw();
 	void EndOfFrame();
 
 	SDL_Renderer* getRendererPtr() const { return m_pRenderer; }
 
-	static Renderer* Instance() // Singleton
+	static Renderer* Instance() // Get instance
 	{
 		if (!s_pInstance)
 			s_pInstance = new Renderer();
 		return s_pInstance;
 	}
 private:
-	Renderer();
+
 	static Renderer* s_pInstance;
 
 	SDL_Renderer* m_pRenderer;
+
+	Renderer();									// Prevent outside unwanted construction
+	Renderer(const Renderer&) :m_pRenderer(nullptr) {};				// Prevent construction by copying
+	Renderer& operator=(const Renderer&) {};	// Prevent assignment
+	~Renderer() {};								// Prevent outside unwanted destruction
 };
 typedef Renderer TheRenderer;
 

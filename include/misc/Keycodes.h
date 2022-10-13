@@ -2,11 +2,12 @@
 
 namespace Mouse
 {
+	// Numbers from SDL_mouse.h
 	enum Buttons
 	{
-		LEFT = 0,
-		MIDDLE = 1,
-		RIGHT = 2
+		LEFT = 1,
+		MIDDLE = 2,
+		RIGHT = 3
 	};
 }
 

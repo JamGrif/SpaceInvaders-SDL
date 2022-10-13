@@ -1,13 +1,15 @@
 #include "pch.h"
 #include "gameobjects/SDLGameObject.h"
 
+#include "SDL2/SDL.h"
+
 #include "core/SpriteManager.h"
 #include "core/Window.h"
 
-#include "SDL2/SDL.h"
-
 SDLGameObject::SDLGameObject()
-	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_objectWidth(0), m_objectHeight(0), m_currentSpriteFrame(1), m_bFlipImage(false)
+	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_objectWidth(0), m_objectHeight(0),
+	m_currentSpriteFrame(1), m_framesInSprite(0), m_animationSpeed(0), m_movementSpeed(0),
+	m_screenWidth(0), m_screenHeight(0), m_bFlipImage(false)
 {
 }
 
@@ -16,7 +18,7 @@ SDLGameObject::~SDLGameObject()
 }
 
 /// <summary>
-/// Responsible for setting all variables used in SDLGameObject
+/// Sell all values in SDLGameObject class
 /// </summary>
 void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
@@ -31,20 +33,21 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 	m_screenHeight = TheWindow::Instance()->getWindowHeight();
 
 	// The Object width and height is the dimensions of the current sprite frame on its sprite sheet
-	Sprite* s = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
-	if (s)
+	Sprite* temp = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
+	if (temp)
 	{
-		s->setUpIndividualSpriteDimensions(pParams->numFrames);
-		m_objectWidth = s->getIndividualDimensions()->w;
-		m_objectHeight = s->getIndividualDimensions()->h;
+		temp->setUpIndividualSpriteDimensions(pParams->numFrames);
+		m_objectWidth = temp->getIndividualDimensions()->w;
+		m_objectHeight = temp->getIndividualDimensions()->h;
 	}
 }
 
+/// <summary>
+/// Use the SpriteManager to draw the sprite
+/// Chooses which sprite to draw by using the sprites ID assigned to it at creation
+/// </summary>
 void SDLGameObject::drawObject()
 {
-	//if (m_velocity.getX() != 0)
-	//	m_bFlipImage = m_velocity.getX() > 0 ? true : false;
-	
 	SpriteManager::Instance()->drawSpriteFrame(
 		m_objectTextureID,
 		static_cast<int>(m_position.getX()),
@@ -55,12 +58,12 @@ void SDLGameObject::drawObject()
 		m_bFlipImage);
 }
 
+/// <summary>
+/// Update the values used in this class
+/// </summary>
 void SDLGameObject::updateObject()
 {
 	m_position += m_velocity;
-
-	// Set correct sprite frame
-	//if (m_framesInSprite > 1)
 
 	// Update animation unless animationSpeed is 0
 	if (m_animationSpeed)
@@ -71,6 +74,5 @@ void SDLGameObject::updateObject()
 	{
 		m_currentSpriteFrame = 0;
 	}
-	
 }
 

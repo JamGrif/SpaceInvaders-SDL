@@ -8,6 +8,9 @@
 
 TextManager* TextManager::s_pInstance = nullptr;
 
+/// <summary>
+/// Initializes the TextManager systems
+/// </summary>
 bool TextManager::init()
 {
 	if (TTF_Init() != INITIALIZE_SUCCESS)
@@ -19,7 +22,9 @@ bool TextManager::init()
 	return true;
 }
 
-
+/// <summary>
+/// Clean up the TextManager systems
+/// </summary>
 void TextManager::clean()
 {
 	// Loop through and delete all open fonts
@@ -31,7 +36,9 @@ void TextManager::clean()
 	TTF_Quit();
 }
 
-
+/// <summary>
+/// Retrieve font object of specified size, creating and storing it if doesn't currently exist
+/// </summary>
 TTF_Font* TextManager::getFont(int textSize)
 {
 	// If font of size textSize doesn't already exist, create it, add it to map and return it

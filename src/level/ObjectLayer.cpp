@@ -1,14 +1,13 @@
 #include "pch.h"
 #include "level/ObjectLayer.h"
 
-#include "gameobjects/BaseGameObject.h"
 #include "gameobjects/Alien.h"
+#include "gameobjects/BaseGameObject.h"
 #include "gameobjects/Block.h"
 
 ObjectLayer::ObjectLayer()
-	:m_layerPlayer(nullptr)
+	:m_layerPlayer(nullptr), m_layerAlienBoss(nullptr)
 {
-
 }
 
 ObjectLayer::~ObjectLayer()
@@ -28,6 +27,9 @@ ObjectLayer::~ObjectLayer()
 	m_layerPlayer = nullptr;
 }
 
+/// <summary>
+/// Updates all objects created in the level parser
+/// </summary>
 void ObjectLayer::updateLayer()
 {
 	for (auto object : m_layerGameObjects)
@@ -46,6 +48,9 @@ void ObjectLayer::updateLayer()
 	}
 }
 
+/// <summary>
+/// Draws all objects created in the level parser
+/// </summary>
 void ObjectLayer::renderLayer()
 {
 	for (auto object : m_layerGameObjects)

@@ -11,6 +11,9 @@ Level::~Level()
 	}
 }
 
+/// <summary>
+/// Update all layers used in this level
+/// </summary>
 void Level::updateLevel()
 {
 	for (auto layer : m_layers)
@@ -19,6 +22,9 @@ void Level::updateLevel()
 	}
 }
 
+/// <summary>
+/// Draw all layers used in this level
+/// </summary>
 void Level::renderLevel()
 {
 	for (auto layer : m_layers)

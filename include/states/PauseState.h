@@ -1,6 +1,9 @@
 #pragma once
-#include "BaseState.h"
+#include "states/BaseState.h"
 
+/// <summary>
+/// The state used when game is paused
+/// </summary>
 class PauseState :
     public BaseState
 {
@@ -16,7 +19,6 @@ public:
 private:
 	static const std::string s_pauseID;
 
-	// Callback functions
 	static void s_pauseToMain();
 	static void s_resumePlay();
 };

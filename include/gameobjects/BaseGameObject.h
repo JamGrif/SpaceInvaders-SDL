@@ -1,5 +1,9 @@
 #pragma once
 
+/// <summary>
+/// Passed to BaseGameObjects through their load function to setup initial values of an object
+/// Mainly used to retrieve values from the level data file to create objects
+/// </summary>
 class LoaderParams
 {
 public:
@@ -8,8 +12,8 @@ public:
 		checkboxStateCallbackID(0), livesRequired(0), textCallbackID(0), textSize(10) {}
 	~LoaderParams(){}
 
-	int xPos;
-	int yPos;
+	int xPos;						// Starting X position
+	int yPos;						// Starting Y position
 
 	std::string textureID;			// Texture the object uses by default
 	int numFrames;					// Number of separate frames in sprite
@@ -32,12 +36,8 @@ public:
 class BaseGameObject
 {
 public:
-	BaseGameObject()
-	{
-	}
-	virtual ~BaseGameObject()
-	{
-	};
+	BaseGameObject() {}
+	virtual ~BaseGameObject() {}
 
 	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams) = 0;
 

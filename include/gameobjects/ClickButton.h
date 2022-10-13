@@ -1,12 +1,15 @@
 #pragma once
 #include "gameobjects/Button.h"
 
-class MenuButton :
+/// <summary>
+/// Click style button that calls a specific button when clicked on
+/// </summary>
+class ClickButton :
     public Button
 {
 public:
-	MenuButton();
-	~MenuButton();
+	ClickButton();
+	~ClickButton();
 
 	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
 
@@ -15,14 +18,13 @@ public:
 
 private:
 
-	bool m_bPlayedSound;
 };
 
-class MenuButtonCreator :
+class ClickButtonCreator :
 	public BaseCreator
 {
 	BaseGameObject* createGameObject() const
 	{
-		return new MenuButton();
+		return new ClickButton();
 	}
 };
