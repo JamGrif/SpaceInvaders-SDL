@@ -45,11 +45,9 @@
   <object id="8" name="ToggleSound" class="CheckboxButton" x="315" y="575" width="48" height="48">
    <properties>
     <property name="checkboxStateCallbackID" value="1"/>
-    <property name="numFrames" type="int" value="2"/>
+    <property name="numFrames" type="int" value="4"/>
     <property name="selectCallbackID" type="int" value="3"/>
-    <property name="textureHeight" type="int" value="100"/>
     <property name="textureID" value="checkboxButton"/>
-    <property name="textureWidth" type="int" value="400"/>
    </properties>
   </object>
   <object id="9" name="SfxIcon" class="SDLGameObject" x="261" y="575" width="48" height="48">
@@ -61,7 +59,7 @@
   <object id="10" name="ToggleMusic" class="CheckboxButton" x="488" y="575" width="48" height="48">
    <properties>
     <property name="checkboxStateCallbackID" value="2"/>
-    <property name="numFrames" type="int" value="2"/>
+    <property name="numFrames" type="int" value="4"/>
     <property name="selectCallbackID" type="int" value="4"/>
     <property name="textureID" value="checkboxButton"/>
    </properties>
