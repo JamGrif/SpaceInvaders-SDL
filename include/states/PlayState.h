@@ -15,7 +15,7 @@ class PlayState :
 public:
 	PlayState()
 		:m_player(nullptr), m_alienBoss(nullptr), m_allAliens(nullptr), m_allBlocks(nullptr),
-		m_SelectedNextShotTime_ms(0), m_maxNextShotTime_ms(2000), m_minNextShotTime_ms(500),
+		m_SelectedNextShotTime_ms(0), m_maxNextShotTime_ms(2000), m_minNextShotTime_ms(250),
 		m_currentNextShotTime_ms(0), m_bFirstCheckDying(false), m_bAllowedToSpawnBullets(true)
 	{
 	}

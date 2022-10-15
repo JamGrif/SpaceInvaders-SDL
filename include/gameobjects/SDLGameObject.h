@@ -41,8 +41,8 @@ protected:
 	// Total amount of separate sprite frames of loaded sprite
 	int m_framesInSprite;
 
-	// Speed that the current sprite frame is changed
-	int m_animationSpeed;
+	// Time until next sprite frame change (_ms means milliseconds)
+	int m_animationSpeed_ms;
 
 	float m_movementSpeed;
 

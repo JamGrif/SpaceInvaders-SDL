@@ -7,7 +7,13 @@
 #include "level/Level.h"
 #include "level/ObjectLayer.h"
 
-#define PBULLET_SPEED 6
+#define PBULLET_SPEED 3
+
+// Alien bullets will have a random speed between this range
+#define ABULLET_MIN_SPEED 2
+#define ABULLET_MAX_SPEED 4
+
+#define ABULLET_ANIMATION_SPEED 250
 
 BulletHandler* BulletHandler::s_pInstance = nullptr;
 
@@ -57,8 +63,8 @@ void BulletHandler::addAlienBullet(int xPos, int yPos)
 	tempLoaderParams->yPos = yPos;
 	tempLoaderParams->textureID = "alienBullet";
 	tempLoaderParams->numFrames = 2;
-	tempLoaderParams->animationSpeed = 250;
-	tempLoaderParams->movementSpeed = 6;
+	tempLoaderParams->animationSpeed = ABULLET_ANIMATION_SPEED;
+	tempLoaderParams->movementSpeed = static_cast<float>(getRandomNumber(ABULLET_MIN_SPEED, ABULLET_MAX_SPEED));
 
 	// Get the object layer in order to retrieve other level objects
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer));

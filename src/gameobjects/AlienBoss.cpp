@@ -2,7 +2,7 @@
 #include "gameobjects/AlienBoss.h"
 
 AlienBoss::AlienBoss()
-	:Alien(), m_minimumRespawnTime_ms(2000), m_maximumRespawnTime_ms(4000), m_selectedRespawnTime_ms(0),
+	:Alien(), m_minimumRespawnTime_ms(5000), m_maximumRespawnTime_ms(1000), m_selectedRespawnTime_ms(0),
 	m_currentRespawnTime_ms(0), m_minimumScoreWorth(60), m_maximumScoreWorth(140),
 	leftSpawnPosition{-100, 100}, rightSpawnPosition{820, 100}
 {

@@ -112,7 +112,7 @@ void Player::setDying()
 	m_bDying = true;
 	m_objectTextureID = "playerDead";
 	m_framesInSprite = 2;
-	m_animationSpeed = 150;
+	m_animationSpeed_ms = 150;
 
 	TheSoundManager::Instance()->playSound("playerExplosion");
 }
