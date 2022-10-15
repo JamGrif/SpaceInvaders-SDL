@@ -37,6 +37,6 @@ protected:
 	std::vector<CheckboxCallback> m_checkBoxStateCallbackFunctions;
 	std::vector<TextCallback> m_textCallbackFunctions;
 
-	Level* m_pStateLevel;
+	Level* m_pStateLevel{nullptr};
 };
 

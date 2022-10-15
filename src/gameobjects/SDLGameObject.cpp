@@ -8,7 +8,7 @@
 
 SDLGameObject::SDLGameObject()
 	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_objectWidth(0), m_objectHeight(0),
-	m_currentSpriteFrame(1), m_framesInSprite(0), m_animationSpeed(0), m_movementSpeed(0),
+	m_currentSpriteFrame(1), m_framesInSprite(0), m_animationSpeed_ms(0), m_movementSpeed(0),
 	m_screenWidth(0), m_screenHeight(0), m_bFlipImage(false)
 {
 }
@@ -26,7 +26,7 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 
 	m_objectTextureID = pParams->textureID;
 	m_framesInSprite = pParams->numFrames;
-	m_animationSpeed = pParams->animationSpeed;
+	m_animationSpeed_ms = pParams->animationSpeed;
 	m_movementSpeed = pParams->movementSpeed;
 
 	m_screenWidth = TheWindow::Instance()->getWindowWidth();
@@ -66,9 +66,9 @@ void SDLGameObject::updateObject()
 	m_position += m_velocity;
 
 	// Update animation unless animationSpeed is 0
-	if (m_animationSpeed)
+	if (m_animationSpeed_ms)
 	{
-		m_currentSpriteFrame = static_cast<int>(((SDL_GetTicks() / m_animationSpeed) % m_framesInSprite));
+		m_currentSpriteFrame = static_cast<int>(((SDL_GetTicks() / m_animationSpeed_ms) % m_framesInSprite));
 	}
 	else
 	{

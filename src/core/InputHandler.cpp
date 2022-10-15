@@ -12,6 +12,8 @@ InputHandler* InputHandler::s_pInstance = nullptr;
 /// </summary>
 bool InputHandler::init()
 {
+	m_mouseButtonStates.resize(4);
+
 	// Set all mouse button states to false (not pressed)
 	for (int i = 0; i < 3; i++)
 	{
@@ -77,10 +79,8 @@ void InputHandler::clean()
 bool InputHandler::isKeyDown(Keyboard::Keys keyboardKey) const
 {
 	if (m_keystates)
-	{
 		return m_keystates[keyboardKey] ? true : false;
-	}
-
+	
 	return false;
 }
 
@@ -119,13 +119,14 @@ void InputHandler::onMouseMove(SDL_Event& event)
 void InputHandler::onMouseButtonDown(SDL_Event& event)
 {
 	if (event.button.button == Mouse::Buttons::LEFT)
-		m_mouseButtonStates[Mouse::LEFT] = true;
+		m_mouseButtonStates.at(Mouse::LEFT) = true;
 
 	if (event.button.button == Mouse::Buttons::MIDDLE)
-		m_mouseButtonStates[Mouse::MIDDLE] = true;
+		m_mouseButtonStates.at(Mouse::MIDDLE) = true;
 	
 	if (event.button.button == Mouse::Buttons::RIGHT)
-		m_mouseButtonStates[Mouse::RIGHT] = true;
+		m_mouseButtonStates.at(Mouse::RIGHT) = true;
+	
 }
 
 /// <summary>
@@ -135,13 +136,13 @@ void InputHandler::onMouseButtonDown(SDL_Event& event)
 void InputHandler::onMouseButtonUp(SDL_Event& event)
 {
 	if (event.button.button == Mouse::Buttons::LEFT)
-		m_mouseButtonStates[Mouse::LEFT] = false;
+		m_mouseButtonStates.at(Mouse::LEFT) = false;
 
 	if (event.button.button == Mouse::Buttons::MIDDLE)
-		m_mouseButtonStates[Mouse::MIDDLE] = false;
+		m_mouseButtonStates.at(Mouse::MIDDLE) = false;
 	
 	if (event.button.button == Mouse::Buttons::RIGHT)
-		m_mouseButtonStates[Mouse::RIGHT] = false;
+		m_mouseButtonStates.at(Mouse::RIGHT) = false;
 }
 
 InputHandler::InputHandler()

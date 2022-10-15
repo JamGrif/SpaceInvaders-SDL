@@ -7,7 +7,6 @@ Vector2D::Vector2D(float x, float y)
 {
 }
 
-
 float Vector2D::length()
 {
 	return static_cast<float>(sqrt((m_x * m_x) + (m_y * m_y)));

@@ -34,29 +34,28 @@ Level* LevelParser::parseLevel(const std::string& filepath)
 		return nullptr;
 	}
 
-	// Create the level object
 	Level* pLevel = new Level();
 
-	// Get the root node
+	// Get the root node <map> </map>
 	TiXmlElement* pRoot = levelDocument.RootElement();
 
-	pRoot->Attribute("tilewidth", &m_tileSize);
-	pRoot->Attribute("width", &m_width);
-	pRoot->Attribute("height", &m_height);
+	pRoot->Attribute("tilewidth", &m_tilePixelSize);
+	pRoot->Attribute("width", &m_levelTileWidth);
+	pRoot->Attribute("height", &m_levelTileHeight);
 
 	// Know that properties is the first child of the root
 	TiXmlElement* pProperties = pRoot->FirstChildElement();
 
-	// Parse the textures needed for this level, which has been added to properties
+	// Parse any sprites
 	for (TiXmlElement* e = pProperties->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("property"))
 		{
-			parseTextures(e);
+			parseSprites(e);
 		}
 	}
 
-	// Parse the tileset
+	// Parse any tileset
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("tileset"))
@@ -68,16 +67,15 @@ Level* LevelParser::parseLevel(const std::string& filepath)
 	// Parse any layers
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("objectgroup") || e->Value() == std::string("layer"))
+		// Object Layer
+		if (e->Value() == std::string("objectgroup"))
 		{
-			if (e->FirstChildElement()->Value() == std::string("object"))
-			{
-				parseObjectLayer(e, pLevel->getLevelLayers());
-			}
-			else if (e->FirstChildElement()->Value() == std::string("data"))
-			{
-				parseTileLayer(e, pLevel->getLevelLayers(), pLevel->getLevelTilesets());
-			}
+			parseObjectLayer(e, pLevel->getLevelLayers());
+		}
+		// Tile Layer
+		else if (e->Value() == std::string("layer"))
+		{
+			parseTileLayer(e, pLevel->getLevelLayers(), pLevel->getLevelTilesets());
 		}
 	}
 
@@ -86,225 +84,238 @@ Level* LevelParser::parseLevel(const std::string& filepath)
 }
 
 /// <summary>
+/// Parse the <layer> </layer> node in the .tmx file
 /// The TileLayer is the layer the tileset is drawn too in the level editor
 /// Uses the Base64 and zlib libraries to decode and decompress the data
 /// </summary>
 void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLayer*>* pLayers, const std::vector<Tileset>* pTilesets)
 {
+	assert(pTileElement);
+	assert(pLayers);
+	assert(pTilesets);
+
 	// Create new TileLayer instance
-	TileLayer* pTileLayer = new TileLayer(m_tileSize, *pTilesets);
+	TileLayer* pTileLayer = new TileLayer(m_tilePixelSize, *pTilesets);
 
-	// Tile data
-	std::vector<std::vector<int>> data; // Holds the decoded and uncompressed tiledata
+	// Will hold base64 decoded level data
+	std::string decodedIDs; 
 
-	std::string decodedIDs; // base64 decoded information
-	TiXmlElement* pDataNode = nullptr;
-
-	// Search for the node that is needed (data node)
+	// Search for <data> </data> and decode the text (the tile layer data in level editor)
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("data"))
 		{
-			pDataNode = e;
+			// Retrieve the text
+			TiXmlText* text = e->FirstChild()->ToText();
+			std::string t = text->Value();
+
+			// Use Base64 decoder to decode text
+			decodedIDs = base64_decode(t);
 		}
 	}
 
-	// Once correct node is found, can get the text from within it (the encoded/compressed data)
-	for (TiXmlNode* e = pDataNode->FirstChild(); e != NULL; e = e->NextSibling())
-	{
-		// Use the Base64 decoder to decode it
-		TiXmlText* text = e->ToText();
-		std::string t = text->Value();
-		decodedIDs = base64_decode(t);
-	}
+	/*
+		Level data text is decoded to a base64 decoded string, now use zlib library to decompress the data
+	*/
 
-	// The decodedIDs variable is now a base64 decoded string
-	// Now to use the zlib library to decompress the data
+	// Total number of tiles in level (times by sizeof an int)
+	uLongf numGids = (m_levelTileWidth * m_levelTileHeight) * sizeof(int);
 
-	// Uncompress zlib compression
-	uLongf numGids = m_width * m_height * sizeof(int);
-
+	// Uncompress the level data and find what tileset frame is in each level tile
 	std::vector<unsigned int> gids(numGids);
-
 	uncompress((Bytef*)&gids[0], &numGids, (const Bytef*)decodedIDs.c_str(), static_cast<uLong>(decodedIDs.size()));
 
-	// The ids vector now contains all of the tile IDs
-	// Now to set the size of the data vector so it can be filled with the tile IDs
-	std::vector<int> layerRow(m_width);
-	for (int j = 0; j < m_height; j++)
+	// The gids vector now contains all the level tiles and which tileset frame id it uses
+	// so now to set the size of the data vector so it can be filled with the tile IDs
+
+	/*
+		Level data is now fully decompressed, now to fill out level data
+	*/
+
+	// Holds the decoded and uncompressed tile data for each level tile
+	std::vector<std::vector<int>> tiledata;
+
+	std::vector<int> layerRow(m_levelTileWidth);
+
+	for (int j = 0; j < m_levelTileHeight; j++)
 	{
-		data.push_back(layerRow);
+		tiledata.push_back(layerRow);
 	}
 
 	// Now to fill our data array with the correct values
-	for (int rows = 0; rows < m_height; rows++)
+	for (int rows = 0; rows < m_levelTileHeight; rows++)
 	{
-		for (int cols = 0; cols < m_width; cols++)
+		for (int cols = 0; cols < m_levelTileWidth; cols++)
 		{
-			data[rows][cols] = gids[rows * m_width + cols];
+			// Set each level tile a tileset frame ID
+			tiledata.at(rows).at(cols) = gids.at(rows * m_levelTileWidth + cols);
 		}
 	}
 
-	// Finally, set this layers tile data and then push the layer into the layers array of the Level
-	pTileLayer->setTileIDs(data);
+	// Finally, set this layers tile data
+	pTileLayer->setTileIDs(tiledata);
+
+	// Push this tilelayer layer into level layer vector
 	pLayers->push_back(pTileLayer);
 }
 
 /// <summary>
+/// Parse the <objectgroup> </objectgroup> node in the .tmx file
 /// The object layer is all the objects added in the level editor
 /// The object layer handles all the updating and drawing of only the objects created from this layer
 /// </summary>
-void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<BaseLayer*>* pLayers)
+void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<BaseLayer*>* pLayers) // <objectgroup> </objectgroup>
 {
+	assert(pObjectElement);
+	assert(pLayers);
+
 	// Create an object layer
 	ObjectLayer* pObjectLayer = new ObjectLayer();
 
+	// Loop through each <object> node in <objectgroup> node, creating the respective gameobject type and filling it out
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
+		// Ensure node is a <object> node
 		if (e->Value() != std::string("object"))
 			continue;
 
-		// Create object of type and check it was made
+		// Create object of specific type("class")
 		BaseGameObject* pGameObject = TheGameObjectFactory::Instance()->createGameObject(e->Attribute("class"));
 		if (!pGameObject)
-			continue;
+			continue; // class type not registered in factory
 
 		std::unique_ptr<LoaderParams> tempLoaderParams = std::make_unique<LoaderParams>();
 
-		// Get the initial node values type, x and y
+		// Get the initial x and y values
 		e->Attribute("x", &tempLoaderParams->xPos);
 		e->Attribute("y", &tempLoaderParams->yPos);
 
-		// Get the property values
+		// Loop through each <properties> node of an object
 		for (TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
 		{
-			if (properties->Value() == std::string("properties"))
+			// Ensure node is a <properties node>
+			if (properties->Value() != std::string("properties"))
+				continue;
+			
+			// Loop through each <property> node of an objects properties
+			for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 			{
-				for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+				// Ensure node is a <property> node
+				if (property->Value() != std::string("property"))
+					continue;
+
+				// Determine what each <property> node is and then assign it to associated LoaderParam value
+
+				if (property->Attribute("name") == std::string("numFrames"))
+					property->Attribute("value", &tempLoaderParams->numFrames);
+	
+				else if (property->Attribute("name") == std::string("textureID"))
+					tempLoaderParams->textureID = property->Attribute("value");
+				
+				else if (property->Attribute("name") == std::string("selectCallbackID"))
+					property->Attribute("value", &tempLoaderParams->selectCallbackID);
+				
+				else if (strcmp(property->Attribute("name"), "animationSpeed") == 0)
+					property->Attribute("value", &tempLoaderParams->animationSpeed);
+				
+				else if (property->Attribute("name") == std::string("livesRequired"))
+					property->Attribute("value", &tempLoaderParams->livesRequired);
+				
+				else if (property->Attribute("name") == std::string("text"))
+					tempLoaderParams->text = property->Attribute("value");
+				
+				else if (property->Attribute("name") == std::string("checkboxStateCallbackID"))
+					property->Attribute("value", &tempLoaderParams->checkboxStateCallbackID);
+				
+				else if (property->Attribute("name") == std::string("scoreWorth"))
+					property->Attribute("value", &tempLoaderParams->scoreWorth);
+				
+				else if (property->Attribute("name") == std::string("textCallbackID"))
+					property->Attribute("value", &tempLoaderParams->textCallbackID);
+				
+				else if (property->Attribute("name") == std::string("textSize"))
+					property->Attribute("value", &tempLoaderParams->textSize);
+
+				else if (property->Attribute("name") == std::string("movementSpeed"))
 				{
-					// Only read the property element of properties
-					if (property->Value() != std::string("property"))
-						continue;
-
-					if (property->Attribute("name") == std::string("numFrames")) // Check for the name of the property rather than grabbing the attribute directly
-					{
-						property->Attribute("value", &tempLoaderParams->numFrames);
-					}
-					else if (property->Attribute("name") == std::string("textureID"))
-					{
-						tempLoaderParams->textureID = property->Attribute("value");
-					}
-					else if (property->Attribute("name") == std::string("selectCallbackID"))
-					{
-						property->Attribute("value", &tempLoaderParams->selectCallbackID);
-					}
-					else if (strcmp(property->Attribute("name"), "animationSpeed") == 0)
-					{
-						property->Attribute("value", &tempLoaderParams->animationSpeed);
-					}
-					else if (property->Attribute("name") == std::string("livesRequired"))
-					{
-						property->Attribute("value", &tempLoaderParams->livesRequired);
-					}
-					else if (property->Attribute("name") == std::string("movementSpeed"))
-					{
-						double x;
-						property->Attribute("value", &x);
-						tempLoaderParams->movementSpeed = static_cast<float>(x);
-					}
-					else if (property->Attribute("name") == std::string("text"))
-					{
-						tempLoaderParams->text = property->Attribute("value");
-					}
-					else if (property->Attribute("name") == std::string("checkboxStateCallbackID"))
-					{
-						property->Attribute("value", &tempLoaderParams->checkboxStateCallbackID);
-					}
-					else if (property->Attribute("name") == std::string("scoreWorth"))
-					{
-						property->Attribute("value", &tempLoaderParams->scoreWorth);
-					}
-					else if (property->Attribute("name") == std::string("textCallbackID"))
-					{
-						property->Attribute("value", &tempLoaderParams->textCallbackID);
-					}
-					else if (property->Attribute("name") == std::string("textSize"))
-					{
-						property->Attribute("value", &tempLoaderParams->textSize);
-					}
-
+					double x;
+					property->Attribute("value", &x);
+					tempLoaderParams->movementSpeed = static_cast<float>(x);
 				}
 			}
 		}
 
-		// Create the object just like the state parser
+		// Now that LoaderParams is filled out, use it to load the values of the gameobject
 		pGameObject->loadObject(tempLoaderParams);
 
-		// If the object is an Alien then put it in a separate vector, otherwise put it in the normal vector
-		if (dynamic_cast<AlienBoss*>(pGameObject))
-		{
-			pObjectLayer->setAlienBoss(dynamic_cast<AlienBoss*>(pGameObject));
-			pObjectLayer->getGameObjects().push_back(pGameObject);
-			continue;
-		}
-
+		
+		// Push block object into its own vector
 		if (dynamic_cast<Block*>(pGameObject))
 		{
-			Block* temp = dynamic_cast<Block*>(pGameObject);
-			pObjectLayer->getBlockObjects().push_back(temp);
+			pObjectLayer->getBlockObjects().push_back(dynamic_cast<Block*>(pGameObject));
 			continue;
 		}
 
-		if (dynamic_cast<Alien*>(pGameObject))
+		// Push alien object into its own vector
+		if (dynamic_cast<Alien*>(pGameObject) && !dynamic_cast<AlienBoss*>(pGameObject))
 		{
-			Alien* temp = dynamic_cast<Alien*>(pGameObject);
-			pObjectLayer->getAlienObjects().push_back(temp);
-		}
-		else
-		{
-			pObjectLayer->getGameObjects().push_back(pGameObject);
-
-			if (dynamic_cast<Player*>(pGameObject))
-				pObjectLayer->setPlayer(dynamic_cast<Player*>(pGameObject));
+			pObjectLayer->getAlienObjects().push_back(dynamic_cast<Alien*>(pGameObject));
+			continue;
 		}
 
+		pObjectLayer->getGameObjects().push_back(pGameObject);
+
+		if (dynamic_cast<Player*>(pGameObject))
+			pObjectLayer->setPlayer(dynamic_cast<Player*>(pGameObject));
+
+		if (dynamic_cast<AlienBoss*>(pGameObject))
+			pObjectLayer->setAlienBoss(dynamic_cast<AlienBoss*>(pGameObject));
+		
 	}
 
-
-	// Once loaded all the objects for this layer, we can push it into our level layer array
+	// Now that all objects of the layer are created and loaded, push the objectlayer into the level layers vector
 	pLayers->push_back(pObjectLayer);
 }
 
 /// <summary>
+/// Parse the <properties> </properties> node in the .tmx file
 /// Creates all the sprites used in the level file
 /// Sprites to load are specified in the map properties in the level editor
 /// </summary>
-void LevelParser::parseTextures(TiXmlElement* pTextureRoot)
+void LevelParser::parseSprites(TiXmlElement* pSpriteRoot)
 {
-	TheSpriteManager::Instance()->loadSprite(SPRITE_PATH_PREFIX + std::string(pTextureRoot->Attribute("value")), pTextureRoot->Attribute("name"));
+	assert(pSpriteRoot);
+
+	TheSpriteManager::Instance()->loadSprite(SPRITE_PATH_PREFIX + std::string(pSpriteRoot->Attribute("value")), pSpriteRoot->Attribute("name"));
 }
 
 /// <summary>
+/// Parse the <tileset> </tileset> node in the .tmx file
 /// Creates all the tilesets used in the level file
 /// Tilesets to load are specified in the level editor
 /// </summary>
 void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
 {
+	assert(pTilesetRoot);
+	assert(pTilesets);
+
 	// Load the tileset (the filepath is the same as the .tmx file path)
 	TheSpriteManager::Instance()->loadSprite(TILESET_PATH_PREFIX + std::string(pTilesetRoot->FirstChildElement()->Attribute("source")), pTilesetRoot->Attribute("name"));
 
 	// Create a tileset object and fill it out
 	Tileset tileset;
-	pTilesetRoot->FirstChildElement()->Attribute("width", &tileset.width);
-	pTilesetRoot->FirstChildElement()->Attribute("height", &tileset.height);
-	pTilesetRoot->Attribute("firstgid", &tileset.firstGridID);
-	pTilesetRoot->Attribute("tilewidth", &tileset.tileWidth);
-	pTilesetRoot->Attribute("tileheight", &tileset.tileHeight);
-	pTilesetRoot->Attribute("spacing", &tileset.spacing);
-	pTilesetRoot->Attribute("margin", &tileset.margin);
+
+	// Assign values to the Tileset members from the .tmx file
 	tileset.name = pTilesetRoot->Attribute("name");
+	pTilesetRoot->Attribute("firstgid",						&tileset.firstGidID);
+	pTilesetRoot->Attribute("tilewidth",					&tileset.tileWidth);
+	pTilesetRoot->Attribute("tileheight",					&tileset.tileHeight);
+	pTilesetRoot->Attribute("columns",						&tileset.numColumns);
+	pTilesetRoot->Attribute("spacing",						&tileset.spacing);
+	pTilesetRoot->Attribute("margin",						&tileset.margin);
+	pTilesetRoot->FirstChildElement()->Attribute("width",	&tileset.width);
+	pTilesetRoot->FirstChildElement()->Attribute("height",	&tileset.height);
 
-	tileset.numColumns = tileset.width / (tileset.tileWidth + tileset.spacing);
-
+	// Add filled out tile to total tilesets
 	pTilesets->push_back(tileset);
 }

@@ -1,8 +1,6 @@
 #include "misc/Utility.h"
 #include "pch.h"
 
-//#include <cstdlib>
-
 #include "gameobjects/SDLGameObject.h"
 
 bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
@@ -33,10 +31,7 @@ bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 	return true;
 }
 
-
-
 int getRandomNumber(int minimumNum, int maximumNum)
 {
 	return rand() % (maximumNum - minimumNum + 1) + minimumNum;
 }
-

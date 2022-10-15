@@ -58,8 +58,8 @@ void TileLayer::renderLayer()
 				(i * m_tileSize),											// Y position to draw the tile at
 				m_tileSize,													// Width of tile
 				m_tileSize,													// Height of tile
-				(id - (tileset.firstGridID - 1)) / tileset.numColumns,		// X Location of the tile on the tilesheet
-				(id - (tileset.firstGridID - 1)) % tileset.numColumns);		// Y Location of the tile on the tilesheet
+				(id - (tileset.firstGidID - 1)) / tileset.numColumns,		// X Location of the tile on the tilesheet
+				(id - (tileset.firstGidID - 1)) % tileset.numColumns);		// Y Location of the tile on the tilesheet
 		}
 	}
 }
@@ -75,7 +75,7 @@ Tileset TileLayer::getTilesetByID(int tileID) const
 	{
 		if (i + 1 <= m_tilesets.size() - 1)
 		{
-			if (tileID >= m_tilesets[i].firstGridID && tileID < m_tilesets[i + 1].firstGridID)
+			if (tileID >= m_tilesets[i].firstGidID && tileID < m_tilesets[i + 1].firstGidID)
 			{
 				return m_tilesets[i];
 			}

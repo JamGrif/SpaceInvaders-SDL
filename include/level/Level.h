@@ -7,15 +7,15 @@ class LevelParser;
 // Passed into the parser when its time to load the map
 struct Tileset
 {
-	int firstGridID = 0;
-	int tileWidth	= 0;
-	int tileHeight	= 0;
+	std::string name;		// Name of tileset in editor
+	int firstGidID = 0;		// First global tile ID of this tileset (This ID maps to the first tile in this tileset)
+	int tileWidth	= 0;	// Pixel size of an individual tile width
+	int tileHeight	= 0;	// Pixel size of an individual tile height
+	int numColumns	= 0;	// Number of tile frames in a row
 	int spacing		= 0;	// Pixel space between each sprite frame
 	int margin		= 0;	// Pixel space from the edge to first sprite frame
-	int width		= 0;
-	int height		= 0;
-	int numColumns	= 0;
-	std::string name;
+	int width		= 0;	// Total pixel width of complete sprite
+	int height		= 0;	// Total pixel height of complete sprite
 };
 
 enum class LayerIndex

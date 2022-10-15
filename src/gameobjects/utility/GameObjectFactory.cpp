@@ -46,6 +46,8 @@ void GameObjectFactory::clean()
 /// </summary>
 bool GameObjectFactory::registerType(const std::string& typeID, BaseCreator* pCreator)
 {
+	assert(pCreator);
+
 	// Ensure type doesn't already exist
 	if (m_creators.count(typeID))
 	{

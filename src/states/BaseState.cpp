@@ -43,7 +43,6 @@ void BaseState::renderState()
 /// </summary>
 void BaseState::setCallbacks()
 {
-
 	// Get the list of game objects
 	ObjectLayer& oLayer = dynamic_cast<ObjectLayer&>(*m_pStateLevel->getLayer(LayerIndex::objectLayer)); 
 	std::vector<BaseGameObject*>& m_gameObjects = oLayer.getGameObjects();

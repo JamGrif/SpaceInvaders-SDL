@@ -27,9 +27,13 @@ private:
 	int m_currentFrame;
 	int m_lastFrame_ms;
 
-	ProgramClock():m_deltaTime_ms(0), m_currentFrame(0), m_lastFrame_ms(0) {}						// Prevent outside unwanted construction
-	ProgramClock(const ProgramClock&) :m_deltaTime_ms(0), m_currentFrame(0), m_lastFrame_ms(0) {}	// Prevent construction by copying
-	ProgramClock& operator=(const ProgramClock&) {}													// Prevent assignment
-	~ProgramClock() {}																				// Prevent outside unwanted destruction
+	// Time to delay each frame in order to stick to a specified FPS
+	// Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
+	int m_delayTime;
+
+	ProgramClock():m_deltaTime_ms(0), m_currentFrame(0), m_lastFrame_ms(0), m_delayTime(0) {}						// Prevent outside unwanted construction
+	ProgramClock(const ProgramClock&) :m_deltaTime_ms(0), m_currentFrame(0), m_lastFrame_ms(0), m_delayTime(0) {}	// Prevent construction by copying
+	ProgramClock& operator=(const ProgramClock&) {}																	// Prevent assignment
+	~ProgramClock() {}																								// Prevent outside unwanted destruction
 };
 typedef ProgramClock TheProgramClock;

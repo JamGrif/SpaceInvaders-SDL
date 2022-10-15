@@ -17,9 +17,7 @@
 
 Game* Game::s_pInstance = nullptr;
 
-constexpr int FPS = 60;
-constexpr int DELAY_TIME = static_cast<int>(1000.0f/FPS); // Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
-Uint32 frameStart, frameTime;
+
 
 /// <summary>
 /// Sets up systems used by the game, required before the game loop can start
@@ -77,16 +75,10 @@ void Game::gameLoop()
 	while (m_bRunning)
 	{
 		TheProgramClock::Instance()->tick();
-		frameStart = SDL_GetTicks();
 
 		handleEventsGame();
 		updateGame();
 		renderGame();
-
-		frameTime = SDL_GetTicks() - frameStart; // Stores how long it took for frame to run
-
-		if (frameTime < DELAY_TIME) // If it is less than the time we want a frame to take, we call SDL_Delay to make the loop wait for the amount of time we want, subtracting how long the loop already took to complete
-			SDL_Delay((int)(DELAY_TIME - frameTime));
 	}
 }
 

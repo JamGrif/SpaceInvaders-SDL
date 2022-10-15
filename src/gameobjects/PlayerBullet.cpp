@@ -24,6 +24,10 @@ PlayerBullet::~PlayerBullet()
 /// </summary>
 void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr, AlienBoss* alienBossPtr, std::vector<Block*>* levelBlocksPtr)
 {
+	assert(levelAliensPtr);
+	assert(alienBossPtr);
+	assert(levelBlocksPtr);
+
 	BaseBullet::loadObject(pParams);
 
 	m_pAllAliens = levelAliensPtr;
@@ -69,7 +73,6 @@ void PlayerBullet::updateObject()
 			}
 		}
 	}
-	
 
 	// Only check for alien collision if above finish line (where only aliens will be)
 	if (m_position.getY() <= LevelFinishLineY)

@@ -40,12 +40,9 @@ void PlayState::updateState()
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ESC))
 		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::pushPause);
 	
-
 	//if (TheInputHandler::Instance()->isKeyDown(Keyboard::ONE))
-	//{
 	//	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
-	//}
-
+	
 	// If player is dead, determine whether to respawn them or change state to game over
 	if (m_player->getDead())
 	{

@@ -28,11 +28,11 @@ bool SoundManager::init()
 	Mix_VolumeMusic(VOLUME_MAXIMUM);
 
 	// Load all sounds and music used in the program
-	TheSoundManager::Instance()->loadSound("res/audio/playerShoot.wav", "playerShoot");
+	TheSoundManager::Instance()->loadSound("res/audio/playerShoot.wav",		"playerShoot");
 	TheSoundManager::Instance()->loadSound("res/audio/playerExplosion.wav", "playerExplosion");
-	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav", "alienExplosion");
-	TheSoundManager::Instance()->loadSound("res/audio/menuMouseOver.wav", "menuMouseOver");
-	TheSoundManager::Instance()->loadMusic("res/audio/music.ogg", "music");
+	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav",	"alienExplosion");
+	TheSoundManager::Instance()->loadSound("res/audio/menuMouseOver.wav",	"menuMouseOver");
+	TheSoundManager::Instance()->loadMusic("res/audio/music.ogg",			"music");
 
 	return true;
 }
@@ -43,7 +43,7 @@ bool SoundManager::init()
 void SoundManager::clean()
 {
 	// Loop through chunks and delete them
-	for (auto const& [key, value] : m_sfxs)
+	for (const auto& [key, value] : m_sfxs)
 	{
 		Mix_FreeChunk(value);
 	}
@@ -70,11 +70,11 @@ bool SoundManager::loadSound(const std::string& filepath, const std::string& id)
 
 	if (!pChunk)
 	{
-		std::cout << "Could not load SFX: ERROR - " << Mix_GetError() << std::endl;
+		std::cout << "Could not load SFX: " << Mix_GetError() << std::endl;
 		return false;
 	}
 
-	m_sfxs[id] = pChunk;
+	m_sfxs.insert({ id, pChunk });
 	return true;
 }
 
@@ -87,11 +87,11 @@ bool SoundManager::loadMusic(const std::string& filepath, const std::string& id)
 
 	if (!pMusic)
 	{
-		std::cout << "Could not load music: ERROR - " << Mix_GetError() << std::endl;
+		std::cout << "Could not load music: " << Mix_GetError() << std::endl;
 		return false;
 	}
 
-	m_music[id] = pMusic;
+	m_music.insert({ id, pMusic });
 	return true;
 }
 

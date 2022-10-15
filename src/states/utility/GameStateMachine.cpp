@@ -52,6 +52,8 @@ void GameStateMachine::renderCurrentState()
 /// </summary>
 void GameStateMachine::pushState(BaseState* pState)
 {
+	assert(pState);
+
 	m_currentGameStates.push_back(pState);
 	m_currentGameStates.back()->onEnterState();
 }
@@ -61,6 +63,8 @@ void GameStateMachine::pushState(BaseState* pState)
 /// </summary>
 void GameStateMachine::changeState(BaseState* pState)
 {
+	assert(pState);
+
 	// Pop all remaining states left before changing state
 	while (!m_currentGameStates.empty())
 	{

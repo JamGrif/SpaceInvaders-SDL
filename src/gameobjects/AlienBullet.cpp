@@ -23,6 +23,9 @@ AlienBullet::~AlienBullet()
 /// </summary>
 void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, Player* levelPlayer, std::vector<Block*>* levelBlocksPtr)
 {
+	assert(levelPlayer);
+	assert(levelBlocksPtr);
+
 	SDLGameObject::loadObject(pParams);
 
 	m_pLevelPlayer = levelPlayer;
