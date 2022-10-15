@@ -18,18 +18,14 @@
    <properties>
     <property name="numFrames" type="int" value="3"/>
     <property name="selectCallbackID" type="int" value="1"/>
-    <property name="textureHeight" type="int" value="80"/>
     <property name="textureID" value="mainMenuButton"/>
-    <property name="textureWidth" type="int" value="200"/>
    </properties>
   </object>
   <object id="5" name="RestartButton" class="ClickButton" x="230" y="300" width="10" height="10">
    <properties>
     <property name="numFrames" type="int" value="3"/>
     <property name="selectCallbackID" type="int" value="2"/>
-    <property name="textureHeight" type="int" value="80"/>
     <property name="textureID" value="restartButton"/>
-    <property name="textureWidth" type="int" value="200"/>
    </properties>
   </object>
   <object id="7" name="Game Over" class="TextObject" x="75" y="56.3333" width="10" height="10">
@@ -44,13 +40,13 @@
     <property name="textSize" type="int" value="30"/>
    </properties>
   </object>
-  <object id="9" name="Final Score:" class="TextObject" x="196.667" y="219" width="10" height="10">
+  <object id="9" name="Final Score:" class="TextObject" x="181.667" y="219" width="10" height="10">
    <properties>
     <property name="text" value="Final Score:"/>
     <property name="textSize" type="int" value="40"/>
    </properties>
   </object>
-  <object id="10" name="Score" class="TextObject" x="583" y="219" width="10" height="10">
+  <object id="10" name="Score" class="TextObject" x="568" y="219" width="10" height="10">
    <properties>
     <property name="text" value="0"/>
     <property name="textCallbackID" type="int" value="1"/>

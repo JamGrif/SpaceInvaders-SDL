@@ -1,74 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="12">
- <properties>
-  <property name="checkboxButton" value="checkboxButton.png"/>
-  <property name="exitButton" value="exitButton.png"/>
-  <property name="logo" value="logo.png"/>
-  <property name="musicIcon" value="musicIcon.png"/>
-  <property name="playButton" value="playButton.png"/>
-  <property name="player" value="player.png"/>
-  <property name="sfxIcon" value="sfxIcon.png"/>
- </properties>
- <tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="13" columns="13">
-  <image source="levelTileset.png" width="444" height="36"/>
- </tileset>
- <layer id="1" name="Tile Layer 1" width="25" height="22">
-  <data encoding="base64" compression="zlib">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="13">
+	<properties>
+		<property name="checkboxButton" value="checkboxButton.png"/>
+		<property name="exitButton" value="exitButton.png"/>
+		<property name="logo" value="logo.png"/>
+		<property name="musicIcon" value="musicIcon.png"/>
+		<property name="playButton" value="playButton.png"/>
+		<property name="player" value="player.png"/>
+		<property name="sfxIcon" value="sfxIcon.png"/>
+	</properties>
+	<tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="13" columns="13">
+		<image source="levelTileset.png" width="444" height="36"/>
+	</tileset>
+	<layer id="1" name="Tile Layer 1" width="25" height="22">
+		<data encoding="base64" compression="zlib">
    eJxjZGBgYKIhZgRiZgbaApZRO0btGLVj1I5RO0btGLWD5naA6nRWGmKQ+QALAAEy
   </data>
- </layer>
- <objectgroup id="2" name="Object Layer 1">
-  <object id="4" name="PlayButton" class="ClickButton" x="230" y="300" width="360" height="100">
-   <properties>
-    <property name="numFrames" type="int" value="3"/>
-    <property name="selectCallbackID" type="int" value="1"/>
-    <property name="textureHeight" type="int" value="100"/>
-    <property name="textureID" value="playButton"/>
-    <property name="textureWidth" type="int" value="400"/>
-   </properties>
-  </object>
-  <object id="5" name="ExitButton" class="ClickButton" x="230" y="460" width="360" height="100">
-   <properties>
-    <property name="numFrames" type="int" value="3"/>
-    <property name="selectCallbackID" type="int" value="2"/>
-    <property name="textureHeight" type="int" value="100"/>
-    <property name="textureID" value="exitButton"/>
-    <property name="textureWidth" type="int" value="400"/>
-   </properties>
-  </object>
-  <object id="6" name="Logo" class="SDLGameObject" x="230" y="50" width="10" height="10">
-   <properties>
-    <property name="numFrames" type="int" value="1"/>
-    <property name="textureID" value="logo"/>
-   </properties>
-  </object>
-  <object id="8" name="ToggleSound" class="CheckboxButton" x="315" y="575" width="48" height="48">
-   <properties>
-    <property name="checkboxStateCallbackID" value="1"/>
-    <property name="numFrames" type="int" value="4"/>
-    <property name="selectCallbackID" type="int" value="3"/>
-    <property name="textureID" value="checkboxButton"/>
-   </properties>
-  </object>
-  <object id="9" name="SfxIcon" class="SDLGameObject" x="261" y="575" width="48" height="48">
-   <properties>
-    <property name="numFrames" type="int" value="1"/>
-    <property name="textureID" value="sfxIcon"/>
-   </properties>
-  </object>
-  <object id="10" name="ToggleMusic" class="CheckboxButton" x="488" y="575" width="48" height="48">
-   <properties>
-    <property name="checkboxStateCallbackID" value="2"/>
-    <property name="numFrames" type="int" value="4"/>
-    <property name="selectCallbackID" type="int" value="4"/>
-    <property name="textureID" value="checkboxButton"/>
-   </properties>
-  </object>
-  <object id="11" name="SfxIcon" class="SDLGameObject" x="434" y="575" width="48" height="48">
-   <properties>
-    <property name="numFrames" type="int" value="1"/>
-    <property name="textureID" value="musicIcon"/>
-   </properties>
-  </object>
- </objectgroup>
+	</layer>
+	<objectgroup id="2" name="Object Layer 1">
+		<object id="4" name="PlayButton" class="ClickButton" x="230" y="300" width="360" height="100">
+			<properties>
+				<property name="numFrames" type="int" value="3"/>
+				<property name="selectCallbackID" type="int" value="1"/>
+				<property name="textureID" value="playButton"/>
+			</properties>
+		</object>
+		<object id="5" name="ExitButton" class="ClickButton" x="230" y="460" width="360" height="100">
+			<properties>
+				<property name="numFrames" type="int" value="3"/>
+				<property name="selectCallbackID" type="int" value="2"/>
+				<property name="textureID" value="exitButton"/>
+			</properties>
+		</object>
+		<object id="6" name="Logo" class="SDLGameObject" x="230" y="50" width="10" height="10">
+			<properties>
+				<property name="numFrames" type="int" value="1"/>
+				<property name="textureID" value="logo"/>
+			</properties>
+		</object>
+		<object id="8" name="ToggleSound" class="CheckboxButton" x="315" y="575" width="48" height="48">
+			<properties>
+				<property name="checkboxStateCallbackID" value="1"/>
+				<property name="numFrames" type="int" value="4"/>
+				<property name="selectCallbackID" type="int" value="3"/>
+				<property name="textureID" value="checkboxButton"/>
+			</properties>
+		</object>
+		<object id="9" name="SfxIcon" class="SDLGameObject" x="261" y="575" width="48" height="48">
+			<properties>
+				<property name="numFrames" type="int" value="1"/>
+				<property name="textureID" value="sfxIcon"/>
+			</properties>
+		</object>
+		<object id="10" name="ToggleMusic" class="CheckboxButton" x="488" y="575" width="48" height="48">
+			<properties>
+				<property name="checkboxStateCallbackID" value="2"/>
+				<property name="numFrames" type="int" value="4"/>
+				<property name="selectCallbackID" type="int" value="4"/>
+				<property name="textureID" value="checkboxButton"/>
+			</properties>
+		</object>
+		<object id="11" name="SfxIcon" class="SDLGameObject" x="434" y="575" width="48" height="48">
+			<properties>
+				<property name="numFrames" type="int" value="1"/>
+				<property name="textureID" value="musicIcon"/>
+			</properties>
+		</object>
+	</objectgroup>
 </map>

@@ -15,58 +15,51 @@
   </data>
  </layer>
  <objectgroup id="2" name="Object Layer 1">
-  <object id="4" name="PlayButton" class="ClickButton" x="230" y="300" width="10" height="10">
+  <object id="4" name="resumeButton" class="ClickButton" x="230" y="300" width="10" height="10">
    <properties>
     <property name="numFrames" type="int" value="3"/>
     <property name="selectCallbackID" type="int" value="1"/>
-    <property name="textureHeight" type="int" value="80"/>
     <property name="textureID" value="resumeButton"/>
-    <property name="textureWidth" type="int" value="200"/>
    </properties>
   </object>
-  <object id="5" name="ExitButton" class="ClickButton" x="230" y="460" width="10" height="10">
+  <object id="5" name="mainMenuButton" class="ClickButton" x="230" y="460" width="10" height="10">
    <properties>
     <property name="numFrames" type="int" value="3"/>
     <property name="selectCallbackID" type="int" value="2"/>
-    <property name="textureHeight" type="int" value="80"/>
     <property name="textureID" value="mainMenuButton"/>
-    <property name="textureWidth" type="int" value="200"/>
    </properties>
   </object>
   <object id="7" name="AlienLower" class="SDLGameObject" x="322" y="60" width="10" height="10">
    <properties>
-    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="2"/>
     <property name="textureID" value="alienLower"/>
    </properties>
   </object>
   <object id="8" name="AlienMiddle" class="SDLGameObject" x="322" y="120" width="10" height="10">
    <properties>
-    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="2"/>
     <property name="textureID" value="alienMiddle"/>
    </properties>
   </object>
   <object id="9" name="AlienUpper" class="SDLGameObject" x="322" y="180" width="10" height="10">
    <properties>
-    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="2"/>
     <property name="textureID" value="alienUpper"/>
    </properties>
   </object>
-  <object id="10" name="Test" class="TextObject" x="410" y="60" width="10" height="10">
+  <object id="10" name="AlienLowerWorth" class="TextObject" x="410" y="60" width="10" height="10">
    <properties>
     <property name="text" value="= 10"/>
     <property name="textSize" type="int" value="30"/>
    </properties>
   </object>
-  <object id="11" name="Test" class="TextObject" x="410" y="120" width="10" height="10">
+  <object id="11" name="AlienMiddleWorth" class="TextObject" x="410" y="120" width="10" height="10">
    <properties>
     <property name="text" value="= 20"/>
     <property name="textSize" type="int" value="30"/>
    </properties>
   </object>
-  <object id="12" name="Test" class="TextObject" x="410" y="180" width="10" height="10">
+  <object id="12" name="AlienUpperWorth" class="TextObject" x="410" y="180" width="10" height="10">
    <properties>
     <property name="text" value="= 30"/>
     <property name="textSize" type="int" value="30"/>
@@ -74,12 +67,11 @@
   </object>
   <object id="13" name="AlienBoss" class="SDLGameObject" x="307" y="240" width="10" height="10">
    <properties>
-    <property name="animationSpeed" type="int" value="0"/>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="alienBoss"/>
    </properties>
   </object>
-  <object id="14" name="Test" class="TextObject" x="410" y="240" width="10" height="10">
+  <object id="14" name="AlienBossWorth" class="TextObject" x="410" y="240" width="10" height="10">
    <properties>
     <property name="text" value="= ???"/>
     <property name="textSize" type="int" value="30"/>
