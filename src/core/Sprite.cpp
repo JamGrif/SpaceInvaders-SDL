@@ -8,6 +8,8 @@ Sprite::Sprite(SDL_Texture* texture, const std::string& fileName, const std::str
 {
 	// Store the complete dimensions of the sprite
 	SDL_QueryTexture(m_texture, NULL, NULL, &m_totalSpriteDimensions->w, &m_totalSpriteDimensions->h);
+
+	//std::cout << "created sprite " << m_fileName << std::endl;
 }
 
 Sprite::~Sprite()
@@ -16,6 +18,8 @@ Sprite::~Sprite()
 	delete m_totalSpriteDimensions;
 
 	SDL_DestroyTexture(m_texture);
+
+	//std::cout << "destroyed sprite " << m_fileName << std::endl;
 }
 
 /// <summary>

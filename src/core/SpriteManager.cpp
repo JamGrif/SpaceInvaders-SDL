@@ -38,11 +38,13 @@ bool SpriteManager::loadSprite(const std::string& filepath, const std::string& i
 /// </summary>
 void SpriteManager::clearAllFromSpriteMap()
 {
-	for (auto& sprite : m_spriteMap)
+	//std::cout << "start of clearallsprites" << std::endl;
+	for (const auto& [key, value] : m_spriteMap)
 	{
-		delete sprite.second;
+		delete value;
 	}
 	m_spriteMap.clear();
+	//std::cout << "end of clearallsprites" << std::endl;
 }
 
 /// <summary>
@@ -72,7 +74,6 @@ void SpriteManager::drawSpriteFrame(const std::string& id, int x, int y, int wid
 	destRect.w = width;
 	destRect.h = height;
 
-
 	SDL_RendererFlip flag = flipHorizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &frameToDraw, &destRect, 0, 0, flag);
@@ -92,7 +93,6 @@ void SpriteManager::drawSpriteTile(const std::string& id, int x, int y, int widt
 	srcRect.h = destRect.h = height;
 	destRect.x = x;
 	destRect.y = y;
-
 
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
 }
