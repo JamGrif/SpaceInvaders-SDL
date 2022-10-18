@@ -73,7 +73,7 @@
     <ClCompile Include="src\states\BaseState.cpp" />
     <ClCompile Include="src\core\InputHandler.cpp" />
     <ClCompile Include="src\core\Renderer.cpp" />
-    <ClCompile Include="src\core\Window.cpp" />
+    <ClCompile Include="src\core\GameWindow.cpp" />
     <ClCompile Include="src\gameobjects\SDLGameObject.cpp" />
     <ClCompile Include="src\gameobjects\Alien.cpp" />
     <ClCompile Include="src\gameobjects\Player.cpp" />
@@ -203,7 +203,7 @@
     <ClInclude Include="include\core\SpriteManager.h" />
     <ClInclude Include="include\gameobjects\Player.h" />
     <ClInclude Include="include\gameobjects\SDLGameObject.h" />
-    <ClInclude Include="include\core\Window.h" />
+    <ClInclude Include="include\core\GameWindow.h" />
     <ClInclude Include="include\core\Renderer.h" />
     <ClInclude Include="include\misc\Vector2D.h" />
     <ClInclude Include="include\core\InputHandler.h" />
@@ -334,7 +334,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;zlibwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -362,7 +362,7 @@ xcopy $(ProjectDir)dependencies\zlib\lib\zlibwapi.dll $(TargetDir)  /d </Command
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>

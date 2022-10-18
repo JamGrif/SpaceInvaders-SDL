@@ -2,15 +2,15 @@
 #include "level/TileLayer.h"
 
 #include "core/SpriteManager.h"
-#include "core/Window.h"
+#include "core/GameWindow.h"
 #include "level/Level.h"
 
 TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets)
 	:m_position(0,0), m_velocity(0,0), m_tilesets(tilesets), m_tileSize(tileSize)
 {
 	// Number of columns and rows to fill the size of the game
-	m_numColumns = (TheWindow::Instance()->getWindowWidth() / m_tileSize);
-	m_numRows = (TheWindow::Instance()->getWindowHeight() / m_tileSize);
+	m_numColumns = (TheGameWindow::Instance()->getWindowWidth() / m_tileSize);
+	m_numRows = (TheGameWindow::Instance()->getWindowHeight() / m_tileSize);
 }
 
 TileLayer::~TileLayer()

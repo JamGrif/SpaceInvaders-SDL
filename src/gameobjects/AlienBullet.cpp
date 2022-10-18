@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "gameobjects/AlienBullet.h"
 
-#include "core/Window.h"
+#include "core/GameWindow.h"
 #include "gameobjects/Player.h"
 #include "gameobjects/Block.h"
 
@@ -10,7 +10,7 @@
 #define PlayerPathY 592
 
 AlienBullet::AlienBullet()
-	:m_pLevelPlayer(nullptr), m_pAllBlocks(nullptr), m_screenHeight(TheWindow::Instance()->getWindowHeight())
+	:m_pLevelPlayer(nullptr), m_pAllBlocks(nullptr), m_screenHeight(TheGameWindow::Instance()->getWindowHeight())
 {
 }
 
@@ -57,7 +57,7 @@ void AlienBullet::updateObject()
 	}
 
 	// Only check for block collision if below finish line (where the blocks are)
-	if (m_position.getY() >= LevelFinishLineY)
+	if (m_position.getY() >= LEVEL_FINISH_LINE_Y)
 	{
 		// Check collision of bullet against blocks
 		for (auto block : *m_pAllBlocks)

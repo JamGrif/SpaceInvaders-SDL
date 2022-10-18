@@ -4,7 +4,7 @@
 #include "SDL2/SDL.h"
 
 #include "core/SpriteManager.h"
-#include "core/Window.h"
+#include "core/GameWindow.h"
 
 SDLGameObject::SDLGameObject()
 	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_objectWidth(0), m_objectHeight(0),
@@ -29,11 +29,11 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 	m_animationSpeed_ms = pParams->animationSpeed;
 	m_movementSpeed = pParams->movementSpeed;
 
-	m_screenWidth = TheWindow::Instance()->getWindowWidth();
-	m_screenHeight = TheWindow::Instance()->getWindowHeight();
+	m_screenWidth = TheGameWindow::Instance()->getWindowWidth();
+	m_screenHeight = TheGameWindow::Instance()->getWindowHeight();
 
 	// The Object width and height is the dimensions of the current sprite frame on its sprite sheet
-	Sprite* temp = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
+	std::shared_ptr<Sprite> temp = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
 	if (temp)
 	{
 		temp->setUpIndividualSpriteDimensions(pParams->numFrames);

@@ -1,14 +1,14 @@
 #include "pch.h"
-#include "core/Window.h"
+#include "core/GameWindow.h"
 
 #include "SDL2/SDL.h"
 
-Window* Window::s_pInstance = nullptr;
+GameWindow* GameWindow::s_pInstance = nullptr;
 
 /// <summary>
 /// Initializes the Window systems
 /// </summary>
-bool Window::init(const std::string& windowTitle, int width, int height)
+bool GameWindow::init(const std::string& windowTitle, int width, int height)
 {
 	m_pWindow = SDL_CreateWindow(windowTitle.c_str(), width/2, height/4, width, height, NULL);
 	if (!m_pWindow)
@@ -23,7 +23,7 @@ bool Window::init(const std::string& windowTitle, int width, int height)
 /// <summary>
 /// Clean up the Window systems
 /// </summary>
-void Window::clean()
+void GameWindow::clean()
 {
 	SDL_DestroyWindow(m_pWindow);
 }

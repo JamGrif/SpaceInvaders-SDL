@@ -3,7 +3,7 @@
 
 #include "SDL2/SDL.h"
 
-#include "core/Window.h"
+#include "core/GameWindow.h"
 
 #define BLACK 0
 #define WHITE 255
@@ -15,7 +15,7 @@ Renderer* Renderer::s_pInstance = nullptr;
 /// </summary>
 bool Renderer::init()
 {
-	m_pRenderer = SDL_CreateRenderer(TheWindow::Instance()->getWindowPtr(), -1, 0);
+	m_pRenderer = SDL_CreateRenderer(TheGameWindow::Instance()->getWindowPtr(), -1, 0);
 	if (!m_pRenderer)
 		return false;
 	
