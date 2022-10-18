@@ -49,7 +49,7 @@ Level* LevelParser::parseLevel(const std::string& filepath)
 	// Parse any sprites
 	for (TiXmlElement* e = pProperties->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("property"))
+		if (strcmp(e->Value(), "property") == 0)
 		{
 			parseSprites(e);
 		}
@@ -58,7 +58,7 @@ Level* LevelParser::parseLevel(const std::string& filepath)
 	// Parse any tileset
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("tileset"))
+		if (strcmp(e->Value(), "tileset") == 0)
 		{
 			parseTilesets(e, pLevel->getLevelTilesets());
 		}
@@ -68,12 +68,12 @@ Level* LevelParser::parseLevel(const std::string& filepath)
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		// Object Layer
-		if (e->Value() == std::string("objectgroup"))
+		if (strcmp(e->Value(), "objectgroup") == 0)
 		{
 			parseObjectLayer(e, pLevel->getLevelLayers());
 		}
 		// Tile Layer
-		else if (e->Value() == std::string("layer"))
+		else if (strcmp(e->Value(), "layer") == 0)
 		{
 			parseTileLayer(e, pLevel->getLevelLayers(), pLevel->getLevelTilesets());
 		}
@@ -103,7 +103,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLay
 	// Search for <data> </data> and decode the text (the tile layer data in level editor)
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("data"))
+		if (strcmp(e->Value(), "data") == 0)
 		{
 			// Retrieve the text
 			TiXmlText* text = e->FirstChild()->ToText();
@@ -176,7 +176,7 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		// Ensure node is a <object> node
-		if (e->Value() != std::string("object"))
+		if (strcmp(e->Value(), "object") != 0)
 			continue;
 
 		// Create object of specific type("class")
@@ -194,49 +194,49 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 		for (TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
 		{
 			// Ensure node is a <properties node>
-			if (properties->Value() != std::string("properties"))
+			if (strcmp(properties->Value(), "properties") != 0)
 				continue;
 			
 			// Loop through each <property> node of an objects properties
 			for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 			{
 				// Ensure node is a <property> node
-				if (property->Value() != std::string("property"))
+				if (strcmp(property->Value(), "property") != 0)
 					continue;
 
 				// Determine what each <property> node is and then assign it to associated LoaderParam value
 
-				if (property->Attribute("name") == std::string("numFrames"))
+				if (strcmp(property->Attribute("name"), "numFrames") == 0)
 					property->Attribute("value", &tempLoaderParams->numFrames);
 	
-				else if (property->Attribute("name") == std::string("textureID"))
+				else if (strcmp(property->Attribute("name"), "textureID") == 0)
 					tempLoaderParams->textureID = property->Attribute("value");
 				
-				else if (property->Attribute("name") == std::string("selectCallbackID"))
+				else if (strcmp(property->Attribute("name"), "selectCallbackID") == 0)
 					property->Attribute("value", &tempLoaderParams->selectCallbackID);
 				
 				else if (strcmp(property->Attribute("name"), "animationSpeed") == 0)
 					property->Attribute("value", &tempLoaderParams->animationSpeed);
 				
-				else if (property->Attribute("name") == std::string("livesRequired"))
+				else if (strcmp(property->Attribute("name"), "livesRequired") == 0)
 					property->Attribute("value", &tempLoaderParams->livesRequired);
 				
-				else if (property->Attribute("name") == std::string("text"))
+				else if (strcmp(property->Attribute("name"), "text") == 0)
 					tempLoaderParams->text = property->Attribute("value");
 				
-				else if (property->Attribute("name") == std::string("checkboxStateCallbackID"))
+				else if (strcmp(property->Attribute("name"), "checkboxStateCallbackID") == 0)
 					property->Attribute("value", &tempLoaderParams->checkboxStateCallbackID);
 				
-				else if (property->Attribute("name") == std::string("scoreWorth"))
+				else if (strcmp(property->Attribute("name"), "scoreWorth") == 0)
 					property->Attribute("value", &tempLoaderParams->scoreWorth);
 				
-				else if (property->Attribute("name") == std::string("textCallbackID"))
+				else if (strcmp(property->Attribute("name"), "textCallbackID") == 0)
 					property->Attribute("value", &tempLoaderParams->textCallbackID);
 				
-				else if (property->Attribute("name") == std::string("textSize"))
+				else if (strcmp(property->Attribute("name"), "textSize") == 0)
 					property->Attribute("value", &tempLoaderParams->textSize);
 
-				else if (property->Attribute("name") == std::string("movementSpeed"))
+				else if (strcmp(property->Attribute("name"), "movementSpeed") == 0)
 				{
 					double x;
 					property->Attribute("value", &x);
@@ -248,7 +248,6 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 		// Now that LoaderParams is filled out, use it to load the values of the gameobject
 		pGameObject->loadObject(tempLoaderParams);
 
-		
 		// Push block object into its own vector
 		if (dynamic_cast<Block*>(pGameObject))
 		{
@@ -270,7 +269,6 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Bas
 
 		if (dynamic_cast<AlienBoss*>(pGameObject))
 			pObjectLayer->setAlienBoss(dynamic_cast<AlienBoss*>(pGameObject));
-		
 	}
 
 	// Now that all objects of the layer are created and loaded, push the objectlayer into the level layers vector

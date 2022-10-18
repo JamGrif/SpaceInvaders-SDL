@@ -3,8 +3,8 @@
 
 #include "gameobjects/utility/GameObjectFactory.h"
 
-// How close an object can get to the edge of the screen
-#define edgeScreenBuffer 40
+// How close an object can get to the edge of the screen before something happens
+#define EDGE_SCREEN_BUFFER 40
 
 /// <summary>
 /// Basic game object

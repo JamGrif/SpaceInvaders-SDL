@@ -85,7 +85,7 @@ void Alien::setDying()
 bool Alien::checkIfReachedEdge()
 {
 	// If alien hit edge
-	if (m_position.getX() < edgeScreenBuffer || m_position.getX() + m_objectWidth > m_screenWidth - edgeScreenBuffer)
+	if (m_position.getX() < EDGE_SCREEN_BUFFER || m_position.getX() + m_objectWidth > m_screenWidth - EDGE_SCREEN_BUFFER)
 	{
 		return true;
 	}

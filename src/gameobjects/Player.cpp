@@ -61,7 +61,7 @@ void Player::updateObject()
 	}
 
 	// Move player in direction from input
-	if (m_position.getX() + m_objectWidth < m_screenWidth - edgeScreenBuffer)
+	if (m_position.getX() + m_objectWidth < m_screenWidth - EDGE_SCREEN_BUFFER)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::D))
 		{
@@ -69,7 +69,7 @@ void Player::updateObject()
 		}
 	}
 
-	if (m_position.getX() > edgeScreenBuffer)
+	if (m_position.getX() > EDGE_SCREEN_BUFFER)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::A))
 		{

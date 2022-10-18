@@ -57,7 +57,7 @@ private:
 
 	GameStateMachine* m_pGameStateMachine;
 
-	// Dictates the main game loop
+	// Condition for main game loop
 	bool			m_bRunning;
 
 	// Result of playing the game - Set by PlayState and used in GameOverState

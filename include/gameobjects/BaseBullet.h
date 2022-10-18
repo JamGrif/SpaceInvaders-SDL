@@ -1,7 +1,8 @@
 #pragma once
 #include "gameobjects/SDLGameObject.h"
 
-#define LevelFinishLineY 520
+// Y value of the space invaders finish line (darkened line in level)
+#define LEVEL_FINISH_LINE_Y 520
 
 /// <summary>
 /// Base class for a Bullet object

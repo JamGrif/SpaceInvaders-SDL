@@ -60,7 +60,7 @@ void PlayerBullet::updateObject()
 	}
 
 	// Only check for block collision if below finish line (where the blocks are)
-	if (m_position.getY() >= LevelFinishLineY)
+	if (m_position.getY() >= LEVEL_FINISH_LINE_Y)
 	{
 		// Check collision of bullet against blocks
 		for (auto block : *m_pAllBlocks)
@@ -75,7 +75,7 @@ void PlayerBullet::updateObject()
 	}
 
 	// Only check for alien collision if above finish line (where only aliens will be)
-	if (m_position.getY() <= LevelFinishLineY)
+	if (m_position.getY() <= LEVEL_FINISH_LINE_Y)
 	{
 		// Check collision of bullet against aliens
 		for (auto alien : *m_pAllAliens)
