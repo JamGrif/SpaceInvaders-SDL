@@ -35,6 +35,16 @@ std::string PlayState::s_textCallback1()
 /// </summary>
 void PlayState::updateState()
 {
+	//if (m_bInPrep)
+	//{
+	//	m_currentPrepTime += TheProgramClock::Instance()->getDeltaTime_ms();
+	//	if (m_currentPrepTime >= m_selectedPretTime)
+	//	{
+	//		m_bInPrep = false;
+	//	}
+	//	return;
+	//}
+
 	BaseState::updateState();
 
 	// If esc is pressed then push PauseState into the FSM
@@ -208,6 +218,9 @@ bool PlayState::onEnterState()
 
 	if (g_bResetScore)
 		TheGame::Instance()->resetCurrentScore();
+
+	// Do one pass of updating gameobjects to set initial states before entering prep stage
+	//BaseState::updateState();
 
 	return true;
 }

@@ -18,6 +18,8 @@ Block::~Block()
 void Block::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
 	SDLGameObject::loadObject(pParams);
+
+	m_currentSpriteFrame = m_blockHealth;
 }
 
 /// <summary>

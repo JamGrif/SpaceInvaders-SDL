@@ -38,6 +38,12 @@ private:
 	std::vector<Alien*>* m_allAliens;
 	std::vector<Block*>* m_allBlocks;
 
+	// Prep time at start of PlayState round, no action is taken until this time is taken
+	int m_currentPrepTime = 0;
+	int m_selectedPretTime = 2000;
+	bool m_bInPrep = true;
+
+
 	// Time until the next alien is chosen to shoot, chosen randomly between minNextShotTime and maxNextShotTime
 	int m_SelectedNextShotTime_ms;
 	int m_minNextShotTime_ms;

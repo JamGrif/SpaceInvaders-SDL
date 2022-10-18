@@ -59,8 +59,10 @@ bool Game::gameInit()
 
 	setGameOutcome(GameStateOutcome::None);
 
-	TheSoundManager::Instance()->playMusic("music");
+	TheSoundManager::Instance()->playMusic("music", true);
 	TheSoundManager::Instance()->playSound("gameStart");
+	//TheSoundManager::Instance()->playSound("dab");
+	//TheSoundManager::Instance()->playMusic("ye");
 
 	m_bRunning = true;
 	return true;

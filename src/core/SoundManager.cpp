@@ -106,7 +106,15 @@ void SoundManager::playSound(const std::string& id, bool loop)
 		loopFlag = -1;
 	}
 
-	Mix_PlayChannel(m_soundEffectObjects.at(id)->getChannel(), m_soundEffectObjects.at(id)->getSfxChunk(), loopFlag);
+	try
+	{
+		Mix_PlayChannel(m_soundEffectObjects.at(id)->getChannel(), m_soundEffectObjects.at(id)->getSfxChunk(), loopFlag);
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << "Failed to play sound with id " << id << " -> " << e.what() << " -> " << __FUNCTION__ << std::endl;
+	}
+	
 }
 
 /// <summary>
@@ -114,7 +122,14 @@ void SoundManager::playSound(const std::string& id, bool loop)
 /// </summary>
 void SoundManager::playMusic(const std::string& id, bool loop)
 {
-	Mix_PlayMusic(m_musicObjects.at(id)->getMusicChunk(), loop);
+	try
+	{
+		Mix_PlayMusic(m_musicObjects.at(id)->getMusicChunk(), loop);
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << "Failed to play music with id " << id << " -> " << e.what() << " -> " << __FUNCTION__ << std::endl;
+	}
 }
 
 /// <summary>
@@ -130,7 +145,7 @@ void SoundManager::stopSound(int channel)
 /// </summary>
 void SoundManager::stopAllSounds()
 {
-	Mix_HaltChannel(-1);
+	Mix_HaltChannel(ALL_CHANNELS);
 }
 
 /// <summary>
