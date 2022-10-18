@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "core/Game.h"
 
-#include "core/Window.h"
+#include "core/GameWindow.h"
 #include "core/Renderer.h"
 #include "core/InputHandler.h"
 #include "core/SoundManager.h"
@@ -10,14 +10,15 @@
 #include "states/MainMenuState.h" 
 #include "states/utility/GameStateMachine.h"
 
-#define INITIALIZE_SUCCESS 0
+//#define INITIALIZE_SUCCESS 0
+static constexpr int INITIALIZE_SUCCESS = 0;
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 704
 
 Game* Game::s_pInstance = nullptr;
 
-
+//uint8_t hi;
 
 /// <summary>
 /// Sets up systems used by the game, required before the game loop can start
@@ -34,7 +35,7 @@ bool Game::gameInit()
 		return false;
 	}
 
-	if (!TheWindow::Instance()->init("SpaceInvaders-SDL", WINDOW_WIDTH, WINDOW_HEIGHT))
+	if (!TheGameWindow::Instance()->init("SpaceInvaders-SDL", WINDOW_WIDTH, WINDOW_HEIGHT))
 		return false;
 
 	if (!TheRenderer::Instance()->init())
@@ -59,6 +60,7 @@ bool Game::gameInit()
 	setGameOutcome(GameStateOutcome::None);
 
 	TheSoundManager::Instance()->playMusic("music");
+	TheSoundManager::Instance()->playSound("gameStart");
 
 	m_bRunning = true;
 	return true;
@@ -88,16 +90,14 @@ void Game::gameLoop()
 void Game::gameClean()
 {
 	// Clean in the reverse order of creation
-	std::cout << "before delete gamestatemachine" << std::endl;
 	delete m_pGameStateMachine;
-	std::cout << "after delete gamestatemachine" << std::endl;
 
 	TheGameObjectFactory::Instance()->clean();
 	TheTextManager::Instance()->clean();
 	TheSoundManager::Instance()->clean();
 	TheInputHandler::Instance()->clean();
 	TheRenderer::Instance()->clean();
-	TheWindow::Instance()->clean();
+	TheGameWindow::Instance()->clean();
 	SDL_Quit();
 }
 

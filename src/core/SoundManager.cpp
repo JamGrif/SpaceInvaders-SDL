@@ -1,17 +1,15 @@
 #include "pch.h"
 #include "core/SoundManager.h"
 
-#include "SDL2_mixer/SDL_mixer.h"
+static constexpr uint16_t FREQUENCY		 = 22050;
+static constexpr uint16_t FORMAT		 = AUDIO_S16;
+static constexpr uint8_t  CHANNELS		 = 2;
+static constexpr uint16_t CHUNK_SIZE	 = 4096;
 
-#define FREQUENCY 22050
-#define FORMAT AUDIO_S16
-#define CHANNELS 2
-#define CHUNK_SIZE 4096
+static constexpr uint8_t  VOLUME_MINIMUM = 0;
+static constexpr uint8_t  VOLUME_MAXIMUM = 50;
 
-#define VOLUME_MINIMUM 0
-#define VOLUME_MAXIMUM 50
-
-#define ALL_CHANNELS -1
+static constexpr int8_t   ALL_CHANNELS	 = -1;
 
 SoundManager* SoundManager::s_pInstance = nullptr;
 
@@ -29,9 +27,15 @@ bool SoundManager::init()
 
 	// Load all sounds and music used in the program
 	TheSoundManager::Instance()->loadSound("res/audio/playerShoot.wav",		"playerShoot");
+	TheSoundManager::Instance()->loadSound("res/audio/alienShoot.wav",		"alienShoot");
 	TheSoundManager::Instance()->loadSound("res/audio/playerExplosion.wav", "playerExplosion");
+	TheSoundManager::Instance()->loadSound("res/audio/gameOver.wav",		"gameOver");
 	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav",	"alienExplosion");
+	TheSoundManager::Instance()->loadSound("res/audio/roundReset.wav",		"roundReset");
 	TheSoundManager::Instance()->loadSound("res/audio/menuMouseOver.wav",	"menuMouseOver");
+	TheSoundManager::Instance()->loadSound("res/audio/alienBossMove.wav",	"alienBossMove", ALIEN_BOSS_CHANNEL);
+	TheSoundManager::Instance()->loadSound("res/audio/blockBreak.wav",		"blockBreak");
+	TheSoundManager::Instance()->loadSound("res/audio/gameStart.wav",		"gameStart");
 	TheSoundManager::Instance()->loadMusic("res/audio/music.ogg",			"music");
 
 	return true;
@@ -42,19 +46,9 @@ bool SoundManager::init()
 /// </summary>
 void SoundManager::clean()
 {
-	// Loop through chunks and delete them
-	for (const auto& [key, value] : m_sfxs)
-	{
-		Mix_FreeChunk(value);
-	}
-	m_sfxs.clear();
-
-	// Loop through music and delete them
-	for (const auto& [key, value] : m_music)
-	{
-		Mix_FreeMusic(value);
-	}
-	m_music.clear();
+	// Delete all sound effect and music objects
+	m_soundEffectObjects.clear();
+	m_musicObjects.clear();
 
 	// Close SDL_mixer
 	Mix_CloseAudio();
@@ -64,7 +58,7 @@ void SoundManager::clean()
 /// <summary>
 /// Load sound at filepath and assign an id to it
 /// </summary>
-bool SoundManager::loadSound(const std::string& filepath, const std::string& id)
+bool SoundManager::loadSound(const std::string& filepath, const std::string& id, int chosenChannel)
 {
 	Mix_Chunk* pChunk = Mix_LoadWAV(filepath.c_str());
 
@@ -74,7 +68,10 @@ bool SoundManager::loadSound(const std::string& filepath, const std::string& id)
 		return false;
 	}
 
-	m_sfxs.insert({ id, pChunk });
+	// If Mix_Chunk was created successfully, create sound object and add to map
+	std::unique_ptr<SoundEffectObject> sound = std::make_unique<SoundEffectObject>(pChunk, chosenChannel);
+
+	m_soundEffectObjects.insert({id, std::move(sound)});
 	return true;
 }
 
@@ -91,24 +88,57 @@ bool SoundManager::loadMusic(const std::string& filepath, const std::string& id)
 		return false;
 	}
 
-	m_music.insert({ id, pMusic });
+	// If Mix_Music was created successfully, create music object and add to map
+	std::unique_ptr<MusicObject> music = std::make_unique<MusicObject>(pMusic);
+
+	m_musicObjects.insert({id, std::move(music)});
 	return true;
 }
 
 /// <summary>
 /// Play specified sound effect, using the id assigned to choose it
 /// </summary>
-void SoundManager::playSound(const std::string& id, int loop)
+void SoundManager::playSound(const std::string& id, bool loop)
 {
-	Mix_PlayChannel(ALL_CHANNELS, m_sfxs[id], loop);
+	int loopFlag = 0;
+	if (loop)
+	{
+		loopFlag = -1;
+	}
+
+	Mix_PlayChannel(m_soundEffectObjects.at(id)->getChannel(), m_soundEffectObjects.at(id)->getSfxChunk(), loopFlag);
 }
 
 /// <summary>
 /// Play specified music, using the id assigned to choose it
 /// </summary>
-void SoundManager::playMusic(const std::string& id, int loop)
+void SoundManager::playMusic(const std::string& id, bool loop)
 {
-	Mix_PlayMusic(m_music[id], loop);
+	Mix_PlayMusic(m_musicObjects.at(id)->getMusicChunk(), loop);
+}
+
+/// <summary>
+/// Stop any sound effects playing on specified channel
+/// </summary>
+void SoundManager::stopSound(int channel)
+{
+	Mix_HaltChannel(channel);
+}
+
+/// <summary>
+/// Stop sound effects playing on all channels
+/// </summary>
+void SoundManager::stopAllSounds()
+{
+	Mix_HaltChannel(-1);
+}
+
+/// <summary>
+/// Stop any music playing
+/// </summary>
+void SoundManager::stopMusic()
+{
+	Mix_HaltMusic();
 }
 
 /// <summary>

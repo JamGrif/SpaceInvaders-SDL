@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "gameobjects/Block.h"
 
+#include "core/SoundManager.h"
+
 Block::Block()
 	:SDLGameObject(), m_bDestoryed(false), m_blockHealth(0)
 {
@@ -48,5 +50,6 @@ void Block::updateObject()
 /// </summary>
 void Block::hit()
 {
+	TheSoundManager::Instance()->playSound("blockBreak");
 	m_blockHealth++;
 }

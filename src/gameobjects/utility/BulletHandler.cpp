@@ -7,12 +7,14 @@
 #include "level/Level.h"
 #include "level/ObjectLayer.h"
 
+// Player bullet speed
 #define PBULLET_SPEED 3
 
 // Alien bullets will have a random speed between this range
 #define ABULLET_MIN_SPEED 2
 #define ABULLET_MAX_SPEED 4
 
+// Alien bullets animation speed
 #define ABULLET_ANIMATION_SPEED 250
 
 BulletHandler* BulletHandler::s_pInstance = nullptr;
@@ -73,6 +75,8 @@ void BulletHandler::addAlienBullet(int xPos, int yPos)
 	alienBullet->loadObject(tempLoaderParams, temp->getPlayerObject(), &temp->getBlockObjects());
 
 	m_alienBullets.push_back(alienBullet);
+
+	TheSoundManager::Instance()->playSound("alienShoot");
 }
 
 /// <summary>

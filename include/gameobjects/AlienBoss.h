@@ -39,6 +39,8 @@ private:
 	// Position the AlienBoss will spawn in when it respawns
 	Vector2D leftSpawnPosition;
 	Vector2D rightSpawnPosition;
+
+	bool m_bSoundPlaying;
 };
 
 

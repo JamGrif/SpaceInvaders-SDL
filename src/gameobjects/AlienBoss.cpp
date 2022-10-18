@@ -1,15 +1,18 @@
 #include "pch.h"
 #include "gameobjects/AlienBoss.h"
 
+#include "core/SoundManager.h"
+
 AlienBoss::AlienBoss()
 	:Alien(), m_minimumRespawnTime_ms(5000), m_maximumRespawnTime_ms(1000), m_selectedRespawnTime_ms(0),
 	m_currentRespawnTime_ms(0), m_minimumScoreWorth(60), m_maximumScoreWorth(140),
-	leftSpawnPosition{-100, 100}, rightSpawnPosition{820, 100}
+	leftSpawnPosition{-100, 100}, rightSpawnPosition{820, 100}, m_bSoundPlaying(false)
 {
 }
 
 AlienBoss::~AlienBoss()
 {
+	TheSoundManager::Instance()->stopSound(ALIEN_BOSS_CHANNEL);
 }
 
 /// <summary>
@@ -47,6 +50,12 @@ void AlienBoss::updateObject()
 	// If dying, continue dying timer
 	if (m_bDying)
 	{
+		if (m_bSoundPlaying)
+		{
+			m_bSoundPlaying = false;
+			TheSoundManager::Instance()->stopSound(ALIEN_BOSS_CHANNEL);
+		}
+
 		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime_ms();
 		if (m_timeSpentDying_ms >= m_timeAloudDying_ms)
 			resetAlien();
@@ -64,7 +73,11 @@ void AlienBoss::updateObject()
 		return;
 	}
 
-	
+	if (!m_bSoundPlaying)
+	{
+		TheSoundManager::Instance()->playSound("alienBossMove", true);
+		m_bSoundPlaying = true;
+	}
 	
 	// Move alien in specified direction
 	if (m_direction == MovingDirection::Right)
@@ -108,4 +121,8 @@ void AlienBoss::resetAlien()
 	// Set alien to dead - allowing it to start its respawn timer
 	m_bDead = true;
 	m_bDying = false;
+
+	// Sound
+	m_bSoundPlaying = false;
+	TheSoundManager::Instance()->stopSound(ALIEN_BOSS_CHANNEL);
 }

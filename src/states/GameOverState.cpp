@@ -3,6 +3,7 @@
 
 #include "core/Game.h"
 #include "core/SpriteManager.h"
+#include "core/SoundManager.h"
 #include "states/utility/GameStateMachine.h"
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
@@ -74,6 +75,8 @@ bool GameOverState::onEnterState()
 	m_textCallbackFunctions.push_back(s_textCallback2);
 
 	setCallbacks();
+
+	TheSoundManager::Instance()->playSound("gameOver");
 
 	return true;
 }

@@ -1,8 +1,53 @@
 #pragma once
 
-struct Mix_Chunk;
-struct _Mix_Music;
-typedef struct _Mix_Music Mix_Music; // Defined in SDL_mixer.h
+#include "SDL2_mixer/SDL_mixer.h"
+
+#define ALIEN_BOSS_CHANNEL 3
+
+/// <summary>
+/// Encapsulates the Mix_Chunk SDL object
+/// </summary>
+class SoundEffectObject
+{
+public:
+	SoundEffectObject(Mix_Chunk* createdMixChunk, int channel = -1)
+		: m_sfx(createdMixChunk), m_channel(channel)
+	{
+	}
+	~SoundEffectObject()
+	{
+		Mix_FreeChunk(m_sfx);
+	}
+
+	Mix_Chunk* getSfxChunk() const { return m_sfx; }
+	int getChannel() const { return m_channel; }
+
+private:
+	Mix_Chunk* m_sfx; // Mix_Chunk used for sound effects only
+	int m_channel;
+};
+
+/// <summary>
+/// Encapsulates the Mix_Music SDL object
+/// </summary>
+class MusicObject
+{
+public:
+	MusicObject(Mix_Music* createdMixMusic)
+		: m_music(createdMixMusic)
+	{
+	}
+	~MusicObject()
+	{
+		Mix_FreeMusic(m_music);
+	}
+
+	Mix_Music* getMusicChunk() const { return m_music; }
+
+private:
+	Mix_Music* m_music; // Mix_music used for music only
+};
+
 
 /// <summary>
 /// Encapsulates the audio for the program, providing utility functions to use it
@@ -14,17 +59,20 @@ public:
 	bool init();
 	void clean();
 
-	bool loadSound(const std::string& filepath, const std::string& id);
+	bool loadSound(const std::string& filepath, const std::string& id, int chosenChannel = -1);
 	bool loadMusic(const std::string& filepath, const std::string& id);
 
-	void playSound(const std::string& id, int loop = false);
-	void playMusic(const std::string& id, int loop = false);
+	void playSound(const std::string& id, bool loop = false);
+	void playMusic(const std::string& id, bool loop = false);
+
+	void stopSound(int channel);
+	void stopAllSounds();
+	void stopMusic();
 
 	void toggleSoundEffects();
 	void toggleMusic();
 
 	bool isSoundPlaying() const { return m_bPlayingSound; }
-
 	bool isMusicPlaying() const { return m_bPlayingMusic; }
 
 	static SoundManager* Instance() // Get instance
@@ -37,8 +85,8 @@ public:
 private:
 	static SoundManager* s_pInstance; 
 
-	std::unordered_map<std::string, Mix_Chunk*> m_sfxs;		// Mix_Chunk used for sound effects only
-	std::unordered_map<std::string, Mix_Music*> m_music;	// Mix_Music used for music tracks only
+	std::unordered_map<std::string, std::unique_ptr<SoundEffectObject>>	m_soundEffectObjects;
+	std::unordered_map<std::string, std::unique_ptr<MusicObject>>		m_musicObjects;
 
 	bool m_bPlayingSound;
 	bool m_bPlayingMusic;

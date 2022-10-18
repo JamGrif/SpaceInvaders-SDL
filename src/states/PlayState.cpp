@@ -3,6 +3,7 @@
 
 #include "core/Game.h"
 #include "core/InputHandler.h"
+#include "core/SoundManager.h"
 #include "gameobjects/Alien.h"
 #include "gameobjects/AlienBoss.h"
 #include "gameobjects/BaseGameObject.h"
@@ -184,6 +185,8 @@ bool PlayState::onEnterState()
 	std::cout << "-=-=-=-=-=-Entering PlayState-=-=-=-=-=-" << std::endl;
 
 	loadLevel("PlayState.tmx");
+
+	TheSoundManager::Instance()->playSound("roundReset");
 
 	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_pStateLevel->getLayer(LayerIndex::objectLayer));
 	m_allAliens = &temp->getAlienObjects();
