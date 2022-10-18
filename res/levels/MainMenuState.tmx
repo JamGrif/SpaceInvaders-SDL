@@ -31,7 +31,7 @@
     <property name="textureID" value="exitButton"/>
    </properties>
   </object>
-  <object id="6" name="Logo" class="SDLGameObject" x="230" y="50" width="10" height="10">
+  <object id="6" name="Logo" class="SDLGameObject" x="174" y="0" width="464" height="304">
    <properties>
     <property name="numFrames" type="int" value="1"/>
     <property name="textureID" value="logo"/>

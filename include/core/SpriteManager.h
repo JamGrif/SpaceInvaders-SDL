@@ -17,7 +17,7 @@ public:
 	void	drawSpriteFrame(const std::string& id, int x, int y, int width, int height, int currentFrame, bool flipHorizontal);
 	void	drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame);
 
-	Sprite*	getSpriteViaID(const std::string& id) const;
+	std::shared_ptr<Sprite>	getSpriteViaID(const std::string& id) const;
 
 	static SpriteManager* Instance() // Get instance
 	{
@@ -29,7 +29,7 @@ public:
 private:
 	static SpriteManager* s_pInstance;
 
-	std::unordered_map<std::string, Sprite*> m_spriteMap;
+	std::unordered_map<std::string, std::shared_ptr<Sprite>> m_spriteMap;
 
 	// Number of pixels between the edge of a tileset picture
 	const int m_tilesetPixelMargin;

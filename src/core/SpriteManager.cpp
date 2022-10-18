@@ -27,8 +27,9 @@ bool SpriteManager::loadSprite(const std::string& filepath, const std::string& i
 	if (!pTexture)
 		return false;
 	
-	Sprite* pSprite = new Sprite(pTexture, filepath, id);
-	m_spriteMap[id] = pSprite;
+	//std::unique_ptr<Sprite> pSprite = new Sprite(pTexture, filepath, id);
+	std::shared_ptr<Sprite>pSprite = std::make_shared<Sprite>(pTexture, filepath, id);
+	m_spriteMap.insert({ id, pSprite });
 
 	return true;
 }
@@ -38,11 +39,11 @@ bool SpriteManager::loadSprite(const std::string& filepath, const std::string& i
 /// </summary>
 void SpriteManager::clearAllFromSpriteMap()
 {
-	//std::cout << "start of clearallsprites" << std::endl;
-	for (const auto& [key, value] : m_spriteMap)
-	{
-		delete value;
-	}
+	////std::cout << "start of clearallsprites" << std::endl;
+	//for (const auto& [key, value] : m_spriteMap)
+	//{
+	//	delete value;
+	//}
 	m_spriteMap.clear();
 	//std::cout << "end of clearallsprites" << std::endl;
 }
@@ -52,7 +53,7 @@ void SpriteManager::clearAllFromSpriteMap()
 /// </summary>
 void SpriteManager::clearFromSpriteMap(const std::string& id)
 {
-	delete m_spriteMap.at(id);
+	//delete m_spriteMap.at(id);
 	m_spriteMap.erase(id);
 }
 
@@ -64,8 +65,10 @@ void SpriteManager::drawSpriteFrame(const std::string& id, int x, int y, int wid
 	SDL_Rect frameToDraw;	// What part of the sprite to use
 	SDL_Rect destRect;		// Where on the screen to draw sprite
 
-	frameToDraw.x = width * currentFrame;
-	frameToDraw.y = 0;
+	//std::cout << "currentframe " << currentFrame << std::endl;
+
+	frameToDraw.x = ((width * currentFrame) + SPRITE_PIXEL_MARGIN) + currentFrame * SPRITE_PIXEL_SPACING;
+	frameToDraw.y = SPRITE_PIXEL_MARGIN;
 	frameToDraw.w = width;
 	frameToDraw.h = height;
 
@@ -100,7 +103,7 @@ void SpriteManager::drawSpriteTile(const std::string& id, int x, int y, int widt
 /// <summary>
 /// Return sprite object at id, nullptr if doesn't exist
 /// </summary>
-Sprite* SpriteManager::getSpriteViaID(const std::string& id) const
+std::shared_ptr<Sprite> SpriteManager::getSpriteViaID(const std::string& id) const
 {
 	return m_spriteMap.count(id) ? m_spriteMap.at(id) : nullptr;
 }
