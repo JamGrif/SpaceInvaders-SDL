@@ -1,6 +1,8 @@
 #pragma once
 #include "gameobjects/BaseGameObject.h"
 
+#include "SDL2/SDL_rect.h"
+
 #include "gameobjects/utility/GameObjectFactory.h"
 
 // How close an object can get to the edge of the screen before something happens
@@ -22,6 +24,8 @@ public:
     virtual void drawObject();
     virtual void updateObject();
 
+	//virtual std::string getSpriteID() { return m_objectTextureID; }
+
 	Vector2D& getPosition() { return m_position; }
 
 	int getWidth() const { return m_objectWidth; }
@@ -33,7 +37,9 @@ protected:
 
 	// The dimensions of the object is the dimensions of an individual sprite frame
     int m_objectWidth;	
-    int m_objectHeight;	
+    int m_objectHeight;
+
+	SDL_Rect m_objectAttributes;
 
 	// Current sprite frame in use of loaded sprite
     int m_currentSpriteFrame;
@@ -65,8 +71,8 @@ protected:
 class SDLGameObjectCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new SDLGameObject();
+		return std::make_shared<SDLGameObject>();
 	}
 };

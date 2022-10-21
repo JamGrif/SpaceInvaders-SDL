@@ -23,8 +23,8 @@ private:
 class ClickButtonCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new ClickButton();
+		return std::make_shared<ClickButton>();
 	}
 };

@@ -49,8 +49,8 @@ private:
 class TextObjectCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new TextObject();
+		return std::make_shared<TextObject>();
 	}
 };

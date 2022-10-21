@@ -16,6 +16,7 @@ public:
 
 	void	drawSpriteFrame(const std::string& id, int x, int y, int width, int height, int currentFrame, bool flipHorizontal);
 	void	drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame);
+	void	drawSpriteText(SDL_Texture* textObjectTexture, const SDL_Rect& textObjectAttributes);
 
 	std::shared_ptr<Sprite>	getSpriteViaID(const std::string& id) const;
 

@@ -32,11 +32,11 @@ public:
 	void changeCurrentState();
 
 private:
-	std::vector<BaseState*> m_currentGameStates;
+	std::vector<std::unique_ptr<BaseState>> m_currentGameStates;
 
 	// State Selection
-	void pushState(BaseState* pState);		
-	void changeState(BaseState* pState);	
+	void pushState(std::unique_ptr<BaseState> pState);
+	void changeState(std::unique_ptr<BaseState> pState);
 	void popState();						
 
 	bool m_bNeedToChange;

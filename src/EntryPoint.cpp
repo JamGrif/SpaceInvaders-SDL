@@ -54,5 +54,13 @@ int main(int argc, char* args[])
 
 	TheGame::Instance()->gameClean();
 
+#ifdef _DEBUG
+	std::cout << "whiletrue start" << std::endl;
+	while (true)
+	{
+
+	}
+#endif
+
 	return 0;
 }

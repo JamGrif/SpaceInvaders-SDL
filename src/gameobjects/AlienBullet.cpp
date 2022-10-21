@@ -10,7 +10,7 @@
 #define PlayerPathY 592
 
 AlienBullet::AlienBullet()
-	:m_pLevelPlayer(nullptr), m_pAllBlocks(nullptr), m_screenHeight(TheGameWindow::Instance()->getWindowHeight())
+	:m_pAllBlocks(nullptr), m_screenHeight(TheGameWindow::Instance()->getWindowHeight())
 {
 }
 
@@ -21,12 +21,14 @@ AlienBullet::~AlienBullet()
 /// <summary>
 /// Set all values in AlienBullet class and parent classes
 /// </summary>
-void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, Player* levelPlayer, std::vector<Block*>* levelBlocksPtr)
+void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::weak_ptr<Player> levelPlayer, std::vector<std::shared_ptr<Block>>* levelBlocksPtr)
 {
-	assert(levelPlayer);
+	//assert(levelPlayer);
 	assert(levelBlocksPtr);
 
 	SDLGameObject::loadObject(pParams);
+
+	m_classType = "AlienBullet";
 
 	m_pLevelPlayer = levelPlayer;
 	m_pAllBlocks = levelBlocksPtr;
@@ -62,7 +64,7 @@ void AlienBullet::updateObject()
 		// Check collision of bullet against blocks
 		for (auto block : *m_pAllBlocks)
 		{
-			if (checkCollision(this, block))
+			if (checkCollision(this, block.get()))
 			{
 				block->hit();
 				m_bDestroy = true;
@@ -75,10 +77,10 @@ void AlienBullet::updateObject()
 	if (m_position.getY() >= PlayerPathY)
 	{
 		// Check collision of bullet against player
-		if (checkCollision(this, m_pLevelPlayer))
+		if (checkCollision(this, m_pLevelPlayer.lock().get()))
 		{
 			m_bDestroy = true;
-			m_pLevelPlayer->setDying();
+			m_pLevelPlayer.lock()->setDying();
 		}
 	}
 }

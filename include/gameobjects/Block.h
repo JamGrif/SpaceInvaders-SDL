@@ -25,13 +25,13 @@ public:
 	virtual void	drawObject();
 	virtual void	updateObject();
 
-	bool			isDestroyed() { return m_bDestoryed; }
+	//bool			isDestroyed() { return m_bDestoryed; }
 
 	void			hit();
 
 private:
 
-	bool m_bDestoryed;
+	//bool m_bDestoryed;
 
 	int m_blockHealth;
 };
@@ -39,9 +39,9 @@ private:
 class BlockCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new Block();
+		return std::make_shared<Block>();
 	}
 };
 

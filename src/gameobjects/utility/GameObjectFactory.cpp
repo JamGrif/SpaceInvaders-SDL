@@ -20,15 +20,15 @@ GameObjectFactory* GameObjectFactory::s_pInstance = nullptr;
 /// </summary>
 bool GameObjectFactory::init()
 {
-	registerType("ClickButton", new ClickButtonCreator());
-	registerType("Player", new PlayerCreator());
-	registerType("Alien", new AlienCreator());
-	registerType("SDLGameObject", new SDLGameObjectCreator());
-	registerType("PlayerLives", new PlayerLivesCreator());
-	registerType("TextObject", new TextObjectCreator());
-	registerType("CheckboxButton", new CheckboxButtonCreator());
-	registerType("AlienBoss", new AlienBossCreator());
-	registerType("Block", new BlockCreator());
+	registerType("ClickButton",		std::move(std::make_unique<ClickButtonCreator>()));
+	registerType("Player",			std::move(std::make_unique<PlayerCreator>()));
+	registerType("Alien",			std::move(std::make_unique<AlienCreator>()));
+	registerType("SDLGameObject",	std::move(std::make_unique<SDLGameObjectCreator>()));
+	registerType("PlayerLives",		std::move(std::make_unique<PlayerLivesCreator>()));
+	registerType("TextObject",		std::move(std::make_unique<TextObjectCreator>()));
+	registerType("CheckboxButton",	std::move(std::make_unique<CheckboxButtonCreator>()));
+	registerType("AlienBoss",		std::move(std::make_unique<AlienBossCreator>()));
+	registerType("Block",			std::move(std::make_unique<BlockCreator>()));
 
 	return true;
 }
@@ -38,25 +38,26 @@ bool GameObjectFactory::init()
 /// </summary>
 void GameObjectFactory::clean()
 {
-	// loop through m_creators to destroy all creator classes
+	// Wipe all created creator classes
+	m_creators.clear();
 }
 
 /// <summary>
 /// Register a new type with the factory and add it to the map
 /// </summary>
-bool GameObjectFactory::registerType(const std::string& typeID, BaseCreator* pCreator)
+bool GameObjectFactory::registerType(const std::string& typeID, std::unique_ptr<BaseCreator> pCreator)
 {
 	assert(pCreator);
 
 	// Ensure type doesn't already exist
 	if (m_creators.count(typeID))
 	{
-		delete pCreator;
+		std::cout << typeID << " type already exists" << std::endl;
 		return false;
 	}
 
 	// Assign to map
-	m_creators.insert({ typeID, pCreator });
+	m_creators.insert({ typeID, std::move(pCreator) });
 
 	return true;
 }
@@ -65,7 +66,7 @@ bool GameObjectFactory::registerType(const std::string& typeID, BaseCreator* pCr
 /// If typeID exists, use the creator object for that type to create
 /// and return a new instance of it as a pointer to BaseGameObject
 /// </summary>
-BaseGameObject* GameObjectFactory::createGameObject(const std::string& typeID)
+std::shared_ptr<BaseGameObject> GameObjectFactory::createGameObject(const std::string& typeID)
 {
 	// Verify that type exists
 	if (!m_creators.count(typeID))
@@ -75,6 +76,6 @@ BaseGameObject* GameObjectFactory::createGameObject(const std::string& typeID)
 	}
 
 	// Return created BaseGameObject
-	BaseCreator* pCreator = m_creators.at(typeID);
-	return pCreator->createGameObject();
+	//std::unique_ptr<BaseCreator> pCreator = m_creators.at(typeID);
+	return m_creators.at(typeID)->createGameObject();
 }

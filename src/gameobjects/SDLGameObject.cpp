@@ -23,6 +23,7 @@ SDLGameObject::~SDLGameObject()
 void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
 	m_position = Vector2D(static_cast<float>(pParams->xPos), static_cast<float>(pParams->yPos));
+	m_classType = pParams->classType;
 
 	m_objectTextureID = pParams->textureID;
 	m_framesInSprite = pParams->numFrames;

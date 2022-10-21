@@ -15,7 +15,7 @@ public:
 	PlayerBullet();
 	~PlayerBullet();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr, AlienBoss* alienBossPtr, std::vector<Block*>* levelBlocksPtr) ;
+	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<std::shared_ptr<Alien>>* levelAliensPtr, std::weak_ptr<AlienBoss> alienBossPtr, std::vector<std::shared_ptr<Block>>* levelBlocksPtr);
 
 	virtual void drawObject() override;
 	virtual void updateObject() override;
@@ -23,16 +23,16 @@ public:
 private:
 
 	// Pointers to other level objects to perform collision checks against
-	std::vector<Alien*>* m_pAllAliens;
-	std::vector<Block*>* m_pAllBlocks;
-	AlienBoss* m_pAlienBoss;
+	std::vector<std::shared_ptr<Alien>>* m_pAllAliens;
+	std::vector<std::shared_ptr<Block>>* m_pAllBlocks;
+	std::weak_ptr<AlienBoss> m_pAlienBoss;
 };
 
 class PlayerBulletCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new PlayerBullet();
+		return std::make_shared<PlayerBullet>();
 	}
 };

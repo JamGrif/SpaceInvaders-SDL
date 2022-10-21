@@ -8,7 +8,8 @@ class BaseGameObject;
 class BaseCreator
 {
 public:
-	virtual BaseGameObject* createGameObject() const = 0;
+	virtual std::shared_ptr<BaseGameObject> createGameObject() const = 0;
+	BaseCreator() {}
 	virtual ~BaseCreator() {}
 };
 
@@ -22,9 +23,9 @@ public:
 	bool init();
 	void clean();
 
-	bool registerType(const std::string& typeID, BaseCreator* pCreator);
+	bool registerType(const std::string& typeID, std::unique_ptr<BaseCreator> pCreator);
 
-	BaseGameObject* createGameObject(const std::string& typeID);
+	std::shared_ptr<BaseGameObject> createGameObject(const std::string& typeID);
 
 	static GameObjectFactory* Instance() // Get instance
 	{
@@ -37,7 +38,7 @@ private:
 	static GameObjectFactory* s_pInstance;
 
 	// Maps a string (the typeID of the object) to its class creator
-	std::unordered_map<std::string, BaseCreator*> m_creators;
+	std::unordered_map<std::string, std::unique_ptr<BaseCreator>> m_creators;
 
 	GameObjectFactory() {}										// Prevent outside unwanted construction
 	GameObjectFactory(const GameObjectFactory&) {}				// Prevent construction by copying

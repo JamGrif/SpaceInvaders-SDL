@@ -47,9 +47,9 @@ private:
 class AlienBossCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new AlienBoss();
+		return std::make_shared<AlienBoss>();
 	}
 };
 

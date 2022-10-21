@@ -1,6 +1,8 @@
 #pragma once
 
-class GameObject;
+class BaseGameObject;
+//class Alien;
+//class Block;
 class Level;
 
 /// <summary>
@@ -9,6 +11,8 @@ class Level;
 class BaseState
 {
 public:
+	BaseState() { std::cout << "created state" << std::endl; };
+	virtual ~BaseState() { std::cout << "destroyed state" << std::endl; };
 	virtual bool onEnterState() = 0;
 	virtual bool onExitState();
 
@@ -33,9 +37,11 @@ protected:
 
 	virtual void setCallbacks();
 
-	std::vector<Callback> m_stateCallbackFunctions;
-	std::vector<CheckboxCallback> m_checkBoxStateCallbackFunctions;
-	std::vector<TextCallback> m_textCallbackFunctions;
+	std::vector<Callback>			m_stateCallbackFunctions;
+	std::vector<CheckboxCallback>	m_checkBoxStateCallbackFunctions;
+	std::vector<TextCallback>		m_textCallbackFunctions;
+
+	std::vector<std::shared_ptr<BaseGameObject>> m_allGameObjects;
 
 	Level* m_pStateLevel{nullptr};
 };

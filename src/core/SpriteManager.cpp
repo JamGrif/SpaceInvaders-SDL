@@ -65,7 +65,6 @@ void SpriteManager::drawSpriteFrame(const std::string& id, int x, int y, int wid
 	SDL_Rect frameToDraw;	// What part of the sprite to use
 	SDL_Rect destRect;		// Where on the screen to draw sprite
 
-	//std::cout << "currentframe " << currentFrame << std::endl;
 
 	frameToDraw.x = ((width * currentFrame) + SPRITE_PIXEL_MARGIN) + currentFrame * SPRITE_PIXEL_SPACING;
 	frameToDraw.y = SPRITE_PIXEL_MARGIN;
@@ -98,6 +97,12 @@ void SpriteManager::drawSpriteTile(const std::string& id, int x, int y, int widt
 	destRect.y = y;
 
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
+}
+
+
+void SpriteManager::drawSpriteText(SDL_Texture* textObjectTexture, const SDL_Rect& textObjectAttributes)
+{
+	SDL_RenderCopy(TheRenderer::Instance()->getRendererPtr(), textObjectTexture, NULL, &textObjectAttributes);
 }
 
 /// <summary>

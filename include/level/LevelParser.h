@@ -5,6 +5,8 @@ class BaseLayer;
 class TiXmlElement;
 struct Tileset;
 
+class BaseGameObject;
+
 /// <summary>
 /// Parser for a .tmx file, creating and filling out a level object from it with its associative layers
 /// </summary>
@@ -12,17 +14,20 @@ class LevelParser
 {
 public:
 
-	Level* parseLevel(const std::string& filepath);
+	Level* parseLevel(const std::string& filepath, std::vector<std::shared_ptr<BaseGameObject>>& allGameObjects);
 
 private:
 
+	// Level to be created and returned
+	Level* createdLevel = nullptr;
+
 	// Layers
-	void parseTileLayer(TiXmlElement* pTileElement, std::vector<BaseLayer*>* pLayers, const std::vector<Tileset>* pTilesets);
-	void parseObjectLayer(TiXmlElement* pObjectElement, std::vector<BaseLayer*>* pLayers);
+	void parseTileLayer(const TiXmlElement& pLayerRoot);
+	void parseObjectLayer(const TiXmlElement& pObjectGroupRoot, std::vector<std::shared_ptr<BaseGameObject>>& allGameObjects); //
 
 	// Sprites
-	void parseSprites(TiXmlElement* pSpriteRoot);
-	void parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets);
+	void parseSprites(const TiXmlElement& pPropertiesRoot); //
+	void parseTilesets(const TiXmlElement& pTilesetRoot); //
 
 	// Dimensions, in pixels, of an individual tile
 	int m_tilePixelSize;

@@ -28,8 +28,8 @@ private:
 class PlayerLivesCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new PlayerLives();
+		return std::make_shared<PlayerLives>();
 	}
 };

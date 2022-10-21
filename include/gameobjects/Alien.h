@@ -55,9 +55,9 @@ protected:
 class AlienCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new Alien();
+		return std::make_shared<Alien>();
 	}
 };
 

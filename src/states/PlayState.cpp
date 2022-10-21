@@ -51,11 +51,11 @@ void PlayState::updateState()
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ESC))
 		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::pushPause);
 	
-	//if (TheInputHandler::Instance()->isKeyDown(Keyboard::ONE))
-	//	TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
+	if (TheInputHandler::Instance()->isKeyDown(Keyboard::ONE))
+		TheGame::Instance()->getStateMachine()->setStateUpdate(StateMachineAction::changeToGameOver);
 	
 	// If player is dead, determine whether to respawn them or change state to game over
-	if (m_player->getDead())
+	if (m_player.lock()->getDead())
 	{
 		// Player has run out of lives
 		if (TheGame::Instance()->getCurrentLives() <= 0)
@@ -69,17 +69,17 @@ void PlayState::updateState()
 		{
 			m_bFirstCheckDying = false;
 			m_bAllowedToSpawnBullets = true;
-			m_player->respawnPlayer();
+			m_player.lock()->respawnPlayer();
 		}
 	}
 
 	// Check all aliens and remove any dead ones
-	for (int i = 0; i < m_allAliens->size(); i++)
+	for (int i = 0; i < m_allAliens.size(); i++)
 	{
-		if (m_allAliens->at(i)->getDead())
+		if (m_allAliens.at(i)->getDead())
 		{
 			// remove alien from vector
-			m_allAliens->erase(m_allAliens->begin() + i);
+			m_allAliens.erase(m_allAliens.begin() + i);
 			continue;
 		}
 	}
@@ -100,20 +100,20 @@ void PlayState::updateState()
 			m_currentNextShotTime_ms = 0;
 			m_SelectedNextShotTime_ms = 0;
 
-			if (!m_allAliens->empty())
+			if (!m_allAliens.empty())
 			{
 				// Pick a random alien
-				int randomIndex = rand() % ((m_allAliens->size() - 1) - 0 + 1);
-				Alien* temp = m_allAliens->at(randomIndex);
+				int randomIndex = getRandomNumber(0, static_cast<int>(m_allAliens.size()) - 1);
+				std::shared_ptr<Alien> temp = m_allAliens.at(randomIndex);
 
 				// Spawn a bullet at selected alien
-				TheBulletHandler::Instance()->addAlienBullet(static_cast<int>((temp->getPosition().getX() + (temp->getWidth() / 2))), static_cast<int>(temp->getPosition().getY()));
+				m_pBulletHandler->addAlienBullet(static_cast<int>((temp->getPosition().getX() + (temp->getWidth() / 2))), static_cast<int>(temp->getPosition().getY()));
 			}
 		}
 	}
 
 	// Check if any alien has reached finish line
-	for (auto alien : *m_allAliens)
+	for (auto alien : m_allAliens)
 	{
 		if (alien->getPosition().getY() >= alienWinLineHeight)
 		{
@@ -126,13 +126,13 @@ void PlayState::updateState()
 	
 
 	// Check and update direction of aliens
-	for (auto aliens : *m_allAliens)
+	for (auto aliens : m_allAliens)
 	{
 		// If any aliens have reached the edge of the screen, they will all need to move down next frame
 		if (aliens->checkIfReachedEdge())
 		{
 			// Tell all the aliens they need to switch
-			for (auto aliens : *m_allAliens)
+			for (auto aliens : m_allAliens)
 			{
 				aliens->switchDirection();
 			}
@@ -141,7 +141,7 @@ void PlayState::updateState()
 	}
 
 	// If all aliens are dead
-	if (m_allAliens->empty())
+	if (m_allAliens.empty())
 	{
 		g_bResetLives = false;
 		g_bResetScore = false;
@@ -153,27 +153,58 @@ void PlayState::updateState()
 	// When player is dying, take action (clearing bullets) once until they next start dying
 	if (!m_bFirstCheckDying)
 	{
-		if (m_player->getDying())
+		if (m_player.lock()->getDying())
 		{
 			m_bFirstCheckDying = true;
 			m_bAllowedToSpawnBullets = false;
-			TheBulletHandler::Instance()->clearBullets();
+			m_pBulletHandler->clearBullets();
 		}
 	}
 
-	// Check all blocks and remove any destroyed
-	for (int i = 0; i < m_allBlocks->size(); i++)
+	for (int i = 0; i < m_allAliens.size(); i++)
 	{
-		if (m_allBlocks->at(i)->isDestroyed())
+		if (m_allAliens.at(i)->getDestroy())
 		{
-			// remove block from vector
-			m_allBlocks->erase(m_allBlocks->begin() + i);
-			continue;
+			std::cout << "destroy alien" << std::endl;
+			m_allAliens.erase(m_allAliens.begin() + i);
 		}
+		else
+		{
+			m_allAliens.at(i)->updateObject();
+		}
+
 	}
+
+	for (int i = 0; i < m_allBlocks.size(); i++)
+	{
+		if (m_allBlocks.at(i)->getDestroy())
+		{
+			std::cout << "destroy block" << std::endl;
+			m_allBlocks.erase(m_allBlocks.begin() + i);
+		}
+		else
+		{
+			m_allBlocks.at(i)->updateObject();
+		}
+
+	}
+
+	//// Check all blocks and remove any destroyed
+	//for (int i = 0; i < m_allBlocks.size(); i++)
+	//{
+	//	if (m_allBlocks.at(i)->isDestroyed())
+	//	{
+	//		// remove block from vector
+	//		delete m_allBlocks.at(i);
+	//		m_allBlocks.erase(m_allBlocks.begin() + i);
+	//		continue;
+	//	}
+	//}
 
 	// Update all bullets
-	TheBulletHandler::Instance()->updateBullets();
+	//TheBulletHandler::Instance()->updateBullets();
+	m_pBulletHandler->updateBullets();
+	//std::cout << "hi2" << std::endl;
 }
 
 /// <summary>
@@ -183,7 +214,20 @@ void PlayState::renderState()
 {
 	BaseState::renderState();
 
-	TheBulletHandler::Instance()->drawBullets();
+	for (const auto& a : m_allAliens)
+	{
+		if (!a->getDestroy())
+			a->drawObject();
+	}
+
+	for (auto b : m_allBlocks)
+	{
+		if (!b->getDestroy())
+			b->drawObject();
+	}
+
+	//TheBulletHandler::Instance()->drawBullets();
+	m_pBulletHandler->drawBullets();
 }
 
 /// <summary>
@@ -198,19 +242,11 @@ bool PlayState::onEnterState()
 
 	TheSoundManager::Instance()->playSound("roundReset");
 
-	ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_pStateLevel->getLayer(LayerIndex::objectLayer));
-	m_allAliens = &temp->getAlienObjects();
-	m_player = temp->getPlayerObject();
-	m_alienBoss = temp->getAlienBossObject();
-	m_allBlocks = &temp->getBlockObjects();
-
 	// Assign IDs to functions, push 0 first so IDs start at 1
 	m_textCallbackFunctions.push_back(0);
 	m_textCallbackFunctions.push_back(s_textCallback1);
 
 	setCallbacks();
-
-	BulletHandler::Instance()->setLevel(m_pStateLevel);
 
 	// If required, reset current lives and score
 	if (g_bResetLives)
@@ -222,6 +258,49 @@ bool PlayState::onEnterState()
 	// Do one pass of updating gameobjects to set initial states before entering prep stage
 	//BaseState::updateState();
 
+	for (auto o : m_allGameObjects)
+	{
+		if (std::dynamic_pointer_cast<Player>(o))
+			m_player = std::dynamic_pointer_cast<Player>(o);
+		
+		if (std::dynamic_pointer_cast<AlienBoss>(o))
+			m_alienBoss = std::dynamic_pointer_cast<AlienBoss>(o);
+	}
+
+	// Go through all gameobjects and move any alien objects and block objects to their respective vectors
+
+	//std::cout << "gameobjects vector size " << m_allGameObjects.size() << std::endl;
+	//std::cout << "alien vector size " << m_allAliens.size() << std::endl;
+	//std::cout << "block vector size " << m_allBlocks.size() << std::endl;
+
+	std::vector<std::shared_ptr<BaseGameObject>>::iterator it = m_allGameObjects.begin();
+	while (it != m_allGameObjects.end())
+	{
+		if (std::dynamic_pointer_cast<Block>(*it))
+		{
+			m_allBlocks.push_back(std::dynamic_pointer_cast<Block>(*it));
+			it = m_allGameObjects.erase(it);
+			continue;
+		}
+		else if (std::dynamic_pointer_cast<Alien>(*it) && !std::dynamic_pointer_cast<AlienBoss>(*it))
+		{
+			m_allAliens.push_back(std::dynamic_pointer_cast<Alien>(*it));
+			it = m_allGameObjects.erase(it);
+			continue;
+		}
+		else
+		{
+			it++;
+		}
+	}
+
+	//std::cout << "gameobjects vector size " << m_allGameObjects.size() << std::endl;
+	//std::cout << "alien vector size " << m_allAliens.size() << std::endl;
+	//std::cout << "block vector size " << m_allBlocks.size() << std::endl;
+
+	m_pBulletHandler = std::make_shared<BulletHandler>(m_allBlocks, m_allAliens, m_player, m_alienBoss);
+	m_player.lock()->setBulletHandler(m_pBulletHandler);
+
 	return true;
 }
 
@@ -232,15 +311,15 @@ bool PlayState::onEnterState()
 bool PlayState::onExitState()
 {
 	std::cout << "-=-=-=-=-=-Exiting PlayState-=-=-=-=-=-" << std::endl;
-
 	BaseState::onExitState();
 
-	m_player = nullptr;
-	m_alienBoss = nullptr;
-	m_allAliens = nullptr;
-	m_allBlocks = nullptr;
+	//delete m_pBulletHandler;
+	//m_allAliens.clear();
+	//m_allBlocks.clear();
+	//m_player = nullptr;
+	//m_alienBoss = nullptr;
 
-	TheBulletHandler::Instance()->clearBullets();
+	TheSoundManager::Instance()->stopAllSounds();
 
 	return true;
 }

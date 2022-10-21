@@ -4,7 +4,7 @@
 #include "core/SoundManager.h"
 
 Block::Block()
-	:SDLGameObject(), m_bDestoryed(false), m_blockHealth(0)
+	:SDLGameObject(), m_blockHealth(0)
 {
 }
 
@@ -39,11 +39,16 @@ void Block::updateObject()
 
 	if (m_blockHealth == static_cast<int>(BlockHealth::Gone))
 	{
-		m_bDestoryed = true;
+		//m_bDestoryed = true;
+		m_bDestroy = true;
 		return;
 	}
+	else
+	{
+		m_currentSpriteFrame = m_blockHealth;
+	}
 
-	m_currentSpriteFrame = m_blockHealth;
+	
 }
 
 /// <summary>

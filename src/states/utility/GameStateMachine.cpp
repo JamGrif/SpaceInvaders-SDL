@@ -50,22 +50,18 @@ void GameStateMachine::renderCurrentState()
 /// <summary>
 /// Push the passed-in state into the gameStates vector and then call its onEnterState function
 /// </summary>
-void GameStateMachine::pushState(BaseState* pState)
+void GameStateMachine::pushState(std::unique_ptr<BaseState> pState)
 {
-	assert(pState);
-
-	m_currentGameStates.push_back(pState);
+	m_currentGameStates.push_back(std::move(pState));
 	m_currentGameStates.back()->onEnterState();
 }
 
 /// <summary>
 /// Change the state to specified state, popping any states currently loaded
 /// </summary>
-void GameStateMachine::changeState(BaseState* pState)
+void GameStateMachine::changeState(std::unique_ptr<BaseState> pState)
 {
-	assert(pState);
-
-	// Pop all remaining states left before changing state
+	// Pop all remaining states before changing state
 	while (!m_currentGameStates.empty())
 	{
 		popState();
@@ -75,7 +71,7 @@ void GameStateMachine::changeState(BaseState* pState)
 	TheSpriteManager::Instance()->clearAllFromSpriteMap();
 
 	// Push back the new state
-	m_currentGameStates.push_back(pState);
+	m_currentGameStates.push_back(std::move(pState));
 
 	// Initialize it
 	m_currentGameStates.back()->onEnterState();
@@ -91,7 +87,6 @@ void GameStateMachine::popState()
 		return;
 
 	m_currentGameStates.back()->onExitState();
-	delete m_currentGameStates.back();
 	m_currentGameStates.pop_back();
 }
 
@@ -117,15 +112,15 @@ void GameStateMachine::changeCurrentState()
 			break;
 
 		case StateMachineAction::changeToPlay:
-			changeState(new PlayState());
+			changeState(std::move(std::make_unique<PlayState>()));
 			break;
 
 		case StateMachineAction::changeToMain:
-			changeState(new MainMenuState());
+			changeState(std::move(std::make_unique<MainMenuState>()));
 			break;
 
 		case StateMachineAction::changeToGameOver:
-			changeState(new GameOverState());
+			changeState(std::move(std::make_unique<GameOverState>()));
 			break;
 
 		case StateMachineAction::popPause:
@@ -133,7 +128,7 @@ void GameStateMachine::changeCurrentState()
 			break;
 
 		case StateMachineAction::pushPause:
-			pushState(new PauseState());
+			pushState(std::move(std::make_unique<PauseState>()));
 			break;
 	}
 

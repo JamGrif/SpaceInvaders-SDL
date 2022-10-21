@@ -11,7 +11,7 @@
 
 
 PlayerBullet::PlayerBullet()
-	:BaseBullet(), m_pAllAliens(nullptr), m_pAllBlocks(nullptr), m_pAlienBoss(nullptr)
+	:BaseBullet(), m_pAllAliens(nullptr), m_pAllBlocks(nullptr)
 {
 }
 
@@ -22,13 +22,15 @@ PlayerBullet::~PlayerBullet()
 /// <summary>
 /// Set all values in PlayerBullet class and parent classes
 /// </summary>
-void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<Alien*>* levelAliensPtr, AlienBoss* alienBossPtr, std::vector<Block*>* levelBlocksPtr)
+void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<std::shared_ptr<Alien>>* levelAliensPtr, std::weak_ptr<AlienBoss> alienBossPtr, std::vector<std::shared_ptr<Block>>* levelBlocksPtr)
 {
 	assert(levelAliensPtr);
-	assert(alienBossPtr);
+	//assert(alienBossPtr);
 	assert(levelBlocksPtr);
 
 	BaseBullet::loadObject(pParams);
+
+	m_classType = "PlayerBullet";
 
 	m_pAllAliens = levelAliensPtr;
 	m_pAlienBoss = alienBossPtr;
@@ -65,7 +67,7 @@ void PlayerBullet::updateObject()
 		// Check collision of bullet against blocks
 		for (auto block : *m_pAllBlocks)
 		{
-			if (checkCollision(this, block))
+			if (checkCollision(this, block.get()))
 			{
 				block->hit();
 				m_bDestroy = true;
@@ -80,7 +82,7 @@ void PlayerBullet::updateObject()
 		// Check collision of bullet against aliens
 		for (auto alien : *m_pAllAliens)
 		{
-			if (checkCollision(this, alien))
+			if (checkCollision(this, alien.get()))
 			{
 				alien->setDying();
 				m_bDestroy = true;
@@ -93,9 +95,9 @@ void PlayerBullet::updateObject()
 	if (m_position.getY() <= AlienBossPathY)
 	{
 		// If bullet collided with alienboss
-		if (checkCollision(this, m_pAlienBoss))
+		if (checkCollision(this, m_pAlienBoss.lock().get()))
 		{
-			m_pAlienBoss->setDying();
+			m_pAlienBoss.lock()->setDying();
 			m_bDestroy = true;
 			return;
 		}

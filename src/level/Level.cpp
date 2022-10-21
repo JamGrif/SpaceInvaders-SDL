@@ -5,10 +5,11 @@
 
 Level::~Level()
 {
-	for (auto layer : m_layers)
-	{
-		delete layer;
-	}
+	//for (auto layer : m_layers)
+	//{
+	//	delete layer;
+	//}
+	//std::cout << "destroyed level" << std::endl;
 }
 
 /// <summary>
@@ -16,7 +17,7 @@ Level::~Level()
 /// </summary>
 void Level::updateLevel()
 {
-	for (auto layer : m_layers)
+	for (const auto& layer : m_layers)
 	{
 		layer->updateLayer();
 	}
@@ -27,10 +28,15 @@ void Level::updateLevel()
 /// </summary>
 void Level::renderLevel()
 {
-	for (auto layer : m_layers)
+	for (const auto& layer : m_layers)
 	{
 		layer->renderLayer();
 	}
+}
+
+void Level::addTileLayer(std::unique_ptr<BaseLayer> layer)
+{
+	m_layers.push_back(std::move(layer));
 }
 
 Level::Level()

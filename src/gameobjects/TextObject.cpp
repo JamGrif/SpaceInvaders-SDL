@@ -6,6 +6,7 @@
 
 #include "core/Renderer.h"
 #include "core/TextManager.h"
+#include "core/SpriteManager.h"
 
 #define FONTPATH "res/text/04B_30__.ttf"
 
@@ -40,7 +41,7 @@ void TextObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 /// </summary>
 void TextObject::drawObject()
 {
-	SDL_RenderCopy(TheRenderer::Instance()->getRendererPtr(), m_textTexture, NULL, &m_textDimensions);
+	SpriteManager::Instance()->drawSpriteText(m_textTexture, m_textDimensions);
 }
 
 /// <summary>

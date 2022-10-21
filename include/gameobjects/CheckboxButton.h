@@ -36,9 +36,9 @@ private:
 class CheckboxButtonCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new CheckboxButton();
+		return std::make_shared<CheckboxButton>();
 	}
 };
 

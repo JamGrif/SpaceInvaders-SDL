@@ -4,12 +4,21 @@ class PlayerBullet;
 class AlienBullet;
 class Level;
 
+class Block;
+class Player;
+class Alien;
+class AlienBoss;
+class BaseGameObject;
+
 /// <summary>
 /// Handles all generated bullets: creation, usage and deletion
 /// </summary>
 class BulletHandler
 {
 public:
+	BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std::vector<std::shared_ptr<Alien>>& allAliens, std::weak_ptr<Player> player, std::weak_ptr<AlienBoss> alienboss);
+	~BulletHandler();
+
 	void addPlayerBullet(int xPos, int yPos);
 	void addAlienBullet(int xPos, int yPos);
 
@@ -18,31 +27,19 @@ public:
 
 	void clearBullets();
 
-	void setLevel(Level* level) { m_level = level; };
-
-	static BulletHandler* Instance() // Get instance
-	{
-		if (!s_pInstance)
-			s_pInstance = new BulletHandler();
-		return s_pInstance;
-	}
-
 private:
-	static BulletHandler* s_pInstance;
+
+	std::vector<std::shared_ptr<Block>>* m_allBlocks;
+	std::vector<std::shared_ptr<Alien>>* m_allAliens;
+	std::weak_ptr<Player> m_player;
+	std::weak_ptr<AlienBoss> m_alienBoss;
 
 	// Current PlayerBullet (only one can exist at one time)
-	PlayerBullet* m_playerBullet;
+	std::unique_ptr<PlayerBullet> m_playerBullet;
 
 	// All current AlienBullets
-	std::vector<AlienBullet*> m_alienBullets;
+	std::vector<std::unique_ptr<AlienBullet>> m_alienBullets;
 	const int m_maxAlienBullets;
 
-	// Current Level to give the bullets information on the other objects to collide with
-	Level* m_level;
-
-	BulletHandler() :m_playerBullet(nullptr), m_maxAlienBullets(5), m_level(nullptr) {}						// Prevent outside unwanted construction
-	BulletHandler(const BulletHandler&) :m_playerBullet(nullptr), m_maxAlienBullets(5), m_level(nullptr) {}	// Prevent construction by copying
-	BulletHandler& operator=(const BulletHandler&) {};									// Prevent assignment
-	~BulletHandler() {};																// Prevent outside unwanted destruction
 };
 typedef BulletHandler TheBulletHandler;

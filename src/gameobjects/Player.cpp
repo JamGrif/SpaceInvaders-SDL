@@ -80,7 +80,8 @@ void Player::updateObject()
 	// Spawn PlayerBullet on input
 	if (TheInputHandler::Instance()->isKeyDown(Keyboard::SPACE))
 	{
-		TheBulletHandler::Instance()->addPlayerBullet(static_cast<int>(m_position.getX()+(m_objectWidth/2)), static_cast<int>(m_position.getY() - m_objectHeight));
+		//TheBulletHandler::Instance()->addPlayerBullet(static_cast<int>(m_position.getX()+(m_objectWidth/2)), static_cast<int>(m_position.getY() - m_objectHeight));
+		m_stateBulletHandler.lock()->addPlayerBullet(static_cast<int>(m_position.getX() + (m_objectWidth / 2)), static_cast<int>(m_position.getY() - m_objectHeight));
 	}
 
 }

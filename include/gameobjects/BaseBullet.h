@@ -19,12 +19,12 @@ public:
 	virtual void	drawObject() override;
 	virtual void	updateObject() = 0;
 
-	bool			getDestroy() const { return m_bDestroy; }
+	//bool			getDestroy() const { return m_bDestroy; }
 
 protected:
 
 	// If bullet needs to be destroyed in next frame
-	bool m_bDestroy;
+	//bool m_bDestroy;
 };
 
 

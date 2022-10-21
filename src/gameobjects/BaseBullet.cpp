@@ -2,7 +2,7 @@
 #include "gameobjects/BaseBullet.h"
 
 BaseBullet::BaseBullet()
-	:SDLGameObject(), m_bDestroy(false)
+	:SDLGameObject()
 {
 }
 

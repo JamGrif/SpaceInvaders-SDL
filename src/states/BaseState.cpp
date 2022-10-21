@@ -1,13 +1,16 @@
 #include "pch.h"
 #include "states/BaseState.h"
 
+#include "core/SoundManager.h"
 #include "gameobjects/BaseGameObject.h"
+//#include "gameobjects/Block.h"
+//#include "gameobjects/Alien.h"
 #include "gameobjects/Button.h"
 #include "gameobjects/CheckboxButton.h"
 #include "gameobjects/TextObject.h"
 #include "level/Level.h"
 #include "level/LevelParser.h"
-#include "level/ObjectLayer.h"
+//#include "level/ObjectLayer.h"
 
 /// <summary>
 /// Called when state is removed from game state machine
@@ -15,6 +18,15 @@
 bool BaseState::onExitState()
 {
 	delete m_pStateLevel;
+
+	for (const auto& o : m_allGameObjects)
+	{
+		//std::cout << o->getClassType() << " used this many times : " << o.use_count() << std::endl;
+	}
+	//m_allGameObjects.clear();
+
+	// Stops sounds being played in the wrong state
+	TheSoundManager::Instance()->stopAllSounds();
 
 	return true;
 }
@@ -24,6 +36,18 @@ bool BaseState::onExitState()
 /// </summary>
 void BaseState::updateState()
 {
+	for (int i = 0; i < m_allGameObjects.size(); i++)
+	{
+		if (m_allGameObjects.at(i)->getDestroy())
+		{
+			m_allGameObjects.erase(m_allGameObjects.begin() + i);
+		}
+		else
+		{
+			m_allGameObjects.at(i)->updateObject();
+		}
+	}
+
 	m_pStateLevel->updateLevel();
 }
 
@@ -32,6 +56,13 @@ void BaseState::updateState()
 /// </summary>
 void BaseState::renderState()
 {
+	for (const auto& o : m_allGameObjects)
+	{
+		// Only draw if object is not going to be destroyed next frame
+		if (!o->getDestroy())
+			o->drawObject();
+	}
+
 	m_pStateLevel->renderLevel();
 }
 
@@ -43,30 +74,26 @@ void BaseState::renderState()
 /// </summary>
 void BaseState::setCallbacks()
 {
-	// Get the list of game objects
-	ObjectLayer& oLayer = dynamic_cast<ObjectLayer&>(*m_pStateLevel->getLayer(LayerIndex::objectLayer)); 
-	std::vector<BaseGameObject*>& m_gameObjects = oLayer.getGameObjects();
-
 	// Go through the game objects
-	for (auto object : m_gameObjects)
+	for (const auto& o : m_allGameObjects)
 	{
 		// If they are of type MenuButton then assign a callback based on the id passed in from the file
-		if (dynamic_cast<Button*>(object)) // use dynamic_cast to check if the object is a Button type
+		if (std::dynamic_pointer_cast<Button>(o))
 		{
 			// Use the objects callbackID as the index into the callbacks vector and assign the correct function
-			Button* pButton = dynamic_cast<Button*>(object);
+			std::shared_ptr<Button> pButton = std::dynamic_pointer_cast<Button>(o);
 			pButton->setSelectCallback(m_stateCallbackFunctions.at(pButton->getSelectCallbackID()));
 
-			if (dynamic_cast<CheckboxButton*>(object))
+			if (std::dynamic_pointer_cast<CheckboxButton>(o))
 			{
-				CheckboxButton* temp = dynamic_cast<CheckboxButton*>(object);
+				std::shared_ptr<CheckboxButton> temp = std::dynamic_pointer_cast<CheckboxButton>(o);
 				temp->setCheckboxStateCallback(m_checkBoxStateCallbackFunctions.at(temp->getCheckboxCallbackID()));
 			}
 		}
 
-		if (dynamic_cast<TextObject*>(object))
+		if (std::dynamic_pointer_cast<TextObject>(o))
 		{
-			TextObject* text = dynamic_cast<TextObject*>(object);
+			std::shared_ptr<TextObject> text = std::dynamic_pointer_cast<TextObject>(o);
 			if (text->getTextCallbackID() != 0)
 			{
 				text->setTextCallback(m_textCallbackFunctions.at(text->getTextCallbackID()));
@@ -81,5 +108,5 @@ void BaseState::setCallbacks()
 void BaseState::loadLevel(const std::string& filepath)
 {
 	LevelParser levelParser;
-	m_pStateLevel = levelParser.parseLevel(filepath);
+	m_pStateLevel = levelParser.parseLevel(filepath, m_allGameObjects);
 }

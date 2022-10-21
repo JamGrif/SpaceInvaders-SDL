@@ -28,7 +28,7 @@ bool TextManager::init()
 void TextManager::clean()
 {
 	// Loop through and delete all open fonts
-	for (auto& [key, value] : m_loadedFonts)
+	for (const auto& [key, value] : m_loadedFonts)
 	{
 		TTF_CloseFont(value);
 	}
@@ -41,7 +41,7 @@ void TextManager::clean()
 /// </summary>
 TTF_Font* TextManager::getFont(int textSize)
 {
-	// If font of size textSize doesn't already exist, create it, add it to map and return it
+	// If font of size textSize doesn't already exist, create it, add to map and return it
 	if (!m_loadedFonts.count(textSize))
 	{
 		TTF_Font* font = TTF_OpenFont(FONTPATH, textSize);
@@ -52,5 +52,3 @@ TTF_Font* TextManager::getFont(int textSize)
 	// Font does exist of textSize so return it
 	return m_loadedFonts.at(textSize);
 }
-
-

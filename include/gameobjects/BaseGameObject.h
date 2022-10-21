@@ -14,6 +14,7 @@ public:
 
 	int xPos;						// Starting X position
 	int yPos;						// Starting Y position
+	std::string classType;			// Class type of object
 
 	std::string textureID;			// Texture the object uses by default
 	int numFrames;					// Number of separate frames in sprite (default is sprite has one frame)
@@ -36,12 +37,20 @@ public:
 class BaseGameObject
 {
 public:
-	BaseGameObject() {}
-	virtual ~BaseGameObject() {}
+	BaseGameObject() :m_bDestroy(false) { /*std::cout << "created gameobject" << std::endl;*/ }
+	virtual ~BaseGameObject() { /*std::cout << m_classType << " object has been destroyed" << std::endl;*/ }
 
 	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams) = 0;
 
 	virtual void drawObject() = 0;
 	virtual void updateObject() = 0;
+
+	bool getDestroy() { return m_bDestroy; }
+
+	std::string getClassType() { return m_classType; }
+
+protected:
+	bool m_bDestroy;
+	std::string m_classType;
 };
 

@@ -11,10 +11,14 @@ TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets)
 	// Number of columns and rows to fill the size of the game
 	m_numColumns = (TheGameWindow::Instance()->getWindowWidth() / m_tileSize);
 	m_numRows = (TheGameWindow::Instance()->getWindowHeight() / m_tileSize);
+
+	//std::cout << "created tilelayer" << std::endl;
+
 }
 
 TileLayer::~TileLayer()
 {
+	//std::cout << "destroyed tilelayer" << std::endl;
 }
 
 /// <summary>

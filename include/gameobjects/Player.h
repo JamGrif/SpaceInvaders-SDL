@@ -1,6 +1,8 @@
 #pragma once
 #include "gameobjects/SDLGameObject.h"
 
+class BulletHandler;
+
 /// <summary>
 /// Player object that appear during gameplay, controlled by the user
 /// </summary>
@@ -18,12 +20,16 @@ public:
 
 	void respawnPlayer();
 
+	void setBulletHandler(std::weak_ptr<BulletHandler> bh) { m_stateBulletHandler = bh; }
+
 	void setDying();
 
 	bool getDead() const { return m_bDead; }
 	bool getDying() const { return m_bDying; }
 
 private:
+
+	std::weak_ptr<BulletHandler> m_stateBulletHandler;
 
 	bool m_bDead;
 	bool m_bDying;
@@ -40,9 +46,9 @@ private:
 class PlayerCreator :
 	public BaseCreator
 {
-	BaseGameObject* createGameObject() const
+	std::shared_ptr<BaseGameObject> createGameObject() const
 	{
-		return new Player();
+		return std::make_shared<Player>();
 	}
 };
 

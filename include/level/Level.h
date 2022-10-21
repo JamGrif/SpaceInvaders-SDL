@@ -21,7 +21,7 @@ struct Tileset
 enum class LayerIndex
 {
 	tilesetLayer	= 0,
-	objectLayer		= 1
+	//objectLayer		= 1
 };
 
 /// <summary>
@@ -38,16 +38,14 @@ public:
 
 	std::vector<Tileset>*		getLevelTilesets() { return &m_tilesets; }
 
-	std::vector<BaseLayer*>*	getLevelLayers() { return &m_layers;}
-
-	BaseLayer*					getLayer(LayerIndex layerIndex) { return m_layers.at(static_cast<size_t>(layerIndex)); }
+	void addTileLayer(std::unique_ptr<BaseLayer> layer);
 
 private:
 	// All tilesets used in this level
 	std::vector<Tileset> m_tilesets;
 
 	// All layers used in this level
-	std::vector<BaseLayer*> m_layers;
+	std::vector<std::unique_ptr<BaseLayer>> m_layers;
 
 	// Ensures that a level can only be created from the LevelParser class
 	Level();
