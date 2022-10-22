@@ -9,12 +9,13 @@
 class SpriteManager
 {
 public:
+	bool	loadSprite(const std::vector<std::pair<std::string, std::string>>& spritesToLoad);
 	bool	loadSprite(const std::string& filepath, const std::string& id);
 
 	void	clearAllFromSpriteMap();
 	void	clearFromSpriteMap(const std::string& id);
 
-	void	drawSpriteFrame(const std::string& id, int x, int y, int width, int height, int currentFrame, bool flipHorizontal);
+	void	drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, int currentFrame, bool flipHorizontal);
 	void	drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame);
 	void	drawSpriteText(SDL_Texture* textObjectTexture, const SDL_Rect& textObjectAttributes);
 

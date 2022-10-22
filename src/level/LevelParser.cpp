@@ -39,14 +39,23 @@ Level* LevelParser::parseLevel(const std::string& filepath, std::vector<std::sha
 	pRoot.Attribute("height", &m_levelTileHeight);
 
 	// Parse any sprites
+	std::vector<std::pair<std::string, std::string>> spritesToLoad;
 	for (const TiXmlElement* e = pRoot.FirstChildElement()->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		// <properties> node
 		if (strcmp(e->Value(), "property") == 0)
 		{
-			parseSprites(*e);
+			//std::pair<std::string, std::string> temp;
+			//temp.first = SPRITE_PATH_PREFIX + std::string(e->Attribute("value"));
+			//temp.second = e->Attribute("name");
+			//spritesToLoad.emplace_back(SPRITE_PATH_PREFIX + std::string(e->Attribute("value")) , e->Attribute("name"));
+			spritesToLoad.emplace_back(SPRITE_PATH_PREFIX + std::string(e->Attribute("value")), e->Attribute("name"));
 		}
+
+
+		//TheSpriteManager::Instance()->loadSprite(SPRITE_PATH_PREFIX + std::string(pPropertiesRoot.Attribute("value")), pPropertiesRoot.Attribute("name"));
 	}
+	parseSprites(spritesToLoad);
 
 	// Parse any tileset
 	for (const TiXmlElement* e = pRoot.FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -84,9 +93,9 @@ Level* LevelParser::parseLevel(const std::string& filepath, std::vector<std::sha
 /// </summary>
 void LevelParser::parseTileLayer(const TiXmlElement& pLayerRoot)
 {
-	// Create new TileLayer instance
-	//TileLayer* pTileLayer = new TileLayer(m_tilePixelSize, *createdLevel->getLevelTilesets());
-	std::unique_ptr<TileLayer> pTileLayer = std::make_unique<TileLayer>(m_tilePixelSize, *createdLevel->getLevelTilesets());
+	// Create new TileLayer
+	std::unique_ptr<TileLayer> pTileLayer = std::make_unique<TileLayer>(m_tilePixelSize);
+	pTileLayer->addTileset(std::move(pTileset));
 
 	// Will hold base64 decoded level data
 	std::string decodedIDs; 
@@ -245,9 +254,9 @@ void LevelParser::parseObjectLayer(const TiXmlElement& pObjectGroupRoot, std::ve
 /// Creates all the sprites used in the level file
 /// Sprites to load are specified in the map properties in the level editor
 /// </summary>
-void LevelParser::parseSprites(const TiXmlElement& pPropertiesRoot)
+void LevelParser::parseSprites(const std::vector<std::pair<std::string, std::string>>& spritesToLoad)
 {
-	TheSpriteManager::Instance()->loadSprite(SPRITE_PATH_PREFIX + std::string(pPropertiesRoot.Attribute("value")), pPropertiesRoot.Attribute("name"));
+	TheSpriteManager::Instance()->loadSprite(spritesToLoad);
 }
 
 /// <summary>
@@ -261,19 +270,16 @@ void LevelParser::parseTilesets(const TiXmlElement& pTilesetRoot)
 	TheSpriteManager::Instance()->loadSprite(TILESET_PATH_PREFIX + std::string(pTilesetRoot.FirstChildElement()->Attribute("source")), pTilesetRoot.Attribute("name"));
 
 	// Create a tileset object and fill it out
-	Tileset tileset;
+	pTileset = std::make_unique<Tileset>();
 
 	// Assign values to the Tileset members from the .tmx file
-	tileset.name = pTilesetRoot.Attribute("name");
-	pTilesetRoot.Attribute("firstgid",						&tileset.firstGidID);
-	pTilesetRoot.Attribute("tilewidth",						&tileset.tileWidth);
-	pTilesetRoot.Attribute("tileheight",					&tileset.tileHeight);
-	pTilesetRoot.Attribute("columns",						&tileset.numColumns);
-	pTilesetRoot.Attribute("spacing",						&tileset.spacing);
-	pTilesetRoot.Attribute("margin",						&tileset.margin);
-	pTilesetRoot.FirstChildElement()->Attribute("width",	&tileset.width);
-	pTilesetRoot.FirstChildElement()->Attribute("height",	&tileset.height);
-
-	// Add filled out tile to total tilesets
-	createdLevel->getLevelTilesets()->push_back(tileset);
+	pTileset->name = pTilesetRoot.Attribute("name");
+	pTilesetRoot.Attribute("firstgid",						&pTileset->firstGidID);
+	pTilesetRoot.Attribute("tilewidth",						&pTileset->tileWidth);
+	pTilesetRoot.Attribute("tileheight",					&pTileset->tileHeight);
+	pTilesetRoot.Attribute("columns",						&pTileset->numColumns);
+	pTilesetRoot.Attribute("spacing",						&pTileset->spacing);
+	pTilesetRoot.Attribute("margin",						&pTileset->margin);
+	pTilesetRoot.FirstChildElement()->Attribute("width",	&pTileset->width);
+	pTilesetRoot.FirstChildElement()->Attribute("height",	&pTileset->height);
 }

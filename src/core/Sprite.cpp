@@ -7,14 +7,14 @@ Sprite::Sprite(SDL_Texture* texture, const std::string& fileName, const std::str
 	:m_textureObject(texture), m_fileName(fileName), m_id(id),
 	m_indivdualSpriteDimension(std::make_unique<SDL_Rect>()), m_totalSpriteDimensions(std::make_unique<SDL_Rect>()), m_bSpriteSetup(false)
 {
-	//std::cout << "created sprite " << m_fileName << std::endl;
+	/*std::cout << "created sprite " << m_fileName << std::endl;*/
 }
 
 Sprite::~Sprite()
 {
 	SDL_DestroyTexture(m_textureObject);
 
-	//std::cout << "destroyed sprite " << m_fileName << std::endl;
+	/*std::cout << "destroyed sprite " << m_fileName << std::endl;*/
 }
 
 /// <summary>
@@ -44,9 +44,4 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames)
 
 	// Height of each frame
 	m_indivdualSpriteDimension->h = m_totalSpriteDimensions->h;
-
-
-	//std::cout << m_fileName << "width of each frame " << m_indivdualSpriteDimension->w << std::endl;
-	//std::cout << m_fileName << "height of each frame " << m_indivdualSpriteDimension->h << std::endl;
-	//std::cout << std::endl;
 }
