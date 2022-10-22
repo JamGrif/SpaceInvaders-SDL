@@ -11,8 +11,8 @@ class Level;
 class BaseState
 {
 public:
-	BaseState() { std::cout << "created state" << std::endl; };
-	virtual ~BaseState() { std::cout << "destroyed state" << std::endl; };
+	BaseState():m_pStateLevel(nullptr) {};
+	virtual ~BaseState() {};
 	virtual bool onEnterState() = 0;
 	virtual bool onExitState();
 
@@ -43,6 +43,6 @@ protected:
 
 	std::vector<std::shared_ptr<BaseGameObject>> m_allGameObjects;
 
-	Level* m_pStateLevel{nullptr};
+	Level* m_pStateLevel;
 };
 

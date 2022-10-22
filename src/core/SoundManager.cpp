@@ -32,7 +32,6 @@ bool SoundManager::init()
 	TheSoundManager::Instance()->loadSound("res/audio/gameOver.wav",		"gameOver");
 	TheSoundManager::Instance()->loadSound("res/audio/alienExplosion.wav",	"alienExplosion");
 	TheSoundManager::Instance()->loadSound("res/audio/roundReset.wav",		"roundReset");
-	TheSoundManager::Instance()->loadSound("res/audio/menuMouseOver.wav",	"menuMouseOver");
 	TheSoundManager::Instance()->loadSound("res/audio/alienBossMove.wav",	"alienBossMove", ALIEN_BOSS_CHANNEL);
 	TheSoundManager::Instance()->loadSound("res/audio/blockBreak.wav",		"blockBreak");
 	TheSoundManager::Instance()->loadSound("res/audio/gameStart.wav",		"gameStart");
@@ -64,7 +63,7 @@ bool SoundManager::loadSound(const std::string& filepath, const std::string& id,
 
 	if (!pChunk)
 	{
-		std::cout << "Could not load SFX: " << Mix_GetError() << std::endl;
+		std::cout << "Could not load sound with filepath:" << filepath << " -> " << Mix_GetError() << std::endl;
 		return false;
 	}
 
@@ -84,7 +83,7 @@ bool SoundManager::loadMusic(const std::string& filepath, const std::string& id)
 
 	if (!pMusic)
 	{
-		std::cout << "Could not load music: " << Mix_GetError() << std::endl;
+		std::cout << "Could not load music with filepath:" << filepath << " -> " << Mix_GetError() << std::endl;
 		return false;
 	}
 

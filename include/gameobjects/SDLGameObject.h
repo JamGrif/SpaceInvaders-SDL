@@ -39,6 +39,8 @@ protected:
     int m_objectWidth;	
     int m_objectHeight;
 
+	// Sent to the SpriteManager to be used for drawing, values set every draw call.
+	// Uses the objects xPos, yYos, width and height
 	SDL_Rect m_objectAttributes;
 
 	// Current sprite frame in use of loaded sprite

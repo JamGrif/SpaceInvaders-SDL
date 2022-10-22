@@ -14,19 +14,16 @@ public:
 	AlienBullet();
 	~AlienBullet();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams, std::weak_ptr<Player> levelPlayer, std::vector<std::shared_ptr<Block>>* levelBlocksPtr);
+	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks);
 
 	virtual void drawObject() override;
 	virtual void updateObject() override;
 
 private:
 
-	// Pointers to other level objects to perform collision checks against
+	// Other level objects to perform collision checks against
 	std::vector<std::shared_ptr<Block>>* m_pAllBlocks;
 	std::weak_ptr<Player> m_pLevelPlayer;
-
-	// Used to find if alien has left screen
-	int m_screenHeight;
 };
 
 

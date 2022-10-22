@@ -3,14 +3,11 @@
 
 #include "core/SoundManager.h"
 #include "gameobjects/BaseGameObject.h"
-//#include "gameobjects/Block.h"
-//#include "gameobjects/Alien.h"
 #include "gameobjects/Button.h"
 #include "gameobjects/CheckboxButton.h"
 #include "gameobjects/TextObject.h"
 #include "level/Level.h"
 #include "level/LevelParser.h"
-//#include "level/ObjectLayer.h"
 
 /// <summary>
 /// Called when state is removed from game state machine
@@ -23,7 +20,6 @@ bool BaseState::onExitState()
 	{
 		//std::cout << o->getClassType() << " used this many times : " << o.use_count() << std::endl;
 	}
-	//m_allGameObjects.clear();
 
 	// Stops sounds being played in the wrong state
 	TheSoundManager::Instance()->stopAllSounds();
@@ -36,15 +32,19 @@ bool BaseState::onExitState()
 /// </summary>
 void BaseState::updateState()
 {
-	for (int i = 0; i < m_allGameObjects.size(); i++)
+	// Update gameobject vector
+	auto it = m_allGameObjects.begin();
+	while (it != m_allGameObjects.end())
 	{
-		if (m_allGameObjects.at(i)->getDestroy())
+		if ((*it)->getDestroy())
 		{
-			m_allGameObjects.erase(m_allGameObjects.begin() + i);
+			it = m_allGameObjects.erase(it);
+			continue;
 		}
 		else
 		{
-			m_allGameObjects.at(i)->updateObject();
+			(*it)->updateObject();
+			it++;
 		}
 	}
 
@@ -74,30 +74,28 @@ void BaseState::renderState()
 /// </summary>
 void BaseState::setCallbacks()
 {
-	// Go through the game objects
+	// Use the objects callbackID as the index into the callbacks vector and assign the correct function to any required objects
 	for (const auto& o : m_allGameObjects)
 	{
-		// If they are of type MenuButton then assign a callback based on the id passed in from the file
-		if (std::dynamic_pointer_cast<Button>(o))
+		// If object is a Button object, set its callback function ID
+		auto button = std::dynamic_pointer_cast<Button>(o);
+		if (button)
 		{
-			// Use the objects callbackID as the index into the callbacks vector and assign the correct function
-			std::shared_ptr<Button> pButton = std::dynamic_pointer_cast<Button>(o);
-			pButton->setSelectCallback(m_stateCallbackFunctions.at(pButton->getSelectCallbackID()));
+			button->setSelectCallback(m_stateCallbackFunctions.at(button->getSelectCallbackID()));
 
-			if (std::dynamic_pointer_cast<CheckboxButton>(o))
+			// If Button is also a CheckboxButton, sets its checkbox state callback function ID
+			auto checkBox = std::dynamic_pointer_cast<CheckboxButton>(o);
+			if (checkBox)
 			{
-				std::shared_ptr<CheckboxButton> temp = std::dynamic_pointer_cast<CheckboxButton>(o);
-				temp->setCheckboxStateCallback(m_checkBoxStateCallbackFunctions.at(temp->getCheckboxCallbackID()));
+				checkBox->setCheckboxStateCallback(m_checkBoxStateCallbackFunctions.at(checkBox->getCheckboxCallbackID()));
 			}
 		}
 
-		if (std::dynamic_pointer_cast<TextObject>(o))
+		// If object is a TextObject, sets its text callback function ID
+		auto textObject = std::dynamic_pointer_cast<TextObject>(o);
+		if (textObject && textObject->getTextCallbackID() != 0)
 		{
-			std::shared_ptr<TextObject> text = std::dynamic_pointer_cast<TextObject>(o);
-			if (text->getTextCallbackID() != 0)
-			{
-				text->setTextCallback(m_textCallbackFunctions.at(text->getTextCallbackID()));
-			}
+			textObject->setTextCallback(m_textCallbackFunctions.at(textObject->getTextCallbackID()));
 		}
 	}
 }

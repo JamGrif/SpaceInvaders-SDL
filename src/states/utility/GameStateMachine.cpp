@@ -54,7 +54,7 @@ void GameStateMachine::pushState(std::unique_ptr<BaseState> pState)
 {
 	m_currentGameStates.push_back(std::move(pState));
 	m_currentGameStates.back()->onEnterState();
-}
+} 
 
 /// <summary>
 /// Change the state to specified state, popping any states currently loaded
@@ -68,7 +68,7 @@ void GameStateMachine::changeState(std::unique_ptr<BaseState> pState)
 	}
 
 	// Clear all sprites used in this state
-	TheSpriteManager::Instance()->clearAllFromSpriteMap();
+	//TheSpriteManager::Instance()->clearAllFromSpriteMap();
 
 	// Push back the new state
 	m_currentGameStates.push_back(std::move(pState));

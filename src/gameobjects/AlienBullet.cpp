@@ -5,33 +5,36 @@
 #include "gameobjects/Player.h"
 #include "gameobjects/Block.h"
 
-#define ABULLET_SCREEN_BUFFER 40	// How close the alien bullet can get to the screen edge before something happens
+// How close the alien bullet can get to the screen edge before something happens
+#define ABULLET_SCREEN_BUFFER 40	
 
-#define PlayerPathY 592
+// The Y value of the players path
+#define PLAYER_PATH_Y 592
 
 AlienBullet::AlienBullet()
-	:m_pAllBlocks(nullptr), m_screenHeight(TheGameWindow::Instance()->getWindowHeight())
+	:m_pAllBlocks(nullptr)
 {
 }
 
 AlienBullet::~AlienBullet()
 {
+	//std::cout << "destroyed alienbullet" << std::endl;
 }
 
 /// <summary>
 /// Set all values in AlienBullet class and parent classes
 /// </summary>
-void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::weak_ptr<Player> levelPlayer, std::vector<std::shared_ptr<Block>>* levelBlocksPtr)
+void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks)
 {
 	//assert(levelPlayer);
-	assert(levelBlocksPtr);
+	assert(pLevelBlocks);
 
 	SDLGameObject::loadObject(pParams);
 
 	m_classType = "AlienBullet";
 
-	m_pLevelPlayer = levelPlayer;
-	m_pAllBlocks = levelBlocksPtr;
+	m_pLevelPlayer = pLevelPlayer;
+	m_pAllBlocks = pLevelBlocks;
 }
 
 /// <summary>
@@ -62,7 +65,7 @@ void AlienBullet::updateObject()
 	if (m_position.getY() >= LEVEL_FINISH_LINE_Y)
 	{
 		// Check collision of bullet against blocks
-		for (auto block : *m_pAllBlocks)
+		for (const auto& block : *m_pAllBlocks)
 		{
 			if (checkCollision(this, block.get()))
 			{
@@ -74,7 +77,7 @@ void AlienBullet::updateObject()
 	}
 
 	// Only check for player collision if near players line (where only player will be)
-	if (m_position.getY() >= PlayerPathY)
+	if (m_position.getY() >= PLAYER_PATH_Y)
 	{
 		// Check collision of bullet against player
 		if (checkCollision(this, m_pLevelPlayer.lock().get()))

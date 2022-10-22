@@ -5,7 +5,7 @@
 #include "core/SoundManager.h"
 
 Alien::Alien()
-	:SDLGameObject(), m_downAmount(15), m_bDying(false), m_bDead(false),
+	:SDLGameObject(), m_downAmount(15), m_bDying(false),
 	m_timeSpentDying_ms(0), m_timeAloudDying_ms(200), m_selectedScoreWorth(0),
 	m_direction(MovingDirection::None)
 {
@@ -42,15 +42,12 @@ void Alien::updateObject()
 {
 	SDLGameObject::updateObject();
 
-	if (m_bDead)
-		return;
-
 	// If dying, continue dying timer
 	if (m_bDying)
 	{
 		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime_ms();
 		if (m_timeSpentDying_ms >= m_timeAloudDying_ms)
-			m_bDead = true;
+			m_bDestroy = true;
 	
 		return;
 	}
@@ -82,7 +79,7 @@ void Alien::setDying()
 /// <summary>
 /// Check if alien has reached either edge of screen and return true if so
 /// </summary>
-bool Alien::checkIfReachedEdge()
+bool Alien::checkIfReachedEdge() const
 {
 	// If alien hit edge
 	if (m_position.getX() < EDGE_SCREEN_BUFFER || m_position.getX() + m_objectWidth > m_screenWidth - EDGE_SCREEN_BUFFER)

@@ -15,7 +15,8 @@ class PlayState :
 {
 public:
 	PlayState()
-		:m_SelectedNextShotTime_ms(0), m_maxNextShotTime_ms(2000), m_minNextShotTime_ms(250),
+		:m_currentPrepTime_ms(0), m_selectedPrepTime_ms(1500), m_bInPrep(true),
+		m_selectedNextShotTime_ms(0), m_maxNextShotTime_ms(2000), m_minNextShotTime_ms(250),
 		m_currentNextShotTime_ms(0), m_bFirstCheckDying(false), m_bAllowedToSpawnBullets(true)
 	{}
 	~PlayState() {}
@@ -36,27 +37,29 @@ private:
 	static std::string s_textCallback1();
 
 	// Player and AlienBoss exist in the gameobjects vector, this is simply a way to reference them by storing their address
-	std::weak_ptr<Player>	m_player;
-	std::weak_ptr<AlienBoss> m_alienBoss;
+	std::weak_ptr<Player>	m_pPlayer;
+	std::weak_ptr<AlienBoss> m_pAlienBoss;
 
 	// All Alien and Block objects are moved out of the total gameobjects vector to be in their own vectors
 	std::vector<std::shared_ptr<Alien>> m_allAliens;
 	std::vector<std::shared_ptr<Block>>	m_allBlocks;
 
 	// Prep time at start of PlayState round, no action is taken until this time is taken
-	int m_currentPrepTime = 0;
-	int m_selectedPretTime = 2000;
-	bool m_bInPrep = true;
+	int m_currentPrepTime_ms;
+	int m_selectedPrepTime_ms;
+	bool m_bInPrep;
 
 	// Time until the next alien is chosen to shoot, chosen randomly between minNextShotTime and maxNextShotTime
-	int m_SelectedNextShotTime_ms;
+	int m_selectedNextShotTime_ms;
 	int m_minNextShotTime_ms;
 	int m_maxNextShotTime_ms;
 
 	// Current time waited for next shot
 	int m_currentNextShotTime_ms;
 
+	// This ensures the bullets are only cleared once when player first dies
 	bool m_bFirstCheckDying;
+
 	bool m_bAllowedToSpawnBullets;
 };
 

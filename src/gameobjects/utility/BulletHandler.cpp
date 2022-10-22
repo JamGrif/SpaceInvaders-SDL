@@ -5,7 +5,6 @@
 #include "gameobjects/PlayerBullet.h"
 #include "gameobjects/AlienBullet.h"
 #include "level/Level.h"
-#include "level/ObjectLayer.h"
 
 // Player bullet speed
 #define PBULLET_SPEED 3
@@ -23,10 +22,8 @@ BulletHandler::BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std
 	m_alienBullets.reserve(static_cast<size_t>(m_maxAlienBullets));
 }
 
-
 BulletHandler::~BulletHandler()
 {
-	std::cout << "bullet handler dead" << std::endl;
 }
 
 /// <summary>
@@ -47,9 +44,6 @@ void BulletHandler::addPlayerBullet(int xPos, int yPos)
 	tempLoaderParams->yPos = yPos;
 	tempLoaderParams->textureID = "playerBullet";
 	tempLoaderParams->movementSpeed = PBULLET_SPEED;
-
-	// Get the object layer in order to retrieve other level objects
-	//ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer)); 
 
 	// Set initial bullet values and give it information on aliens, alienboss and level blocks
 	m_playerBullet->loadObject(tempLoaderParams, m_allAliens, m_alienBoss, m_allBlocks);
@@ -78,12 +72,10 @@ void BulletHandler::addAlienBullet(int xPos, int yPos)
 	tempLoaderParams->animationSpeed = ABULLET_ANIMATION_SPEED;
 	tempLoaderParams->movementSpeed = static_cast<float>(getRandomNumber(ABULLET_MIN_SPEED, ABULLET_MAX_SPEED));
 
-	// Get the object layer in order to retrieve other level objects
-	//ObjectLayer* temp = dynamic_cast<ObjectLayer*>(m_level->getLayer(LayerIndex::objectLayer));
-
 	// Set initial bullet values and give it information on player and level blocks
 	alienBullet->loadObject(tempLoaderParams, m_player, m_allBlocks);
 
+	// Add newly created bullet into total alien bullet vector
 	m_alienBullets.push_back(std::move(alienBullet));
 
 	TheSoundManager::Instance()->playSound("alienShoot");
@@ -99,7 +91,7 @@ void BulletHandler::updateBullets()
 		// Check deletion status of the PlayerBullet
 		if (m_playerBullet->getDestroy())
 		{
-			m_playerBullet = nullptr;
+			m_playerBullet.reset();
 		}
 		else
 		{
@@ -107,16 +99,18 @@ void BulletHandler::updateBullets()
 		}
 	}
 
-	for (int i = 0; i < m_alienBullets.size(); i++)
+	auto it = m_alienBullets.begin();
+	while (it != m_alienBullets.end())
 	{
 		// Check deletion status of each AlienBullet
-		if (m_alienBullets.at(i)->getDestroy())
+		if ((*it)->getDestroy())
 		{
-			m_alienBullets.erase(m_alienBullets.begin() + i);
+			it = m_alienBullets.erase(it);
 		}
 		else
 		{
-			m_alienBullets.at(i)->updateObject();
+			(*it)->updateObject();
+			it++;
 		}
 	}
 }

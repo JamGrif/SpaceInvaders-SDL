@@ -17,6 +17,7 @@ PlayerBullet::PlayerBullet()
 
 PlayerBullet::~PlayerBullet()
 {
+	//std::cout << "ded" << std::endl;
 }
 
 /// <summary>

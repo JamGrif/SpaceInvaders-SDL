@@ -49,12 +49,15 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 /// </summary>
 void SDLGameObject::drawObject()
 {
-	SpriteManager::Instance()->drawSpriteFrame(
+	// Reassemble SDL_Rect structure
+	m_objectAttributes.x = m_position.getX();
+	m_objectAttributes.y = m_position.getY();
+	m_objectAttributes.w = m_objectWidth;
+	m_objectAttributes.h = m_objectHeight;
+
+	TheSpriteManager::Instance()->drawSpriteFrame(
 		m_objectTextureID,
-		static_cast<int>(m_position.getX()),
-		static_cast<int>(m_position.getY()),
-		m_objectWidth,
-		m_objectHeight,
+		m_objectAttributes,
 		m_currentSpriteFrame,
 		m_bFlipImage);
 }

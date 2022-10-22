@@ -7,7 +7,6 @@
 #include "core/SoundManager.h"
 #include "core/TextManager.h"
 #include "gameobjects/utility/GameObjectFactory.h"
-#include "states/MainMenuState.h" 
 #include "states/utility/GameStateMachine.h"
 
 //#define INITIALIZE_SUCCESS 0
@@ -61,8 +60,6 @@ bool Game::gameInit()
 
 	TheSoundManager::Instance()->playMusic("music", true);
 	TheSoundManager::Instance()->playSound("gameStart");
-	//TheSoundManager::Instance()->playSound("dab");
-	//TheSoundManager::Instance()->playMusic("ye");
 
 	m_bRunning = true;
 	return true;

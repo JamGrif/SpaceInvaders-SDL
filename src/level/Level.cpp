@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "level/Level.h"
 
-#include "level/BaseLayer.h"
+#include "level/TileLayer.h"
 
 Level::~Level()
 {
@@ -10,6 +10,11 @@ Level::~Level()
 	//	delete layer;
 	//}
 	//std::cout << "destroyed level" << std::endl;
+	//for (auto& t : m_tilesets)
+	//{
+	//	delete t;
+	//}
+	//std::cout << "level tileset size " << m_tilesets.size() << std::endl;
 }
 
 /// <summary>
@@ -17,10 +22,11 @@ Level::~Level()
 /// </summary>
 void Level::updateLevel()
 {
-	for (const auto& layer : m_layers)
-	{
-		layer->updateLayer();
-	}
+	//for (const auto& layer : m_layers)
+	//{
+	//	layer->updateLayer();
+	//}
+	m_pTileLayer->updateLayer();
 }
 
 /// <summary>
@@ -28,15 +34,17 @@ void Level::updateLevel()
 /// </summary>
 void Level::renderLevel()
 {
-	for (const auto& layer : m_layers)
-	{
-		layer->renderLayer();
-	}
+	//for (const auto& layer : m_layers)
+	//{
+	//	layer->renderLayer();
+	//}
+	m_pTileLayer->renderLayer();
 }
 
-void Level::addTileLayer(std::unique_ptr<BaseLayer> layer)
+void Level::addTileLayer(std::unique_ptr<TileLayer> layer)
 {
-	m_layers.push_back(std::move(layer));
+	//m_layers.push_back(std::move(layer));
+	m_pTileLayer = std::move(layer);
 }
 
 Level::Level()

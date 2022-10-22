@@ -1,5 +1,4 @@
 #pragma once
-#include "level/BaseLayer.h"
 
 struct Tileset;
 
@@ -7,21 +6,20 @@ struct Tileset;
 /// Only contains all the tilesets used by the level
 /// Handles the updating and drawing of the tilesets
 /// </summary>
-class TileLayer :
-    public BaseLayer
+class TileLayer
 {
 public:
-	TileLayer(int tileSize, const std::vector<Tileset>& tilesets);
+	TileLayer(int tileSize);
 	~TileLayer();
 
-	virtual void updateLayer() override;
-	virtual void renderLayer() override;
+	void updateLayer();
+	void renderLayer();
+
+	void addTileset(std::unique_ptr<Tileset> t) { m_pTileset = std::move(t); }
 
 	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
 
 	void setTileSize(int tileSize) { m_tileSize = tileSize; }
-
-	Tileset getTilesetByID(int tileID) const;
 
 private:
 	// Number of columns and rows to draw tiles too, determined from size of window
@@ -31,11 +29,7 @@ private:
 	// Pixel size of individual tile frame
 	int m_tileSize;
 
-	// Used for scrolling the map
-	Vector2D m_position;
-	Vector2D m_velocity;
-
-	const std::vector<Tileset>& m_tilesets;
+	std::unique_ptr<Tileset> m_pTileset;
 	std::vector<std::vector<int>> m_tileIDs;
 };
 

@@ -11,13 +11,17 @@ public:
 	AlienBoss();
 	~AlienBoss();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
+	virtual void	loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
 
-	virtual void drawObject() override;
-	virtual void updateObject() override;
+	virtual void	drawObject() override;
+	virtual void	updateObject() override;
+
+	bool			getDead() const { return m_bDead; }
 
 private:
-	void resetAlien();
+	void			resetAlien();
+
+	bool m_bDead;
 
 	// Store alive texture ID to use when alien respawns
 	std::string m_aliveTextureID;

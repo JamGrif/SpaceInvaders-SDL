@@ -24,9 +24,8 @@ public:
     virtual void	updateObject() override;
 
 	void			setDying();
-	bool			getDead() const { return m_bDead; }
-
-	bool			checkIfReachedEdge();
+	
+	bool			checkIfReachedEdge() const;
 	void			switchDirection();
 
 protected:
@@ -34,7 +33,6 @@ protected:
 	// Amount the alien will move down by when it reaches an edge
 	float m_downAmount; 
 
-	bool m_bDead;
 	bool m_bDying;
 
 	MovingDirection m_direction;
