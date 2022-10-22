@@ -52,9 +52,7 @@
     <ClCompile Include="src\gameobjects\BaseBullet.cpp" />
     <ClCompile Include="src\misc\ProgramClock.cpp" />
     <ClCompile Include="src\core\SoundManager.cpp" />
-    <ClCompile Include="src\level\ObjectLayer.cpp" />
     <ClCompile Include="src\level\LevelParser.cpp" />
-    <ClCompile Include="src\level\BaseLayer.cpp" />
     <ClCompile Include="src\level\Level.cpp" />
     <ClCompile Include="src\gameobjects\utility\GameObjectFactory.cpp" />
     <ClCompile Include="src\misc\Utility.cpp" />
@@ -212,10 +210,8 @@
     <ClInclude Include="include\gameobjects\ClickButton.h" />
     <ClInclude Include="include\states\PauseState.h" />
     <ClInclude Include="include\level\Level.h" />
-    <ClInclude Include="include\level\BaseLayer.h" />
     <ClInclude Include="include\level\LevelParser.h" />
     <ClInclude Include="include\level\TileLayer.h" />
-    <ClInclude Include="include\level\ObjectLayer.h" />
     <ClInclude Include="include\core\SoundManager.h" />
     <ClInclude Include="include\misc\ProgramClock.h" />
     <ClInclude Include="include\gameobjects\BaseBullet.h" />
@@ -360,6 +356,7 @@ xcopy $(ProjectDir)dependencies\zlib\lib\zlibwapi.dll $(TargetDir)  /d </Command
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
