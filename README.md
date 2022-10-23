@@ -4,7 +4,7 @@
 
 A complete Space Invaders game made using SDL2 in C++. Small project I've been working on in my spare time for fun.
 
-**Full game showcase video:**
+**Full game showcase video:** https://www.youtube.com/watch?v=tejSJq9U4xs
 
 # Gameplay Features  
 - Player can destroy aliens in order to gain score  
