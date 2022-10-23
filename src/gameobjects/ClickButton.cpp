@@ -3,11 +3,11 @@
 
 #include "core/InputHandler.h"
 
-enum MenuButtonState
+enum class MenuButtonState
 {
-	MOUSE_OUT = 0,
-	MOUSE_OVER = 1,
-	CLICKED = 2
+	MOUSE_OUT	= 0,
+	MOUSE_OVER	= 1,
+	CLICKED		= 2
 }; 
 
 ClickButton::ClickButton()
@@ -26,7 +26,7 @@ void ClickButton::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
 	Button::loadObject(pParams);
 
-	m_currentSpriteFrame = MOUSE_OUT;
+	m_currentSpriteFrame = static_cast<uint8_t>(MenuButtonState::MOUSE_OUT);
 }
 
 /// <summary>
@@ -51,13 +51,13 @@ void ClickButton::updateObject()
 		&& pMousePos.getY() < (m_position.getY() + m_objectHeight)
 		&& pMousePos.getY() > m_position.getY())
 	{
-		m_currentSpriteFrame = MOUSE_OVER;
+		m_currentSpriteFrame = static_cast<uint8_t>(MenuButtonState::MOUSE_OVER);
 
 		// Moused over and clicked button
 		if (TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT)
 			&& m_bReleased)
 		{
-			m_currentSpriteFrame = CLICKED;
+			m_currentSpriteFrame = static_cast<uint8_t>(MenuButtonState::CLICKED);
 
 			// Call the callback function
 			m_selectCallback(); 
@@ -68,11 +68,11 @@ void ClickButton::updateObject()
 		else if (!TheInputHandler::Instance()->isMouseButtonDown(Mouse::LEFT))
 		{
 			m_bReleased = true;
-			m_currentSpriteFrame = MOUSE_OVER;
+			m_currentSpriteFrame = static_cast<uint8_t>(MenuButtonState::MOUSE_OVER);
 		}
 	}
 	else
 	{
-		m_currentSpriteFrame = MOUSE_OUT;
+		m_currentSpriteFrame = static_cast<uint8_t>(MenuButtonState::MOUSE_OUT);
 	}
 }

@@ -21,7 +21,7 @@ public:
 	virtual void	updateObject();
 
 	void			setTextCallback(std::string(*callback)()) { m_textCallback = callback; }
-	int				getTextCallbackID() const { return m_textCallbackID; }
+	uint8_t			getTextCallbackID() const { return m_textCallbackID; }
 
 private:
 	void updateText(const std::string& newText);
@@ -30,7 +30,7 @@ private:
 	std::string(*m_textCallback)(); 
 
 	//ID of function used to determine what text to copy (ID set in level editor)
-	int m_textCallbackID;
+	uint8_t m_textCallbackID;
 
 	// The actual text this object will render
 	std::string m_text;

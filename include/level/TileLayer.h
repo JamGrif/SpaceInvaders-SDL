@@ -17,19 +17,19 @@ public:
 
 	void addTileset(std::unique_ptr<Tileset> t) { m_pTileset = std::move(t); }
 
-	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
+	void setTileIDs(const std::vector<std::vector<uint16_t>>& data) { m_tileIDs = data; }
 
-	void setTileSize(int tileSize) { m_tileSize = tileSize; }
+	void setTileSize(uint8_t tileSize) { m_tileSize = tileSize; }
 
 private:
 	// Number of columns and rows to draw tiles too, determined from size of window
-	int m_numColumns;
-	int m_numRows;
+	uint16_t m_numColumns;
+	uint16_t m_numRows;
 
 	// Pixel size of individual tile frame
-	int m_tileSize;
+	uint8_t m_tileSize;
 
 	std::unique_ptr<Tileset> m_pTileset;
-	std::vector<std::vector<int>> m_tileIDs;
+	std::vector<std::vector<uint16_t>> m_tileIDs;
 };
 

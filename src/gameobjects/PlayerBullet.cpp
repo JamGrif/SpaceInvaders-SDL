@@ -5,9 +5,11 @@
 #include "gameobjects/AlienBoss.h"
 #include "gameobjects/Block.h"
 
-#define PBULLET_SCREEN_BUFFER 115	// How close the player bullet can get to the screen edge before something happens
+// How close the player bullet can get to the screen edge before something happens
+static constexpr uint16_t PBULLET_SCREEN_BUFFER = 115;
 
-#define AlienBossPathY 140
+// The Y value the AlienBoss will travel along
+static constexpr uint16_t ALIEN_BOSS_PATH_Y = 140;
 
 
 PlayerBullet::PlayerBullet()
@@ -66,11 +68,11 @@ void PlayerBullet::updateObject()
 	if (m_position.getY() >= LEVEL_FINISH_LINE_Y)
 	{
 		// Check collision of bullet against blocks
-		for (auto block : *m_pAllBlocks)
+		for (const auto& block : *m_pAllBlocks)
 		{
 			if (checkCollision(this, block.get()))
 			{
-				block->hit();
+				block->hitObject();
 				m_bDestroy = true;
 				return;
 			}
@@ -81,7 +83,7 @@ void PlayerBullet::updateObject()
 	if (m_position.getY() <= LEVEL_FINISH_LINE_Y)
 	{
 		// Check collision of bullet against aliens
-		for (auto alien : *m_pAllAliens)
+		for (const auto& alien : *m_pAllAliens)
 		{
 			if (checkCollision(this, alien.get()))
 			{
@@ -93,7 +95,7 @@ void PlayerBullet::updateObject()
 	}
 
 	// Only check for collision of alien boss if above specified line (where the alien boss will always be)
-	if (m_position.getY() <= AlienBossPathY)
+	if (m_position.getY() <= ALIEN_BOSS_PATH_Y)
 	{
 		// If bullet collided with alienboss
 		if (checkCollision(this, m_pAlienBoss.lock().get()))

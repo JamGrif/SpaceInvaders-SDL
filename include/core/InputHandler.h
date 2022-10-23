@@ -15,7 +15,7 @@ public:
 	void		update();
 	void		clean();
 
-	bool		isMouseButtonDown(int mouseButton) const { return m_mouseButtonStates[mouseButton]; }
+	bool		isMouseButtonDown(uint8_t mouseButton) const { return m_mouseButtonStates[mouseButton]; }
 
 	bool		isKeyDown(Keyboard::Keys keyboardKey) const;
 

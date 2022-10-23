@@ -68,7 +68,7 @@ void SpriteManager::clearFromSpriteMap(const std::string& id)
 /// <summary>
 /// Draw the specified sprite, using its id to choose it
 /// </summary>
-void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, int currentFrame, bool flipHorizontal)
+void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal)
 {
 	if (m_spriteMap.find(id) == m_spriteMap.end())
 	{
@@ -91,7 +91,7 @@ void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objec
 /// <summary>
 /// Draw the specified tileset tile, using its id to choose it
 /// </summary>
-void SpriteManager::drawSpriteTile(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame)
+void SpriteManager::drawSpriteTile(const std::string& id, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t currentRow, uint8_t currentFrame)
 {
 	if (m_spriteMap.find(id) == m_spriteMap.end())
 	{

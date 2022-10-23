@@ -45,17 +45,17 @@ private:
 	std::vector<std::shared_ptr<Block>>	m_allBlocks;
 
 	// Prep time at start of PlayState round, no action is taken until this time is taken
-	int m_currentPrepTime_ms;
-	int m_selectedPrepTime_ms;
+	uint16_t m_currentPrepTime_ms;
+	uint16_t m_selectedPrepTime_ms;
 	bool m_bInPrep;
 
 	// Time until the next alien is chosen to shoot, chosen randomly between minNextShotTime and maxNextShotTime
-	int m_selectedNextShotTime_ms;
-	int m_minNextShotTime_ms;
-	int m_maxNextShotTime_ms;
+	uint16_t m_selectedNextShotTime_ms;
+	uint16_t m_minNextShotTime_ms;
+	uint16_t m_maxNextShotTime_ms;
 
 	// Current time waited for next shot
-	int m_currentNextShotTime_ms;
+	uint16_t m_currentNextShotTime_ms;
 
 	// This ensures the bullets are only cleared once when player first dies
 	bool m_bFirstCheckDying;

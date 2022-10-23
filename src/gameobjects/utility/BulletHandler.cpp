@@ -29,7 +29,7 @@ BulletHandler::~BulletHandler()
 /// <summary>
 /// Spawn a PlayerBullet object at specified position
 /// </summary>
-void BulletHandler::addPlayerBullet(int xPos, int yPos)
+void BulletHandler::addPlayerBullet(int32_t xPos, int32_t yPos)
 {
 	// Only one PlayerBullet can exist at one time
 	if (m_playerBullet)
@@ -54,7 +54,7 @@ void BulletHandler::addPlayerBullet(int xPos, int yPos)
 /// <summary>
 /// Spawn an AlienBullet object at specified position
 /// </summary>
-void BulletHandler::addAlienBullet(int xPos, int yPos)
+void BulletHandler::addAlienBullet(int32_t xPos, int32_t yPos)
 {
 	// Only a certain amount of alienBullets can exist
 	if (m_alienBullets.size() >= m_maxAlienBullets)

@@ -33,10 +33,10 @@ private:
 	void parseTilesets(const TiXmlElement& pTilesetRoot); //
 
 	// Dimensions, in pixels, of an individual tile
-	int m_tilePixelSize;
+	int32_t m_tilePixelSize = 0;
 
 	// Dimensions, in tiles, of the entire .tmx file
-	int m_levelTileWidth;
-	int m_levelTileHeight;
+	int32_t m_levelTileWidth = 0;
+	int32_t m_levelTileHeight = 0;
 };
 

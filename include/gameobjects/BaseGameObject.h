@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Passed to BaseGameObjects through their load function to setup initial values of an object
-/// Mainly used to retrieve values from the level data file to create objects
+/// Mainly used to retrieve values from the level data file to create objects in LevelParser
 /// </summary>
 class LoaderParams
 {
@@ -12,23 +12,22 @@ public:
 		checkboxStateCallbackID(0), livesRequired(0), textCallbackID(0), textSize(10) {}
 	~LoaderParams(){}
 
-	int xPos;						// Starting X position
-	int yPos;						// Starting Y position
-	std::string classType;			// Class type of object
+	int32_t xPos;						// Starting X position
+	int32_t yPos;						// Starting Y position
+	std::string classType;				// Class type of object
 
-	std::string textureID;			// Texture the object uses by default
-	int numFrames;					// Number of separate frames in sprite (default is sprite has one frame)
-	float movementSpeed;			// Speed at which the object moves
+	std::string textureID;				// Texture the object uses by default
+	int32_t numFrames;					// Number of separate frames in sprite (default is sprite has one frame)
+	float movementSpeed;				// Speed at which the object moves
+	int32_t animationSpeed;				// Time until next sprite frame change (_ms means milliseconds) (default is sprite frame will not change)
 
-	int animationSpeed;				// Time until next sprite frame change (_ms means milliseconds) (default is sprite frame will not change)
-
-	int scoreWorth;					// Used in Alien - How much the alien increases the current score by when killed
-	int selectCallbackID;			// Used in Button - The ID of the function it will call when clicked on
-	int checkboxStateCallbackID;	// Used in CheckboxButton - Finds the starting state of the checkbox (filled or not)
-	int livesRequired;				// Used in PlayerLives
-	std::string text;				// Used in TextObject - The actual text it will display (assuming its not using a textCallback function)
-	int textCallbackID;				// Used in TextObject - Lets a text object copy a variable value
-	int textSize;					// Used in TextObject - Sets the size of the font
+	int32_t scoreWorth;					// Used in Alien - How much the alien increases the current score by when killed
+	int32_t selectCallbackID;			// Used in Button - The ID of the function it will call when clicked on
+	int32_t checkboxStateCallbackID;	// Used in CheckboxButton - Finds the starting state of the checkbox (filled or not)
+	int32_t livesRequired;				// Used in PlayerLives
+	std::string text;					// Used in TextObject - The actual text it will display (assuming its not using a textCallback function)
+	int32_t textCallbackID;				// Used in TextObject - Lets a text object copy a variable value
+	int32_t textSize;					// Used in TextObject - Sets the size of the font
 };
 
 /// <summary>

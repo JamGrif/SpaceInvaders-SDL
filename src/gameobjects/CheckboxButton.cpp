@@ -3,7 +3,7 @@
 
 #include "core/InputHandler.h"
 
-enum CheckBoxButtonState
+enum class CheckBoxButtonState
 {
 	FILLED					= 0,
 	NOT_FILLED				= 1,
@@ -59,7 +59,7 @@ void CheckboxButton::updateObject()
 		&& pMousePos.getY() < (m_position.getY() + m_objectHeight)
 		&& pMousePos.getY() > m_position.getY())
 	{
-		m_currentSpriteFrame = m_bTicked ? FILLED_HIGHLIGHT : NOT_FILLED_HIGHLIGHT;
+		m_currentSpriteFrame = static_cast<uint8_t>(m_bTicked ? CheckBoxButtonState::FILLED_HIGHLIGHT : CheckBoxButtonState::NOT_FILLED_HIGHLIGHT);
 
 		// Moused over and clicked button
 		if (m_bReleased &&
@@ -80,6 +80,6 @@ void CheckboxButton::updateObject()
 	}
 	else
 	{
-		m_currentSpriteFrame = m_bTicked ? FILLED : NOT_FILLED;
+		m_currentSpriteFrame = static_cast<uint8_t>(m_bTicked ? CheckBoxButtonState::FILLED : CheckBoxButtonState::NOT_FILLED);
 	}
 }

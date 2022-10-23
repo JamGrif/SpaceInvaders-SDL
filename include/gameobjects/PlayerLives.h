@@ -20,7 +20,7 @@ public:
 private:
 
 	// Minimum lives required for the player lives icon to get drawn
-	int m_livesRequired;
+	uint8_t m_livesRequired;
 
 	bool m_bDraw;
 };

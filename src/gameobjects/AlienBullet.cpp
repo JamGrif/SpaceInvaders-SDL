@@ -6,10 +6,10 @@
 #include "gameobjects/Block.h"
 
 // How close the alien bullet can get to the screen edge before something happens
-#define ABULLET_SCREEN_BUFFER 40	
+static constexpr uint16_t ABULLET_SCREEN_BUFFER = 40;
 
 // The Y value of the players path
-#define PLAYER_PATH_Y 592
+static constexpr uint16_t PLAYER_PATH_Y = 592;
 
 AlienBullet::AlienBullet()
 	:m_pAllBlocks(nullptr)
@@ -18,7 +18,6 @@ AlienBullet::AlienBullet()
 
 AlienBullet::~AlienBullet()
 {
-	//std::cout << "destroyed alienbullet" << std::endl;
 }
 
 /// <summary>
@@ -69,7 +68,7 @@ void AlienBullet::updateObject()
 		{
 			if (checkCollision(this, block.get()))
 			{
-				block->hit();
+				block->hitObject();
 				m_bDestroy = true;
 				return;
 			}

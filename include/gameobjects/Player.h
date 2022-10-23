@@ -35,10 +35,10 @@ private:
 	bool m_bDying;
 
 	// Current time spent dying
-	int m_timeSpentDying_ms;
+	uint16_t m_timeSpentDying_ms;
 
 	// When player has been dying for this amount of time, set to dead
-	const int m_timeAloudDying_ms;
+	const uint16_t m_timeAloudDying_ms;
 
 	Vector2D m_respawnPosition;
 };

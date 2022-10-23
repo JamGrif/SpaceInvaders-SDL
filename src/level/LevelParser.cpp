@@ -15,6 +15,8 @@
 #define TILESET_PATH_PREFIX "res/levels/"
 #define SPRITE_PATH_PREFIX "res/sprites/"
 
+static constexpr uint8_t STRCMP_SUCCESS = 0;
+
 /// <summary>
 /// Called whenever a .tmx file needs to be parsed at filepath
 /// </summary>
@@ -43,7 +45,7 @@ Level* LevelParser::parseLevel(const std::string& filepath, std::vector<std::sha
 	for (const TiXmlElement* e = pRoot.FirstChildElement()->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		// <properties> node
-		if (strcmp(e->Value(), "property") == 0)
+		if (strcmp(e->Value(), "property") == STRCMP_SUCCESS)
 		{
 			//std::pair<std::string, std::string> temp;
 			//temp.first = SPRITE_PATH_PREFIX + std::string(e->Attribute("value"));
@@ -61,7 +63,7 @@ Level* LevelParser::parseLevel(const std::string& filepath, std::vector<std::sha
 	for (const TiXmlElement* e = pRoot.FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		// <tileset> node
-		if (strcmp(e->Value(), "tileset") == 0)
+		if (strcmp(e->Value(), "tileset") == STRCMP_SUCCESS)
 		{
 			parseTilesets(*e);
 		}
@@ -71,12 +73,12 @@ Level* LevelParser::parseLevel(const std::string& filepath, std::vector<std::sha
 	for (const TiXmlElement* e = pRoot.FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		// <objectgroup> node
-		if (strcmp(e->Value(), "objectgroup") == 0)
+		if (strcmp(e->Value(), "objectgroup") == STRCMP_SUCCESS)
 		{
 			parseObjectLayer(*e, allGameObjects);
 		}
 		// <layer> node
-		else if (strcmp(e->Value(), "layer") == 0)
+		else if (strcmp(e->Value(), "layer") == STRCMP_SUCCESS)
 		{
 			parseTileLayer(*e);
 		}
@@ -103,7 +105,7 @@ void LevelParser::parseTileLayer(const TiXmlElement& pLayerRoot)
 	// Search for <data> </data> and decode the text (the tile layer data in level editor)
 	for (const TiXmlElement* e = pLayerRoot.FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (strcmp(e->Value(), "data") == 0)
+		if (strcmp(e->Value(), "data") == STRCMP_SUCCESS)
 		{
 			// Retrieve the text
 			const TiXmlText* text = e->FirstChild()->ToText();
@@ -133,19 +135,19 @@ void LevelParser::parseTileLayer(const TiXmlElement& pLayerRoot)
 	*/
 
 	// Holds the decoded and uncompressed tile data for each level tile
-	std::vector<std::vector<int>> tiledata;
+	std::vector<std::vector<uint16_t>> tiledata;
 
-	const std::vector<int> layerRow(m_levelTileWidth);
+	const std::vector<uint16_t> layerRow(m_levelTileWidth);
 
-	for (int j = 0; j < m_levelTileHeight; j++)
+	for (int32_t j = 0; j < m_levelTileHeight; j++)
 	{
 		tiledata.push_back(layerRow);
 	}
 
 	// Now to fill our data array with the correct values
-	for (int rows = 0; rows < m_levelTileHeight; rows++)
+	for (int32_t rows = 0; rows < m_levelTileHeight; rows++)
 	{
-		for (int cols = 0; cols < m_levelTileWidth; cols++)
+		for (int32_t cols = 0; cols < m_levelTileWidth; cols++)
 		{
 			// Set each level tile a tileset frame ID
 			tiledata.at(rows).at(cols) = gids.at(rows * m_levelTileWidth + cols);
@@ -171,7 +173,7 @@ void LevelParser::parseObjectLayer(const TiXmlElement& pObjectGroupRoot, std::ve
 	for (const TiXmlElement* e = pObjectGroupRoot.FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		// Ensure node is a <object> node
-		if (strcmp(e->Value(), "object") != 0)
+		if (strcmp(e->Value(), "object") != STRCMP_SUCCESS)
 			continue;
 
 		// Create object of specific type("class")
@@ -190,49 +192,49 @@ void LevelParser::parseObjectLayer(const TiXmlElement& pObjectGroupRoot, std::ve
 		// Loop through each <properties> node of an object
 		for (const TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())
 		{
-			// Ensure node is a <properties node>
-			if (strcmp(properties->Value(), "properties") != 0)
+			// Ensure node is a <properties> node
+			if (strcmp(properties->Value(), "properties") != STRCMP_SUCCESS)
 				continue;
 			
 			// Loop through each <property> node of an objects properties
 			for (const TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 			{
 				// Ensure node is a <property> node
-				if (strcmp(property->Value(), "property") != 0)
+				if (strcmp(property->Value(), "property") != STRCMP_SUCCESS)
 					continue;
 
 				// Determine what each <property> node is and then assign it to associated LoaderParam value
-				if (strcmp(property->Attribute("name"), "numFrames") == 0)
+				if (strcmp(property->Attribute("name"), "numFrames") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->numFrames);
 	
-				else if (strcmp(property->Attribute("name"), "textureID") == 0)
+				else if (strcmp(property->Attribute("name"), "textureID") == STRCMP_SUCCESS)
 					tempLoaderParams->textureID = property->Attribute("value");
 				
-				else if (strcmp(property->Attribute("name"), "selectCallbackID") == 0)
+				else if (strcmp(property->Attribute("name"), "selectCallbackID") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->selectCallbackID);
 				
-				else if (strcmp(property->Attribute("name"), "animationSpeed") == 0)
+				else if (strcmp(property->Attribute("name"), "animationSpeed") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->animationSpeed);
 				
-				else if (strcmp(property->Attribute("name"), "livesRequired") == 0)
+				else if (strcmp(property->Attribute("name"), "livesRequired") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->livesRequired);
 				
-				else if (strcmp(property->Attribute("name"), "text") == 0)
+				else if (strcmp(property->Attribute("name"), "text") == STRCMP_SUCCESS)
 					tempLoaderParams->text = property->Attribute("value");
 				
-				else if (strcmp(property->Attribute("name"), "checkboxStateCallbackID") == 0)
+				else if (strcmp(property->Attribute("name"), "checkboxStateCallbackID") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->checkboxStateCallbackID);
 				
-				else if (strcmp(property->Attribute("name"), "scoreWorth") == 0)
+				else if (strcmp(property->Attribute("name"), "scoreWorth") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->scoreWorth);
 				
-				else if (strcmp(property->Attribute("name"), "textCallbackID") == 0)
+				else if (strcmp(property->Attribute("name"), "textCallbackID") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->textCallbackID);
 				
-				else if (strcmp(property->Attribute("name"), "textSize") == 0)
+				else if (strcmp(property->Attribute("name"), "textSize") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->textSize);
 
-				else if (strcmp(property->Attribute("name"), "movementSpeed") == 0)
+				else if (strcmp(property->Attribute("name"), "movementSpeed") == STRCMP_SUCCESS)
 				{
 					double x;
 					property->Attribute("value", &x);

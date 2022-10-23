@@ -2,7 +2,7 @@
 
 #include "SDL2_ttf/SDL_ttf.h" // Required include for TTF_Font
 
-#define FONT_SIZE int
+#define FONT_SIZE uint8_t
 
 /// <summary>
 /// Encapsulates the SDL TTF library, allowing loading and usage of TTF_Font objects
@@ -13,7 +13,7 @@ public:
 	bool		init();
 	void		clean();
 
-	TTF_Font*	getFont(int textSize);
+	TTF_Font*	getFont(uint8_t textSize);
 
 	static TextManager* Instance() // Get instance
 	{

@@ -7,15 +7,15 @@ class TileLayer;
 // Passed into the parser when its time to load the map
 struct Tileset
 {
-	std::string name;		// Name of tileset in editor
-	int firstGidID = 0;		// First global tile ID of this tileset (This ID maps to the first tile in this tileset)
-	int tileWidth	= 0;	// Pixel size of an individual tile width
-	int tileHeight	= 0;	// Pixel size of an individual tile height
-	int numColumns	= 0;	// Number of tile frames in a row
-	int spacing		= 0;	// Pixel space between each sprite frame
-	int margin		= 0;	// Pixel space from the edge to first sprite frame
-	int width		= 0;	// Total pixel width of complete sprite
-	int height		= 0;	// Total pixel height of complete sprite
+	std::string name;			// Name of tileset in editor
+	int32_t firstGidID	= 0;	// First global tile ID of this tileset (This ID maps to the first tile in this tileset)
+	int32_t tileWidth	= 0;	// Pixel size of an individual tile width
+	int32_t tileHeight	= 0;	// Pixel size of an individual tile height
+	int32_t numColumns	= 0;	// Number of tile frames in a row
+	int32_t spacing		= 0;	// Pixel space between each sprite frame
+	int32_t margin		= 0;	// Pixel space from the edge to first sprite frame
+	int32_t width		= 0;	// Total pixel width of complete sprite
+	int32_t height		= 0;	// Total pixel height of complete sprite
 };
 
 /// <summary>

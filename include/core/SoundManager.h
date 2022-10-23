@@ -10,7 +10,7 @@
 class SoundEffectObject
 {
 public:
-	SoundEffectObject(Mix_Chunk* createdMixChunk, int channel = -1)
+	SoundEffectObject(Mix_Chunk* createdMixChunk, int8_t channel = -1)
 		: m_sfx(createdMixChunk), m_channel(channel)
 	{
 	}
@@ -20,11 +20,11 @@ public:
 	}
 
 	Mix_Chunk* getSfxChunk() const { return m_sfx; }
-	int getChannel() const { return m_channel; }
+	int8_t getChannel() const { return m_channel; }
 
 private:
 	Mix_Chunk* m_sfx; // Mix_Chunk used for sound effects only
-	int m_channel;
+	int8_t m_channel;
 };
 
 /// <summary>
@@ -59,13 +59,13 @@ public:
 	bool init();
 	void clean();
 
-	bool loadSound(const std::string& filepath, const std::string& id, int chosenChannel = -1);
+	bool loadSound(const std::string& filepath, const std::string& id, int8_t chosenChannel = -1);
 	bool loadMusic(const std::string& filepath, const std::string& id);
 
 	void playSound(const std::string& id, bool loop = false);
 	void playMusic(const std::string& id, bool loop = false);
 
-	void stopSound(int channel);
+	void stopSound(int8_t channel);
 	void stopAllSounds();
 	void stopMusic();
 

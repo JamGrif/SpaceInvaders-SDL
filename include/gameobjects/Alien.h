@@ -38,16 +38,16 @@ protected:
 	MovingDirection m_direction;
 
 	// Current time spent dying
-	int m_timeSpentDying_ms;
+	uint16_t m_timeSpentDying_ms;
 
 	// When alien has been dying for this amount of time, set to dead
-	int m_timeAloudDying_ms;  
+	uint16_t m_timeAloudDying_ms;
 
 	// Sprite the Alien will use upon death
 	std::string m_deadTextureID;
 
 	// Score to give upon alien death
-	int m_selectedScoreWorth;
+	uint16_t m_selectedScoreWorth;
 };
 
 class AlienCreator :

@@ -57,7 +57,7 @@ void SoundManager::clean()
 /// <summary>
 /// Load sound at filepath and assign an id to it
 /// </summary>
-bool SoundManager::loadSound(const std::string& filepath, const std::string& id, int chosenChannel)
+bool SoundManager::loadSound(const std::string& filepath, const std::string& id, int8_t chosenChannel)
 {
 	Mix_Chunk* pChunk = Mix_LoadWAV(filepath.c_str());
 
@@ -134,7 +134,7 @@ void SoundManager::playMusic(const std::string& id, bool loop)
 /// <summary>
 /// Stop any sound effects playing on specified channel
 /// </summary>
-void SoundManager::stopSound(int channel)
+void SoundManager::stopSound(int8_t channel)
 {
 	Mix_HaltChannel(channel);
 }

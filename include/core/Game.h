@@ -36,13 +36,13 @@ public:
 	// Player's score
 	void			increaseCurrentScore(int value) { m_currentScore += value; }
 	void			resetCurrentScore() { m_currentScore = 0; }
-	int				getCurrentScore() const { return m_currentScore; }
+	uint16_t		getCurrentScore() const { return m_currentScore; }
 
 	// Player's lives
 	void			increaseCurrentLives();
 	void			decreaseCurrentLives();
 	void			resetCurrentLives() { m_currentLives = m_maxLives; }
-	int				getCurrentLives() const { return m_currentLives; }
+	int8_t			getCurrentLives() const { return m_currentLives; }
 
 		
 	static Game*	Instance() // Get instance
@@ -64,11 +64,11 @@ private:
 	std::string		m_outcomeText;
 
 	// Player score - in Game class to persist through different states
-	int				m_currentScore;
+	uint16_t		m_currentScore;
 
 	// Player lives - in Game class to persist through different states
-	const int		m_maxLives;
-	int				m_currentLives;
+	const uint8_t	m_maxLives;
+	int8_t			m_currentLives;
 
 	Game();																// Prevent outside unwanted construction
 	Game(const Game&)													// Prevent construction by copying

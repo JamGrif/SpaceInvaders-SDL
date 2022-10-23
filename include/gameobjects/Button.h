@@ -20,7 +20,7 @@ public:
 	void			setSelectCallback(void(*callback)()) { m_selectCallback = callback; }
 
 	// The function callback ID is set in the level editor (.tmx file)
-	int				getSelectCallbackID() const { return m_selectCallbackID; }
+	uint8_t			getSelectCallbackID() const { return m_selectCallbackID; }
 
 protected:
 
@@ -31,5 +31,5 @@ protected:
 	void (*m_selectCallback)();
 
 	// ID of function used to determine which function to call on click (ID set in level editor)
-	int m_selectCallbackID;
+	uint8_t m_selectCallbackID;
 };

@@ -6,7 +6,7 @@
 #include "gameobjects/utility/GameObjectFactory.h"
 
 // How close an object can get to the edge of the screen before something happens
-#define EDGE_SCREEN_BUFFER 40
+constexpr uint8_t EDGE_SCREEN_BUFFER = 40;
 
 /// <summary>
 /// Basic game object
@@ -24,39 +24,37 @@ public:
     virtual void drawObject();
     virtual void updateObject();
 
-	//virtual std::string getSpriteID() { return m_objectTextureID; }
-
 	Vector2D& getPosition() { return m_position; }
 
-	int getWidth() const { return m_objectWidth; }
-	int getHeight() const { return m_objectHeight; };
+	int32_t getWidth() const { return m_objectWidth; }
+	int32_t getHeight() const { return m_objectHeight; };
 
 protected:
     Vector2D m_position;
     Vector2D m_velocity;
 
 	// The dimensions of the object is the dimensions of an individual sprite frame
-    int m_objectWidth;	
-    int m_objectHeight;
+	int32_t m_objectWidth;
+	int32_t m_objectHeight;
 
 	// Sent to the SpriteManager to be used for drawing, values set every draw call.
 	// Uses the objects xPos, yYos, width and height
 	SDL_Rect m_objectAttributes;
 
 	// Current sprite frame in use of loaded sprite
-    int m_currentSpriteFrame;
+	uint8_t m_currentSpriteFrame;
 
 	// Total amount of separate sprite frames of loaded sprite
-	int m_framesInSprite;
+	uint8_t m_framesInSprite;
 
 	// Time until next sprite frame change (_ms means milliseconds)
-	int m_animationSpeed_ms;
+	uint16_t m_animationSpeed_ms;
 
 	float m_movementSpeed;
 
 	// Dimensions of game window
-	int m_screenWidth;
-	int m_screenHeight;
+	uint16_t m_screenWidth;
+	uint16_t m_screenHeight;
 
 	// ID of sprite this object uses
     std::string m_objectTextureID;
@@ -65,11 +63,6 @@ protected:
 	bool m_bFlipImage;
 };
 
-/// <summary>
-/// Registers an object with the GameObjectFactory which is used to create objects from the level editor files (.tmx)
-/// Only required for objects that are spawned from the level editor
-/// Any new inherited game objects must also inherit and implement this class 
-/// </summary>
 class SDLGameObjectCreator :
 	public BaseCreator
 {

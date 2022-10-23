@@ -3,8 +3,8 @@
 
 #include "SDL2/SDL.h"
 
-#define INITIALIZE_SUCCESS 0
-#define FONTPATH "res/text/04B_30__.ttf"
+static constexpr int8_t INITIALIZE_SUCCESS = 0;
+static const char* FONTPATH = "res/text/04B_30__.ttf";
 
 TextManager* TextManager::s_pInstance = nullptr;
 
@@ -39,7 +39,7 @@ void TextManager::clean()
 /// <summary>
 /// Retrieve font object of specified size, creating and storing it if doesn't currently exist
 /// </summary>
-TTF_Font* TextManager::getFont(int textSize)
+TTF_Font* TextManager::getFont(uint8_t textSize)
 {
 	// If font of size textSize doesn't already exist, create it, add to map and return it
 	if (!m_loadedFonts.count(textSize))

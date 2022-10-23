@@ -27,18 +27,18 @@ private:
 	std::string m_aliveTextureID;
 
 	// The AlienBoss will respawn between this range
-	const int m_minimumRespawnTime_ms;
-	const int m_maximumRespawnTime_ms;
+	const uint16_t m_minimumRespawnTime_ms;
+	const uint16_t m_maximumRespawnTime_ms;
 
 	// Selected respawn time between minimum and maximum respawn time
-	int m_selectedRespawnTime_ms;
+	uint16_t m_selectedRespawnTime_ms;
 
 	// Current time AlienBoss has spent dying
-	int m_currentRespawnTime_ms;
+	uint16_t m_currentRespawnTime_ms;
 
 	// The AlienBoss will select a random score to give upon its death between a range
-	const int m_minimumScoreWorth;
-	const int m_maximumScoreWorth;
+	const uint16_t m_minimumScoreWorth;
+	const uint16_t m_maximumScoreWorth;
 
 	// Position the AlienBoss will spawn in when it respawns
 	Vector2D leftSpawnPosition;

@@ -3,8 +3,18 @@
 
 #include "core/SoundManager.h"
 
+// Numbers correspond to sprite frames in "block.png"
+enum class BlockHealth
+{
+	NoDamage		= 3,
+	SlightDamage	= 2,
+	MinorDamage		= 1,
+	MajorDamage		= 0,
+	Gone			= -1
+};
+
 Block::Block()
-	:SDLGameObject(), m_blockHealth(0)
+	:SDLGameObject(), m_blockHealth(BlockHealth::NoDamage)
 {
 }
 
@@ -19,7 +29,7 @@ void Block::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 {
 	SDLGameObject::loadObject(pParams);
 
-	m_currentSpriteFrame = m_blockHealth;
+	m_currentSpriteFrame = static_cast<uint8_t>(m_blockHealth);
 }
 
 /// <summary>
@@ -37,26 +47,18 @@ void Block::updateObject()
 {
 	SDLGameObject::updateObject();
 
-	if (m_blockHealth == static_cast<int>(BlockHealth::Gone))
-	{
-		//m_bDestoryed = true;
+	if (m_blockHealth == BlockHealth::Gone)
 		m_bDestroy = true;
-		return;
-	}
 	else
-	{
-		m_currentSpriteFrame = m_blockHealth;
-	}
-
-	
+		m_currentSpriteFrame = static_cast<uint8_t>(m_blockHealth);
 }
 
 /// <summary>
 /// Decrement the blocks health
 /// Called when the block is hit by a bullet
 /// </summary>
-void Block::hit()
+void Block::hitObject()
 {
+	m_blockHealth = static_cast<BlockHealth>(static_cast<int32_t>(m_blockHealth) - 1);
 	TheSoundManager::Instance()->playSound("blockBreak");
-	m_blockHealth++;
 }

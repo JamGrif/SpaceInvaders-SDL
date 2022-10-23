@@ -19,8 +19,8 @@ public:
 	BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std::vector<std::shared_ptr<Alien>>& allAliens, std::weak_ptr<Player> player, std::weak_ptr<AlienBoss> alienboss);
 	~BulletHandler();
 
-	void addPlayerBullet(int xPos, int yPos);
-	void addAlienBullet(int xPos, int yPos);
+	void addPlayerBullet(int32_t xPos, int32_t yPos);
+	void addAlienBullet(int32_t xPos, int32_t yPos);
 
 	void updateBullets();
 	void drawBullets();
@@ -39,7 +39,6 @@ private:
 
 	// All current AlienBullets
 	std::vector<std::unique_ptr<AlienBullet>> m_alienBullets;
-	const int m_maxAlienBullets;
-
+	const uint8_t m_maxAlienBullets;
 };
 typedef BulletHandler TheBulletHandler;

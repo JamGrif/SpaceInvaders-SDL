@@ -8,8 +8,8 @@
 
 SDLGameObject::SDLGameObject()
 	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_objectWidth(0), m_objectHeight(0),
-	m_currentSpriteFrame(1), m_framesInSprite(0), m_animationSpeed_ms(0), m_movementSpeed(0),
-	m_screenWidth(0), m_screenHeight(0), m_bFlipImage(false)
+	m_objectAttributes{ 0,0,0,0 },m_currentSpriteFrame(1), m_framesInSprite(0), m_animationSpeed_ms(0),
+	m_movementSpeed(0), m_screenWidth(0), m_screenHeight(0), m_bFlipImage(false)
 {
 }
 
@@ -50,8 +50,8 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
 void SDLGameObject::drawObject()
 {
 	// Reassemble SDL_Rect structure
-	m_objectAttributes.x = m_position.getX();
-	m_objectAttributes.y = m_position.getY();
+	m_objectAttributes.x = static_cast<int>(m_position.getX());
+	m_objectAttributes.y = static_cast<int>(m_position.getY());
 	m_objectAttributes.w = m_objectWidth;
 	m_objectAttributes.h = m_objectHeight;
 

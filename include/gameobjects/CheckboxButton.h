@@ -17,7 +17,7 @@ public:
 	virtual void	updateObject();
 
 	void			setCheckboxStateCallback(bool(*callback)()) { m_checkboxStateCallback = callback; }
-	int				getCheckboxCallbackID() const { return m_checkboxStateCallbackID; }
+	uint8_t			getCheckboxCallbackID() const { return m_checkboxStateCallbackID; }
 
 private:
 
@@ -30,7 +30,7 @@ private:
 	bool (*m_checkboxStateCallback)();
 
 	// ID of function used to determine starting state (ID set in level editor)
-	int m_checkboxStateCallbackID; 
+	uint8_t m_checkboxStateCallbackID; 
 };
 
 class CheckboxButtonCreator :
