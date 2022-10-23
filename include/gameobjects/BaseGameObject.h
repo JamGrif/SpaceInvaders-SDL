@@ -39,7 +39,7 @@ public:
 	BaseGameObject() :m_bDestroy(false) { /*std::cout << "created gameobject" << std::endl;*/ }
 	virtual ~BaseGameObject() { /*std::cout << m_classType << " object has been destroyed" << std::endl;*/ }
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams) = 0;
+	virtual void loadObject(std::unique_ptr<LoaderParams> pParams) = 0;
 
 	virtual void drawObject() = 0;
 	virtual void updateObject() = 0;

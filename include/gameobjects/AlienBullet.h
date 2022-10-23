@@ -14,7 +14,7 @@ public:
 	AlienBullet();
 	~AlienBullet();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks);
+	virtual void loadObject(std::unique_ptr<LoaderParams> pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks);
 
 	virtual void drawObject() override;
 	virtual void updateObject() override;

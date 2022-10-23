@@ -18,13 +18,13 @@ Alien::~Alien()
 /// <summary>
 /// Set all values in Alien class and parent classes
 /// </summary>
-void Alien::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void Alien::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
-
 	m_deadTextureID = "alienDead";
 	m_selectedScoreWorth = pParams->scoreWorth;
 	m_direction = MovingDirection::Left;
+
+	SDLGameObject::loadObject(std::move(pParams));
 }
 
 /// <summary>

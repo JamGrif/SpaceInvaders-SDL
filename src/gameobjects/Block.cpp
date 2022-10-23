@@ -25,11 +25,14 @@ Block::~Block()
 /// <summary>
 /// Call parent class load function
 /// </summary>
-void Block::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void Block::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
+	SDLGameObject::loadObject(std::move(pParams));
 
 	m_currentSpriteFrame = static_cast<uint8_t>(m_blockHealth);
+
+	// Set the block to a random angle (0/90/180/270)
+	m_spriteRotation = 90 * getRandomNumber(0, 3);
 }
 
 /// <summary>

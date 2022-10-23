@@ -23,11 +23,11 @@ CheckboxButton::~CheckboxButton()
 /// <summary>
 /// Set all values in CheckboxButton and parent classes
 /// </summary>
-void CheckboxButton::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void CheckboxButton::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	Button::loadObject(pParams);
-
 	m_checkboxStateCallbackID = pParams->checkboxStateCallbackID;
+
+	Button::loadObject(std::move(pParams));
 }
 
 /// <summary>

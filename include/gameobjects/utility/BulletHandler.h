@@ -16,10 +16,10 @@ class BaseGameObject;
 class BulletHandler
 {
 public:
-	BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std::vector<std::shared_ptr<Alien>>& allAliens, std::weak_ptr<Player> player, std::weak_ptr<AlienBoss> alienboss);
+	BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std::vector<std::shared_ptr<Alien>>& allAliens, std::weak_ptr<Player> pPlayer, std::weak_ptr<AlienBoss> pAlienboss);
 	~BulletHandler();
 
-	void addPlayerBullet(int32_t xPos, int32_t yPos);
+	bool addPlayerBullet(int32_t xPos, int32_t yPos);
 	void addAlienBullet(int32_t xPos, int32_t yPos);
 
 	void updateBullets();

@@ -19,13 +19,13 @@ AlienBoss::~AlienBoss()
 /// Set all values in AlienBoss class and parent classes
 /// </summary>
 /// <param name="pParams"></param>
-void AlienBoss::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void AlienBoss::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
-
 	m_aliveTextureID = pParams->textureID;
 
 	m_deadTextureID = "alienBossDead";
+
+	SDLGameObject::loadObject(std::move(pParams));
 
 	resetAlien();
 }

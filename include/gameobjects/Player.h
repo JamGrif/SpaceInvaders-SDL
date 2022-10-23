@@ -13,7 +13,7 @@ public:
     Player();
     ~Player();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void loadObject(std::unique_ptr<LoaderParams> pParams);
 
     virtual void drawObject();
     virtual void updateObject();
@@ -34,13 +34,17 @@ private:
 	bool m_bDead;
 	bool m_bDying;
 
-	// Current time spent dying
-	uint16_t m_timeSpentDying_ms;
-
 	// When player has been dying for this amount of time, set to dead
-	const uint16_t m_timeAloudDying_ms;
+	// Current time spent dying
+	const uint16_t m_selectedDyingTime_ms;
+	uint16_t m_currentDyingTime_ms;
 
 	Vector2D m_respawnPosition;
+
+	// Provides a cool down before the player can next shoot - prevents rapid fire into blocks
+	bool m_bReadyToShoot;
+	const uint16_t m_selectedShotWaitTime_ms;
+	uint16_t m_currentShotWaitTime_ms;
 };
 
 class PlayerCreator :

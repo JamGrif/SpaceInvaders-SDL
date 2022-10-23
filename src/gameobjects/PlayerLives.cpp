@@ -16,11 +16,11 @@ PlayerLives::~PlayerLives()
 /// Set all values in PlayerLives class and parent classes
 /// </summary>
 /// <param name="pParams"></param>
-void PlayerLives::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void PlayerLives::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
-
 	m_livesRequired = pParams->livesRequired;
+
+	SDLGameObject::loadObject(std::move(pParams));
 }
 
 /// <summary>

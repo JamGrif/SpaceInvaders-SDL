@@ -16,8 +16,8 @@
 // Alien bullets animation speed
 #define ABULLET_ANIMATION_SPEED 250
 
-BulletHandler::BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std::vector<std::shared_ptr<Alien>>& allAliens, std::weak_ptr<Player> player, std::weak_ptr<AlienBoss> alienboss)
-	: m_allBlocks(&allblocks), m_allAliens(&allAliens), m_player(player), m_alienBoss(alienboss), m_playerBullet(nullptr), m_maxAlienBullets(5)
+BulletHandler::BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std::vector<std::shared_ptr<Alien>>& allAliens, std::weak_ptr<Player> pPlayer, std::weak_ptr<AlienBoss> pAlienboss)
+	: m_allBlocks(&allblocks), m_allAliens(&allAliens), m_player(pPlayer), m_alienBoss(pAlienboss), m_playerBullet(nullptr), m_maxAlienBullets(5)
 {
 	m_alienBullets.reserve(static_cast<size_t>(m_maxAlienBullets));
 }
@@ -29,11 +29,11 @@ BulletHandler::~BulletHandler()
 /// <summary>
 /// Spawn a PlayerBullet object at specified position
 /// </summary>
-void BulletHandler::addPlayerBullet(int32_t xPos, int32_t yPos)
+bool BulletHandler::addPlayerBullet(int32_t xPos, int32_t yPos)
 {
 	// Only one PlayerBullet can exist at one time
 	if (m_playerBullet)
-		return;
+		return false;
 
 	// Create bullet
 	m_playerBullet = std::make_unique<PlayerBullet>();
@@ -46,9 +46,11 @@ void BulletHandler::addPlayerBullet(int32_t xPos, int32_t yPos)
 	tempLoaderParams->movementSpeed = PBULLET_SPEED;
 
 	// Set initial bullet values and give it information on aliens, alienboss and level blocks
-	m_playerBullet->loadObject(tempLoaderParams, m_allAliens, m_alienBoss, m_allBlocks);
+	m_playerBullet->loadObject(std::move(tempLoaderParams), m_allAliens, m_alienBoss, m_allBlocks);
 
 	TheSoundManager::Instance()->playSound("playerShoot");
+
+	return true;
 }
 
 /// <summary>
@@ -73,7 +75,7 @@ void BulletHandler::addAlienBullet(int32_t xPos, int32_t yPos)
 	tempLoaderParams->movementSpeed = static_cast<float>(getRandomNumber(ABULLET_MIN_SPEED, ABULLET_MAX_SPEED));
 
 	// Set initial bullet values and give it information on player and level blocks
-	alienBullet->loadObject(tempLoaderParams, m_player, m_allBlocks);
+	alienBullet->loadObject(std::move(tempLoaderParams), m_player, m_allBlocks);
 
 	// Add newly created bullet into total alien bullet vector
 	m_alienBullets.push_back(std::move(alienBullet));

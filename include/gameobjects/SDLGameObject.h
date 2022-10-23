@@ -19,7 +19,7 @@ public:
     SDLGameObject();
 	~SDLGameObject();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void loadObject(std::unique_ptr<LoaderParams> pParams);
 
     virtual void drawObject();
     virtual void updateObject();
@@ -61,6 +61,9 @@ protected:
 
 	// Flip sprite on draw?
 	bool m_bFlipImage;
+
+	// Rotation of the sprite during drawing (default - 0)
+	double m_spriteRotation;
 };
 
 class SDLGameObjectCreator :

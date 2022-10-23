@@ -8,7 +8,8 @@
 
 Player::Player()
 	:SDLGameObject(), m_bDead(false), m_bDying(false),
-	m_timeSpentDying_ms(0), m_timeAloudDying_ms(2000), m_respawnPosition(0,0)
+	m_currentDyingTime_ms(0), m_selectedDyingTime_ms(2000), m_respawnPosition(0,0),
+	m_bReadyToShoot(true), m_selectedShotWaitTime_ms(500), m_currentShotWaitTime_ms(0)
 {
 }
 
@@ -19,13 +20,13 @@ Player::~Player()
 /// <summary>
 /// Set all values in Player and parent classes
 /// </summary>
-void Player::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void Player::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
-
 	// Use the starting position as the respawn position
 	m_respawnPosition.setX(static_cast<float>(pParams->xPos));
 	m_respawnPosition.setY(static_cast<float>(pParams->yPos));
+
+	SDLGameObject::loadObject(std::move(pParams));
 }
 
 /// <summary>
@@ -53,14 +54,14 @@ void Player::updateObject()
 	// If dying, continue dying timer
 	if (m_bDying)
 	{
-		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime_ms();
-		if (m_timeSpentDying_ms >= m_timeAloudDying_ms)
+		m_currentDyingTime_ms += TheProgramClock::Instance()->getDeltaTime_ms();
+		if (m_currentDyingTime_ms >= m_selectedDyingTime_ms)
 			m_bDead = true;
 		
 		return;
 	}
 
-	// Move player in direction from input
+	// Ensure player is not touching right wall
 	if (m_position.getX() + m_objectWidth < m_screenWidth - EDGE_SCREEN_BUFFER)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::D))
@@ -68,7 +69,7 @@ void Player::updateObject()
 			m_velocity.setX(m_movementSpeed);
 		}
 	}
-
+	// Ensure player is not touching left wall
 	if (m_position.getX() > EDGE_SCREEN_BUFFER)
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::A))
@@ -77,13 +78,25 @@ void Player::updateObject()
 		}
 	}
 
-	// Spawn PlayerBullet on input
-	if (TheInputHandler::Instance()->isKeyDown(Keyboard::SPACE))
+	if (m_bReadyToShoot)
 	{
-		//TheBulletHandler::Instance()->addPlayerBullet(static_cast<int>(m_position.getX()+(m_objectWidth/2)), static_cast<int>(m_position.getY() - m_objectHeight));
-		m_stateBulletHandler.lock()->addPlayerBullet(static_cast<int>(m_position.getX() + (m_objectWidth / 2)), static_cast<int>(m_position.getY() - m_objectHeight));
+		// Spawn PlayerBullet on input
+		if (TheInputHandler::Instance()->isKeyDown(Keyboard::SPACE))
+		{
+			// If shot was fired, begin shot cool down
+			if (m_stateBulletHandler.lock()->addPlayerBullet(static_cast<int>(m_position.getX() + (m_objectWidth / 2)), static_cast<int>(m_position.getY() - m_objectHeight)))
+				m_bReadyToShoot = false;
+		}
 	}
-
+	else
+	{
+		m_currentShotWaitTime_ms += TheProgramClock::Instance()->getDeltaTime_ms();
+		if (m_currentShotWaitTime_ms >= m_selectedShotWaitTime_ms)
+		{
+			m_currentShotWaitTime_ms = 0;
+			m_bReadyToShoot = true;
+		}
+	}
 }
 
 /// <summary>
@@ -100,7 +113,7 @@ void Player::respawnPlayer()
 	m_bDead = false;
 	m_bDying = false;
 
-	m_timeSpentDying_ms = 0;
+	m_currentDyingTime_ms = 0;
 
 	TheGame::Instance()->decreaseCurrentLives();
 }

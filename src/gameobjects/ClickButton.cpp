@@ -22,9 +22,9 @@ ClickButton::~ClickButton()
 /// <summary>
 /// Set all values in ClickButton and parent classes
 /// </summary>
-void ClickButton::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void ClickButton::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	Button::loadObject(pParams);
+	Button::loadObject(std::move(pParams));
 
 	m_currentSpriteFrame = static_cast<uint8_t>(MenuButtonState::MOUSE_OUT);
 }

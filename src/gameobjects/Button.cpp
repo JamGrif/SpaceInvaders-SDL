@@ -6,7 +6,6 @@ Button::Button()
 {
 }
 
-
 Button::~Button()
 {
 }
@@ -14,11 +13,11 @@ Button::~Button()
 /// <summary>
 /// Set all values in Button class and parent classes
 /// </summary>
-void Button::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void Button::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
-
 	m_selectCallbackID = pParams->selectCallbackID;
+
+	SDLGameObject::loadObject(std::move(pParams));
 }
 
 /// <summary>

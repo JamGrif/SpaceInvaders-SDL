@@ -23,17 +23,16 @@ AlienBullet::~AlienBullet()
 /// <summary>
 /// Set all values in AlienBullet class and parent classes
 /// </summary>
-void AlienBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks)
+void AlienBullet::loadObject(std::unique_ptr<LoaderParams> pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks)
 {
-	//assert(levelPlayer);
 	assert(pLevelBlocks);
-
-	SDLGameObject::loadObject(pParams);
 
 	m_classType = "AlienBullet";
 
 	m_pLevelPlayer = pLevelPlayer;
 	m_pAllBlocks = pLevelBlocks;
+
+	SDLGameObject::loadObject(std::move(pParams));
 }
 
 /// <summary>

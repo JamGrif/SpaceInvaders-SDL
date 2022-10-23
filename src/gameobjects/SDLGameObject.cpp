@@ -9,7 +9,7 @@
 SDLGameObject::SDLGameObject()
 	:BaseGameObject(), m_position(0, 0), m_velocity(0, 0), m_objectWidth(0), m_objectHeight(0),
 	m_objectAttributes{ 0,0,0,0 },m_currentSpriteFrame(1), m_framesInSprite(0), m_animationSpeed_ms(0),
-	m_movementSpeed(0), m_screenWidth(0), m_screenHeight(0), m_bFlipImage(false)
+	m_movementSpeed(0), m_screenWidth(0), m_screenHeight(0), m_bFlipImage(false), m_spriteRotation(0.0)
 {
 }
 
@@ -20,7 +20,7 @@ SDLGameObject::~SDLGameObject()
 /// <summary>
 /// Sell all values in SDLGameObject class
 /// </summary>
-void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
 	m_position = Vector2D(static_cast<float>(pParams->xPos), static_cast<float>(pParams->yPos));
 	m_classType = pParams->classType;
@@ -59,7 +59,8 @@ void SDLGameObject::drawObject()
 		m_objectTextureID,
 		m_objectAttributes,
 		m_currentSpriteFrame,
-		m_bFlipImage);
+		m_bFlipImage,
+		m_spriteRotation);
 }
 
 /// <summary>

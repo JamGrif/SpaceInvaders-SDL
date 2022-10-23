@@ -8,8 +8,6 @@
 #include "core/TextManager.h"
 #include "core/SpriteManager.h"
 
-#define FONTPATH "res/text/04B_30__.ttf"
-
 TextObject::TextObject()
 	:m_textCallback(nullptr), m_textCallbackID(0), m_thisFont(nullptr), m_textTexture(nullptr),
 	m_textDimensions({0,0,0,0}), m_textColor({0,255,0})
@@ -23,17 +21,19 @@ TextObject::~TextObject()
 /// <summary>
 /// Set all values in TextObject class and parent classes
 /// </summary>
-void TextObject::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void TextObject::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
-
 	m_textCallbackID = pParams->textCallbackID;
 
 	// Set this objects font
 	m_thisFont = TheTextManager::Instance()->getFont(pParams->textSize);
 
 	// Set the current text
-	updateText(pParams->text);
+	m_text = pParams->text;
+
+	SDLGameObject::loadObject(std::move(pParams));
+
+	updateText(m_text);
 }
 
 /// <summary>
@@ -52,7 +52,7 @@ void TextObject::updateObject()
 	SDLGameObject::updateObject();
 
 	// If the TextObject uses a callback function, it means it copies a value from somewhere else in the program
-	if (m_textCallbackID != 0)
+	if (m_textCallbackID)
 	{
 		// Update text only if changed
 		if (m_text != m_textCallback())

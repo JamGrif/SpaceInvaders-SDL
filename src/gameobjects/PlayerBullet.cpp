@@ -25,19 +25,18 @@ PlayerBullet::~PlayerBullet()
 /// <summary>
 /// Set all values in PlayerBullet class and parent classes
 /// </summary>
-void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams, std::vector<std::shared_ptr<Alien>>* levelAliensPtr, std::weak_ptr<AlienBoss> alienBossPtr, std::vector<std::shared_ptr<Block>>* levelBlocksPtr)
+void PlayerBullet::loadObject(std::unique_ptr<LoaderParams> pParams, std::vector<std::shared_ptr<Alien>>* pLevelAliens, std::weak_ptr<AlienBoss> pAlienBoss, std::vector<std::shared_ptr<Block>>* pLevelBlocks)
 {
-	assert(levelAliensPtr);
-	//assert(alienBossPtr);
-	assert(levelBlocksPtr);
+	assert(pLevelAliens);
+	assert(pLevelBlocks);
 
-	BaseBullet::loadObject(pParams);
+	BaseBullet::loadObject(std::move(pParams));
 
 	m_classType = "PlayerBullet";
 
-	m_pAllAliens = levelAliensPtr;
-	m_pAlienBoss = alienBossPtr;
-	m_pAllBlocks = levelBlocksPtr;
+	m_pAllAliens = pLevelAliens;
+	m_pAlienBoss = pAlienBoss;
+	m_pAllBlocks = pLevelBlocks;
 }
 
 /// <summary>

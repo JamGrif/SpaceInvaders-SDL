@@ -15,7 +15,7 @@ public:
 	TextObject();
 	~TextObject();
 
-	virtual void	loadObject(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams);
 
 	virtual void	drawObject();
 	virtual void	updateObject();

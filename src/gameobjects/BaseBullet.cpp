@@ -13,9 +13,9 @@ BaseBullet::~BaseBullet()
 /// <summary>
 /// Call parent class load function
 /// </summary>
-void BaseBullet::loadObject(std::unique_ptr<LoaderParams> const& pParams)
+void BaseBullet::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	SDLGameObject::loadObject(pParams);
+	SDLGameObject::loadObject(std::move(pParams));
 }
 
 /// <summary>

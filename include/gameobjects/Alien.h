@@ -18,7 +18,7 @@ public:
 	Alien();
 	~Alien();
 
-	virtual void	loadObject(std::unique_ptr<LoaderParams> const& pParams) override;
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams) override;
 
     virtual void	drawObject() override;
     virtual void	updateObject() override;
