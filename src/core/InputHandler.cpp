@@ -5,8 +5,6 @@
 
 #include "core/Game.h"
 
-InputHandler* InputHandler::s_pInstance = nullptr;
-
 /// <summary>
 /// Initializes the InputHandler systems
 /// </summary>

@@ -5,10 +5,8 @@
 
 #include "core/GameWindow.h"
 
-#define BLACK 0
-#define WHITE 255
-
-Renderer* Renderer::s_pInstance = nullptr;
+static constexpr uint8_t BLACK = 0;
+static constexpr uint8_t WHITE = 255;
 
 /// <summary>
 /// Initializes the Renderer systems

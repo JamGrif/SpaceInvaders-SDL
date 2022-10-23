@@ -77,13 +77,11 @@ public:
 
 	static SoundManager* Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new SoundManager();
+		static SoundManager* s_pInstance = new SoundManager;
 		return s_pInstance;
 	}
 
 private:
-	static SoundManager* s_pInstance; 
 
 	std::unordered_map<std::string, std::unique_ptr<SoundEffectObject>>	m_soundEffectObjects;
 	std::unordered_map<std::string, std::unique_ptr<MusicObject>>		m_musicObjects;
@@ -91,9 +89,9 @@ private:
 	bool m_bPlayingSound;
 	bool m_bPlayingMusic;
 
-	SoundManager() :m_bPlayingSound(true), m_bPlayingMusic(true) {};					// Prevent construction
-	SoundManager(const SoundManager&) :m_bPlayingSound(true), m_bPlayingMusic(true) {};	// Prevent construction by copying
-	SoundManager& operator=(const SoundManager&) {};									// Prevent assignment
-	~SoundManager() {};																	// Prevent unwanted destruction
+	SoundManager() :m_bPlayingSound(true), m_bPlayingMusic(true) {};	// Prevent construction
+	SoundManager(const SoundManager&) = delete;							// Prevent construction by copying
+	SoundManager& operator=(const SoundManager&) = delete;				// Prevent assignment
+	~SoundManager() {};													// Prevent unwanted destruction
 };
 typedef SoundManager TheSoundManager;

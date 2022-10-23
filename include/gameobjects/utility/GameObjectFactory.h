@@ -3,7 +3,9 @@
 class BaseGameObject;
 
 /// <summary>
-/// Only purpose is the creation of a specific object
+/// Registers an object with the GameObjectFactory which is used to create objects from the level editor files (.tmx)
+/// Only required for objects that are spawned from the level editor
+/// Any new inherited game objects must also inherit and implement this class 
 /// </summary>
 class BaseCreator
 {

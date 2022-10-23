@@ -15,7 +15,7 @@ public:
 	void	clearAllFromSpriteMap();
 	void	clearFromSpriteMap(const std::string& id);
 
-	void	drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal);
+	void	drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal, double spriteRotation);
 	void	drawSpriteTile(const std::string& id, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t currentRow, uint8_t currentFrame);
 	void	drawSpriteText(SDL_Texture* textObjectTexture, const SDL_Rect& textObjectAttributes);
 
@@ -23,13 +23,11 @@ public:
 
 	static SpriteManager* Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new SpriteManager();
+		static SpriteManager* s_pInstance = new SpriteManager;
 		return s_pInstance;
 	}
 
 private:
-	static SpriteManager* s_pInstance;
 
 	std::unordered_map<std::string, std::shared_ptr<Sprite>> m_spriteMap;
 
@@ -39,9 +37,9 @@ private:
 	// Number of pixels between each sprite in a tileset picture
 	const uint8_t m_tilesetPixelSpacing;
 		
-	SpriteManager() :m_tilesetPixelMargin(2), m_tilesetPixelSpacing(2) {};						// Prevent outside unwanted construction
-	SpriteManager(const SpriteManager&) :m_tilesetPixelMargin(2), m_tilesetPixelSpacing(2) {};	// Prevent construction by copying
-	SpriteManager& operator=(const SpriteManager&) {};											// Prevent assignment
-	~SpriteManager() {};																		// Prevent outside unwanted destruction
+	SpriteManager() :m_tilesetPixelMargin(2), m_tilesetPixelSpacing(2) {};	// Prevent outside unwanted construction
+	SpriteManager(const SpriteManager&) = delete;							// Prevent construction by copying
+	SpriteManager& operator=(const SpriteManager&) = delete;				// Prevent assignment
+	~SpriteManager() {};													// Prevent outside unwanted destruction
 };
 typedef SpriteManager TheSpriteManager;

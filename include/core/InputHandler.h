@@ -23,13 +23,11 @@ public:
 
 	static InputHandler* Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new InputHandler();
+		static InputHandler* s_pInstance = new InputHandler;
 		return s_pInstance;
 	}
 
 private:
-	static InputHandler* s_pInstance;
 
 	// Handle Keyboard events
 	void		onKeyDown();
@@ -49,10 +47,10 @@ private:
 	// Current state of the keyboard buttons
 	uint8_t*	m_keystates;
 
-	InputHandler();										// Prevent outside unwanted construction
-	InputHandler(const InputHandler&);					// Prevent construction by copying
-	InputHandler& operator=(const InputHandler&) {};	// Prevent assignment
-	~InputHandler() {};									// Prevent outside unwanted destruction
+	InputHandler();											// Prevent outside unwanted construction
+	InputHandler(const InputHandler&) = delete;				// Prevent construction by copying
+	InputHandler& operator=(const InputHandler&) = delete;	// Prevent assignment
+	~InputHandler() {};										// Prevent outside unwanted destruction
 
 };
 typedef InputHandler TheInputHandler;

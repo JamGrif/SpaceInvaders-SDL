@@ -17,21 +17,18 @@ public:
 
 	static TextManager* Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new TextManager();
+		static TextManager* s_pInstance = new TextManager;
 		return s_pInstance;
 	}
 
 private:
-	static TextManager* s_pInstance;
 
 	// Prevents reconstruction of fonts with same font size
 	std::unordered_map<FONT_SIZE, TTF_Font*> m_loadedFonts;
 
-	TextManager() {};								// Prevent construction
-	TextManager(const TextManager&) {};				// Prevent construction by copying
-	TextManager& operator=(const TextManager&) {};	// Prevent assignment
-	~TextManager() {};								// Prevent unwanted destruction
-
+	TextManager() {};										// Prevent construction
+	TextManager(const TextManager&) = delete;				// Prevent construction by copying
+	TextManager& operator=(const TextManager&) = delete;	// Prevent assignment
+	~TextManager() {};										// Prevent unwanted destruction
 };
 typedef TextManager TheTextManager;

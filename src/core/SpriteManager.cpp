@@ -6,8 +6,6 @@
 
 #include "core/Renderer.h"
 
-SpriteManager* SpriteManager::s_pInstance = nullptr;
-
 /// <summary>
 /// Create sprite at filepath and assign an id to it
 /// </summary>
@@ -68,7 +66,7 @@ void SpriteManager::clearFromSpriteMap(const std::string& id)
 /// <summary>
 /// Draw the specified sprite, using its id to choose it
 /// </summary>
-void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal)
+void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal, double spriteRotation)
 {
 	if (m_spriteMap.find(id) == m_spriteMap.end())
 	{
@@ -85,7 +83,7 @@ void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objec
 
 	SDL_RendererFlip flag = flipHorizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
-	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &spriteFrame, &objectAttributes, 0, 0, flag);
+	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &spriteFrame, &objectAttributes, spriteRotation, 0, flag);
 }
 
 /// <summary>

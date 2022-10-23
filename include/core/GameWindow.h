@@ -18,23 +18,21 @@ public:
 
 	static GameWindow*	Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new GameWindow();
+		static GameWindow* s_pInstance = new GameWindow;
 		return s_pInstance;
 	}
 
 private:
-	static GameWindow* s_pInstance;
 
 	SDL_Window* m_pWindow;
 
 	uint16_t m_windowWidth;
 	uint16_t m_windowHeight;
 
-	GameWindow() :m_pWindow(nullptr), m_windowWidth(0), m_windowHeight(0) {};				// Prevent outside unwanted construction
-	GameWindow(const GameWindow&) :m_pWindow(nullptr), m_windowWidth(0), m_windowHeight(0) {};	// Prevent construction by copying
-	GameWindow& operator=(const GameWindow&) {};												// Prevent assignment
-	~GameWindow() {};																		// Prevent outside unwanted destruction
+	GameWindow() :m_pWindow(nullptr), m_windowWidth(0), m_windowHeight(0) {};	// Prevent outside unwanted construction
+	GameWindow(const GameWindow&) = delete;										// Prevent construction by copying
+	GameWindow& operator=(const GameWindow&) = delete;							// Prevent assignment
+	~GameWindow() {};															// Prevent outside unwanted destruction
 
 };
 typedef GameWindow TheGameWindow;

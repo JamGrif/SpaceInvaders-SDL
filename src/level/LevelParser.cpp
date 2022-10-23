@@ -244,7 +244,7 @@ void LevelParser::parseObjectLayer(const TiXmlElement& pObjectGroupRoot, std::ve
 		}
 
 		// Now that LoaderParams is filled out, use it to load the values of the gameobject
-		pGameObject->loadObject(tempLoaderParams);
+		pGameObject->loadObject(std::move(tempLoaderParams));
 
 		// Put the new object into the total gameobject vector
 		allGameObjects.push_back(pGameObject);

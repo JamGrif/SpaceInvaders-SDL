@@ -9,15 +9,10 @@
 #include "gameobjects/utility/GameObjectFactory.h"
 #include "states/utility/GameStateMachine.h"
 
-//#define INITIALIZE_SUCCESS 0
-static constexpr int INITIALIZE_SUCCESS = 0;
+static constexpr int8_t INITIALIZE_SUCCESS = 0;
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 704
-
-Game* Game::s_pInstance = nullptr;
-
-//uint8_t hi;
+static constexpr uint16_t WINDOW_WIDTH = 800;
+static constexpr uint16_t WINDOW_HEIGHT = 704;
 
 /// <summary>
 /// Sets up systems used by the game, required before the game loop can start

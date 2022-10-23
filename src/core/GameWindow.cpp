@@ -3,8 +3,6 @@
 
 #include "SDL2/SDL.h"
 
-GameWindow* GameWindow::s_pInstance = nullptr;
-
 /// <summary>
 /// Initializes the Window systems
 /// </summary>

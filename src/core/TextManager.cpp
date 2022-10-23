@@ -6,8 +6,6 @@
 static constexpr int8_t INITIALIZE_SUCCESS = 0;
 static const char* FONTPATH = "res/text/04B_30__.ttf";
 
-TextManager* TextManager::s_pInstance = nullptr;
-
 /// <summary>
 /// Initializes the TextManager systems
 /// </summary>

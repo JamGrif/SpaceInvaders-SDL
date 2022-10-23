@@ -18,20 +18,17 @@ public:
 
 	static Renderer* Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new Renderer();
+		static Renderer* s_pInstance = new Renderer;
 		return s_pInstance;
 	}
 private:
 
-	static Renderer* s_pInstance;
-
 	SDL_Renderer* m_pRenderer;
 
-	Renderer();									// Prevent outside unwanted construction
-	Renderer(const Renderer&) :m_pRenderer(nullptr) {};				// Prevent construction by copying
-	Renderer& operator=(const Renderer&) {};	// Prevent assignment
-	~Renderer() {};								// Prevent outside unwanted destruction
+	Renderer();										// Prevent outside unwanted construction
+	Renderer(const Renderer&) = delete;				// Prevent construction by copying
+	Renderer& operator=(const Renderer&) = delete;	// Prevent assignment
+	~Renderer() {};									// Prevent outside unwanted destruction
 };
 typedef Renderer TheRenderer;
 

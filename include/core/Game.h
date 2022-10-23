@@ -47,13 +47,11 @@ public:
 		
 	static Game*	Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new Game();
+		static Game* s_pInstance = new Game;
 		return s_pInstance;
 	}
 
 private:
-	static Game*	s_pInstance;
 
 	GameStateMachine* m_pGameStateMachine;
 
@@ -70,11 +68,9 @@ private:
 	const uint8_t	m_maxLives;
 	int8_t			m_currentLives;
 
-	Game();																// Prevent outside unwanted construction
-	Game(const Game&)													// Prevent construction by copying
-		:m_pGameStateMachine(nullptr), m_bRunning(false),
-		m_currentScore(0), m_maxLives(3), m_currentLives(m_maxLives) {}		
-	Game& operator=(const Game&) {}										// Prevent assignment
-	~Game() {}															// Prevent outside unwanted destruction
+	Game();									// Prevent outside unwanted construction
+	Game(const Game&) = delete;				// Prevent construction by copying
+	Game& operator=(const Game&) = delete;	// Prevent assignment
+	~Game() {}								// Prevent outside unwanted destruction
 };
 typedef Game TheGame;

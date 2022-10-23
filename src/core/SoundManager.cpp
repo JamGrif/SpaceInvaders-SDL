@@ -11,8 +11,6 @@ static constexpr uint8_t  VOLUME_MAXIMUM = 50;
 
 static constexpr int8_t   ALL_CHANNELS	 = -1;
 
-SoundManager* SoundManager::s_pInstance = nullptr;
-
 /// <summary>
 /// Initializes the SoundManager systems
 /// </summary>
