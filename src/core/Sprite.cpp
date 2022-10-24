@@ -7,14 +7,14 @@ Sprite::Sprite(SDL_Texture* texture, const std::string& fileName, const std::str
 	:m_textureObject(texture), m_fileName(fileName), m_id(id),
 	m_indivdualSpriteDimension(std::make_unique<SDL_Rect>()), m_totalSpriteDimensions(std::make_unique<SDL_Rect>()), m_bSpriteSetup(false)
 {
-	/*std::cout << "created sprite " << m_fileName << std::endl;*/
+	/*std::cout << "created sprite " << m_id << std::endl;*/
 }
 
 Sprite::~Sprite()
 {
 	SDL_DestroyTexture(m_textureObject);
 
-	/*std::cout << "destroyed sprite " << m_fileName << std::endl;*/
+	/*std::cout << "destroyed sprite " << m_id << std::endl;*/
 }
 
 /// <summary>
@@ -44,4 +44,34 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames)
 
 	// Height of each frame
 	m_indivdualSpriteDimension->h = m_totalSpriteDimensions->h;
+}
+
+/// <summary>
+/// Update the total sprite dimensions to the current SDL_Texture size
+/// </summary>
+void Sprite::calculateSpriteDimensions()
+{
+	SDL_QueryTexture(m_textureObject, NULL, NULL, &m_totalSpriteDimensions->w, &m_totalSpriteDimensions->h);
+}
+
+/// <summary>
+/// Copy the totalSpriteDimensions to the provided SDL_Rect structure
+/// </summary>
+void Sprite::getSpriteDimensions(SDL_Rect& rect)
+{
+	rect.w = m_totalSpriteDimensions->w;
+	rect.h = m_totalSpriteDimensions->h;
+}
+
+/// <summary>
+/// Swap out the current SDL_Texture object with a new one
+/// Destroys the old one
+/// </summary>
+void Sprite::changeTexture(SDL_Texture* pNewTexture)
+{
+	if (!pNewTexture)
+		return;
+
+	SDL_DestroyTexture(m_textureObject);
+	m_textureObject = pNewTexture;
 }

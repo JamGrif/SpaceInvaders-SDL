@@ -47,11 +47,29 @@ bool SpriteManager::loadSprite(const std::vector<std::pair<std::string, std::str
 }
 
 /// <summary>
+/// Create a Sprite object from an already created SDL_Texture and assign an id to it
+/// </summary>
+bool SpriteManager::loadSprite(SDL_Texture* pCreatedTexture, const std::string& id)
+{
+	// Check if sprite with id already exists
+	if (m_spriteMap.find(id) != m_spriteMap.end())
+		return false;
+
+	// Add sprite to spriteMap
+	m_spriteMap.insert({ id, std::make_shared<Sprite>(pCreatedTexture, "", id)});
+
+	return true;
+}
+
+/// <summary>
 /// Delete all loaded sprite objects from the spriteMap
 /// </summary>
 void SpriteManager::clearAllFromSpriteMap()
 {
 	m_spriteMap.clear();
+
+	// As all sprites have been removed, clear free IDs
+	resetIDs();
 }
 
 /// <summary>
@@ -98,7 +116,7 @@ void SpriteManager::drawSpriteTile(const std::string& id, int16_t x, int16_t y, 
 	}
 
 	SDL_Rect tileToDraw;	// Tile on tileset to draw
-	SDL_Rect destRect;		// Location on screen to draw
+	SDL_Rect destRect;		
 
 	tileToDraw.x = m_tilesetPixelMargin + (m_tilesetPixelSpacing + width) * currentFrame;
 	tileToDraw.y = m_tilesetPixelMargin + (m_tilesetPixelSpacing + height) * currentRow;
@@ -111,18 +129,66 @@ void SpriteManager::drawSpriteTile(const std::string& id, int16_t x, int16_t y, 
 	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &tileToDraw, &destRect, 0, 0, SDL_FLIP_NONE);
 }
 
-
-void SpriteManager::drawSpriteText(SDL_Texture* textObjectTexture, const SDL_Rect& textObjectAttributes)
+/// <summary>
+/// Draw the specified text, using its id to choose it
+/// </summary>
+void SpriteManager::drawSpriteText(const std::string& id, const SDL_Rect& objectAttributes)
 {
-	assert(textObjectTexture);
+	if (m_spriteMap.find(id) == m_spriteMap.end())
+	{
+		std::cout << "text sprite with id: " << id << " doesn't exist" << std::endl;
+		return;
+	}
 
-	SDL_RenderCopy(TheRenderer::Instance()->getRendererPtr(), textObjectTexture, NULL, &textObjectAttributes);
+	SDL_RenderCopy(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), NULL, &objectAttributes);
 }
 
 /// <summary>
 /// Return sprite object at id, nullptr if doesn't exist
 /// </summary>
-std::shared_ptr<Sprite> SpriteManager::getSpriteViaID(const std::string& id) const
+std::weak_ptr<Sprite> SpriteManager::getSpriteViaID(const std::string& id) const
 {
 	return m_spriteMap.find(id) != m_spriteMap.end() ? m_spriteMap.at(id) : nullptr;
+}
+
+/// <summary>
+/// Returns an available ID for an object to identify its sprite in the m_spriteMap
+/// For objects that aren't assigned filepaths or IDs in the level editors (like TextObjects)
+/// </summary>
+uint32_t SpriteManager::getNextFreeID()
+{
+	m_inUseIDs.push_back(0);
+	return static_cast<uint32_t>(m_inUseIDs.size());
+}
+
+/// <summary>
+/// Resets the available IDs back to 0
+/// </summary>
+void SpriteManager::resetIDs()
+{
+	m_inUseIDs.clear();
+	while (!m_amountIDAtStateStart.empty())
+	{
+		m_amountIDAtStateStart.pop();
+	}
+}
+
+/// <summary>
+/// Store the current number of IDs in use when a new state is PUSHED into the FSM
+/// </summary>
+void SpriteManager::storeIDsOnStatePush()
+{
+	m_amountIDAtStateStart.push(static_cast<int>(m_inUseIDs.size()));
+}
+
+/// <summary>
+/// When a state is POPPED off the FSM, return back to the number of IDs before that state was pushed on
+/// </summary>
+void SpriteManager::removeIDsAtStatePop()
+{
+	if (m_amountIDAtStateStart.empty())
+		return;
+
+	m_inUseIDs.resize(m_amountIDAtStateStart.top());
+	m_amountIDAtStateStart.pop();
 }

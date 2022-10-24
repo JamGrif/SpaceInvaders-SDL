@@ -34,12 +34,12 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> pParams)
 	m_screenHeight = TheGameWindow::Instance()->getWindowHeight();
 
 	// The Object width and height is the dimensions of the current sprite frame on its sprite sheet
-	std::shared_ptr<Sprite> temp = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
-	if (temp)
+	std::weak_ptr<Sprite> temp = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
+	if (!temp.expired())
 	{
-		temp->setUpIndividualSpriteDimensions(pParams->numFrames);
-		m_objectWidth = temp->getIndividualDimensions()->w;
-		m_objectHeight = temp->getIndividualDimensions()->h;
+		temp.lock()->setUpIndividualSpriteDimensions(pParams->numFrames);
+		m_objectWidth = temp.lock()->getIndividualDimensions()->w;
+		m_objectHeight = temp.lock()->getIndividualDimensions()->h;
 	}
 }
 

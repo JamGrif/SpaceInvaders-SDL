@@ -25,26 +25,26 @@ bool TextManager::init()
 /// </summary>
 void TextManager::clean()
 {
-	// Loop through and delete all open fonts
-	for (const auto& [key, value] : m_loadedFonts)
-	{
-		TTF_CloseFont(value);
-	}
-
+	m_loadedFonts.clear();
+	
 	TTF_Quit();
 }
 
 /// <summary>
 /// Retrieve font object of specified size, creating and storing it if doesn't currently exist
 /// </summary>
-TTF_Font* TextManager::getFont(uint8_t textSize)
+std::weak_ptr<FontData> TextManager::getFont(uint8_t textSize)
 {
 	// If font of size textSize doesn't already exist, create it, add to map and return it
 	if (!m_loadedFonts.count(textSize))
 	{
 		TTF_Font* font = TTF_OpenFont(FONTPATH, textSize);
-		m_loadedFonts.insert({ textSize, font });
-		return font;
+		if (!font)
+			return {};
+		
+		std::shared_ptr<FontData> temp = std::make_shared<FontData>(font, textSize);
+		m_loadedFonts.insert({ textSize, temp });
+		return temp;
 	}
 
 	// Font does exist of textSize so return it

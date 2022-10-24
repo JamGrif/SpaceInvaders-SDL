@@ -17,6 +17,7 @@ public:
 	~Sprite();
 
 	void						setUpIndividualSpriteDimensions(int numFrames);
+	void						calculateSpriteDimensions();
 
 	SDL_Texture*				getTexturePtr() { return m_textureObject; }
 	std::string&				getFileName() { return m_fileName; }
@@ -24,6 +25,10 @@ public:
 
 	std::unique_ptr<SDL_Rect>&	getTotalDimensions() { return m_totalSpriteDimensions; };
 	std::unique_ptr<SDL_Rect>&	getIndividualDimensions() { return m_indivdualSpriteDimension; }
+
+	void						getSpriteDimensions(SDL_Rect& rect);
+
+	void						changeTexture(SDL_Texture* pNewTexture);
 
 private:
 	SDL_Texture*				m_textureObject;

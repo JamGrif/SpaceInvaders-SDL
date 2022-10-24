@@ -9,8 +9,7 @@
 #include "core/SpriteManager.h"
 
 TextObject::TextObject()
-	:m_textCallback(nullptr), m_textCallbackID(0), m_thisFont(nullptr), m_textTexture(nullptr),
-	m_textDimensions({0,0,0,0}), m_textColor({0,255,0})
+	:m_textCallback(nullptr), m_textCallbackID(0), m_textColor({0,255,0})
 {
 }
 
@@ -33,6 +32,10 @@ void TextObject::loadObject(std::unique_ptr<LoaderParams> pParams)
 
 	SDLGameObject::loadObject(std::move(pParams));
 
+	// As a TextObject isn't assigned a filepath or ID in level editor,
+	// it needs to retrieve a free ID from SpriteManager to identify its Sprite object
+	m_objectTextureID = std::to_string(TheSpriteManager::Instance()->getNextFreeID());
+
 	updateText(m_text);
 }
 
@@ -41,7 +44,7 @@ void TextObject::loadObject(std::unique_ptr<LoaderParams> pParams)
 /// </summary>
 void TextObject::drawObject()
 {
-	SpriteManager::Instance()->drawSpriteText(m_textTexture, m_textDimensions);
+	SpriteManager::Instance()->drawSpriteText(m_objectTextureID, m_objectAttributes);
 }
 
 /// <summary>
@@ -65,18 +68,31 @@ void TextObject::updateObject()
 /// </summary>
 void TextObject::updateText(const std::string& newText)
 {
-	SDL_Surface* textSurface = TTF_RenderText_Solid(m_thisFont, newText.c_str(), m_textColor);
+	// Create the new SDL_Texture object with the new text value
+	SDL_Surface* textSurface = TTF_RenderText_Solid(m_thisFont.lock()->getTTF_Font(), newText.c_str(), m_textColor);
 	if (!textSurface)
 		return;
 
-	m_textTexture = SDL_CreateTextureFromSurface(TheRenderer::Instance()->getRendererPtr(), textSurface);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(TheRenderer::Instance()->getRendererPtr(), textSurface);
 	SDL_FreeSurface(textSurface);
-	if (!m_textTexture)
+	if (!textTexture)
 		return;
 
+	// Store the new text
 	m_text = newText;
 
-	// Update dimensions of texture object as text has changed
-	SDL_QueryTexture(m_textTexture, NULL, NULL, &m_objectWidth, &m_objectHeight);
-	m_textDimensions = { static_cast<int>(m_position.getX()), static_cast<int>(m_position.getY()), m_objectWidth, m_objectHeight };
+	// If first time creating sprite at m_objectTextureID, create the Sprite object
+	if (TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).expired())
+		TheSpriteManager::Instance()->loadSprite(textTexture, m_objectTextureID);
+	// Otherwise, simply swap out the SDL_Texture with the newly created one
+	else
+		TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).lock()->changeTexture(textTexture);
+	
+	// Calculate the new dimensions of the SDL_Texture object as the text has changed
+	TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).lock()->calculateSpriteDimensions();
+
+	// Update m_objectAttributes for rendering
+	m_objectAttributes.x = static_cast<int>(m_position.getX());
+	m_objectAttributes.y = static_cast<int>(m_position.getY());
+	TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).lock()->getSpriteDimensions(m_objectAttributes);
 }
