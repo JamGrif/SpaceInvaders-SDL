@@ -21,16 +21,16 @@ public:
 
 private:
 
-	bool m_bTicked;
+	bool			m_bTicked;
 
 	// Starting state of the checkbox (ticked or not)
-	bool m_bInitialStateSet;
+	bool			m_bInitialStateSet;
 
 	// Function pointer to use to determine starting state of button
 	bool (*m_checkboxStateCallback)();
 
 	// ID of function used to determine starting state (ID set in level editor)
-	uint8_t m_checkboxStateCallbackID; 
+	uint8_t			m_checkboxStateCallbackID; 
 };
 
 class CheckboxButtonCreator :

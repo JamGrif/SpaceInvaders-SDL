@@ -8,13 +8,13 @@ struct SDL_Renderer;
 class Renderer
 {
 public:
-	bool init();
-	void clean();
+	bool			init();
+	void			clean();
 
-	void startOfFrame();
-	void EndOfFrame();
+	void			startOfFrame();
+	void			EndOfFrame();
 
-	SDL_Renderer* getRendererPtr() const { return m_pRenderer; }
+	SDL_Renderer*	getRendererPtr() const { return m_pRenderer; }
 
 	static Renderer* Instance() // Get instance
 	{
@@ -23,7 +23,7 @@ public:
 	}
 private:
 
-	SDL_Renderer* m_pRenderer;
+	SDL_Renderer*	m_pRenderer;
 
 	Renderer();										// Prevent outside unwanted construction
 	Renderer(const Renderer&) = delete;				// Prevent construction by copying

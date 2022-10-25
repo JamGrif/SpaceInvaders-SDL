@@ -22,7 +22,7 @@ public:
 
 private:
 
-	BlockHealth m_blockHealth;
+	BlockHealth		m_blockHealth;
 };
 
 class BlockCreator :

@@ -24,22 +24,22 @@ public:
 	~GameStateMachine();
 
 	// State Actions
-	void updateCurrentState();
-	void renderCurrentState();
+	void	updateCurrentState();
+	void	renderCurrentState();
 
-	bool checkForStateChange() const { return m_bNeedToChange; }
-	void setStateUpdate(StateMachineAction change);
-	void changeCurrentState();
+	bool	checkForStateChange() const { return m_bNeedToChange; }
+	void	setStateUpdate(StateMachineAction change);
+	void	changeCurrentState();
 
 private:
 	std::vector<std::unique_ptr<BaseState>> m_currentGameStates;
 
 	// State Selection
-	void pushState(std::unique_ptr<BaseState> pState);
-	void changeState(std::unique_ptr<BaseState> pState);
-	void popState();						
+	void	pushState(std::unique_ptr<BaseState> pState);
+	void	changeState(std::unique_ptr<BaseState> pState);
+	void	popState();
 
-	bool m_bNeedToChange;
+	bool	m_bNeedToChange;
 	StateMachineAction m_actionToTake;
 };
 

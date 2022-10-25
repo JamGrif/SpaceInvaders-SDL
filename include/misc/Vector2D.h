@@ -9,19 +9,17 @@ class Vector2D
 public:
 	Vector2D(float x, float y);
 
-	float getX() const { return m_x; }
+	float		getX() const { return m_x; }
+	float		getY() const { return m_y; }
 
-	float getY() const { return m_y; }
-
-	void setX(float x) { m_x = x; }
-
-	void setY(float y){ m_y = y; }
+	void		setX(float x) { m_x = x; }
+	void		setY(float y){ m_y = y; }
 
 	// Pythagoras Theorem
-	float length();
+	float		length();
 
 	// Add together two vectors to return a new one
-	Vector2D operator+ (const Vector2D& v2) const;
+	Vector2D	operator+ (const Vector2D& v2) const;
 
 	// Using friend means you can access .m_x and .m_y for both objects directly
 	friend Vector2D& operator+= (Vector2D& v1, const Vector2D& v2)
@@ -41,12 +39,12 @@ public:
 	*/
 
 	// Multiply vector by a scalar number
-	Vector2D operator* (float scalar);
+	Vector2D	operator* (float scalar);
 
-	Vector2D& operator*= (float scalar);
+	Vector2D&	operator*= (float scalar);
 
 	// Subtraction of two vectors
-	Vector2D operator- (const Vector2D& v2) const;
+	Vector2D	operator- (const Vector2D& v2) const;
 
 	friend Vector2D& operator-= (Vector2D& v1, const Vector2D& v2)
 	{
@@ -57,12 +55,12 @@ public:
 	}
 
 	// Divide by a scaler number
-	Vector2D operator/ (float scalar);
+	Vector2D	operator/ (float scalar);
 
-	Vector2D& operator /= (float scalar);
+	Vector2D&	operator /= (float scalar);
 
 	// Normalize a vector
-	void normalize();
+	void		normalize();
 
 private:
 	float m_x;

@@ -15,13 +15,11 @@ public:
 
 	static ProgramClock* Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new ProgramClock();
+		static ProgramClock* s_pInstance = new ProgramClock;
 		return s_pInstance;
 	}
 
 private:
-	static ProgramClock* s_pInstance;
 
 	uint32_t m_deltaTime_ms;
 	uint32_t m_currentFrame;

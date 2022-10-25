@@ -21,30 +21,30 @@ public:
 private:
 	void			resetAlien();
 
-	bool m_bDead;
+	bool			m_bDead;
 
 	// Store alive texture ID to use when alien respawns
-	std::string m_aliveTextureID;
+	std::string		m_aliveTextureID;
 
 	// The AlienBoss will respawn between this range
-	const uint16_t m_minimumRespawnTime_ms;
-	const uint16_t m_maximumRespawnTime_ms;
+	const uint16_t	m_minimumRespawnTime_ms;
+	const uint16_t	m_maximumRespawnTime_ms;
 
 	// Selected respawn time between minimum and maximum respawn time
-	uint16_t m_selectedRespawnTime_ms;
+	uint16_t		m_selectedRespawnTime_ms;
 
 	// Current time AlienBoss has spent dying
-	uint16_t m_currentRespawnTime_ms;
+	uint16_t		m_currentRespawnTime_ms;
 
 	// The AlienBoss will select a random score to give upon its death between a range
-	const uint16_t m_minimumScoreWorth;
-	const uint16_t m_maximumScoreWorth;
+	const uint16_t	m_minimumScoreWorth;
+	const uint16_t	m_maximumScoreWorth;
 
 	// Position the AlienBoss will spawn in when it respawns
-	Vector2D leftSpawnPosition;
-	Vector2D rightSpawnPosition;
+	Vector2D		m_leftSpawnPosition;
+	Vector2D		m_rightSpawnPosition;
 
-	bool m_bSoundPlaying;
+	bool			m_bSoundPlaying;
 };
 
 

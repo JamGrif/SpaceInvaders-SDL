@@ -10,10 +10,6 @@
 #include "gameobjects/PlayerLives.h"
 #include "gameobjects/TextObject.h"
 
-GameObjectFactory* GameObjectFactory::s_pInstance = nullptr;
-
-// 
-
 /// <summary>
 ///	Initialize the GameObjectFactory, registering the types for the LevelParser
 /// Note only the ones that appear in .tmx files need to be registered

@@ -9,23 +9,23 @@ class MainMenuState :
     public BaseState
 {
 public:
-	virtual bool onEnterState() override;
-	virtual bool onExitState() override;
+	virtual bool		onEnterState() override;
+	virtual bool		onExitState() override;
 
-	virtual void updateState() override;
-	virtual void renderState() override;
+	virtual void		updateState() override;
+	virtual void		renderState() override;
 
 	virtual std::string getStateID() const { return s_menuID; }
 
 private:
 	static const std::string s_menuID;
 
-	static void s_menuToPlay(); 
-	static void s_exitFromMenu();
-	static void s_toggleSound();
-	static void s_toggleMusic();
+	static void			s_menuToPlay();
+	static void			s_exitFromMenu();
+	static void			s_toggleSound();
+	static void			s_toggleMusic();
 
-	static bool s_checkboxState1();
-	static bool s_checkboxState2();
+	static bool			s_checkboxState1();
+	static bool			s_checkboxState2();
 };
 

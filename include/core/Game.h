@@ -28,8 +28,6 @@ public:
 
 	void			quitGame();
 
-	GameStateMachine* getStateMachine() const { return m_pGameStateMachine; }
-
 	void			setGameOutcome(GameStateOutcome e);
 	std::string		getGameOutcome() { return m_outcomeText; }
 
@@ -44,6 +42,7 @@ public:
 	void			resetCurrentLives() { m_currentLives = m_maxLives; }
 	int8_t			getCurrentLives() const { return m_currentLives; }
 
+	GameStateMachine* getStateMachine() const { return m_pGameStateMachine; }
 		
 	static Game*	Instance() // Get instance
 	{

@@ -12,17 +12,17 @@ public:
 	PlayerLives();
 	~PlayerLives();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams);
 
-	virtual void drawObject();
-	virtual void updateObject();
+	virtual void	drawObject();
+	virtual void	updateObject();
 
 private:
 
 	// Minimum lives required for the player lives icon to get drawn
-	uint8_t m_livesRequired;
+	uint8_t			m_livesRequired;
 
-	bool m_bDraw;
+	bool			m_bDraw;
 };
 
 class PlayerLivesCreator :

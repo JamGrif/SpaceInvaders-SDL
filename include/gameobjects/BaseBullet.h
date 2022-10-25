@@ -18,8 +18,6 @@ public:
 
 	virtual void	drawObject() override;
 	virtual void	updateObject() = 0;
-
-protected:
 };
 
 

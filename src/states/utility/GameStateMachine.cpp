@@ -52,6 +52,8 @@ void GameStateMachine::renderCurrentState()
 /// </summary>
 void GameStateMachine::pushState(std::unique_ptr<BaseState> pState)
 {
+	TheSpriteManager::Instance()->storeIDsOnStatePush();
+
 	m_currentGameStates.push_back(std::move(pState));
 	m_currentGameStates.back()->onEnterState();
 } 
@@ -67,9 +69,8 @@ void GameStateMachine::changeState(std::unique_ptr<BaseState> pState)
 		popState();
 	}
 
-	// Clear all sprites used in this state
-	//TheSpriteManager::Instance()->clearAllFromSpriteMap();
-
+	TheSpriteManager::Instance()->clearAllFromSpriteMap();
+	
 	// Push back the new state
 	m_currentGameStates.push_back(std::move(pState));
 
@@ -85,6 +86,8 @@ void GameStateMachine::popState()
 	// Ensure that are states to pop off
 	if (m_currentGameStates.empty())
 		return;
+
+	TheSpriteManager::Instance()->removeIDsAtStatePop();
 
 	m_currentGameStates.back()->onExitState();
 	m_currentGameStates.pop_back();

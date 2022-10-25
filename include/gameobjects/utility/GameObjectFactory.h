@@ -22,22 +22,20 @@ public:
 class GameObjectFactory
 {
 public:
-	bool init();
-	void clean();
+	bool							init();
+	void							clean();
 
-	bool registerType(const std::string& typeID, std::unique_ptr<BaseCreator> pCreator);
+	bool							registerType(const std::string& typeID, std::unique_ptr<BaseCreator> pCreator);
 
 	std::shared_ptr<BaseGameObject> createGameObject(const std::string& typeID);
 
-	static GameObjectFactory* Instance() // Get instance
+	static GameObjectFactory*		Instance() // Get instance
 	{
-		if (!s_pInstance)
-			s_pInstance = new GameObjectFactory();
+		static GameObjectFactory* s_pInstance = new GameObjectFactory;
 		return s_pInstance;
 	}
 
 private:
-	static GameObjectFactory* s_pInstance;
 
 	// Maps a string (the typeID of the object) to its class creator
 	std::unordered_map<std::string, std::unique_ptr<BaseCreator>> m_creators;

@@ -31,23 +31,23 @@ public:
 protected:
 
 	// Amount the alien will move down by when it reaches an edge
-	float m_downAmount; 
+	float			m_downAmount; 
 
-	bool m_bDying;
+	bool			m_bDying;
 
 	MovingDirection m_direction;
 
 	// Current time spent dying
-	uint16_t m_timeSpentDying_ms;
+	uint16_t		m_timeSpentDying_ms;
 
 	// When alien has been dying for this amount of time, set to dead
-	uint16_t m_timeAloudDying_ms;
+	uint16_t		m_timeAloudDying_ms;
 
 	// Sprite the Alien will use upon death
-	std::string m_deadTextureID;
+	std::string		m_deadTextureID;
 
 	// Score to give upon alien death
-	uint16_t m_selectedScoreWorth;
+	uint16_t		m_selectedScoreWorth;
 };
 
 class AlienCreator :

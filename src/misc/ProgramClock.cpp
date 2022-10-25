@@ -3,9 +3,7 @@
 
 #include "SDL2/SDL.h"
 
-#define FPS 60
-
-ProgramClock* ProgramClock::s_pInstance = nullptr;
+static constexpr uint8_t FPS = 60;
 
 /// <summary>
 /// Initializes the program clock

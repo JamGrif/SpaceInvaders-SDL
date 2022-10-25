@@ -25,11 +25,11 @@ public:
 protected:
 
 	// Ensure button is only clicked once until mouse button is released
-	bool m_bReleased;
+	bool			m_bReleased;
 
 	// Function pointer to store what function will run when the button is clicked on
 	void (*m_selectCallback)();
 
 	// ID of function used to determine which function to call on click (ID set in level editor)
-	uint8_t m_selectCallbackID;
+	uint8_t			m_selectCallbackID;
 };

@@ -19,12 +19,12 @@ public:
 		Mix_FreeChunk(m_sfx);
 	}
 
-	Mix_Chunk* getSfxChunk() const { return m_sfx; }
-	int8_t getChannel() const { return m_channel; }
+	Mix_Chunk*	getSfxChunk() const { return m_sfx; }
+	int8_t		getChannel() const { return m_channel; }
 
 private:
-	Mix_Chunk* m_sfx; // Mix_Chunk used for sound effects only
-	int8_t m_channel;
+	Mix_Chunk*	m_sfx; // Mix_Chunk used for sound effects only
+	int8_t		m_channel;
 };
 
 /// <summary>
@@ -42,10 +42,10 @@ public:
 		Mix_FreeMusic(m_music);
 	}
 
-	Mix_Music* getMusicChunk() const { return m_music; }
+	Mix_Music*	getMusicChunk() const { return m_music; }
 
 private:
-	Mix_Music* m_music; // Mix_music used for music only
+	Mix_Music*	m_music; // Mix_music used for music only
 };
 
 

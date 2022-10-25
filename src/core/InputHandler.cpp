@@ -35,7 +35,6 @@ void InputHandler::update()
 		switch (event.type)
 		{
 			case SDL_QUIT:
-				std::cout << "quit" << std::endl;
 				TheGame::Instance()->quitGame();
 				break;
 

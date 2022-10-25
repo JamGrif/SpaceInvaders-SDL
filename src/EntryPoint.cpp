@@ -54,12 +54,9 @@ int main(int argc, char* args[])
 
 	TheGame::Instance()->gameClean();
 
+	// Keep console open after game end (debug mode)
 #ifdef _DEBUG
-	std::cout << "whiletrue start" << std::endl;
-	while (true)
-	{
-
-	}
+	while (true) {}
 #endif
 
 	return 0;

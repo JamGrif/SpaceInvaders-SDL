@@ -19,11 +19,11 @@ public:
 		TTF_CloseFont(m_pFont);
 	}
 
-	TTF_Font* getTTF_Font() { return m_pFont; }
+	TTF_Font*	getTTF_Font() { return m_pFont; }
 
 private:
-	TTF_Font* m_pFont;
-	uint8_t m_fontSize;
+	TTF_Font*	m_pFont;
+	uint8_t		m_fontSize;
 };
 
 /// <summary>
@@ -32,12 +32,12 @@ private:
 class TextManager
 {
 public:
-	bool		init();
-	void		clean();
+	bool					init();
+	void					clean();
 
 	std::weak_ptr<FontData>	getFont(uint8_t textSize);
 
-	static TextManager* Instance() // Get instance
+	static TextManager*		Instance() // Get instance
 	{
 		static TextManager* s_pInstance = new TextManager;
 		return s_pInstance;

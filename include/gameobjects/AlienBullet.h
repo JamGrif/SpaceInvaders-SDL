@@ -14,16 +14,16 @@ public:
 	AlienBullet();
 	~AlienBullet();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks);
+	virtual void			loadObject(std::unique_ptr<LoaderParams> pParams, std::weak_ptr<Player> pLevelPlayer, std::vector<std::shared_ptr<Block>>* pLevelBlocks);
 
-	virtual void drawObject() override;
-	virtual void updateObject() override;
+	virtual void			drawObject() override;
+	virtual void			updateObject() override;
 
 private:
 
 	// Other level objects to perform collision checks against
 	std::vector<std::shared_ptr<Block>>* m_pAllBlocks;
-	std::weak_ptr<Player> m_pLevelPlayer;
+	std::weak_ptr<Player>	m_pLevelPlayer;
 };
 
 

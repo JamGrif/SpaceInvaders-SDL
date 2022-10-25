@@ -16,10 +16,10 @@ bool BaseState::onExitState()
 {
 	delete m_pStateLevel;
 
-	for (const auto& o : m_allGameObjects)
-	{
-		//std::cout << o->getClassType() << " used this many times : " << o.use_count() << std::endl;
-	}
+	//for (const auto& o : m_allGameObjects)
+	//{
+	//	std::cout << o->getClassType() << " used this many times : " << o.use_count() << std::endl;
+	//}
 
 	// Stops sounds being played in the wrong state
 	TheSoundManager::Instance()->stopAllSounds();

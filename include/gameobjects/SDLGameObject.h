@@ -24,46 +24,46 @@ public:
     virtual void drawObject();
     virtual void updateObject();
 
-	Vector2D& getPosition() { return m_position; }
+	Vector2D&	getPosition() { return m_position; }
 
-	int32_t getWidth() const { return m_objectWidth; }
-	int32_t getHeight() const { return m_objectHeight; };
+	int32_t		getWidth() const { return m_objectWidth; }
+	int32_t		getHeight() const { return m_objectHeight; };
 
 protected:
-    Vector2D m_position;
-    Vector2D m_velocity;
+    Vector2D	m_position;
+    Vector2D	m_velocity;
 
 	// The dimensions of the object is the dimensions of an individual sprite frame
-	int32_t m_objectWidth;
-	int32_t m_objectHeight;
+	int32_t		m_objectWidth;
+	int32_t		m_objectHeight;
 
 	// Sent to the SpriteManager to be used for drawing, values set every draw call.
 	// Uses the objects xPos, yYos, width and height
-	SDL_Rect m_objectAttributes;
+	SDL_Rect	m_objectAttributes;
 
 	// Current sprite frame in use of loaded sprite
-	uint8_t m_currentSpriteFrame;
+	uint8_t		m_currentSpriteFrame;
 
 	// Total amount of separate sprite frames of loaded sprite
-	uint8_t m_framesInSprite;
+	uint8_t		m_framesInSprite;
 
 	// Time until next sprite frame change (_ms means milliseconds)
-	uint16_t m_animationSpeed_ms;
+	uint16_t	m_animationSpeed_ms;
 
-	float m_movementSpeed;
+	float		m_movementSpeed;
 
 	// Dimensions of game window
-	uint16_t m_screenWidth;
-	uint16_t m_screenHeight;
+	uint16_t	m_screenWidth;
+	uint16_t	m_screenHeight;
 
 	// ID of sprite this object uses
     std::string m_objectTextureID;
 
 	// Flip sprite on draw?
-	bool m_bFlipImage;
+	bool		m_bFlipImage;
 
 	// Rotation of the sprite during drawing (default - 0)
-	double m_spriteRotation;
+	double		m_spriteRotation;
 };
 
 class SDLGameObjectCreator :

@@ -27,21 +27,21 @@ public:
 
 private:
 
-	void updateText(const std::string& newText);
+	void			updateText(const std::string& newText);
 
 	// Function pointer used to find and copy a specific value updated somewhere else in the program
 	std::string(*m_textCallback)(); 
 
 	// ID of function used to determine what text to copy (ID set in level editor)
-	uint8_t m_textCallbackID;
+	uint8_t			m_textCallbackID;
 
 	// The actual text this object will render
-	std::string m_text;
+	std::string		m_text;
 
 	// Font object this object will use when rendering text
 	std::weak_ptr<FontData> m_thisFont;
 
-	SDL_Color m_textColor;
+	SDL_Color		m_textColor;
 };
 
 class TextObjectCreator :

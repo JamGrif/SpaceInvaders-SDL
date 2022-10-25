@@ -39,17 +39,17 @@ public:
 	BaseGameObject() :m_bDestroy(false) { /*std::cout << "created gameobject" << std::endl;*/ }
 	virtual ~BaseGameObject() { /*std::cout << m_classType << " object has been destroyed" << std::endl;*/ }
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> pParams) = 0;
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams) = 0;
 
-	virtual void drawObject() = 0;
-	virtual void updateObject() = 0;
+	virtual void	drawObject() = 0;
+	virtual void	updateObject() = 0;
 
-	bool getDestroy() { return m_bDestroy; }
+	bool			getDestroy() { return m_bDestroy; }
 
-	std::string getClassType() { return m_classType; }
+	std::string		getClassType() { return m_classType; }
 
 protected:
-	bool m_bDestroy;
-	std::string m_classType;
+	bool			m_bDestroy;
+	std::string		m_classType;
 };
 
