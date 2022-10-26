@@ -42,7 +42,7 @@ void Renderer::startOfFrame()
 /// <summary>
 /// Present newly created frame
 /// </summary>
-void Renderer::EndOfFrame()
+void Renderer::endOfFrame()
 {
 	// Show the window
 	SDL_RenderPresent(m_pRenderer);

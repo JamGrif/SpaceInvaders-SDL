@@ -13,7 +13,8 @@
 #include "states/utility/GameStateMachine.h"
 
 // Required Y value of alien for them to win
-#define ALIEN_WIN_LINE_HEIGHT 500
+static constexpr uint16_t ALIEN_WIN_LINE_HEIGHT = 500;
+
 
 static bool g_bResetLives = true;	// Should lives be reset at PlayState begin?
 static bool g_bResetScore = true;	// Should score be reset at PlatState begin?

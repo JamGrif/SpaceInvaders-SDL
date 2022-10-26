@@ -5,7 +5,6 @@ class GameStateMachine;
 enum class GameStateOutcome
 {
 	None					= 0,
-	Win_KilledAllAliens		= 1,
 	Lose_NoLives			= 2,
 	Lose_AliensReachedEnd	= 3
 };

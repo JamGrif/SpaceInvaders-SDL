@@ -11,7 +11,6 @@ static constexpr uint16_t PBULLET_SCREEN_BUFFER = 115;
 // The Y value the AlienBoss will travel along
 static constexpr uint16_t ALIEN_BOSS_PATH_Y = 140;
 
-
 PlayerBullet::PlayerBullet()
 	:BaseBullet(), m_pAllAliens(nullptr), m_pAllBlocks(nullptr)
 {

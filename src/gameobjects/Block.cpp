@@ -62,6 +62,6 @@ void Block::updateObject()
 /// </summary>
 void Block::hitObject()
 {
-	m_blockHealth = static_cast<BlockHealth>(static_cast<int32_t>(m_blockHealth) - 1);
+	m_blockHealth = static_cast<BlockHealth>(static_cast<uint8_t>(m_blockHealth) - 1);
 	TheSoundManager::Instance()->playSound("blockBreak");
 }

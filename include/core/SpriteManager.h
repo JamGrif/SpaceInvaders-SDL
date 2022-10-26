@@ -30,7 +30,7 @@ public:
 	// Every time a new state is PUSHED into the state machine, the number of currently used IDs are stored and then when that state is POPPED, the number of currently used IDs returns back to that number
 	// CHANGING state will reset the IDs in use back to 0
 	// This system means TextObject don't regenerate new Sprite objects every time they are loaded as each object will always use the same ID every time the state is loaded
-	std::stack<uint32_t>	m_amountIDAtStateStart;	// The number of IDs being used when a state is pushed into the FSM
+	std::stack<uint32_t>	m_amountIDAtStateStart;		// The number of IDs being used when a state is pushed into the FSM
 	std::list<uint32_t>		m_inUseIDs;					// Number of IDs that are currently being used by an object to identity its sprite in m_spriteMap
 
 	uint32_t				getNextFreeID();

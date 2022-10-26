@@ -104,7 +104,7 @@ void Game::renderGame()
 
 	m_pGameStateMachine->renderCurrentState();
 
-	TheRenderer::Instance()->EndOfFrame();
+	TheRenderer::Instance()->endOfFrame();
 }
 
 /// <summary>
@@ -146,11 +146,7 @@ void Game::setGameOutcome(GameStateOutcome e)
 	switch (e)
 	{
 		case GameStateOutcome::None:
-			m_outcomeText = "u shouldn't be here";
-			break;
-
-		case GameStateOutcome::Win_KilledAllAliens:
-			m_outcomeText = "Killed all aliens";
+			m_outcomeText = "ERROR - NO OUTCOME";
 			break;
 
 		case GameStateOutcome::Lose_NoLives:

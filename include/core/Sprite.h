@@ -3,11 +3,11 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
-#define SPRITE_PIXEL_MARGIN 2	// Pixel margin around the sprite sheet
-#define SPRITE_PIXEL_SPACING 2	// Pixel space between each frame on the sprite sheet
+constexpr uint8_t SPRITE_PIXEL_MARGIN = 2;	// Pixel margin around the sprite sheet
+constexpr uint8_t SPRITE_PIXEL_SPACING = 2; // Pixel space between each frame on the sprite sheet
 
 /// <summary>
-/// Encapsulates an SDL_Texture object and provides utility functions for it
+/// Encapsulates a SDL_Texture object and provides utility functions for it
 /// Created and destroyed by SpriteManager
 /// </summary>
 class Sprite

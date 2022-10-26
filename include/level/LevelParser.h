@@ -1,11 +1,11 @@
 #pragma once
 
-class Level;
-class BaseLayer;
 class TiXmlElement;
-struct Tileset;
 
 class BaseGameObject;
+class Level;
+
+#include "TileLayer.h"
 
 /// <summary>
 /// Parser for a .tmx file, creating and filling out a level object from it with its associative layers
@@ -19,10 +19,10 @@ public:
 private:
 
 	// Level to be created and returned
-	Level*		createdLevel = nullptr;
+	Level*		createdLevel{nullptr};
 
 	// Tileset created during level parsing
-	std::unique_ptr<Tileset> pTileset;
+	std::unique_ptr<Tileset> pTileset;;
 
 	// Layers
 	void		parseTileLayer(const TiXmlElement& pLayerRoot);

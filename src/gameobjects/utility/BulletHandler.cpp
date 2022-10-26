@@ -7,14 +7,14 @@
 #include "level/Level.h"
 
 // Player bullet speed
-#define PBULLET_SPEED 3
+static constexpr uint8_t PBULLET_SPEED = 3;
 
 // Alien bullets will have a random speed between this range
-#define ABULLET_MIN_SPEED 2
-#define ABULLET_MAX_SPEED 4
+static constexpr uint8_t ABULLET_MIN_SPEED = 2;
+static constexpr uint8_t ABULLET_MAX_SPEED = 4;
 
 // Alien bullets animation speed
-#define ABULLET_ANIMATION_SPEED 250
+static constexpr uint16_t ABULLET_ANIMATION_SPEED = 250;
 
 BulletHandler::BulletHandler(std::vector<std::shared_ptr<Block>>& allblocks, std::vector<std::shared_ptr<Alien>>& allAliens, std::weak_ptr<Player> pPlayer, std::weak_ptr<AlienBoss> pAlienboss)
 	: m_allBlocks(&allblocks), m_allAliens(&allAliens), m_player(pPlayer), m_alienBoss(pAlienboss), m_playerBullet(nullptr), m_maxAlienBullets(5)

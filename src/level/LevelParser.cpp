@@ -5,15 +5,14 @@
 #include "gameobjects/utility/GameObjectFactory.h"
 #include "gameobjects/BaseGameObject.h"
 #include "level/Level.h"
-#include "level/TileLayer.h"
 
 #include "Base64/base64.h"		// Decode the level data
 #include "zlib/zlib.h"			// Decompress the level data
 #include "tinyXML/tinyxml.h"	// Read the level data
 
-#define LEVEL_PATH_PREFIX "res/levels/"
-#define TILESET_PATH_PREFIX "res/levels/"
-#define SPRITE_PATH_PREFIX "res/sprites/"
+static const char* LEVEL_PATH_PREFIX = "res/levels/";
+static const char* TILESET_PATH_PREFIX = "res/levels/";
+static const char* SPRITE_PATH_PREFIX = "res/sprites/";
 
 static constexpr uint8_t STRCMP_SUCCESS = 0;
 
