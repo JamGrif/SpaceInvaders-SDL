@@ -30,20 +30,26 @@
   </object>
   <object id="7" name="AlienLower" class="SDLGameObject" x="322" y="60" width="10" height="10">
    <properties>
+    <property name="defaultRow" type="int" value="2"/>
     <property name="numFrames" type="int" value="2"/>
-    <property name="textureID" value="alienLower"/>
+    <property name="numRows" type="int" value="4"/>
+    <property name="textureID" value="alienSheet"/>
    </properties>
   </object>
   <object id="8" name="AlienMiddle" class="SDLGameObject" x="322" y="120" width="10" height="10">
    <properties>
+    <property name="defaultRow" type="int" value="1"/>
     <property name="numFrames" type="int" value="2"/>
-    <property name="textureID" value="alienMiddle"/>
+    <property name="numRows" type="int" value="4"/>
+    <property name="textureID" value="alienSheet"/>
    </properties>
   </object>
   <object id="9" name="AlienUpper" class="SDLGameObject" x="322" y="180" width="10" height="10">
    <properties>
+    <property name="defaultRow" type="int" value="0"/>
     <property name="numFrames" type="int" value="2"/>
-    <property name="textureID" value="alienUpper"/>
+    <property name="numRows" type="int" value="4"/>
+    <property name="textureID" value="alienSheet"/>
    </properties>
   </object>
   <object id="10" name="AlienLowerWorth" class="TextObject" x="410" y="60" width="10" height="10">
@@ -66,8 +72,10 @@
   </object>
   <object id="13" name="AlienBoss" class="SDLGameObject" x="307" y="240" width="10" height="10">
    <properties>
+    <property name="defaultRow" type="int" value="0"/>
     <property name="numFrames" type="int" value="1"/>
-    <property name="textureID" value="alienBoss"/>
+    <property name="numRows" type="int" value="2"/>
+    <property name="textureID" value="alienBossSheet"/>
    </properties>
   </object>
   <object id="14" name="AlienBossWorth" class="TextObject" x="410" y="240" width="10" height="10">
