@@ -2,19 +2,62 @@
 #include "core/Sprite.h"
 
 #include "SDL2/SDL.h"
+#include "SDL2_image/SDL_image.h"
 
-Sprite::Sprite(SDL_Texture* texture, const std::string& fileName, const std::string& id)
-	:m_textureObject(texture), m_fileName(fileName), m_id(id),
-	m_indivdualSpriteDimension(std::make_unique<SDL_Rect>()), m_totalSpriteDimensions(std::make_unique<SDL_Rect>()), m_bSpriteSetup(false)
+#include "core/Renderer.h"
+
+Sprite::Sprite()
+	:m_pSurfaceObject(nullptr), m_pTextureObject(nullptr), m_filepath(""), m_id(""), m_spriteType(SpriteType::UNSET_SPRITE), m_bSpriteSetup(false),
+	m_pIndivdualSpriteDimension(std::make_unique<SDL_Rect>()), m_pTotalSpriteDimensions(std::make_unique<SDL_Rect>())
 {
-	/*std::cout << "created sprite " << m_id << std::endl;*/
 }
 
 Sprite::~Sprite()
 {
-	SDL_DestroyTexture(m_textureObject);
+	if (m_pSurfaceObject)
+		SDL_FreeSurface(m_pSurfaceObject);
+
+	if (m_pTextureObject)
+		SDL_DestroyTexture(m_pTextureObject);
 
 	/*std::cout << "destroyed sprite " << m_id << std::endl;*/
+}
+
+
+bool Sprite::loadSprite(const std::string& filepath, const std::string& id, SpriteType spriteType)
+{
+	// Create SDL_Surface and SDL_Texture at filepath
+	m_pSurfaceObject = IMG_Load(filepath.c_str());
+	if (!m_pSurfaceObject)
+		return false;
+
+	m_pTextureObject = SDL_CreateTextureFromSurface(TheRenderer::Instance()->getRendererPtr(), m_pSurfaceObject);
+	if (!m_pTextureObject)
+	{
+		SDL_FreeSurface(m_pSurfaceObject);
+		return false;
+	}
+
+	m_filepath = filepath;
+	m_id = id;
+	m_spriteType = spriteType;
+
+	/*std::cout << "created sprite " << m_id << std::endl; */
+	return true;
+}
+
+
+bool Sprite::loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, SpriteType spriteType)
+{
+	if (!pCreatedTexture)
+		return false;
+
+	m_id = id;
+	m_pTextureObject = pCreatedTexture;
+	m_spriteType = spriteType;
+
+	/*std::cout << "created sprite " << m_id << std::endl*/;
+	return true;
 }
 
 /// <summary>
@@ -27,23 +70,26 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames)
 	if (m_bSpriteSetup)
 		return;
 
+	if (!m_pTextureObject)
+		return;
+
 	m_bSpriteSetup = true;
 
 	// Store the complete dimensions of the sprite
-	SDL_QueryTexture(m_textureObject, NULL, NULL, &m_totalSpriteDimensions->w, &m_totalSpriteDimensions->h);
+	SDL_QueryTexture(m_pTextureObject, NULL, NULL, &m_pTotalSpriteDimensions->w, &m_pTotalSpriteDimensions->h);
 
 	// Remove added space from sprite pixel margin and spacing
-	m_totalSpriteDimensions->w -= SPRITE_PIXEL_MARGIN * 2;
+	m_pTotalSpriteDimensions->w -= SPRITE_PIXEL_MARGIN * 2;
 	int temp = numFrames;
-	m_totalSpriteDimensions->w -= SPRITE_PIXEL_SPACING * (--temp);
+	m_pTotalSpriteDimensions->w -= SPRITE_PIXEL_SPACING * (--temp);
 
-	m_totalSpriteDimensions->h -= (SPRITE_PIXEL_MARGIN * 2);
+	m_pTotalSpriteDimensions->h -= (SPRITE_PIXEL_MARGIN * 2);
 
 	// Width of each frame
-	m_indivdualSpriteDimension->w = (m_totalSpriteDimensions->w / numFrames);
+	m_pIndivdualSpriteDimension->w = (m_pTotalSpriteDimensions->w / numFrames);
 
 	// Height of each frame
-	m_indivdualSpriteDimension->h = m_totalSpriteDimensions->h;
+	m_pIndivdualSpriteDimension->h = m_pTotalSpriteDimensions->h;
 }
 
 /// <summary>
@@ -51,7 +97,8 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames)
 /// </summary>
 void Sprite::calculateSpriteDimensions()
 {
-	SDL_QueryTexture(m_textureObject, NULL, NULL, &m_totalSpriteDimensions->w, &m_totalSpriteDimensions->h);
+	if (m_pTextureObject)
+		SDL_QueryTexture(m_pTextureObject, NULL, NULL, &m_pTotalSpriteDimensions->w, &m_pTotalSpriteDimensions->h);
 }
 
 /// <summary>
@@ -59,19 +106,18 @@ void Sprite::calculateSpriteDimensions()
 /// </summary>
 void Sprite::getSpriteDimensions(SDL_Rect& rect)
 {
-	rect.w = m_totalSpriteDimensions->w;
-	rect.h = m_totalSpriteDimensions->h;
+	rect.w = m_pTotalSpriteDimensions->w;
+	rect.h = m_pTotalSpriteDimensions->h;
 }
 
 /// <summary>
 /// Swap out the current SDL_Texture object with a new one
-/// Destroys the old one
 /// </summary>
 void Sprite::changeTexture(SDL_Texture* pNewTexture)
 {
 	if (!pNewTexture)
 		return;
 
-	SDL_DestroyTexture(m_textureObject);
-	m_textureObject = pNewTexture;
+	SDL_DestroyTexture(m_pTextureObject);
+	m_pTextureObject = pNewTexture;
 }

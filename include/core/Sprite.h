@@ -1,10 +1,26 @@
 #pragma once
 
+struct SDL_Surface;
 struct SDL_Texture;
 struct SDL_Rect;
 
-constexpr uint8_t SPRITE_PIXEL_MARGIN = 2;	// Pixel margin around the sprite sheet
-constexpr uint8_t SPRITE_PIXEL_SPACING = 2; // Pixel space between each frame on the sprite sheet
+constexpr uint8_t SPRITE_PIXEL_MARGIN  = 2;		// Pixel margin around the sprite sheet
+constexpr uint8_t SPRITE_PIXEL_SPACING = 2;		// Pixel space between each frame on the sprite sheet
+
+constexpr uint8_t TILESET_PIXEL_MARGIN  = 2;	// Pixel margin around the tileset
+constexpr uint8_t TILESET_PIXEL_SPACING = 2;	// Pixel space between each frame on the tileset
+
+/// <summary>
+/// Sets when the texture is created and destroyed
+/// </summary>
+enum class SpriteType
+{
+	UNSET_SPRITE = 0,	// Sprite type has not been set
+	CORE_SPRITE  = 1,	// Sprite is created outside of any states and deleted on program exit
+	STATE_SPRITE = 2	// Sprite is created on State enter and deleted on State exit
+};
+
+typedef std::string spriteID;
 
 /// <summary>
 /// Encapsulates a SDL_Texture object and provides utility functions for it
@@ -13,31 +29,40 @@ constexpr uint8_t SPRITE_PIXEL_SPACING = 2; // Pixel space between each frame on
 class Sprite
 {
 public:
-	Sprite(SDL_Texture* texture, const std::string& fileName, const std::string& id);
+	Sprite();
 	~Sprite();
+
+	bool						loadSprite(const std::string& filepath, const std::string& id, SpriteType spriteType);
+	bool						loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, SpriteType spriteType);
 
 	void						setUpIndividualSpriteDimensions(int numFrames);
 	void						calculateSpriteDimensions();
 
-	SDL_Texture*				getTexturePtr() { return m_textureObject; }
-	std::string&				getFileName() { return m_fileName; }
+	SDL_Surface*				getSurfacePtr() { return m_pSurfaceObject; }
+	SDL_Texture*				getTexturePtr() { return m_pTextureObject; }
+	std::string&				getFilepath() { return m_filepath; }
 	std::string&				getID() { return m_id; }
+	SpriteType					getSpriteType() { return m_spriteType; }
 
-	std::unique_ptr<SDL_Rect>&	getTotalDimensions() { return m_totalSpriteDimensions; };
-	std::unique_ptr<SDL_Rect>&	getIndividualDimensions() { return m_indivdualSpriteDimension; }
+	std::unique_ptr<SDL_Rect>&	getTotalDimensions() { return m_pTotalSpriteDimensions; };
+	std::unique_ptr<SDL_Rect>&	getIndividualDimensions() { return m_pIndivdualSpriteDimension; }
 
 	void						getSpriteDimensions(SDL_Rect& rect);
 
 	void						changeTexture(SDL_Texture* pNewTexture);
 
 private:
-	SDL_Texture*				m_textureObject;
+	SDL_Surface*				m_pSurfaceObject;
+	SDL_Texture*				m_pTextureObject;
 
-	std::string					m_fileName;
+	std::string					m_filepath;
 	std::string					m_id;
 
-	std::unique_ptr<SDL_Rect>	m_indivdualSpriteDimension;
-	std::unique_ptr<SDL_Rect>	m_totalSpriteDimensions;
+	SpriteType					m_spriteType;
 
 	bool						m_bSpriteSetup;
+
+	std::unique_ptr<SDL_Rect>	m_pIndivdualSpriteDimension;
+	std::unique_ptr<SDL_Rect>	m_pTotalSpriteDimensions;
+
 };

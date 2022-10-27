@@ -2,32 +2,25 @@
 #include "core/SpriteManager.h"
 
 #include "SDL2/SDL.h"
-#include "SDL2_image/SDL_image.h"
 
 #include "core/Renderer.h"
+
+static constexpr uint32_t NO_IDS = 0;
 
 /// <summary>
 /// Create sprite at filepath and assign an id to it
 /// </summary>
-bool SpriteManager::loadSprite(const std::string& filepath, const std::string& id)
+bool SpriteManager::createSprite(const std::string& filepath, const spriteID& id, SpriteType spriteType)
 {
 	// Check if sprite at filepath already exists
 	if (m_spriteMap.find(id) != m_spriteMap.end())
 		return false;
 
-	// Create SDL_Texture at filepath
-	SDL_Surface* pTempSurface = IMG_Load(filepath.c_str());
-	if (!pTempSurface)
-		return false;
-
-	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(TheRenderer::Instance()->getRendererPtr(), pTempSurface);
-	SDL_FreeSurface(pTempSurface);
-
-	if (!pTexture)
-		return false;
-
-	// Add sprite to spriteMap
-	m_spriteMap.insert({ id, std::make_shared<Sprite>(pTexture, filepath, id) });
+	std::shared_ptr<Sprite> pSprite = std::make_shared<Sprite>();
+	if (pSprite->loadSprite(filepath, id, spriteType))
+	{
+		m_spriteMap.insert({ id, pSprite });
+	}
 
 	return true;
 }
@@ -35,12 +28,12 @@ bool SpriteManager::loadSprite(const std::string& filepath, const std::string& i
 /// <summary>
 /// Load a collection of sprites using the filepath and id from the pair structure
 /// </summary>
-bool SpriteManager::loadSprite(const std::vector<std::pair<std::string, std::string>>& spritesToLoad)
+bool SpriteManager::createSprite(const std::vector<std::pair<std::string, spriteID>>& spritesToLoad, SpriteType spriteType)
 {
 	// Loop through and load each sprite using its filepath(first) and id(second)
 	for (const auto& s : spritesToLoad)
 	{
-		loadSprite(s.first, s.second);
+		createSprite(s.first, s.second, spriteType);
 	}
 
 	return true;
@@ -49,14 +42,17 @@ bool SpriteManager::loadSprite(const std::vector<std::pair<std::string, std::str
 /// <summary>
 /// Create a Sprite object from an already created SDL_Texture and assign an id to it
 /// </summary>
-bool SpriteManager::loadSprite(SDL_Texture* pCreatedTexture, const std::string& id)
+bool SpriteManager::createSprite(SDL_Texture* pCreatedTexture, const spriteID& id, SpriteType spriteType)
 {
 	// Check if sprite with id already exists
 	if (m_spriteMap.find(id) != m_spriteMap.end())
 		return false;
 
-	// Add sprite to spriteMap
-	m_spriteMap.insert({ id, std::make_shared<Sprite>(pCreatedTexture, "", id)});
+	std::shared_ptr<Sprite> pSprite = std::make_shared<Sprite>();
+	if (pSprite->loadSprite(pCreatedTexture, id, spriteType))
+	{
+		m_spriteMap.insert({ id, pSprite });
+	}
 
 	return true;
 }
@@ -64,27 +60,33 @@ bool SpriteManager::loadSprite(SDL_Texture* pCreatedTexture, const std::string& 
 /// <summary>
 /// Delete all loaded sprite objects from the spriteMap
 /// </summary>
-void SpriteManager::clearAllFromSpriteMap()
+void SpriteManager::clearAllFromSpriteMap(SpriteType spritetype)
 {
-	m_spriteMap.clear();
+	auto it = m_spriteMap.begin();
+	while (it != m_spriteMap.end())
+	{
+		if ((*it).second->getSpriteType() == spritetype)
+		{
+			it = m_spriteMap.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
 
 	// As all sprites have been removed, clear free IDs
-	resetIDs();
-}
-
-/// <summary>
-/// Delete the specified loaded sprite object from the spriteMap
-/// </summary>
-void SpriteManager::clearFromSpriteMap(const std::string& id)
-{
-	if (m_spriteMap.find(id) != m_spriteMap.end())
-		m_spriteMap.erase(id);
+	if (spritetype == SpriteType::STATE_SPRITE)
+	{
+		resetIDs();
+	}
+	
 }
 
 /// <summary>
 /// Draw the specified sprite, using its id to choose it
 /// </summary>
-void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal, double spriteRotation)
+void SpriteManager::drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal, double spriteRotation)
 {
 	if (m_spriteMap.find(id) == m_spriteMap.end())
 	{
@@ -107,7 +109,7 @@ void SpriteManager::drawSpriteFrame(const std::string& id, const SDL_Rect& objec
 /// <summary>
 /// Draw the specified tileset tile, using its id to choose it
 /// </summary>
-void SpriteManager::drawSpriteTile(const std::string& id, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t currentRow, uint8_t currentFrame)
+void SpriteManager::drawSpriteTile(const spriteID& id, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t currentRow, uint8_t currentFrame)
 {
 	if (m_spriteMap.find(id) == m_spriteMap.end())
 	{
@@ -132,7 +134,7 @@ void SpriteManager::drawSpriteTile(const std::string& id, int16_t x, int16_t y, 
 /// <summary>
 /// Draw the specified text, using its id to choose it
 /// </summary>
-void SpriteManager::drawSpriteText(const std::string& id, const SDL_Rect& objectAttributes)
+void SpriteManager::drawSpriteText(const spriteID& id, const SDL_Rect& objectAttributes)
 {
 	if (m_spriteMap.find(id) == m_spriteMap.end())
 	{
@@ -146,7 +148,7 @@ void SpriteManager::drawSpriteText(const std::string& id, const SDL_Rect& object
 /// <summary>
 /// Return sprite object at id, nullptr if doesn't exist
 /// </summary>
-std::weak_ptr<Sprite> SpriteManager::getSpriteViaID(const std::string& id) const
+std::weak_ptr<Sprite> SpriteManager::getSpriteViaID(const spriteID& id) const
 {
 	return m_spriteMap.find(id) != m_spriteMap.end() ? m_spriteMap.at(id) : nullptr;
 }
@@ -157,8 +159,7 @@ std::weak_ptr<Sprite> SpriteManager::getSpriteViaID(const std::string& id) const
 /// </summary>
 uint32_t SpriteManager::getNextFreeID()
 {
-	m_inUseIDs.push_back(0);
-	return static_cast<uint32_t>(m_inUseIDs.size());
+	return ++m_inUseIDs;
 }
 
 /// <summary>
@@ -166,7 +167,7 @@ uint32_t SpriteManager::getNextFreeID()
 /// </summary>
 void SpriteManager::resetIDs()
 {
-	m_inUseIDs.clear();
+	m_inUseIDs = NO_IDS;
 	while (!m_amountIDAtStateStart.empty())
 	{
 		m_amountIDAtStateStart.pop();
@@ -178,7 +179,7 @@ void SpriteManager::resetIDs()
 /// </summary>
 void SpriteManager::storeIDsOnStatePush()
 {
-	m_amountIDAtStateStart.push(static_cast<int>(m_inUseIDs.size()));
+	m_amountIDAtStateStart.push(m_inUseIDs);
 }
 
 /// <summary>
@@ -189,6 +190,15 @@ void SpriteManager::removeIDsAtStatePop()
 	if (m_amountIDAtStateStart.empty())
 		return;
 
-	m_inUseIDs.resize(m_amountIDAtStateStart.top());
+	m_inUseIDs = m_amountIDAtStateStart.top();
 	m_amountIDAtStateStart.pop();
+}
+
+SpriteManager::SpriteManager()
+	:m_inUseIDs(NO_IDS), m_tilesetPixelMargin(TILESET_PIXEL_MARGIN), m_tilesetPixelSpacing(TILESET_PIXEL_SPACING)
+{
+}
+
+SpriteManager::~SpriteManager()
+{
 }

@@ -257,7 +257,7 @@ void LevelParser::parseObjectLayer(const TiXmlElement& pObjectGroupRoot, std::ve
 /// </summary>
 void LevelParser::parseSprites(const std::vector<std::pair<std::string, std::string>>& spritesToLoad)
 {
-	TheSpriteManager::Instance()->loadSprite(spritesToLoad);
+	TheSpriteManager::Instance()->createSprite(spritesToLoad, SpriteType::STATE_SPRITE);
 }
 
 /// <summary>
@@ -268,7 +268,7 @@ void LevelParser::parseSprites(const std::vector<std::pair<std::string, std::str
 void LevelParser::parseTilesets(const TiXmlElement& pTilesetRoot)
 {
 	// Load the tileset (the filepath is the same as the .tmx file path)
-	TheSpriteManager::Instance()->loadSprite(TILESET_PATH_PREFIX + std::string(pTilesetRoot.FirstChildElement()->Attribute("source")), pTilesetRoot.Attribute("name"));
+	TheSpriteManager::Instance()->createSprite(TILESET_PATH_PREFIX + std::string(pTilesetRoot.FirstChildElement()->Attribute("source")), pTilesetRoot.Attribute("name"), SpriteType::STATE_SPRITE);
 
 	// Create a tileset object and fill it out
 	pTileset = std::make_unique<Tileset>();

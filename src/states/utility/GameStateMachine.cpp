@@ -16,7 +16,8 @@ GameStateMachine::GameStateMachine()
 
 GameStateMachine::~GameStateMachine()
 {
-	SpriteManager::Instance()->clearAllFromSpriteMap();
+	TheSpriteManager::Instance()->clearAllFromSpriteMap(SpriteType::CORE_SPRITE);
+	TheSpriteManager::Instance()->clearAllFromSpriteMap(SpriteType::STATE_SPRITE);
 
 	// Pop all remaining states left
 	while (!m_currentGameStates.empty())
@@ -69,7 +70,8 @@ void GameStateMachine::changeState(std::unique_ptr<BaseState> pState)
 		popState();
 	}
 
-	TheSpriteManager::Instance()->clearAllFromSpriteMap();
+	// Delete all state sprites
+	TheSpriteManager::Instance()->clearAllFromSpriteMap(SpriteType::STATE_SPRITE);
 	
 	// Push back the new state
 	m_currentGameStates.push_back(std::move(pState));

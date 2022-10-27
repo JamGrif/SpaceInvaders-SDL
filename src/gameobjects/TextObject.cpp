@@ -83,7 +83,7 @@ void TextObject::updateText(const std::string& newText)
 
 	// If first time creating sprite at m_objectTextureID, create the Sprite object
 	if (TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).expired())
-		TheSpriteManager::Instance()->loadSprite(textTexture, m_objectTextureID);
+		TheSpriteManager::Instance()->createSprite(textTexture, m_objectTextureID, SpriteType::STATE_SPRITE);
 	// Otherwise, simply swap out the SDL_Texture with the newly created one
 	else
 		TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).lock()->changeTexture(textTexture);
