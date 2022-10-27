@@ -101,9 +101,13 @@ void SpriteManager::drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAt
 	spriteFrame.w = objectAttributes.w;
 	spriteFrame.h = objectAttributes.h;
 
+	SDL_Rect rect = objectAttributes;
+	rect.w *= m_spriteMap[id]->getScaleX();
+	rect.h *= m_spriteMap[id]->getScaleY();
+
 	SDL_RendererFlip flag = flipHorizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
-	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &spriteFrame, &objectAttributes, spriteRotation, 0, flag);
+	SDL_RenderCopyEx(TheRenderer::Instance()->getRendererPtr(), m_spriteMap[id]->getTexturePtr(), &spriteFrame, &rect, spriteRotation, 0, flag);
 }
 
 /// <summary>

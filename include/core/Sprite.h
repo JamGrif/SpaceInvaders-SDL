@@ -51,6 +51,12 @@ public:
 
 	void						changeTexture(SDL_Texture* pNewTexture);
 
+	void						setScaleX(float scale) { m_scale.setX(scale); }
+	void						setScaleY(float scale) { m_scale.setY(scale); }
+
+	float						getScaleX() { return m_scale.getX(); }
+	float						getScaleY() { return m_scale.getY(); }
+
 private:
 	SDL_Surface*				m_pSurfaceObject;
 	SDL_Texture*				m_pTextureObject;
@@ -65,4 +71,5 @@ private:
 	std::unique_ptr<SDL_Rect>	m_pIndivdualSpriteDimension;
 	std::unique_ptr<SDL_Rect>	m_pTotalSpriteDimensions;
 
+	Vector2D					m_scale;
 };

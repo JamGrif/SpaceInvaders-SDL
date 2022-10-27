@@ -8,7 +8,7 @@
 
 Sprite::Sprite()
 	:m_pSurfaceObject(nullptr), m_pTextureObject(nullptr), m_filepath(""), m_id(""), m_spriteType(SpriteType::UNSET_SPRITE), m_bSpriteSetup(false),
-	m_pIndivdualSpriteDimension(std::make_unique<SDL_Rect>()), m_pTotalSpriteDimensions(std::make_unique<SDL_Rect>())
+	m_pIndivdualSpriteDimension(std::make_unique<SDL_Rect>()), m_pTotalSpriteDimensions(std::make_unique<SDL_Rect>()), m_scale(1, 1)
 {
 }
 
@@ -20,7 +20,7 @@ Sprite::~Sprite()
 	if (m_pTextureObject)
 		SDL_DestroyTexture(m_pTextureObject);
 
-	std::cout << "destroyed sprite " << m_id << std::endl;
+	/*std::cout << "destroyed sprite " << m_id << std::endl;*/
 }
 
 
@@ -42,7 +42,7 @@ bool Sprite::loadSprite(const std::string& filepath, const std::string& id, Spri
 	m_id = id;
 	m_spriteType = spriteType;
 
-	std::cout << "created sprite " << m_id << std::endl; 
+	/*std::cout << "created sprite " << m_id << std::endl; */
 	return true;
 }
 
@@ -56,7 +56,7 @@ bool Sprite::loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, Sprite
 	m_pTextureObject = pCreatedTexture;
 	m_spriteType = spriteType;
 
-	std::cout << "created sprite " << m_id << std::endl;
+	/*std::cout << "created sprite " << m_id << std::endl;*/
 	return true;
 }
 
@@ -93,9 +93,6 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames, int numRows)
 
 	// Height of each frame
 	m_pIndivdualSpriteDimension->h = (m_pTotalSpriteDimensions->h / numRows);
-
-	//std::cout << m_id << " width is " << m_pIndivdualSpriteDimension->w << std::endl;
-	//std::cout << m_id << " height is " << m_pIndivdualSpriteDimension->h << std::endl;
 }
 
 /// <summary>
