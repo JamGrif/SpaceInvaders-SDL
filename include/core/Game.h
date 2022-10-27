@@ -1,6 +1,7 @@
 #pragma once
 
 class GameStateMachine;
+struct SDL_Cursor;
 
 enum class GameStateOutcome
 {
@@ -65,6 +66,8 @@ private:
 	// Player lives - in Game class to persist through different states
 	const uint8_t	m_maxLives;
 	int8_t			m_currentLives;
+
+	SDL_Cursor* m_pGameCursor = nullptr;
 
 	Game();									// Prevent outside unwanted construction
 	Game(const Game&) = delete;				// Prevent construction by copying

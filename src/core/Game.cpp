@@ -8,6 +8,9 @@
 #include "core/TextManager.h"
 #include "gameobjects/utility/GameObjectFactory.h"
 #include "states/utility/GameStateMachine.h"
+#include "core/SpriteManager.h"
+
+#include "SDL2/SDL.h"
 
 static constexpr int8_t INITIALIZE_SUCCESS = 0;
 
@@ -56,6 +59,11 @@ bool Game::gameInit()
 	TheSoundManager::Instance()->playMusic("music", true);
 	TheSoundManager::Instance()->playSound("gameStart");
 
+	// Create and set cursor
+	TheSpriteManager::Instance()->createSprite("res/sprites/cursor.png", "cursor", SpriteType::CORE_SPRITE);
+	m_pGameCursor = SDL_CreateColorCursor(TheSpriteManager::Instance()->getSpriteViaID("cursor").lock()->getSurfacePtr(), 0, 0);
+	SDL_SetCursor(m_pGameCursor);
+
 	m_bRunning = true;
 	return true;
 }
@@ -83,6 +91,8 @@ void Game::gameLoop()
 /// </summary>
 void Game::gameClean()
 {
+	SDL_FreeCursor(m_pGameCursor);
+
 	// Clean in the reverse order of creation
 	delete m_pGameStateMachine;
 
