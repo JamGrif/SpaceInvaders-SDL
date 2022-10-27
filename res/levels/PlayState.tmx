@@ -9,12 +9,9 @@
   <property name="alienMiddle" value="alienMiddle.png"/>
   <property name="alienUpper" value="alienUpper.png"/>
   <property name="block" value="block.png"/>
-  <property name="helicopter" value="helicopter.png"/>
-  <property name="lives" value="lives.png"/>
   <property name="player" value="player.png"/>
   <property name="playerBullet" value="playerBullet.png"/>
   <property name="playerDead" value="playerDead.png"/>
-  <property name="score" value="score.png"/>
  </properties>
  <tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="13" columns="13">
   <image source="levelTileset.png" width="444" height="36"/>

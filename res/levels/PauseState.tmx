@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="15">
  <properties>
-  <property name="alienLower" value="alienLower.png"/>
   <property name="logo" value="logo.png"/>
   <property name="mainMenuButton" value="mainMenuButton.png"/>
   <property name="resumeButton" value="resumeButton.png"/>

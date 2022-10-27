@@ -1,64 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="25" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="12">
-	<properties>
-		<property name="gameOverText" value="gameover.png"/>
-		<property name="mainMenuButton" value="mainMenuButton.png"/>
-		<property name="restartButton" value="restartButton.png"/>
-	</properties>
-	<tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="13" columns="13">
-		<image source="levelTileset.png" width="444" height="36"/>
-	</tileset>
-	<layer id="1" name="Tile Layer 1" width="25" height="22">
-		<data encoding="base64" compression="zlib">
+ <properties>
+  <property name="mainMenuButton" value="mainMenuButton.png"/>
+  <property name="restartButton" value="restartButton.png"/>
+ </properties>
+ <tileset firstgid="1" name="levelTileset" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="13" columns="13">
+  <image source="levelTileset.png" width="444" height="36"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="25" height="22">
+  <data encoding="base64" compression="zlib">
    eJxjZGBgYKIhZgRiZgbaApZRO0btGLVj1I5RO0btGLWD5naA6nRWGmKQ+QALAAEy
-		</data>
-	</layer>
-	<objectgroup id="2" name="Object Layer 1">
-		<object id="4" name="MainMenuButton" class="ClickButton" x="230" y="460" width="10" height="10">
-			<properties>
-				<property name="numFrames" type="int" value="3"/>
-				<property name="selectCallbackID" type="int" value="1"/>
-				<property name="textureID" value="mainMenuButton"/>
-			</properties>
-		</object>
-		<object id="5" name="RestartButton" class="ClickButton" x="230" y="300" width="10" height="10">
-			<properties>
-				<property name="numFrames" type="int" value="3"/>
-				<property name="selectCallbackID" type="int" value="2"/>
-				<property name="textureID" value="restartButton"/>
-			</properties>
-		</object>
-		<object id="7" name="Game Over" class="TextObject" x="75" y="56.3333" width="10" height="10">
-			<properties>
-				<property name="text" value="GAME OVER"/>
-				<property name="textSize" type="int" value="80"/>
-			</properties>
-		</object>
-		<object id="8" name="___" class="TextObject" x="89.6667" y="118" width="10" height="10">
-			<properties>
-				<property name="text" value="_______________________"/>
-				<property name="textSize" type="int" value="30"/>
-			</properties>
-		</object>
-		<object id="9" name="Final Score:" class="TextObject" x="181.667" y="219" width="10" height="10">
-			<properties>
-				<property name="text" value="Final Score:"/>
-				<property name="textSize" type="int" value="40"/>
-			</properties>
-		</object>
-		<object id="10" name="Score" class="TextObject" x="568" y="219" width="10" height="10">
-			<properties>
-				<property name="text" value="0"/>
-				<property name="textCallbackID" type="int" value="1"/>
-				<property name="textSize" type="int" value="40"/>
-			</properties>
-		</object>
-		<object id="11" name="Game Outcome" class="TextObject" x="194.333" y="163.667" width="10" height="10">
-			<properties>
-				<property name="text" value="0"/>
-				<property name="textCallbackID" type="int" value="2"/>
-				<property name="textSize" type="int" value="30"/>
-			</properties>
-		</object>
-	</objectgroup>
+  </data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="4" name="MainMenuButton" class="ClickButton" x="230" y="460" width="10" height="10">
+   <properties>
+    <property name="numFrames" type="int" value="3"/>
+    <property name="selectCallbackID" type="int" value="1"/>
+    <property name="textureID" value="mainMenuButton"/>
+   </properties>
+  </object>
+  <object id="5" name="RestartButton" class="ClickButton" x="230" y="300" width="10" height="10">
+   <properties>
+    <property name="numFrames" type="int" value="3"/>
+    <property name="selectCallbackID" type="int" value="2"/>
+    <property name="textureID" value="restartButton"/>
+   </properties>
+  </object>
+  <object id="7" name="Game Over" class="TextObject" x="75" y="56.3333" width="10" height="10">
+   <properties>
+    <property name="text" value="GAME OVER"/>
+    <property name="textSize" type="int" value="80"/>
+   </properties>
+  </object>
+  <object id="8" name="___" class="TextObject" x="89.6667" y="118" width="10" height="10">
+   <properties>
+    <property name="text" value="_______________________"/>
+    <property name="textSize" type="int" value="30"/>
+   </properties>
+  </object>
+  <object id="9" name="Final Score:" class="TextObject" x="181.667" y="219" width="10" height="10">
+   <properties>
+    <property name="text" value="Final Score:"/>
+    <property name="textSize" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="10" name="Score" class="TextObject" x="568" y="219" width="10" height="10">
+   <properties>
+    <property name="text" value="0"/>
+    <property name="textCallbackID" type="int" value="1"/>
+    <property name="textSize" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="11" name="Game Outcome" class="TextObject" x="194.333" y="163.667" width="10" height="10">
+   <properties>
+    <property name="text" value="0"/>
+    <property name="textCallbackID" type="int" value="2"/>
+    <property name="textSize" type="int" value="30"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
