@@ -3,8 +3,6 @@
 // Everything that uses SpriteManager will need access to Sprite too
 #include "core/Sprite.h"
 
-#include <stack>
-
 /// <summary>
 /// Controls creation, usage and destruction of Sprite objects
 /// </summary>

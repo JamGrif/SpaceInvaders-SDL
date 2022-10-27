@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <stack>
 
 #include "misc/Vector2D.h"
 #include "misc/ProgramClock.h"

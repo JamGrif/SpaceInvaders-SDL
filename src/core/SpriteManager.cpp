@@ -8,7 +8,7 @@
 static constexpr uint32_t NO_IDS = 0;
 
 /// <summary>
-/// Create sprite at filepath and assign an id to it
+/// Create sprite at filepath of type spriteType and assign an id to it
 /// </summary>
 bool SpriteManager::createSprite(const std::string& filepath, const spriteID& id, SpriteType spriteType)
 {
@@ -30,7 +30,7 @@ bool SpriteManager::createSprite(const std::string& filepath, const spriteID& id
 /// </summary>
 bool SpriteManager::createSprite(const std::vector<std::pair<std::string, spriteID>>& spritesToLoad, SpriteType spriteType)
 {
-	// Loop through and load each sprite using its filepath(first) and id(second)
+	// Loop through and load each sprite using its filepath(first) and id(second) and spriteType
 	for (const auto& s : spritesToLoad)
 	{
 		createSprite(s.first, s.second, spriteType);
@@ -40,7 +40,7 @@ bool SpriteManager::createSprite(const std::vector<std::pair<std::string, sprite
 }
 
 /// <summary>
-/// Create a Sprite object from an already created SDL_Texture and assign an id to it
+/// Create a Sprite object from an already created SDL_Texture and assign an id and spriteType to it
 /// </summary>
 bool SpriteManager::createSprite(SDL_Texture* pCreatedTexture, const spriteID& id, SpriteType spriteType)
 {

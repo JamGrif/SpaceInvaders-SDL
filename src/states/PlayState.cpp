@@ -256,7 +256,7 @@ bool PlayState::onEnterState()
 	//BaseState::updateState();
 
 	// Go through all gameobjects and move any alien objects and block objects to their respective vectors
-	std::vector<std::shared_ptr<BaseGameObject>>::iterator it = m_allGameObjects.begin();
+	auto it = m_allGameObjects.begin();
 	while (it != m_allGameObjects.end())
 	{
 		// Check if gameobject is a Block object and move it to its own vector
@@ -298,6 +298,8 @@ bool PlayState::onEnterState()
 		it++;
 	}
 
+	m_allGameObjects.shrink_to_fit();
+
 	// Create bullet handler and let player class store a pointer to it
 	m_pBulletHandler = std::make_shared<BulletHandler>(m_allBlocks, m_allAliens, m_pPlayer, m_pAlienBoss);
 	m_pPlayer.lock()->setBulletHandler(m_pBulletHandler);
@@ -308,17 +310,10 @@ bool PlayState::onEnterState()
 /// <summary>
 /// Call parent class onExitState function and clear any active bullets
 /// </summary>
-/// <returns></returns>
 bool PlayState::onExitState()
 {
 	std::cout << "-=-=-=-=-=-Exiting PlayState-=-=-=-=-=-" << std::endl;
 	BaseState::onExitState();
-
-	//delete m_pBulletHandler;
-	//m_allAliens.clear();
-	//m_allBlocks.clear();
-	//m_player = nullptr;
-	//m_alienBoss = nullptr;
 
 	TheSoundManager::Instance()->stopAllSounds();
 
