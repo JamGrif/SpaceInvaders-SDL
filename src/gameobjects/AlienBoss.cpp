@@ -3,6 +3,12 @@
 
 #include "core/SoundManager.h"
 
+enum class AlienBossSpriteRow
+{
+	Alive = 0,
+	Dead  = 1
+};
+
 AlienBoss::AlienBoss()
 	:Alien(), m_bDead(false), m_minimumRespawnTime_ms(5000), m_maximumRespawnTime_ms(1000), m_selectedRespawnTime_ms(0),
 	m_currentRespawnTime_ms(0), m_minimumScoreWorth(60), m_maximumScoreWorth(140),
@@ -21,10 +27,6 @@ AlienBoss::~AlienBoss()
 /// <param name="pParams"></param>
 void AlienBoss::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
-	m_aliveTextureID = pParams->textureID;
-
-	m_deadTextureID = "alienBossDead";
-
 	SDLGameObject::loadObject(std::move(pParams));
 
 	resetAlien();
@@ -54,6 +56,7 @@ void AlienBoss::updateObject()
 		{
 			m_bSoundPlaying = false;
 			TheSoundManager::Instance()->stopSound(ALIEN_BOSS_CHANNEL);
+			m_currentSpriteRow = static_cast<uint8_t>(AlienBossSpriteRow::Dead);
 		}
 
 		m_timeSpentDying_ms += TheProgramClock::Instance()->getDeltaTime_ms();
@@ -116,7 +119,7 @@ void AlienBoss::resetAlien()
 	m_timeSpentDying_ms = 0;
 
 	// Set texture back to alive
-	m_objectTextureID = m_aliveTextureID;
+	m_currentSpriteRow = static_cast<uint8_t>(AlienBossSpriteRow::Alive);
 
 	// Set alien to dead - allowing it to start its respawn timer
 	m_bDead = true;

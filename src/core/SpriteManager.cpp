@@ -86,7 +86,7 @@ void SpriteManager::clearAllFromSpriteMap(SpriteType spritetype)
 /// <summary>
 /// Draw the specified sprite, using its id to choose it
 /// </summary>
-void SpriteManager::drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal, double spriteRotation)
+void SpriteManager::drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAttributes, uint8_t currentRow, uint8_t currentFrame, bool flipHorizontal, double spriteRotation)
 {
 	if (m_spriteMap.find(id) == m_spriteMap.end())
 	{
@@ -97,7 +97,7 @@ void SpriteManager::drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAt
 	SDL_Rect spriteFrame; // What part of the sprite sheet to use
 
 	spriteFrame.x = ((objectAttributes.w * currentFrame) + SPRITE_PIXEL_MARGIN) + currentFrame * SPRITE_PIXEL_SPACING;
-	spriteFrame.y = SPRITE_PIXEL_MARGIN;
+	spriteFrame.y = ((objectAttributes.h * currentRow) + SPRITE_PIXEL_MARGIN) + currentRow * SPRITE_PIXEL_SPACING;
 	spriteFrame.w = objectAttributes.w;
 	spriteFrame.h = objectAttributes.h;
 

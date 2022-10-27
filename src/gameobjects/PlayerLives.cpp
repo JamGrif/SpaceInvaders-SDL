@@ -15,7 +15,6 @@ PlayerLives::~PlayerLives()
 /// <summary>
 /// Set all values in PlayerLives class and parent classes
 /// </summary>
-/// <param name="pParams"></param>
 void PlayerLives::loadObject(std::unique_ptr<LoaderParams> pParams)
 {
 	m_livesRequired = pParams->livesRequired;

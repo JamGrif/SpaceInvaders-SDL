@@ -26,6 +26,8 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> pParams)
 	m_classType = pParams->classType;
 
 	m_objectTextureID = pParams->textureID;
+	m_rowsInSprite = pParams->numRows;
+	m_defaultRow = pParams->defaultRow;
 	m_framesInSprite = pParams->numFrames;
 	m_animationSpeed_ms = pParams->animationSpeed;
 	m_movementSpeed = pParams->movementSpeed;
@@ -37,10 +39,14 @@ void SDLGameObject::loadObject(std::unique_ptr<LoaderParams> pParams)
 	std::weak_ptr<Sprite> temp = TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID);
 	if (!temp.expired())
 	{
-		temp.lock()->setUpIndividualSpriteDimensions(pParams->numFrames);
+		temp.lock()->setUpIndividualSpriteDimensions(m_framesInSprite, m_rowsInSprite);
 		m_objectWidth = temp.lock()->getIndividualDimensions()->w;
 		m_objectHeight = temp.lock()->getIndividualDimensions()->h;
 	}
+
+	// Set starting sprite frame and row
+	m_currentSpriteFrame = 0;
+	m_currentSpriteRow = m_defaultRow;
 }
 
 /// <summary>
@@ -58,6 +64,7 @@ void SDLGameObject::drawObject()
 	TheSpriteManager::Instance()->drawSpriteFrame(
 		m_objectTextureID,
 		m_objectAttributes,
+		m_currentSpriteRow,
 		m_currentSpriteFrame,
 		m_bFlipImage,
 		m_spriteRotation);

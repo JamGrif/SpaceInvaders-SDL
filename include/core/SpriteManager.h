@@ -15,7 +15,7 @@ public:
 
 	void					clearAllFromSpriteMap(SpriteType spritetype);
 
-	void					drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAttributes, uint8_t currentFrame, bool flipHorizontal, double spriteRotation);
+	void					drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAttributes, uint8_t currentRow, uint8_t currentFrame, bool flipHorizontal, double spriteRotation);
 	void					drawSpriteTile(const spriteID& id, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t currentRow, uint8_t currentFrame);
 	void					drawSpriteText(const spriteID& id, const SDL_Rect& objectAttributes);
 

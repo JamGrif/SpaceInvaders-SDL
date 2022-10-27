@@ -4,6 +4,14 @@
 #include "core/Game.h"
 #include "core/SoundManager.h"
 
+enum class AlienSpriteRow
+{
+	Upper  = 0,
+	Middle = 1,
+	Lower  = 2,
+	Dead   = 3
+};
+
 Alien::Alien()
 	:SDLGameObject(), m_downAmount(15), m_bDying(false),
 	m_timeSpentDying_ms(0), m_timeAloudDying_ms(200), m_selectedScoreWorth(0),
@@ -70,7 +78,8 @@ void Alien::setDying()
 {
 	m_bDying = true;
 
-	m_objectTextureID = m_deadTextureID;
+	m_currentSpriteRow = static_cast<uint8_t>(AlienSpriteRow::Dead);
+
 	TheGame::Instance()->increaseCurrentScore(m_selectedScoreWorth);
 
 	TheSoundManager::Instance()->playSound("alienExplosion");

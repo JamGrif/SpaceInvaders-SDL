@@ -23,9 +23,6 @@ private:
 
 	bool			m_bDead;
 
-	// Store alive texture ID to use when alien respawns
-	std::string		m_aliveTextureID;
-
 	// The AlienBoss will respawn between this range
 	const uint16_t	m_minimumRespawnTime_ms;
 	const uint16_t	m_maximumRespawnTime_ms;

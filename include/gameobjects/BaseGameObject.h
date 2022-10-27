@@ -8,7 +8,7 @@ class LoaderParams
 {
 public:
 	LoaderParams()
-		:xPos(0), yPos(0), numFrames(1), movementSpeed(0.0f), animationSpeed(0), scoreWorth(0), selectCallbackID(0),
+		:xPos(0), yPos(0), numRows(1), defaultRow(0), numFrames(1), movementSpeed(0.0f), animationSpeed(0), scoreWorth(0), selectCallbackID(0),
 		checkboxStateCallbackID(0), livesRequired(0), textCallbackID(0), textSize(10) {}
 	~LoaderParams(){}
 
@@ -17,7 +17,9 @@ public:
 	std::string classType;				// Class type of object
 
 	std::string textureID;				// Texture the object uses by default
-	int32_t numFrames;					// Number of separate frames in sprite (default is sprite has one frame)
+	int32_t	numRows;					// Number of separate rows in sprite sheet (default is sprite has one row)
+	int32_t defaultRow;					// Which row to set as default and starting row (default is first row)
+	int32_t numFrames;					// Number of separate frames in sprite sheet (default is sprite has one frame)
 	float movementSpeed;				// Speed at which the object moves
 	int32_t animationSpeed;				// Time until next sprite frame change (_ms means milliseconds) (default is sprite frame will not change)
 

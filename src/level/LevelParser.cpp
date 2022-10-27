@@ -205,33 +205,39 @@ void LevelParser::parseObjectLayer(const TiXmlElement& pObjectGroupRoot, std::ve
 				// Determine what each <property> node is and then assign it to associated LoaderParam value
 				if (strcmp(property->Attribute("name"), "numFrames") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->numFrames);
-	
+
 				else if (strcmp(property->Attribute("name"), "textureID") == STRCMP_SUCCESS)
 					tempLoaderParams->textureID = property->Attribute("value");
-				
+
 				else if (strcmp(property->Attribute("name"), "selectCallbackID") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->selectCallbackID);
-				
+
 				else if (strcmp(property->Attribute("name"), "animationSpeed") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->animationSpeed);
-				
+
 				else if (strcmp(property->Attribute("name"), "livesRequired") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->livesRequired);
-				
+
 				else if (strcmp(property->Attribute("name"), "text") == STRCMP_SUCCESS)
 					tempLoaderParams->text = property->Attribute("value");
-				
+
 				else if (strcmp(property->Attribute("name"), "checkboxStateCallbackID") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->checkboxStateCallbackID);
-				
+
 				else if (strcmp(property->Attribute("name"), "scoreWorth") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->scoreWorth);
-				
+
 				else if (strcmp(property->Attribute("name"), "textCallbackID") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->textCallbackID);
-				
+
 				else if (strcmp(property->Attribute("name"), "textSize") == STRCMP_SUCCESS)
 					property->Attribute("value", &tempLoaderParams->textSize);
+
+				else if (strcmp(property->Attribute("name"), "numRows") == STRCMP_SUCCESS)
+					property->Attribute("value", &tempLoaderParams->numRows);
+
+				else if (strcmp(property->Attribute("name"), "defaultRow") == STRCMP_SUCCESS)
+					property->Attribute("value", &tempLoaderParams->defaultRow);
 
 				else if (strcmp(property->Attribute("name"), "movementSpeed") == STRCMP_SUCCESS)
 				{

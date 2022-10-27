@@ -41,11 +41,18 @@ protected:
 	// Uses the objects xPos, yYos, width and height
 	SDL_Rect	m_objectAttributes;
 
+	// Which row in the sprite sheet to use
+	uint8_t		m_currentSpriteRow;
+
 	// Current sprite frame in use of loaded sprite
 	uint8_t		m_currentSpriteFrame;
 
 	// Total amount of separate sprite frames of loaded sprite
+	uint8_t		m_rowsInSprite;
 	uint8_t		m_framesInSprite;
+
+	// Default/starting row to use in sprite
+	uint8_t		m_defaultRow;
 
 	// Time until next sprite frame change (_ms means milliseconds)
 	uint16_t	m_animationSpeed_ms;

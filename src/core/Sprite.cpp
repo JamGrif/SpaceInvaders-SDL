@@ -20,7 +20,7 @@ Sprite::~Sprite()
 	if (m_pTextureObject)
 		SDL_DestroyTexture(m_pTextureObject);
 
-	/*std::cout << "destroyed sprite " << m_id << std::endl;*/
+	std::cout << "destroyed sprite " << m_id << std::endl;
 }
 
 
@@ -42,7 +42,7 @@ bool Sprite::loadSprite(const std::string& filepath, const std::string& id, Spri
 	m_id = id;
 	m_spriteType = spriteType;
 
-	/*std::cout << "created sprite " << m_id << std::endl; */
+	std::cout << "created sprite " << m_id << std::endl; 
 	return true;
 }
 
@@ -56,7 +56,7 @@ bool Sprite::loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, Sprite
 	m_pTextureObject = pCreatedTexture;
 	m_spriteType = spriteType;
 
-	/*std::cout << "created sprite " << m_id << std::endl*/;
+	std::cout << "created sprite " << m_id << std::endl;
 	return true;
 }
 
@@ -65,7 +65,7 @@ bool Sprite::loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, Sprite
 /// Takes into account the margin and spacing between each sprite frame
 /// Assuming each frame has the exact same dimensions
 /// </summary>
-void Sprite::setUpIndividualSpriteDimensions(int numFrames)
+void Sprite::setUpIndividualSpriteDimensions(int numFrames, int numRows)
 {
 	if (m_bSpriteSetup)
 		return;
@@ -83,13 +83,19 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames)
 	int temp = numFrames;
 	m_pTotalSpriteDimensions->w -= SPRITE_PIXEL_SPACING * (--temp);
 
-	m_pTotalSpriteDimensions->h -= (SPRITE_PIXEL_MARGIN * 2);
+
+	m_pTotalSpriteDimensions->h -= SPRITE_PIXEL_MARGIN * 2;
+	int temp2 = numRows;
+	m_pTotalSpriteDimensions->h -= SPRITE_PIXEL_SPACING * (--temp2);
 
 	// Width of each frame
 	m_pIndivdualSpriteDimension->w = (m_pTotalSpriteDimensions->w / numFrames);
 
 	// Height of each frame
-	m_pIndivdualSpriteDimension->h = m_pTotalSpriteDimensions->h;
+	m_pIndivdualSpriteDimension->h = (m_pTotalSpriteDimensions->h / numRows);
+
+	//std::cout << m_id << " width is " << m_pIndivdualSpriteDimension->w << std::endl;
+	//std::cout << m_id << " height is " << m_pIndivdualSpriteDimension->h << std::endl;
 }
 
 /// <summary>

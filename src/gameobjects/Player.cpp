@@ -6,6 +6,12 @@
 #include "core/SoundManager.h"
 #include "gameobjects/utility/BulletHandler.h"
 
+enum class PlayerSpriteRow
+{
+	Alive = 0,
+	Dead  = 1
+};
+
 Player::Player()
 	:SDLGameObject(), m_bDead(false), m_bDying(false),
 	m_currentDyingTime_ms(0), m_selectedDyingTime_ms(2000), m_respawnPosition(0,0),
@@ -104,8 +110,10 @@ void Player::updateObject()
 /// </summary>
 void Player::respawnPlayer()
 {
-	m_objectTextureID = "player";
-	m_framesInSprite = 1;
+	//m_objectTextureID = "player";
+	//m_framesInSprite = 1;
+	
+	m_currentSpriteRow = static_cast<uint8_t>(PlayerSpriteRow::Alive);
 
 	m_position.setX(m_respawnPosition.getX());
 	m_position.setY(m_respawnPosition.getY());
@@ -124,7 +132,8 @@ void Player::respawnPlayer()
 void Player::setDying()
 {
 	m_bDying = true;
-	m_objectTextureID = "playerDead";
+	//m_objectTextureID = "playerDead";
+	m_currentSpriteRow = static_cast<uint8_t>(PlayerSpriteRow::Dead);
 	m_framesInSprite = 2;
 	m_animationSpeed_ms = 150;
 

@@ -35,7 +35,7 @@ public:
 	bool						loadSprite(const std::string& filepath, const std::string& id, SpriteType spriteType);
 	bool						loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, SpriteType spriteType);
 
-	void						setUpIndividualSpriteDimensions(int numFrames);
+	void						setUpIndividualSpriteDimensions(int numFrames, int numRows);
 	void						calculateSpriteDimensions();
 
 	SDL_Surface*				getSurfacePtr() { return m_pSurfaceObject; }
