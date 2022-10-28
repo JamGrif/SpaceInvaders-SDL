@@ -3,7 +3,7 @@
 
 #include "gameobjects/SDLGameObject.h"
 
-bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
+bool checkCollision(const SDLGameObject* p1, const SDLGameObject* p2)
 {
 	float leftA, leftB;
 	float rightA, rightB;

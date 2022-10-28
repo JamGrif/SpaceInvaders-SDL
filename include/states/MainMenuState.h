@@ -15,7 +15,7 @@ public:
 	virtual void		updateState() override;
 	virtual void		renderState() override;
 
-	virtual std::string getStateID() const { return s_menuID; }
+	virtual const std::string& getStateID() const override { return s_menuID; }
 
 private:
 	static const std::string s_menuID;

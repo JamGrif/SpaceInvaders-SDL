@@ -2,13 +2,11 @@
 
 class PlayerBullet;
 class AlienBullet;
-class Level;
 
 class Block;
 class Player;
 class Alien;
 class AlienBoss;
-class BaseGameObject;
 
 /// <summary>
 /// Handles all generated bullets: creation, usage and deletion

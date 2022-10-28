@@ -14,7 +14,7 @@ public:
 	virtual void		updateState() override;
 	virtual void		renderState() override;
 
-	virtual std::string getStateID() const { return s_gameOverID; }
+	virtual const std::string& getStateID() const override { return s_gameOverID; }
 
 private:
 	static const std::string s_gameOverID;

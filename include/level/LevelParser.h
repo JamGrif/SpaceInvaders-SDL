@@ -13,6 +13,8 @@ class Level;
 class LevelParser
 {
 public:
+	LevelParser() : m_tilePixelSize(0), m_levelTileWidth(0), m_levelTileHeight(0) {}
+	~LevelParser() {}
 
 	Level*		parseLevel(const std::string& filepath, std::vector<std::shared_ptr<BaseGameObject>>& allGameObjects);
 
@@ -33,10 +35,10 @@ private:
 	void		parseTilesets(const TiXmlElement& pTilesetRoot); //
 
 	// Dimensions, in pixels, of an individual tile
-	int32_t		m_tilePixelSize = 0;
+	int32_t		m_tilePixelSize;
 
 	// Dimensions, in tiles, of the entire .tmx file
-	int32_t		m_levelTileWidth = 0;
-	int32_t		m_levelTileHeight = 0;
+	int32_t		m_levelTileWidth;
+	int32_t		m_levelTileHeight;
 };
 

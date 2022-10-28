@@ -19,7 +19,7 @@ public:
 
 	bool		isKeyDown(Keyboard::Keys keyboardKey) const;
 
-	Vector2D	getMousePosition() const { return m_mousePosition; }
+	const Vector2D&	getMousePosition() const { return m_mousePosition; }
 
 	static InputHandler* Instance() // Get instance
 	{

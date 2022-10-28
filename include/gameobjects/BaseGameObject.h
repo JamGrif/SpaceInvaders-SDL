@@ -48,7 +48,7 @@ public:
 
 	bool			getDestroy() { return m_bDestroy; }
 
-	std::string		getClassType() { return m_classType; }
+	const std::string& getClassType() { return m_classType; }
 
 protected:
 	bool			m_bDestroy;

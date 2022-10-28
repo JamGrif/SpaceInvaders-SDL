@@ -35,12 +35,12 @@ public:
 	void		setTileSize(uint8_t tileSize) { m_tileSize = tileSize; }
 
 private:
-	// Number of columns and rows to draw tiles too, determined from size of window
-	uint16_t	m_numColumns;
-	uint16_t	m_numRows;
-
 	// Pixel size of individual tile frame
 	uint8_t		m_tileSize;
+
+	// Number of columns and rows to draw tiles too, determined from size of window
+	const uint16_t	m_numColumns;
+	const uint16_t	m_numRows;
 
 	std::unique_ptr<Tileset> m_pTileset;
 	std::vector<std::vector<uint16_t>> m_tileIDs;

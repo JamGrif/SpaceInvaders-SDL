@@ -11,10 +11,10 @@ public:
 	CheckboxButton();
 	~CheckboxButton();
 
-	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams) override;
 
-	virtual void	drawObject();
-	virtual void	updateObject();
+	virtual void	drawObject() override;
+	virtual void	updateObject() override;
 
 	void			setCheckboxStateCallback(bool(*callback)()) { m_checkboxStateCallback = callback; }
 	uint8_t			getCheckboxCallbackID() const { return m_checkboxStateCallbackID; }

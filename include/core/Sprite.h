@@ -32,37 +32,36 @@ public:
 	Sprite();
 	~Sprite();
 
-	bool						loadSprite(const std::string& filepath, const std::string& id, SpriteType spriteType);
+	bool						loadSprite(const std::string& filepath, const spriteID& id, SpriteType spriteType);
 	bool						loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, SpriteType spriteType);
 
 	void						setUpIndividualSpriteDimensions(int numFrames, int numRows);
-	void						calculateSpriteDimensions();
 
-	SDL_Surface*				getSurfacePtr() { return m_pSurfaceObject; }
-	SDL_Texture*				getTexturePtr() { return m_pTextureObject; }
-	std::string&				getFilepath() { return m_filepath; }
-	std::string&				getID() { return m_id; }
-	SpriteType					getSpriteType() { return m_spriteType; }
+	SDL_Surface*				getSurfacePtr() const { return m_pSurfaceObject; }
+	SDL_Texture*				getTexturePtr() const { return m_pTextureObject; }
+	const std::string&			getFilepath() const { return m_filepath; }
+	const std::string&			getID() const { return m_id; }
+	SpriteType					getSpriteType() const { return m_spriteType; }
 
-	std::unique_ptr<SDL_Rect>&	getTotalDimensions() { return m_pTotalSpriteDimensions; };
-	std::unique_ptr<SDL_Rect>&	getIndividualDimensions() { return m_pIndivdualSpriteDimension; }
+	const std::unique_ptr<SDL_Rect>& getTotalDimensions() const { return m_pTotalSpriteDimensions; };
+	const std::unique_ptr<SDL_Rect>& getIndividualDimensions() const { return m_pIndivdualSpriteDimension; }
 
-	void						getSpriteDimensions(SDL_Rect& rect);
+	void						getSpriteDimensions(SDL_Rect& rect) const;
 
 	void						changeTexture(SDL_Texture* pNewTexture);
 
 	void						setScaleX(float scale) { m_scale.setX(scale); }
 	void						setScaleY(float scale) { m_scale.setY(scale); }
 
-	float						getScaleX() { return m_scale.getX(); }
-	float						getScaleY() { return m_scale.getY(); }
+	float						getScaleX() const { return m_scale.getX(); }
+	float						getScaleY() const { return m_scale.getY(); }
 
 private:
 	SDL_Surface*				m_pSurfaceObject;
 	SDL_Texture*				m_pTextureObject;
 
 	std::string					m_filepath;
-	std::string					m_id;
+	spriteID					m_id;
 
 	SpriteType					m_spriteType;
 

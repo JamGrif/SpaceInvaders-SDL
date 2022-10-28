@@ -102,8 +102,8 @@ void SpriteManager::drawSpriteFrame(const spriteID& id, const SDL_Rect& objectAt
 	spriteFrame.h = objectAttributes.h;
 
 	SDL_Rect rect = objectAttributes;
-	rect.w *= m_spriteMap[id]->getScaleX();
-	rect.h *= m_spriteMap[id]->getScaleY();
+	rect.w *= static_cast<int>(m_spriteMap[id]->getScaleX());
+	rect.h *= static_cast<int>(m_spriteMap[id]->getScaleY());
 
 	SDL_RendererFlip flag = flipHorizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
@@ -124,8 +124,8 @@ void SpriteManager::drawSpriteTile(const spriteID& id, int16_t x, int16_t y, uin
 	SDL_Rect tileToDraw;	// Tile on tileset to draw
 	SDL_Rect destRect;		
 
-	tileToDraw.x = m_tilesetPixelMargin + (m_tilesetPixelSpacing + width) * currentFrame;
-	tileToDraw.y = m_tilesetPixelMargin + (m_tilesetPixelSpacing + height) * currentRow;
+	tileToDraw.x = TILESET_PIXEL_MARGIN + (TILESET_PIXEL_SPACING + width) * currentFrame;
+	tileToDraw.y = TILESET_PIXEL_MARGIN + (TILESET_PIXEL_SPACING + height) * currentRow;
 	tileToDraw.w = destRect.w = width;
 	tileToDraw.h = destRect.h = height;
 
@@ -199,7 +199,7 @@ void SpriteManager::removeIDsAtStatePop()
 }
 
 SpriteManager::SpriteManager()
-	:m_inUseIDs(NO_IDS), m_tilesetPixelMargin(TILESET_PIXEL_MARGIN), m_tilesetPixelSpacing(TILESET_PIXEL_SPACING)
+	:m_inUseIDs(NO_IDS)
 {
 }
 

@@ -29,9 +29,9 @@ private:
 	// Gives the amount of time we need to delay the game between loops to keep the frame rate constant. (1000 = number of milliseconds in a second)
 	uint32_t m_delayTime;
 
-	ProgramClock():m_deltaTime_ms(0), m_currentFrame(0), m_lastFrame_ms(0), m_delayTime(0) {}						// Prevent outside unwanted construction
-	ProgramClock(const ProgramClock&) :m_deltaTime_ms(0), m_currentFrame(0), m_lastFrame_ms(0), m_delayTime(0) {}	// Prevent construction by copying
-	ProgramClock& operator=(const ProgramClock&) {}																	// Prevent assignment
-	~ProgramClock() {}																								// Prevent outside unwanted destruction
+	ProgramClock():m_deltaTime_ms(0), m_currentFrame(0), m_lastFrame_ms(0), m_delayTime(0) {}	// Prevent outside unwanted construction
+	ProgramClock(const ProgramClock&) = delete;													// Prevent construction by copying
+	ProgramClock& operator=(const ProgramClock&) = delete;										// Prevent assignment
+	~ProgramClock() {}																			// Prevent outside unwanted destruction
 };
 typedef ProgramClock TheProgramClock;

@@ -14,7 +14,7 @@ public:
 	virtual void		updateState() override;
 	virtual void		renderState() override;
 
-	virtual std::string getStateID() const { return s_pauseID; }
+	virtual const std::string& getStateID() const override { return s_pauseID; }
 
 private:
 	static const std::string s_pauseID;

@@ -12,10 +12,10 @@ public:
 	PlayerLives();
 	~PlayerLives();
 
-	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams) override;
 
-	virtual void	drawObject();
-	virtual void	updateObject();
+	virtual void	drawObject() override;
+	virtual void	updateObject() override;
 
 private:
 

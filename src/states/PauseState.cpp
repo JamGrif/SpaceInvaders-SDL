@@ -2,6 +2,7 @@
 #include "states/PauseState.h"
 
 #include "core/Game.h"
+#include "core/InputHandler.h"
 #include "states/utility/GameStateMachine.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";

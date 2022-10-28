@@ -19,7 +19,7 @@ public:
 		TTF_CloseFont(m_pFont);
 	}
 
-	TTF_Font*	getTTF_Font() { return m_pFont; }
+	const TTF_Font*	getTTF_Font() const { return m_pFont; }
 
 private:
 	TTF_Font*	m_pFont;

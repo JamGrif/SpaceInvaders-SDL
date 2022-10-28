@@ -11,9 +11,9 @@ public:
 	Button();
 	~Button();
 
-	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams) override;
 
-	virtual void	drawObject();
+	virtual void	drawObject() override;
 	virtual void	updateObject() = 0;
 
 	// Set what function is called when the button is pressed, called during OnEnterState function in current state

@@ -17,10 +17,10 @@ public:
 	TextObject();
 	~TextObject();
 
-	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams);
+	virtual void	loadObject(std::unique_ptr<LoaderParams> pParams) override;
 
-	virtual void	drawObject();
-	virtual void	updateObject();
+	virtual void	drawObject() override;
+	virtual void	updateObject() override;
 
 	void			setTextCallback(std::string(*callback)()) { m_textCallback = callback; }
 	uint8_t			getTextCallbackID() const { return m_textCallbackID; }

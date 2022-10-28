@@ -19,12 +19,12 @@ public:
     SDLGameObject();
 	~SDLGameObject();
 
-	virtual void loadObject(std::unique_ptr<LoaderParams> pParams);
+	virtual void loadObject(std::unique_ptr<LoaderParams> pParams) override;
 
-    virtual void drawObject();
-    virtual void updateObject();
+    virtual void drawObject() override;
+    virtual void updateObject() override;
 
-	Vector2D&	getPosition() { return m_position; }
+	const Vector2D&	getPosition() const { return m_position; }
 
 	int32_t		getWidth() const { return m_objectWidth; }
 	int32_t		getHeight() const { return m_objectHeight; };

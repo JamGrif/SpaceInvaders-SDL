@@ -29,7 +29,7 @@ public:
 	void			quitGame();
 
 	void			setGameOutcome(GameStateOutcome e);
-	std::string		getGameOutcome() { return m_outcomeText; }
+	const std::string& getGameOutcome() const { return m_outcomeText; }
 
 	// Player's score
 	void			increaseCurrentScore(int value) { m_currentScore += value; }
@@ -44,7 +44,7 @@ public:
 
 	GameStateMachine* getStateMachine() const { return m_pGameStateMachine; }
 		
-	static Game*	Instance() // Get instance
+	static Game* Instance() // Get instance
 	{
 		static Game* s_pInstance = new Game;
 		return s_pInstance;

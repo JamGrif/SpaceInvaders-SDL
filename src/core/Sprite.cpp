@@ -23,8 +23,10 @@ Sprite::~Sprite()
 	/*std::cout << "destroyed sprite " << m_id << std::endl;*/
 }
 
-
-bool Sprite::loadSprite(const std::string& filepath, const std::string& id, SpriteType spriteType)
+/// <summary>
+/// Create a sprite with at filepath and assign an ID and spriteType to it
+/// </summary>
+bool Sprite::loadSprite(const std::string& filepath, const spriteID& id, SpriteType spriteType)
 {
 	// Create SDL_Surface and SDL_Texture at filepath
 	m_pSurfaceObject = IMG_Load(filepath.c_str());
@@ -42,26 +44,34 @@ bool Sprite::loadSprite(const std::string& filepath, const std::string& id, Spri
 	m_id = id;
 	m_spriteType = spriteType;
 
+	// Set initial sprite dimensions
+	SDL_QueryTexture(m_pTextureObject, NULL, NULL, &m_pTotalSpriteDimensions->w, &m_pTotalSpriteDimensions->h);
+
 	/*std::cout << "created sprite " << m_id << std::endl; */
 	return true;
 }
 
-
+/// <summary>
+/// Create a sprite object with a previously created SDL_Texture object and assign an ID and spriteType to it
+/// </summary>
 bool Sprite::loadSprite(SDL_Texture* pCreatedTexture, const spriteID& id, SpriteType spriteType)
 {
 	if (!pCreatedTexture)
 		return false;
 
-	m_id = id;
 	m_pTextureObject = pCreatedTexture;
+	m_id = id;
 	m_spriteType = spriteType;
+
+	// Set initial sprite dimensions
+	SDL_QueryTexture(m_pTextureObject, NULL, NULL, &m_pTotalSpriteDimensions->w, &m_pTotalSpriteDimensions->h);
 
 	/*std::cout << "created sprite " << m_id << std::endl;*/
 	return true;
 }
 
 /// <summary>
-/// Determine dimensions of an individual sprite frame by telling sprite how many sprite frames in a row
+/// Determine dimensions of an individual sprite frame by telling sprite how many sprite frames in a row and how many rows in the total sprite sheet
 /// Takes into account the margin and spacing between each sprite frame
 /// Assuming each frame has the exact same dimensions
 /// </summary>
@@ -75,14 +85,11 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames, int numRows)
 
 	m_bSpriteSetup = true;
 
-	// Store the complete dimensions of the sprite
-	SDL_QueryTexture(m_pTextureObject, NULL, NULL, &m_pTotalSpriteDimensions->w, &m_pTotalSpriteDimensions->h);
 
 	// Remove added space from sprite pixel margin and spacing
 	m_pTotalSpriteDimensions->w -= SPRITE_PIXEL_MARGIN * 2;
 	int temp = numFrames;
 	m_pTotalSpriteDimensions->w -= SPRITE_PIXEL_SPACING * (--temp);
-
 
 	m_pTotalSpriteDimensions->h -= SPRITE_PIXEL_MARGIN * 2;
 	int temp2 = numRows;
@@ -96,18 +103,9 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames, int numRows)
 }
 
 /// <summary>
-/// Update the total sprite dimensions to the current SDL_Texture size
-/// </summary>
-void Sprite::calculateSpriteDimensions()
-{
-	if (m_pTextureObject)
-		SDL_QueryTexture(m_pTextureObject, NULL, NULL, &m_pTotalSpriteDimensions->w, &m_pTotalSpriteDimensions->h);
-}
-
-/// <summary>
 /// Copy the totalSpriteDimensions to the provided SDL_Rect structure
 /// </summary>
-void Sprite::getSpriteDimensions(SDL_Rect& rect)
+void Sprite::getSpriteDimensions(SDL_Rect& rect) const
 {
 	rect.w = m_pTotalSpriteDimensions->w;
 	rect.h = m_pTotalSpriteDimensions->h;
@@ -123,4 +121,7 @@ void Sprite::changeTexture(SDL_Texture* pNewTexture)
 
 	SDL_DestroyTexture(m_pTextureObject);
 	m_pTextureObject = pNewTexture;
+
+	// Update dimensions with new texture
+	SDL_QueryTexture(m_pTextureObject, NULL, NULL, &m_pTotalSpriteDimensions->w, &m_pTotalSpriteDimensions->h);
 }

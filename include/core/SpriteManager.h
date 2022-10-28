@@ -39,7 +39,6 @@ public:
 private:
 
 	std::unordered_map<spriteID, std::shared_ptr<Sprite>> m_spriteMap;
-	//std::unordered_map<spriteID, std::shared_ptr<Sprite>> m_stateSpriteMap;
 
 	// The number of IDs being used when a state is pushed into the FSM
 	std::stack<uint32_t>	m_amountIDAtStateStart;
@@ -48,12 +47,6 @@ private:
 	uint32_t				m_inUseIDs;
 
 	void					resetIDs();
-
-	// Number of pixels between the edge of a tileset picture
-	const uint8_t			m_tilesetPixelMargin;
-
-	// Number of pixels between each sprite in a tileset picture
-	const uint8_t			m_tilesetPixelSpacing;
 		
 	SpriteManager();											// Prevent outside unwanted construction
 	~SpriteManager();											// Prevent outside unwanted destruction

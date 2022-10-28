@@ -69,7 +69,7 @@ void TextObject::updateObject()
 void TextObject::updateText(const std::string& newText)
 {
 	// Create the new SDL_Texture object with the new text value
-	SDL_Surface* textSurface = TTF_RenderText_Solid(m_thisFont.lock()->getTTF_Font(), newText.c_str(), m_textColor);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(const_cast<TTF_Font*>(m_thisFont.lock()->getTTF_Font()), newText.c_str(), m_textColor);
 	if (!textSurface)
 		return;
 
@@ -87,9 +87,6 @@ void TextObject::updateText(const std::string& newText)
 	// Otherwise, simply swap out the SDL_Texture with the newly created one
 	else
 		TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).lock()->changeTexture(textTexture);
-	
-	// Calculate the new dimensions of the SDL_Texture object as the text has changed
-	TheSpriteManager::Instance()->getSpriteViaID(m_objectTextureID).lock()->calculateSpriteDimensions();
 
 	// Update m_objectAttributes for rendering
 	m_objectAttributes.x = static_cast<int>(m_position.getX());

@@ -6,11 +6,8 @@
 #include "level/Level.h"
 
 TileLayer::TileLayer(int tileSize)
-	:m_tileSize(tileSize)
+	:m_tileSize(tileSize), m_numColumns(TheGameWindow::Instance()->getWindowWidth() / m_tileSize), m_numRows(TheGameWindow::Instance()->getWindowHeight() / m_tileSize)
 {
-	// Number of columns and rows to fill the size of the game
-	m_numColumns = (TheGameWindow::Instance()->getWindowWidth() / m_tileSize);
-	m_numRows = (TheGameWindow::Instance()->getWindowHeight() / m_tileSize);
 }
 
 TileLayer::~TileLayer()

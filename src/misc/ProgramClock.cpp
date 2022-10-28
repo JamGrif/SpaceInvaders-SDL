@@ -24,7 +24,8 @@ void ProgramClock::tick()
 	m_deltaTime_ms = m_currentFrame - m_lastFrame_ms;
 	m_lastFrame_ms = m_currentFrame;
 
-	// If it is less than the time we want a frame to take, we call SDL_Delay to make the loop wait for the amount of time we want, subtracting how long the loop already took to complete
+	// If it is less than the time needed for a frame to take, we call SDL_Delay to make the loop wait
+	// for the amount of time we want, subtracting how long the loop already took to complete
 	if (m_deltaTime_ms < m_delayTime)
 		SDL_Delay((int)(m_delayTime - m_deltaTime_ms));
 }
