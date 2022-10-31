@@ -40,6 +40,7 @@ bool Sprite::loadSprite(const std::string& filepath, const spriteID& id, SpriteT
 		return false;
 	}
 
+	// SDL_Surface and SDL_Texture creation successful - set initial values
 	m_filepath = filepath;
 	m_id = id;
 	m_spriteType = spriteType;
@@ -84,7 +85,6 @@ void Sprite::setUpIndividualSpriteDimensions(int numFrames, int numRows)
 		return;
 
 	m_bSpriteSetup = true;
-
 
 	// Remove added space from sprite pixel margin and spacing
 	m_pTotalSpriteDimensions->w -= SPRITE_PIXEL_MARGIN * 2;

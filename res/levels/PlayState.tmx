@@ -728,7 +728,7 @@
   <object id="84" name="AlienBoss" class="AlienBoss" x="95" y="-69" width="10" height="10">
    <properties>
     <property name="defaultRow" type="int" value="0"/>
-    <property name="movementSpeed" type="float" value="0.2"/>
+    <property name="movementSpeed" type="float" value="0.8"/>
     <property name="numFrames" type="int" value="1"/>
     <property name="numRows" type="int" value="2"/>
     <property name="textureID" value="alienBossSheet"/>

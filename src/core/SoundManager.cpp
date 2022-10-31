@@ -66,9 +66,7 @@ bool SoundManager::loadSound(const std::string& filepath, const std::string& id,
 	}
 
 	// If Mix_Chunk was created successfully, create sound object and add to map
-	std::unique_ptr<SoundEffectObject> sound = std::make_unique<SoundEffectObject>(pChunk, chosenChannel);
-
-	m_soundEffectObjects.insert({id, std::move(sound)});
+	m_soundEffectObjects.insert({id, std::make_unique<SoundEffectObject>(pChunk, chosenChannel) });
 	return true;
 }
 
@@ -86,9 +84,7 @@ bool SoundManager::loadMusic(const std::string& filepath, const std::string& id)
 	}
 
 	// If Mix_Music was created successfully, create music object and add to map
-	std::unique_ptr<MusicObject> music = std::make_unique<MusicObject>(pMusic);
-
-	m_musicObjects.insert({id, std::move(music)});
+	m_musicObjects.insert({id, std::make_unique<MusicObject>(pMusic) });
 	return true;
 }
 

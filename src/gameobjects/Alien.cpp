@@ -4,6 +4,7 @@
 #include "core/Game.h"
 #include "core/SoundManager.h"
 
+// Row values from alienSheet.png
 enum class AlienSpriteRow
 {
 	Upper  = 0,

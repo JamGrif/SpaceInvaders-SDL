@@ -41,10 +41,9 @@ std::weak_ptr<FontData> TextManager::getFont(uint8_t textSize)
 		TTF_Font* font = TTF_OpenFont(FONTPATH, textSize);
 		if (!font)
 			return {};
-		
-		std::shared_ptr<FontData> temp = std::make_shared<FontData>(font, textSize);
-		m_loadedFonts.insert({ textSize, temp });
-		return temp;
+
+		m_loadedFonts.insert({ textSize, std::make_shared<FontData>(font, textSize) });
+		return m_loadedFonts[textSize];
 	}
 
 	// Font does exist of textSize so return it

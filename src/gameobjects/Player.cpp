@@ -6,6 +6,7 @@
 #include "core/SoundManager.h"
 #include "gameobjects/utility/BulletHandler.h"
 
+// Row values from playerSheet.png
 enum class PlayerSpriteRow
 {
 	Alive = 0,
@@ -72,7 +73,7 @@ void Player::updateObject()
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::D))
 		{
-			m_velocity.setX(m_movementSpeed);
+			m_velocity.setX(m_velocity.getX() + m_movementSpeed);
 		}
 	}
 	// Ensure player is not touching left wall
@@ -80,7 +81,7 @@ void Player::updateObject()
 	{
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::A))
 		{
-			m_velocity.setX(-m_movementSpeed);
+			m_velocity.setX(m_velocity.getX() + -m_movementSpeed);
 		}
 	}
 
@@ -90,7 +91,7 @@ void Player::updateObject()
 		if (TheInputHandler::Instance()->isKeyDown(Keyboard::SPACE))
 		{
 			// If shot was fired, begin shot cool down
-			if (m_stateBulletHandler.lock()->addPlayerBullet(static_cast<int>(m_position.getX() + (m_objectWidth / 2)), static_cast<int>(m_position.getY() - m_objectHeight)))
+			if (m_stateBulletHandler.lock()->addPlayerBullet(static_cast<int32_t>(m_position.getX() + (m_objectWidth / 2)), static_cast<int32_t>(m_position.getY() - m_objectHeight)))
 				m_bReadyToShoot = false;
 		}
 	}

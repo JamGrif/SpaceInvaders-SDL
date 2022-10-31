@@ -2,7 +2,7 @@
 
 #include "SDL2_mixer/SDL_mixer.h"
 
-#define ALIEN_BOSS_CHANNEL 3
+constexpr uint8_t ALIEN_BOSS_CHANNEL = 3;
 
 /// <summary>
 /// Encapsulates the Mix_Chunk SDL object

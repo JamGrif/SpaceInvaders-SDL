@@ -3,6 +3,7 @@
 
 #include "core/SoundManager.h"
 
+// Row values from alienBossSheet.png
 enum class AlienBossSpriteRow
 {
 	Alive = 0,

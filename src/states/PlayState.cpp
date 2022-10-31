@@ -252,9 +252,6 @@ bool PlayState::onEnterState()
 	if (g_bResetScore)
 		TheGame::Instance()->resetCurrentScore();
 
-	// Do one pass of updating gameobjects to set initial states before entering prep stage
-	//BaseState::updateState();
-
 	// Go through all gameobjects and move any alien objects and block objects to their respective vectors
 	auto it = m_allGameObjects.begin();
 	while (it != m_allGameObjects.end())
@@ -297,7 +294,6 @@ bool PlayState::onEnterState()
 
 		it++;
 	}
-
 	m_allGameObjects.shrink_to_fit();
 
 	// Create bullet handler and let player class store a pointer to it
@@ -313,9 +309,8 @@ bool PlayState::onEnterState()
 bool PlayState::onExitState()
 {
 	std::cout << "-=-=-=-=-=-Exiting PlayState-=-=-=-=-=-" << std::endl;
-	BaseState::onExitState();
 
-	TheSoundManager::Instance()->stopAllSounds();
+	BaseState::onExitState();
 
 	return true;
 }
